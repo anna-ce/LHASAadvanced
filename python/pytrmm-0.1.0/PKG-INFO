@@ -1,0 +1,27 @@
+Metadata-Version: 1.0
+Name: pytrmm
+Version: 0.1.0
+Summary: Tools for reading TRMM data in Python
+Home-page: http://github.com/sahg/pytrmm
+Author: Scott Sinclair
+Author-email: scott.sinclair.za@gmail.com
+License: BSD
+Download-URL: http://github.com/sahg/pytrmm
+Description: PyTRMM - Python tools for reading TRMM data
+        ===========================================
+        
+        PyTRMM is a BSD licensed Python library containing tools for reading
+        the data files produced by the Tropical Rainfall Measuring Mission
+        (TRMM - http://trmm.gsfc.nasa.gov/). At this stage the package has
+        tools to read the TRMM 3B4XRT data files, but the code should be
+        useful for reading other data provided by TRMM.
+        
+        
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Environment :: Console
+Classifier: Operating System :: OS Independent
+Classifier: Intended Audience :: Science/Research
+Classifier: Programming Language :: Python
+Classifier: Topic :: Scientific/Engineering
