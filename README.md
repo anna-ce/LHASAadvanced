@@ -6,17 +6,7 @@ Pat Cappelaere	Vightel		pat@cappelaere.com
 
 ## Requirements & Installation
 
-Node.js
-
-## Database Operations
-# Dump local database
-This application uses the same database as OJO-Streamer.
-Make sure to point to proper db using environment variable
-
-NOTE:
-// to reset database and reload
-> heroku pg:reset DATABASE
-
+npm install
 
 ## Set HEROKU Env	
 > heroku config:set DATABASE=

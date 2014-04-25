@@ -236,8 +236,7 @@ function bootApplication(app) {
 	  res.status(404).render('404', { layout: false, url: req.originalUrl })
 	})
 	
-	app_set_env('SENDGRID_USER')
-	app_set_env('SENDGRID_KEY')	
-	app.sendgrid  = require('sendgrid')(app.SENDGRID_USER, app.SENDGRID_KEY);
-	
+	//app_set_env('SENDGRID_USER')
+	//app_set_env('SENDGRID_KEY')	
+	//app.sendgrid  = require('sendgrid')(app.SENDGRID_USER, app.SENDGRID_KEY);
 }
