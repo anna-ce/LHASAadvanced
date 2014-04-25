@@ -45,7 +45,6 @@ for( var r in app.config.regions) {
 	var region = app.config.regions[r]
 	var bucket = region['bucket']
 	var subdir = path.join(app.root, "tmp", bucket)
-	console.log("mkdirp:", subdir)
 	mkdirp(subdir)
 }
 
