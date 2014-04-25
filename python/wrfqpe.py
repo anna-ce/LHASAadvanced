@@ -29,6 +29,7 @@ ym	 		= "%s%02d" % (year, month)
 #month		= 10
 #day		= 1
 
+protocol	= "ftp://"
 ftp_site 	= "ftp.nsstc.org"
 path		= "outgoing/molthan/%d%02d%02d06/grib1"%(year,month, day)
 force		= 0
@@ -46,6 +47,9 @@ def process_wrf_d03_file():
 	filename =  get_wrf_file("d03", 24)
 	process_wrf_file("d03", filename)
 
+#
+# Grab the 24hr forecast file that contains the 24hr accumulation
+#
 def get_wrf_file( dx, fcst ):
 	yy 			= year - 2000
 	hr			= 0
@@ -53,18 +57,22 @@ def get_wrf_file( dx, fcst ):
 		
 	local_filename = os.path.join(config.data_dir, "wrf", download)
 	if os.path.exists(local_filename):
+		if verbose:
+			print "Download file exists:", local_filename
 		return local_filename
 	else:
-		print "Downloading to...", local_filename
+		if verbose:
+			print "Downloading %s to %s" %( protocol+ftp_site+path+"/"+download, local_filename)
+		
 		file = open(local_filename+".gz", 'wb')
 	
 		ftp.retrbinary("RETR " + download+".gz", file.write)
-		ftp.quit()
 		file.close()
 		
 		# decompress it
 		cmd = "gzip -d "+local_filename+".gz"
-		print cmd
+		if verbose:
+			print cmd
 		err = os.system(cmd)
 		if err:
 			print err
@@ -73,7 +81,8 @@ def get_wrf_file( dx, fcst ):
 		return local_filename
 		
 def process_wrf_file(dx, file_name):
-	print "Processing:"+file_name+" for "+ dx
+	if verbose:
+		print "Processing:"+file_name+" for "+ dx
 
 	grbs 	    = pygrib.open(file_name)
 	
@@ -95,24 +104,26 @@ def process_wrf_file(dx, file_name):
 	#grbs.close()
 	
 	# Set file vars
-	delete_files 		= os.path.join(config.data_dir,"wrf", "wrf_precip_out_*")
-	output_file 		= os.path.join(config.data_dir,"wrf","wrf_precip_out_"+dx+"_lambert.tif")
-	rgb_output_file 	= os.path.join(config.data_dir,"wrf","wrf_precip_out_"+dx+"lambert_rgb.tif")
+	delete_files 		= os.path.join(config.data_dir,"wrf", dx, "wrf_precip_out_*")
+	output_file 		= os.path.join(config.data_dir,"wrf", dx, "wrf_precip_out_"+dx+"_"+config.ymd+"_lambert.tif")
+	rgb_output_file 	= os.path.join(config.data_dir,"wrf", dx, "wrf_precip_out_"+dx+"_"+config.ymd+"_lambert_rgb.tif")
 	
-	reproj_file 		= os.path.join(config.data_dir,"wrf","wrf_precip_out_"+dx+"4326.tif")
-	reproj_rgb_file 	= os.path.join(config.data_dir,"wrf","wrf_precip_out_"+dx+"4326_rgb.tif")
+	reproj_file 		= os.path.join(config.data_dir,"wrf", dx, "wrf_precip_out_"+dx+"_"+config.ymd+"_4326.tif")
+	reproj_rgb_file 	= os.path.join(config.data_dir,"wrf", dx, "wrf_precip_out_"+dx+"_"+config.ymd+"_4326_rgb.tif")
 	
-	color_file 			= os.path.join(config.data_dir,"wrf_colors.txt")
-	resampled_file 		= os.path.join(config.data_dir,"wrf","wrf_precip_out_"+dx+"4326_1km.tif")
-	resampled_rgb_file 	= os.path.join(config.data_dir,"wrf","wrf_precip_out_"+dx+"4326_1km_rgb.tif")
+	color_file 			= os.path.join("cluts", "green-blue-gr.txt")
 	
-	mbtiles_dir			= os.path.join(config.data_dir,"mbtiles", "wrf_precip_%s_%s%02d00" % (dx, ym, day))
+	resampled_file 		= os.path.join(config.data_dir,"wrf", dx, "wrf_precip_out_"+dx+"_"+config.ymd+"_4326_1km.tif")
+	resampled_rgb_file 	= os.path.join(config.data_dir,"wrf", dx, "wrf_precip_out_"+dx+"_"+config.ymd+"_4326_1km_rgb.tif")
+	
+	mbtiles_dir			= os.path.join(config.data_dir,"mbtiles", "wrf_precip_%s_%s" % (dx, config.ymd))
 	mbtiles_fname 		= mbtiles_dir+".mbtiles"
 	
-	cmd = "rm "+delete_files
-	if verbose:
-		print cmd
-	os.system(cmd)
+	
+	#cmd = "rm "+delete_files
+	#if verbose:
+	#		print cmd
+	#os.system(cmd)
 	
 	# generate lambert conformant conic
 	if force or not os.path.exists(output_file):			
@@ -143,13 +154,17 @@ def process_wrf_file(dx, file_name):
 	# color it
 	if force or not os.path.exists(resampled_rgb_file):			
 		cmd = "gdaldem color-relief -q -alpha " + resampled_file + " " + color_file + " " + resampled_rgb_file
-		print cmd
+		if verbose:
+			print cmd
 		os.system(cmd)
 	
-	# mbtiles
-	
-	if force or not os.path.exists(mbtiles_fname):			
-		cmd = "./gdal2tiles.py -z "+tzoom+" --s_srs=EPSG:4326 " + resampled_rgb_file  + " " + mbtiles_dir
+	# mbtiles	
+	if force or not os.path.exists(mbtiles_fname):		
+		processes 	= "--processes 10"
+		#zoom		= "-z "+tzoom
+		zoom		= ""
+		srs			= "--s_srs=EPSG:4326" 
+		cmd = "./gdal2tiles.py %s %s %s %s %s" % (processes, zoom, srs, resampled_rgb_file, mbtiles_dir)
 		if verbose:
 			print cmd
 		os.system(cmd)
@@ -157,7 +172,7 @@ def process_wrf_file(dx, file_name):
 		# generate metadata.json
 		metafile = os.path.join(mbtiles_dir, "metadata.json")
 		json = "{\n"
-		json += "  \"name\": \"Precipitation Forecast - "+ ym + "\",\n"
+		json += "  \"name\": \"24hr Precipitation Forecast - "+ config.ymd + "\",\n"
 		json += "  \"description\": \"WRF Forecast - "+ os.path.basename(file_name)+"\",\n"
 		json += "  \"version\": 1\n"
 		json += "}"
@@ -185,6 +200,12 @@ def process_wrf_file(dx, file_name):
 	if verbose:
 		print cmd
 	os.system(cmd)
+	
+	os.system("rm "+output_file)
+	os.system("rm "+rgb_output_file)
+	os.system("rm "+reproj_file)
+	os.system("rm "+reproj_rgb_file)
+	os.system("rm "+output_file+".aux.xml")
 		
 #
 # ======================================================================
@@ -204,15 +225,18 @@ if __name__ == '__main__':
 	force		= options.force
 	verbose		= options.verbose
 	
-	print("Checking "+ ftp_site + " for latest file...")
+	if verbose:
+		print("Checking "+ ftp_site + " for latest file...")
+
 	ftp = FTP(ftp_site)
 
 	ftp.login()               					# user anonymous, passwd anonymous@
-	print("cwd to "+path)
+	if verbose:
+		print("cwd to "+path)
 	ftp.cwd(path)
 	
-	#process_wrf_wrf_d01_file
-	#process_wrf_d02_file()
+	process_wrf_d02_file()
 	process_wrf_d03_file()
+	ftp.quit()
 	
 	

@@ -7,6 +7,8 @@ import sys, os, inspect, math
 # Amazon S3
 import boto
 import uuid
+import os
+from boto.s3.connection import S3Connection
 
 # Site configuration
 import config
@@ -26,28 +28,37 @@ if __name__ == '__main__':
 	apg_input.add_argument("-v", "--verbose", action='store_true', help="Verbose Flag")
 	apg_input.add_argument("-l", "--file", nargs=1, help="file to copy")
 	apg_input.add_argument("-b", "--bucket",  nargs=1, help="S3 bucket to copy it too")
+	apg_input.add_argument("-s", "--folder",  nargs=1, help="S3 subfolder to copy it too")
 	
 	options 	= parser.parse_args()
 	
 	force		= options.force
 	verbose		= options.verbose
-	mbtiles		= options.file[0]
+	fileName	= options.file[0]
 	bucket		= options.bucket[0]
+	folder		= options.folder[0]
 	
 	# copy mbtiles to S3
 	if verbose:
-		print "Copying "+ mbtiles+" to bucket:"+bucket
+		print "Copying "+ fileName+" to bucket:"+bucket
 		
-	conn 		= boto.connect_s3()
+	aws_access_key 			= os.environ.get('AWS_ACCESSKEYID')
+	aws_secret_access_key 	= os.environ.get('AWS_SECRETACCESSKEY')
+	
+	conn = S3Connection(aws_access_key, aws_secret_access_key)
+	
+	#conn 		= boto.connect_s3()
 
 	mybucket 	= conn.get_bucket(bucket)
-	fname		= os.path.basename(mbtiles)
+	fname		= os.path.basename(fileName)
 	 
-	if verbose:
-		print "storing to s3:", bucket, fname
 
 	from boto.s3.key import Key
 	k 			= Key(mybucket)
-	k.key 		= fname
-	k.set_contents_from_filename(mbtiles)
-	mybucket.set_acl('public-read', fname )
+	k.key 		= folder+"/"+fname
+
+	if verbose:
+		print "storing to s3:", bucket, k.key
+	
+	k.set_contents_from_filename(fileName)
+	mybucket.set_acl('public-read', k.key )

@@ -64,14 +64,14 @@ def process_ncep_file( filename ):
 	flipped_data 		= numpy.flipud(data)
 	
 	# Set file vars
-	delete_files 		= os.path.join(config.data_dir,"ncep_out_*")
-	output_file 		= os.path.join(config.data_dir,"ncep_out_4326.tif")
-	rgb_output_file 	= os.path.join(config.data_dir,"ncep_out_4326_rgb.tif")
-	subset_file 		= os.path.join(config.data_dir,"ncep_out_subset_4326.tif")
-	subset_rgb_file 	= os.path.join(config.data_dir,"ncep_out_subset_4326_rgb.tif")
-	color_file 			= os.path.join(config.data_dir,"ncep_colors.txt")
-	resampled_file 		= os.path.join(config.data_dir,"ncep_out_subset_4326_1km.tif")
-	resampled_rgb_file 	= os.path.join(config.data_dir,"ncep_out_subset_4326_1km_rgb.tif")
+	delete_files 		= os.path.join(config.data_dir,"gdas","ncep_out_*")
+	output_file 		= os.path.join(config.data_dir,"gdas","ncep_out_4326.tif")
+	rgb_output_file 	= os.path.join(config.data_dir,"gdas","ncep_out_4326_rgb.tif")
+	subset_file 		= os.path.join(config.data_dir,"gdas","ncep_out_subset_4326.tif")
+	subset_rgb_file 	= os.path.join(config.data_dir,"gdas","ncep_out_subset_4326_rgb.tif")
+	color_file 			= os.path.join("cluts","ncep_colors.txt")
+	resampled_file 		= os.path.join(config.data_dir,"gdas","ncep_out_subset_4326_1km.tif")
+	resampled_rgb_file 	= os.path.join(config.data_dir,"gdas","ncep_out_subset_4326_1km_rgb.tif")
 
 	cmd = "rm " + delete_files
 	print cmd
@@ -136,43 +136,46 @@ def process_ncep_file( filename ):
 #bbox latitude: -89.84 to 89.84 res: 0.204432
 #bbox longitude: 0..359.80 res: 0.204432
 
+
 #
 # Get latest NCEP file from FTP site
 #
 def get_latest_ncep_file():
 	
-	print("Checking "+ ftp_site + " for latest file...")
+	print("Checking ftp://"+ ftp_site + " for latest file...")
 	ftp = FTP(ftp_site)
 	
-	ftp.login()               					# user anonymous, passwd anonymous@
-	print("cwd to "+ path)
+	try:
+		ftp.login()               					# user anonymous, passwd anonymous@
+		print("cwd to "+ path)
 	
-	ftp.cwd( path )
-	filenames = []
+		ftp.cwd( path )
+		filenames = []
 	
-	def getsfluxgrbf(name):
-		#print name
-		if name.find("sfluxgrbf") > 0 and name.find("idx") < 0:
-			filenames.append(name)
+		def getsfluxgrbf(name):
+			#print name
+			if name.find("sfluxgrbf") > 0 and name.find("idx") < 0:
+				filenames.append(name)
 			
-	ftp.retrlines('NLST', getsfluxgrbf )
+		ftp.retrlines('NLST', getsfluxgrbf )
 
-	downwload = filenames[len(filenames)-1]
-	print "latest is: ", downwload	
+		downwload = filenames[len(filenames)-1]
+		print "latest is: ", downwload	
 
-	local_filename = os.path.join(config.data_dir, gdasdir+"."+downwload)
-	if os.path.exists(local_filename):
-		return local_filename
-	else:
-		print "Downloading ", local_filename
-		file = open(local_filename, 'wb')
-		try:
-			ftp.retrbinary("RETR " + downwload, file.write)
+		local_filename = os.path.join(config.data_dir, "gdas", gdasdir+"."+downwload)
+		if os.path.exists(local_filename):
 			return local_filename
-		except:
-			print "Error"
-			sys.exit(1)
-			
+		else:
+			print "Downloading ", local_filename
+			file = open(local_filename, 'wb')
+			ftp.retrbinary("RETR " + downwload, file.write)
+			ftp.close()
+			return local_filename
+	except:
+		print "FTP Error",sys.exc_info()[0]
+		ftp.close()
+		sys.exit(1)
+	
 #
 # ======================================================================
 #
@@ -182,8 +185,8 @@ if __name__ == '__main__':
 		print('ERROR: Python bindings of GDAL 1.8.0 or later required')
 		sys.exit(1)
 
-	#latest_file = get_latest_ncep_file()
-	#process_ncep_file( latest_file)
+	latest_file = get_latest_ncep_file()
+	process_ncep_file( latest_file)
 	
-	process_ncep_file( os.path.join(config.data_dir,"gdas.20131003.gdas1.t00z.sfluxgrbf00.grib2"))
+	#process_ncep_file( os.path.join(config.data_dir,"gdas.20131003.gdas1.t00z.sfluxgrbf00.grib2"))
 	
