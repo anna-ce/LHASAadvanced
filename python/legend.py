@@ -24,9 +24,9 @@ class LEGEND:
 		
 	def parseColorFile(self):
 		self.data 	= np.genfromtxt(colorFileName, dtype=None)
-		#print data
+		#print self.data
+		self.count  = 0
 		# find min and max of non transparent items
-		print "find min/max"
 		for line in self.data:
 			#print line[0]
 			if line[4] != 0:
@@ -34,6 +34,8 @@ class LEGEND:
 					self.min = line[0]
 				if line[0] > self.max:
 					self.max = line[0]
+				self.count += 1
+		print "find count %d min %d max %d" %(self.count, self.min, self.max)
 				
 	def generateColormap(self):
 		rng 	= self.max - self.min
@@ -62,6 +64,7 @@ class LEGEND:
 		im.save(tmpName)
 		
 		cmd = "gdaldem color-relief "+ tmpName + " " + self.colorFileName + " " + self.outputFileName
+		print cmd
 		os.system(cmd) 
 		
 		os.remove(tmpName)
@@ -81,13 +84,20 @@ class LEGEND:
 		#font			= 'arial'
 		#font = ImageFont.truetype("media/text/fonts/" + font + ".ttf", fontsize, encoding="unic")
 		
+		print "rng %f step %f count %d"%(rng,step, self.count)
+		
+		# total height 	= 255
+		# num labels 	= self.count
+		dy = 255.0/self.count
+		print "dy %f", dy
 		for line in self.data:
 			if line[4] != 0:
 				value 	= line[0]
 				height 	= value * step
 				text	= "%4d" % value
+				#print "y: %f %s" % (Y,text)
 				draw.text((X, Y), text, (0,0,0), font=font)
-				Y -= 27*step*value
+				Y -= dy
 		
 		print "add title:", self.title
 		draw.text((5,265),self.title, font=font, fill=(0,0,0,255))

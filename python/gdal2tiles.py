@@ -2277,7 +2277,7 @@ if __name__ == '__main__':
 
 		pool = multiprocessing.Pool()
 		processed_tiles = 0
-		print("Generating // Base Tiles:")
+		#print("Generating // Base Tiles:")
 		for cpu in range(gdal2tiles.options.processes):
 			pool.apply_async(worker_base_tiles, [argv, cpu])
 		pool.close()
@@ -2292,7 +2292,7 @@ if __name__ == '__main__':
 		pool.join()
 
 		processed_tiles = 0
-		print("Generating // Overview Tiles:")
+		#print("Generating // Overview Tiles:")
 		gdal2tiles.open_input()
 		for tz in range(gdal2tiles.tmaxz - 1, gdal2tiles.tminz - 1, -1):
 			pool = multiprocessing.Pool()

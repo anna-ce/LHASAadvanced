@@ -45,11 +45,12 @@ class MODIS:
 		swp				= str.format("MODIS_{0}{1}_{2}D{2}OT.tif", year, day, product)
 		pnm 			= str.format("MODIS_{0}{1}_{2}D{2}OT.pnm", year, day, product)
 		pgm 			= str.format("MODIS_{0}{1}_{2}D{2}OT.pgm", year, day, product)
+		bmp 			= str.format("MODIS_{0}{1}_{2}D{2}OT.bmp", year, day, product)
 		geojson 		= str.format("MODIS_{0}{1}_{2}D{2}OT.geojson", year, day, product)
 		topojson 		= str.format("MODIS_{0}{1}_{2}D{2}OT.topojson", year, day, product)
 		tgz		 		= str.format("MODIS_{0}{1}_{2}D{2}OT.topojson.tgz", year, day, product)
 		svg		 		= str.format("MODIS_{0}{1}_{2}D{2}OT.svg", year, day, product)
-		png		 		= str.format("MODIS_{0}{1}_{2}D{2}OT.png", year, day, product)
+		#png		 		= str.format("MODIS_{0}{1}_{2}D{2}OT.png", year, day, product)
 			
 		self.infile 	= os.path.join( inpath, mosaic )
 		self.swp		= os.path.join( inpath, swp )
@@ -58,7 +59,9 @@ class MODIS:
 		self.geojson	= os.path.join( inpath, geojson )
 		self.topojson	= os.path.join( inpath, topojson )
 		self.tgz		= os.path.join( inpath, tgz )
-		self.png		= os.path.join( inpath, year, day, png )
+		#self.png		= os.path.join( inpath, year, day, png )
+		#self.bmp		= os.path.join( inpath, year, day, bmp )
+		self.bmp		= os.path.join( inpath, bmp )
 		
 		if self.verbose:
 			print self.infile
@@ -179,15 +182,23 @@ class MODIS:
 		#print( cmd )
 		#os.system(cmd)
 
-		cmd = "convert " + self.swp + " "+self.pgm
-		if self.verbose:
-			print( cmd )
+		#cmd = "convert " + self.swp + " "+self.pgm
+		#if self.verbose:
+		#	print( cmd )
+		#os.system(cmd)
+
+		# subset it, convert red band (band 1) and output to .pgm using PNM driver
+		cmd = "gdal_translate -b 1 -of BMP -ot Byte %s %s" % (self.swp, self.bmp)
 		os.system(cmd)
+		if verbose:
+			print( cmd )
+		os.system("rm -f "+self.bmp+".aux.xml")
+
 
 	def convert_to_geojson(self, res, xorg, yorg):
 		# Step 3
 		# create geojson
-		cmd = str.format("potrace -z black -a 1.5 -t 1 -i -b geojson -o {0} {1} -x {2} -L {3} -B {4} ", self.geojson, self.pgm, self.res, self.xorg, self.ymax ); 
+		cmd = str.format("potrace -z black -a 1.5 -t 1 -i -b geojson -o {0} {1} -x {2} -L {3} -B {4} ", self.geojson, self.bmp, self.res, self.xorg, self.ymax ); 
 		if self.verbose:
 			print(cmd)
 		os.system(cmd)
@@ -257,11 +268,11 @@ if __name__ == '__main__':
 	
 	# Make sure we have proper environment variables
 	try:
-		aws_key 	= os.environ['AWS_ACCESS_KEY_ID']
-		aws_secret 	= os.environ['AWS_SECRET_ACCESS_KEY']
+		aws_key 	= os.environ['AWS_ACCESSKEYID']
+		aws_secret 	= os.environ['AWS_SECRETACCESSKEY']
 
 	except:
-		print "Unexpected error:", sys.exc_info()[0]
+		print "Unavailable AWS keys", sys.exc_info()[0]
 		sys.exit(-1)
 		
 	parser 		= argparse.ArgumentParser(description='MODIS Processing')
@@ -274,7 +285,7 @@ if __name__ == '__main__':
 	force		= options.force
 	verbose		= options.verbose
 
-	#process_modis_region("d02", force, verbose)
+	process_modis_region("d02", force, verbose)
 	process_modis_region("d03", force, verbose)
 	
 

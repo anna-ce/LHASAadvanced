@@ -21,7 +21,7 @@ import argparse
 year		= config.year
 month		= config.month
 day			= config.day
-ym	 		= "%s%02d" % (year, month)
+ymd	 		= config.ymd
 
 
 ftp_site 	= "ba1.geog.umd.edu"
@@ -49,6 +49,7 @@ def get_latest_mcd45_file():
 	local_filename = os.path.join(config.data_dir, "modis_fires", download)
 	if os.path.exists(local_filename):
 		print "already downloaded..."
+		ftp.close()
 		return local_filename
 	else:
 		if verbose:
@@ -67,28 +68,32 @@ def get_latest_mcd45_file():
 			print "gunzip err", err
 			if err != 0:
 				raise Exception("gunzip error")
-			
+			ftp.close()
 			return local_filename
 		except:
 			print "Error", sys.exc_info()[0]
 			os.remove(local_filename+".gz")
+			ftp.close()
 			sys.exit(1)
 			
 def process_mcd45_file(dx, file_name):
-	print "Processing:"+file_name
+	if verbose:
+		print "Processing:"+file_name
+		
 	region 	= config.regions[dx]
 	bbox	= region['bbox']
 	tzoom   = region['tiles-zoom']
 	
 	# Set file vars
-	output_file 		= os.path.join(config.data_dir,"modis_fires", dx, "mcd45_out.tif")
-	rgb_output_file 	= os.path.join(config.data_dir,"modis_fires", dx, "mcd45_out_rgb.tif")
-	subset_file 		= os.path.join(config.data_dir,"modis_fires", dx, "mcd45_subset.tif")
-	subset_rgb_file 	= os.path.join(config.data_dir,"modis_fires", dx, "mcd45_subset_rgb.tif")
-	color_file 			= os.path.join(config.data_dir,"mcd45_colors.txt")
-	resampled_file 		= os.path.join(config.data_dir,"modis_fires", dx, "mcd45_resampled.tif")
-	resampled_rgb_file 	= os.path.join(config.data_dir,"modis_fires", dx, "mcd45_resampled_rgb.tif")
-	mbtiles_dir			= os.path.join(config.data_dir,"mbtiles", "mcd45_%s_%s%02d00" % (dx, ym, day))
+	output_file 		= os.path.join(config.data_dir,"modis_fires", dx, "mcd45_%s_out.tif" % ymd)
+	rgb_output_file 	= os.path.join(config.data_dir,"modis_fires", dx, "mcd45_%s_out_rgb.tif" % ymd)
+	subset_file 		= os.path.join(config.data_dir,"modis_fires", dx, "mcd45_%s_subset.tif" % ymd)
+	subset_rgb_file 	= os.path.join(config.data_dir,"modis_fires", dx, "mcd45_%s_subset_rgb.tif" % ymd)
+	color_file 			= os.path.join("cluts","mcd45_colors.txt")
+	resampled_file 		= os.path.join(config.data_dir,"modis_fires", dx, "mcd45_%s_resampled.tif" % ymd)
+	resampled_rgb_file 	= os.path.join(config.data_dir,"modis_fires", dx, "mcd45_%s_resampled_rgb.tif" % ymd)
+	
+	mbtiles_dir			= os.path.join(config.data_dir,"mbtiles", "mcd45_%s_%s" % (dx, ymd))
 	mbtiles_fname 		= mbtiles_dir +".mbtiles"
 
 	# for now
