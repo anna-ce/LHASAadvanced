@@ -1,0 +1,52 @@
+{  
+  "name": "ojo_bot",
+  "description": "OJO Bot Component of the NASA Disaster Architecture Implementation",
+  "version": "0.1.0",
+  "private": false,
+  "main": "server.js",
+  "author": {
+    "name": "Patrice G. Cappelaere",
+    "email": "pat@cappelaere.com"
+  },
+  "dependencies": {
+    "async": "~0.2.10",
+    "aws-sdk": "~2.0.0-rc9",
+    "connect-pg": "1.1.5",
+    "consolidate": "0.10.0",
+    "debug": "0.7.4",
+    "ejs": "~0.8.5",
+    "express": "3.4.8",
+    "express-partials": "~0.2.0",
+    "eyes": "0.1.8",
+    "fbgraph": "~0.2.9",
+	"file-size": "0.0.3",
+    "github": "0.1.15",
+    "glob": "~3.2.8",
+    "hawk": "2.1.2",
+    "mkdirp": "0.4.0",
+    "moment": "~2.5.1",
+    "pg": "~2.11.1",
+    "querystring": "0.2.0",
+    "request": "2.33.0",
+	"sendgrid": "1.0.2",
+	"shortid": "2.0.0",
+    "tar": "~0.1.19",
+    "underscore": "1.5.2",
+    "underscore.string": "2.3.3",
+    "winston": "0.7.2",
+    "winston-papertrail": "0.1.4"
+  },
+  "maintainers": [
+    "Pat Cappelaere <pat@cappelaere.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/vightel/ojo-bot.git"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">= 0.10.22"
+  }
+}
