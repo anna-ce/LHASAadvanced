@@ -662,12 +662,11 @@ module.exports = {
 		switch(fmt) {
 			case 'html':
 				var fbAppId 	= app.config.fbAppId;
+				var image 		= req.protocol + "://" + host +"/products/" + reg_id + "/" + ymd + "/" + id + ".thn.png"
+				var topojson 	= req.protocol + "://" + host +"/products/" + reg_id + "/" + ymd + "/" + id + ".topojson.gz"
 				
 				if( id.indexOf('trmm_24') >= 0 ) {
 					var date = moment(ymd, "YYYYMMDD")
-					
-					var image 		= "/products/"+reg_id+"/"+ymd+"/"+id+".thn.png"
-					var topojson 	= "/products/"+reg_id+"/"+ymd+"/"+id+".topojson.gz"
 					
 					res.render("products/trmm", {
 						layout: 		false,
@@ -682,10 +681,7 @@ module.exports = {
 					})
 				} else if(id.indexOf('wrf_') >= 0) {
 					var date = moment(ymd, "YYYYMMDD")
-					
-					var image 		= "/products/"+reg_id+"/"+ymd+"/"+id+".thn.png"
-					var topojson 	= "/products/"+reg_id+"/"+ymd+"/"+id+".topojson.gz"
-					
+										
 					res.render("products/wrf", {
 						layout: 		false,
 						image: 			image,
@@ -700,10 +696,7 @@ module.exports = {
 					
 				} else if(id.indexOf('EO1A') >= 0) {
 					var date = moment(ymd, "YYYYMMDD")
-					
-					var image 		= "/products/"+reg_id+"/"+ymd+"/"+id+".thn.png"
-					var topojson 	= "/products/"+reg_id+"/"+ymd+"/"+id+".topojson.gz"
-					
+										
 					res.render("products/eo1", {
 						layout: 		false,
 						image: 			image,
