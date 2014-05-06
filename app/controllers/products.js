@@ -627,7 +627,8 @@ module.exports = {
 	},
 	
 	index: function(req, res) {
-		res.render("products/index")
+		var user = req.session.user
+		res.render("products/index", {user: user})
 	},
 	
 	distribute: function(req, res) {
