@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "print_data.py", line 4, in <module>
+    from gribapi import *
+  File "/Users/patricecappelaere/Development/ojo/ojo-bot/python/grib_api-1.12.0/python/gribapi.py", line 31, in <module>
+    import gribapi_swig as _internal
+  File "/Users/patricecappelaere/Development/ojo/ojo-bot/python/grib_api-1.12.0/python/gribapi_swig.py", line 25, in <module>
+    _gribapi_swig = swig_import_helper()
+  File "/Users/patricecappelaere/Development/ojo/ojo-bot/python/grib_api-1.12.0/python/gribapi_swig.py", line 17, in swig_import_helper
+    import _gribapi_swig
+ImportError: dlopen(/Users/patricecappelaere/Development/ojo/ojo-bot/python/grib_api-1.12.0/python/.libs/_gribapi_swig.so, 2): Library not loaded: /usr/local/grib_api_dir/lib/libgrib_api.0.dylib
+  Referenced from: /Users/patricecappelaere/Development/ojo/ojo-bot/python/grib_api-1.12.0/python/.libs/_gribapi_swig.so
+  Reason: image not found

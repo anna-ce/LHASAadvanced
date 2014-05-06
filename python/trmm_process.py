@@ -27,9 +27,9 @@ day			= config.day
 
 #year		= today.year
 #month		= today.month
-#day			= today.day
+#day		= today.day
 #ym	 		= "%s%02d" % (year, month)
-#ymd	 		= "%s%02d%02d" % (year, month, day)
+#ymd	 	= "%s%02d%02d" % (year, month, day)
 
 ymd = config.ymd
 
@@ -269,7 +269,7 @@ def process_trmm_region_to_s3( dx, ymd, thumbnail_file, topojson_gz_file):
 	execute(cmd)
 	
 def process_trmm_region_cleanup(dx, ymd):
-	if not verbose:
+	if not verbose:			# probably debugging, so do not dispose of artifacts
 		delete_files = [
 			os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s_1km.dbf" % (dx,ymd)),
 			os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s_1km.geojson" % (dx,ymd)),
@@ -301,17 +301,17 @@ def process_trmm_region( dx ):
 	if verbose:
 		print "process_trmm_region:", dx
 
-	subset_file 		= os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s.tif" % (dx,ymd))
-	thumbnail_file 		= os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s.thn.png" % (dx,ymd))
-	static_file 		= os.path.join(config.data_dir,"trmm", dx, "%s_static.tiff" % (dx))
-	rgb_subset_file		= os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s_rgb.tif" % (dx,ymd))
-	resampled_file 		= os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s_1km.tif" % (dx,ymd))
+	subset_file 			= os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s.tif" % (dx,ymd))
+	thumbnail_file 			= os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s.thn.png" % (dx,ymd))
+	static_file 			= os.path.join(config.data_dir,"trmm", dx, "%s_static.tiff" % (dx))
+	rgb_subset_file			= os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s_rgb.tif" % (dx,ymd))
+	resampled_file 			= os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s_1km.tif" % (dx,ymd))
 	supersampled_file	 	= os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s_100m.tif" % (dx,ymd))
 	supersampled_rgb_file 	= os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s_100m_rgb.tif" % (dx,ymd))
-	shp_file 			= os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s_1km.shp" % (dx,ymd))
-	geojson_file 		= os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s_1km.geojson" % (dx,ymd))
-	topojson_file		= os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s.topojson" % (dx,ymd))
-	topojson_gz_file	= os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s.topojson.gz" % (dx,ymd))
+	shp_file 				= os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s_1km.shp" % (dx,ymd))
+	geojson_file 			= os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s_1km.geojson" % (dx,ymd))
+	topojson_file			= os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s.topojson" % (dx,ymd))
+	topojson_gz_file		= os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s.topojson.gz" % (dx,ymd))
 	
 	process_trmm_region_subset(output_file_180, bbox, subset_file, color_file, rgb_subset_file)
 	process_trmm_region_upsample(pixelsize, bbox, output_file_180, resampled_file)

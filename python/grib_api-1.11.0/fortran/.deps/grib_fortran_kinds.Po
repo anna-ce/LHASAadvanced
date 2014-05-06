@@ -1,4 +1,0 @@
-grib_fortran_kinds.o: grib_fortran_kinds.c \
-  /usr/bin/../lib/clang/5.0/include/stddef.h
-
-/usr/bin/../lib/clang/5.0/include/stddef.h:

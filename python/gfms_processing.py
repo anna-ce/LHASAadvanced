@@ -19,19 +19,26 @@ import config
 year 	= config.year
 day	 	= config.day
 ym		= config.ym
+ymd 	= config.ymd
 
 url		= "http://eagle1.umd.edu"
+
 
 class GFMS:
 	def __init__( self, inpath, force, verbose ):
 		self.inpath 	= inpath
 		self.force		= force
 		self.verbose	= verbose
+
+	def execute(self, cmd):
+		if(self.verbose):
+			print cmd
+		os.system(cmd)
 		
 	def get_latest_file(self):
 		path 			= "%s/flood/download/%s/%s/Flood_byStor_%s%02d00.bin" % (url, year, ym, ym, day)
 		fname 			= "Flood_byStor_%s%02d00.bin" % (ym, day)
-		fullname		= os.path.join(self.inpath, "gfms", fname)
+		fullname		= os.path.join(self.inpath, "gfms", ymd, fname)
 		
 		if not os.path.exists(fullname):
 			if self.verbose:
@@ -44,7 +51,7 @@ class GFMS:
 	def get_latest_highres_file(self):
 		path 			= "%s/flood/download1km/%s/%s/Routed_%s%02d00.bin" % (url, year, ym, ym, day)
 		fname 			= "Routed_%s%02d00.bin" % (ym, day)
-		fullname		= os.path.join(self.inpath, "gfms", fname)
+		fullname		= os.path.join(self.inpath, "gfms", ymd, fname)
 		
 		def reporthook(blocks_read, block_size, total_size):
 			if not blocks_read:
@@ -66,60 +73,106 @@ class GFMS:
 			print "highres exists:", fullname
 
 	def process_highres_region(self, dx, dt):
-		region 				= config.regions[dx]
-		bbox				= region['bbox']
-		tzoom				= region['tiles-zoom']
+		region 		= config.regions[dx]
+		bbox		= region['bbox']
+		tzoom		= region['tiles-zoom']
+		pxsize		= region['pixelsize']
+		thn_width   = region['thn_width']
+		thn_height  = region['thn_height']
+		bucketName 	= region['bucket']
 		
 		if self.verbose:
 			print "gfms highres processing region:", dx, dt
 			
-		output_file			= os.path.join(self.inpath, "gfms", "Routed_%s%02d00.tif" % (ym, day))
-		subset_file			= os.path.join(self.inpath, "gfms", "Routed_%s_subset_%s.tif" % (dt, dx))
-		subset_rgb_file		= os.path.join(self.inpath, "gfms", "Routed_%s_subset_%s_rgb.tif" % (dt, dx))
-		color_file			= os.path.join(self.inpath, "gfms_colors.txt")
-		mbtiles_dir 		= os.path.join(config.data_dir,"mbtiles", "gfms_highres_%s_%s" % (dt, dx))
-		mbtiles_fname 		= mbtiles_dir+".mbtiles"
+		output_file			= os.path.join(self.inpath, "gfms", ymd, "Routed_%s%02d00.tif" % (ym, day))
+		subset_file			= os.path.join(self.inpath, "gfms", dx, ymd, "Routed_%s_subset_%s.tif" % (dt, dx))
+		subset_rgb_file		= os.path.join(self.inpath, "gfms", dx, ymd, "Routed_%s_subset_%s_rgb.tif" % (dt, dx))
+		
+		supersampled_file		= os.path.join(self.inpath, "gfms", dx, ymd, "Routed_%s_hr_subset_%s.tif" % (dt, dx))
+		supersampled_file_rgb	= os.path.join(self.inpath, "gfms", dx, ymd, "Routed_%s_hr_subset_%s_rgb.tif" % (dt, dx))
+		
+		color_file 			= os.path.join("cluts", "gfms_colors.txt")
+		
+		shp_file 			= os.path.join(config.data_dir,"gfms", dx, ymd, "gfms_24_"+dx+"_"+ymd+".shp")
+		geojson_file 		= os.path.join(config.data_dir,"gfms", dx, ymd, "gfms_24_"+dx+"_"+ymd+".geojson")
+		topojson_file		= os.path.join(config.data_dir,"gfms", dx, ymd, "gfms_24_"+dx+"_"+ymd+".topojson")
+		topojson_gz_file	= os.path.join(config.data_dir,"gfms", dx, ymd, "gfms_24_"+dx+"_"+ymd+".topojson.gz")
+		thumbnail_file 		= os.path.join(config.data_dir,"gfms", dx, ymd, "gfms_24_%s_%s.thn.png" % (dx,ymd))
+		
+		static_file 		= os.path.join(config.data_dir,"gfms", dx, "%s_static.tiff" % (dx))
+		
+		#mbtiles_dir 		= os.path.join(config.data_dir,"mbtiles", "gfms_highres_%s_%s" % (dt, dx))
+		#mbtiles_fname 		= mbtiles_dir+".mbtiles"
 		
 		# subset it to our BBOX
 		# use ullr
 		if self.force or not os.path.exists(subset_file):
 			lonlats	= "" + str(bbox[0]) + " " + str(bbox[3]) + " " + str(bbox[2]) + " " + str(bbox[1])	
 			cmd 	= "gdal_translate -q -projwin " + lonlats +" "+ output_file+ " " + subset_file
-			if verbose:
-				print cmd
-			os.system(cmd)
+			self.execute(cmd)
 			
 		if self.force or not os.path.exists(subset_rgb_file):		
 			cmd = "gdaldem color-relief -q -alpha "+ subset_file + " " + color_file + " " + subset_rgb_file
-			if self.verbose:
-				print cmd
-			os.system(cmd)
+			self.execute(cmd)
 
-		# mbtiles
-		if self.force or not os.path.exists(mbtiles_fname):		
-			cmd = "./gdal2tiles.py -z "+ tzoom + " " + subset_rgb_file  + " " + mbtiles_dir
-			if self.verbose:
-				print cmd
-			os.system(cmd)
+		# resample it at 100m
+		if force or not os.path.exists(supersampled_file):			
+			cmd = "gdalwarp -q -tr %f %f -r cubicspline %s %s" % (pxsize/10,pxsize/10,subset_file,supersampled_file)
+			self.execute(cmd)
 
-			cmd = "./mb-util " + mbtiles_dir  + " " + mbtiles_fname
-			if self.verbose:
-				print cmd
-			os.system(cmd)
+		# color it for debugging
+		if force or not os.path.exists(supersampled_file_rgb):			
+			cmd = "gdaldem color-relief -q -alpha " + supersampled_file + " " + color_file + " " + supersampled_file_rgb
+			self.execute(cmd)
+		
+		if self.force or not os.path.exists(shp_file):
+			cmd = "gdal_contour -q -a risk -fl 100 -fl 200 %s %s" % ( supersampled_file, shp_file )
+			self.execute(cmd)
+	
+		if self.force or not os.path.exists(geojson_file):
+			cmd = "ogr2ogr -f geoJSON %s %s" %( geojson_file, shp_file) 
+			self.execute(cmd)
+	
+		if self.force or not os.path.exists(topojson_file):
+			cmd = "topojson --simplify-proportion 0.75  --bbox -p risk -o %s -- flood_24hr_forecast=%s" % (topojson_file, geojson_file ) 
+			self.execute(cmd)
+	
+		if self.force or not os.path.exists(topojson_gz_file):
+			cmd = "gzip %s" % (topojson_file)
+			self.execute(cmd)
+		
+		tmp_file = thumbnail_file + ".tmp.tif"
+		if force or not os.path.exists(thumbnail_file):
+			cmd="gdalwarp -overwrite -q -multi -ts %d %d -r cubicspline -co COMPRESS=LZW %s %s" % (thn_width, thn_height, supersampled_file_rgb, tmp_file )
+			self.execute(cmd)
+			cmd = "composite -blend 60 %s %s %s" % ( tmp_file, static_file, thumbnail_file)
+			self.execute(cmd)
+			self.execute("rm "+tmp_file)
+		
+		cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + ymd + " --file " + topojson_gz_file
+		if verbose:
+			cmd += " --verbose"
+		self.execute(cmd)
 
-		# copy mbtiles to S3
-		if os.path.exists(mbtiles_fname):
-			bucketName = region['bucket']
-			cmd = "aws-copy.py --bucket "+bucketName+ " --file " + mbtiles_fname
-			if self.verbose:
-				cmd += " --verbose "
-				print cmd
-			os.system(cmd)
-
-			cmd = "rm -rf "+ mbtiles_dir
-			if verbose:
-				print cmd
-				os.system(cmd)
+		cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + ymd + " --file " + thumbnail_file
+		if verbose:
+			cmd += " --verbose"
+		self.execute(cmd)
+	
+		delete_files = [
+			os.path.join(config.data_dir,"wrf", dx, ymd, "gfms_24_%s_%s_4326.tif" % (dx,ymd)),
+			os.path.join(config.data_dir,"wrf", dx, ymd, "gfms_24_%s_%s.dbf" % (dx,ymd)),
+			os.path.join(config.data_dir,"wrf", dx, ymd, "gfms_24_%s_%s.prj" % (dx,ymd)),
+			os.path.join(config.data_dir,"wrf", dx, ymd, "gfms_24_%s_%s.shp" % (dx,ymd)),
+			os.path.join(config.data_dir,"wrf", dx, ymd, "gfms_24_%s_%s.shx" % (dx,ymd)),
+			os.path.join(config.data_dir,"wrf", dx, ymd, "gfms_24_%s_%s.geojson" % (dx,ymd)),
+			os.path.join(config.data_dir,"wrf", dx, ymd, "Routed_%s_hr_subset_%s.tif" % (ymd, dx)),
+			os.path.join(config.data_dir,"wrf", dx, ymd, "Routed_%s_subset_*" % (ymd)),
+		]
+	
+		if not verbose:		# probably debugging, so do not dispose of artifacts
+			cmd = "rm "+ " ".join(delete_files)
+			self.execute(cmd)
 			
 	def process_highres_d02(self, dt):
 		self.process_highres_region("d02", dt)
@@ -129,14 +182,16 @@ class GFMS:
 				
 	def process_highres(self):
 		input_fname 			= "Routed_%s%02d00.bin" % (ym, day)
-		input_fullname			= os.path.join(self.inpath, "gfms", input_fname)
+		input_fullname			= os.path.join(self.inpath, "gfms", ymd, input_fname)
 		output_fname 			= "Routed_%s%02d00.tif" % (ym, day)
-		output_fullname			= os.path.join(self.inpath, "gfms", output_fname)
+		output_fullname			= os.path.join(self.inpath, "gfms", ymd, output_fname)
 		output_rgb_fname		= "Routed_%s%02d00_rgb.tif" % (ym, day)
-		output_rgb_fullname		= os.path.join(self.inpath, "gfms", output_rgb_fname)
-		color_file				= os.path.join(self.inpath, "gfms_colors.txt")
-		mbtiles_dir 			= os.path.join(config.data_dir,"mbtiles", "gfms_highres_%s%02d00" % (ym, day))
-		mbtiles_fname 			= mbtiles_dir+".mbtiles"
+		
+		output_rgb_fullname		= os.path.join(self.inpath, "gfms", ymd, output_rgb_fname)
+		color_file 				= os.path.join("cluts", "gfms_colors.txt")
+		
+		#mbtiles_dir 			= os.path.join(config.data_dir,"mbtiles", "gfms_highres_%s%02d00" % (ym, day))
+		#mbtiles_fname 			= mbtiles_dir+".mbtiles"
 
 		if self.force or not os.path.exists(output_fullname):		
 			rows 	= 12001
@@ -154,7 +209,6 @@ class GFMS:
 			res		= 0.00833
 			nodata	= -9999
 			
-
 			# Create gtif
 			driver = gdal.GetDriverByName("GTiff")
 			dst_ds = driver.Create(output_fullname, cols, rows, 1, gdal.GDT_Float32)
@@ -173,7 +227,7 @@ class GFMS:
 			dst_ds = None
 
 		dt = "%s%02d00" %(ym,day)
-		self.process_highres_d02(dt)
+		#self.process_highres_d02(dt)
 		self.process_highres_d03(dt)
 			
 	def process(self):
@@ -184,8 +238,9 @@ class GFMS:
 		output_rgb_fname		= "Flood_byStor_%s%02d00_rgb.tif" % (ym, day)
 		output_rgb_fullname		= os.path.join(self.inpath, "gfms", output_rgb_fname)
 		color_file				= os.path.join(self.inpath, "gfms_colors.txt")
-		mbtiles_dir 			= os.path.join(config.data_dir,"mbtiles", "gfms_%s%02d00" % (ym, day))
-		mbtiles_fname 			= mbtiles_dir+".mbtiles"
+		
+		#mbtiles_dir 			= os.path.join(config.data_dir,"mbtiles", "gfms_%s%02d00" % (ym, day))
+		#mbtiles_fname 			= mbtiles_dir+".mbtiles"
 
 		region                  = config.regions['global']
 		tzoom                   = region['tiles-zoom']
@@ -232,16 +287,16 @@ class GFMS:
 			os.system(cmd)
 		
 		# mbtiles
-		if self.force or not os.path.exists(mbtiles_fname):		
-			cmd = "./gdal2tiles.py -z " + tzoom + output_rgb_fullname  + " " + mbtiles_dir
-			if self.verbose:
-				print cmd
-			os.system(cmd)
+		#if self.force or not os.path.exists(mbtiles_fname):		
+		#	cmd = "./gdal2tiles.py -z " + tzoom + output_rgb_fullname  + " " + mbtiles_dir
+		#	if self.verbose:
+		#		print cmd
+		#	os.system(cmd)
 
-			cmd = "./mb-util " + mbtiles_dir  + " " + mbtiles_fname
-			if self.verbose:
-				print cmd
-			os.system(cmd)
+		#	cmd = "./mb-util " + mbtiles_dir  + " " + mbtiles_fname
+		#	if self.verbose:
+		#		print cmd
+		#	os.system(cmd)
 		
 		# copy mbtiles to S3
 		bucketName = region['bucket']
@@ -253,7 +308,24 @@ class GFMS:
 	
 		cmd = "rm -rf "+ mbtiles_dir
 		os.system(cmd)
+
+# ======================================================================
+# Make sure directories exist
+#
+def checkdirs():
+	# required directories
+	gmfs_d03_dir	=  os.path.join(config.data_dir, "gfms", "d02", ymd)
+	gmfs_d02_dir	=  os.path.join(config.data_dir, "gfms", "d03", ymd)
+	gmfs_dir		=  os.path.join(config.data_dir, "gfms", ymd)
 		
+	if not os.path.exists(gmfs_d03_dir):
+	    os.makedirs(gmfs_d03_dir)
+
+	if not os.path.exists(gmfs_d02_dir):
+	    os.makedirs(gmfs_d02_dir)
+		
+	if not os.path.exists(gmfs_dir):
+	    os.makedirs(gmfs_dir)
 #
 # ======================================================================
 #
@@ -274,7 +346,7 @@ if __name__ == '__main__':
 
 	# Destination Directory
 	dir			= config.data_dir
-	
+	checkdirs();
 	app = GFMS( dir, force, verbose  )
 	#app.get_latest_file()
 	

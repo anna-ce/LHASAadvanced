@@ -11,7 +11,7 @@ npm install
 ## Set HEROKU Env	
 > heroku config:set DATABASE_URL=
 > heroku config:set fbAppId=
-> heroku config:set fbAppSecret=
+> heroku config:set fbSecret=
 > heroku config:set AWS_ACCESSKEYID=
 > heroku config:set AWS_SECRETACCESSKEY=
 > heroku config:set AWS_REGION=

@@ -16,15 +16,12 @@ day			= today.day
 # Hardcoded day for now so we can all agree
 #
 
-year 		= 2014
+year		= 2014
 month		= 04
-day			= 24
+day			= 31
 
-#hour		= 6
-today		= date(year, month, day)
-jd			= today.timetuple().tm_yday
-ym	 		= "%s%02d" % (year, month)
-ymd			= "%s%02d%02d" % (year, month, day)
+ym	 		= "%d%02d" % (year, month)
+ymd 		= "%d%02d%02d" % (year, month, day)
 
 # BBOX of interest
 #bbox		= [-94, 19, -76, 6]
