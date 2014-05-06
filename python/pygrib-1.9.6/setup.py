@@ -62,11 +62,15 @@ libdirs=[]
 incdirs=[numpy.get_include()]
 libraries=['grib_api']
 
+print grib_api_libdir, grib_api_dir
+
 if grib_api_libdir is None and grib_api_dir is not None:
     libdirs.append(os.path.join(grib_api_dir,'lib'))
     libdirs.append(os.path.join(grib_api_dir,'lib64'))
 if grib_api_incdir is None and grib_api_dir is not None:
     incdirs.append(os.path.join(grib_api_dir,'include'))
+
+print libdirs
 
 if jasper_dir is not None or jasper_libdir is not None:
     libraries.append("jasper")

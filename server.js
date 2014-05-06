@@ -19,9 +19,10 @@ var express 		= require('express'),
 	opensearch		= require('./app/controllers/opensearch'),
 	persona			= require('./app/controllers/persona'),
 	App				= require('./models/app'),
-	User			= require('./models/user')
+	User			= require('./models/user'),
 	apps			= require('./app/controllers/apps'),
-	products		= require('./app/controllers/products');
+	products		= require('./app/controllers/products'),
+	mapinfo			= require('./app/controllers/mapinfo');
 	
 var app = module.exports = express();
 
@@ -161,8 +162,10 @@ app.get('/user/:name',	 						users.show_by_name);
 
 app.get('/stats', 								stats.index);
 
+app.get('/s3/sync',								s3.sync);
 app.get('/s3/:bucket/:id',						s3.index);
 
+app.get('/test/image',							test.image);
 app.get('/test/:id', 							test.index);
 app.get('/test',								test.index);
 
@@ -171,8 +174,8 @@ app.get('/opensearch',							if_authorized, opensearch.index);
 app.all('/persona/verify',						persona.verify);
 app.all('/persona/logout',						persona.logout);
 
-//app.get('/social/facebook',						social.facebook);
-//app.get('/social/twitter',						social.twitter);
+//app.get('/social/facebook',					social.facebook);
+//app.get('/social/twitter',					social.twitter);
 
 app.get('/products/opensearch',					hawk_restrict, products.opensearch);
 app.get('/products/:region/:ymd/:id.:fmt?',		products.distribute);
@@ -187,6 +190,26 @@ app.get('/apps/edit/:id',						hawk_restrict, apps.edit);
 app.get('/apps/delete/:id',						hawk_restrict, apps.delete);
 app.put('/apps/:id',							hawk_restrict, apps.update);
 app.delete('/apps/:id',							hawk_restrict, apps.delete);
+
+app.get('/mapinfo/trmm_24',						mapinfo.trmm_24);
+app.get('/mapinfo/trmm_24/style',				mapinfo.trmm_24_style);
+app.get('/mapinfo/trmm_24/legend',				mapinfo.trmm_24_legend);
+app.get('/mapinfo/trmm_24/credits',				mapinfo.trmm_24_credits);
+
+app.get('/mapinfo/wrf_24',						mapinfo.wrf_24);
+app.get('/mapinfo/wrf_24/style',				mapinfo.wrf_24_style);
+app.get('/mapinfo/wrf_24/legend',				mapinfo.wrf_24_legend);
+app.get('/mapinfo/wrf_24/credits',				mapinfo.wrf_24_credits);
+
+app.get('/mapinfo/gfms_24',						mapinfo.gfms_24);
+app.get('/mapinfo/gfms_24/style',				mapinfo.gfms_24_style);
+app.get('/mapinfo/gfms_24/legend',				mapinfo.gfms_24_legend);
+app.get('/mapinfo/gfms_24/credits',				mapinfo.gfms_24_credits);
+
+app.get('/mapinfo/eo1',							mapinfo.eo1);
+app.get('/mapinfo/eo1/style',					mapinfo.eo1_style);
+app.get('/mapinfo/eo1/legend',					mapinfo.eo1_legend);
+app.get('/mapinfo/eo1/credits',					mapinfo.eo1_credits);
 
 //
 // returned to OPTIONS
@@ -209,6 +232,8 @@ function setAuthHeaders(req, res, next) {
 // ===========================================================
 // port set based on NODE_ENV settings (production, development or test)
 debug("trying to start on port:"+ app.get('port'));
+
+s3.synchronize();
 
 if (!module.parent) {
 	app.listen(app.get('port'));

@@ -1,0 +1,1 @@
+write "/Users/patricecappelaere/Development/ojo/ojo-bot/python/grib_api-1.12.0/data/split/[centre]_[date]_[dataType]_[gridType]_[levelType]_[level]_[short_name]_[packingType].grib[editionNumber]";

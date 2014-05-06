@@ -10,6 +10,8 @@ app.configure('production', function() {
   	app.enable('eval cache');
   	app.settings.quiet = true;
 	
+	app.set('tmp_dir', '/tmp')
+	
 });
 
 app_port = 80;

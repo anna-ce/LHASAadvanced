@@ -13,8 +13,13 @@ brew install gdal --with-python
 > python setup.py install
 
 # compile and make grib_api
-> cd grib_api-1.11.0
-> ./configure --with-jasper=/usr/local/lib --prefix=/Users/patrice/Development/landslide/python/grib_api_dir
+# had to setenv LDFLAGS /usr/local/lib and unsetenv PYTHON
+#
+> cd grib_api-1.12.0
+> ./configure --with-jasper=/usr/local/lib --prefix=/usr/local/grib_api_dir --enable-python
+> make
+> make check
+> make install
 
 # build/install pyproj-1.9.3
 > cd pyproj-1.9.3
@@ -22,15 +27,17 @@ brew install gdal --with-python
 > python setup.py install
 
 # build pygrib
+# add environment variables
+setenv GRIBAPI_DIR      	/usr/local/grib_api_dir
+#setenv GRIBAPI_LIBDIR   	$GRIBAPI_DIR/lib
+setenv GRIB_DEFINITION_PATH	$GRIBAPI_DIR/share/grib_api/definitions
+
 > cd pygrib-1.9.6
 # modify setup.cfg to specify grib_api_dir and libjasper
+> python setup.py config 
 > python setup.py build
 > sudo python setup.py install
 
-# add environment variables
-setenv GRIBAPI_DIR      /Users/patrice/Development/landslide/python/grib_api_dir
-setenv GRIBAPI_LIBDIR   $GRIBAPI_DIR/lib
-setenv GRIB_DEFINITION_PATH	$GRIBAPI_DIR/share/grib_api/definitions
 
 
 test:

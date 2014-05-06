@@ -37,7 +37,9 @@ module.exports = {
 		
 		res.render("test/index.ejs", {layout: false})
 	},
-	
+	image: function(req, res) {
+		res.sendfile("./public/img/trmm_24_d03_20140421.thn.png")
+	},
 	index: function(req, res) {
 		var userid = 2
 
