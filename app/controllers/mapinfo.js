@@ -278,7 +278,7 @@ function get_wrf_24_style() {
 	return json
 }
 
-function get_gmfs_24_style() {
+function get_gfms_24_style() {
 	var json = {
 		"{risk}==100": 	{
 			color: "#FFA500", 

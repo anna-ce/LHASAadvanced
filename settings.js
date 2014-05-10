@@ -228,7 +228,7 @@ function bootApplication(app) {
 	  console.error(err.stack)
 
 	  // error page
-	  res.status(500).render('500')
+	  res.status(500).render('500', { layout: false })
 	})
 
 	// assume 404 since no middleware responded
