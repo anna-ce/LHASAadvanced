@@ -8,7 +8,20 @@ var util	= require('util'),
 	Hawk	= require('hawk'),
 	glob 	= require("glob")
 	debug	= require('debug')('products'),
+	sys 	= require('sys'),
+	exec 	= require('child_process').exec,
+	mime	= require('mime-types'),
+	osm_geojson	= require("osm-and-geojson/osm_geojson"),
+	tokml	= require('tokml'),
 	fs		= require('fs');
+	
+	mime.define( {
+		"application/x-osm+xml": [ "osm"],
+		"application/json": [ "geojson", "topojson"],
+		"application/x-gzip": ["gz"]
+	})
+	
+	function puts(error, stdout, stderr) { sys.puts(stdout) }
 	
 	function InBBOX( lat, lon, bbox) {
 		if( (lat > bbox[2]) && (lat< bbox[3]) && (lon > bbox[0]) && (lon < bbox[2]) ) return true;
@@ -53,18 +66,18 @@ var util	= require('util'),
 		})
 	}
 	
-	function sendPngFile( res, file ) {
-		res.set("Content-Type", "image/png")
-		//res.set("Access-Control-Allow-Origin", "*")
-		var fname = path.join(path.dirname(file), path.basename(file))		
-		return res.sendfile(fname)
-	}
-	
-	function sendTopoJsonFile( res, file ) {
-		res.header("Content-Type", "application/json")
-		res.header("Content-Encoding", "gzip")
+	function sendFile( res, file ) {
+		var ext 		= path.extname(file)
+		var basename 	= 	path.basename(file)
+		var dirname 	= 	path.dirname(file)
+		
+		var mime_type = mime.lookup(path.basename(file))
+		console.log("Sending:", basename, dirname, " as ", mime_type, ext)
+		
+		res.header("Content-Type", mime_type)
+		if( ext == '.topojson') res.header("Content-Encoding", "gzip")
 		res.header("Access-Control-Allow-Origin", "*")
-		res.sendfile(path.basename(file), {root: path.dirname(file)})
+		res.sendfile(basename, {root: dirname})
 	}
 	
 	function regionId( region ) {
@@ -501,11 +514,40 @@ var util	= require('util'),
 								{
 									"objectType": 	"HttpActionHandler",
 									"method": 		"GET",
-									"url": 			Bewit(base_url+".topojson.gz"),
+									"url": 			Bewit(base_url+".topojson"),
 									"mediaType": 	"application/json",
-									"displayName": 	"topojson",
-									"size": 		stats.size
+									"displayName": 	"topojson"
+								},
+								{
+									"objectType": 	"HttpActionHandler",
+									"method": 		"GET",
+									"url": 			Bewit(base_url+".topojson.gz"),
+									"mediaType": 	"application/gzip",
+									"displayName": 	"topojson.gz",
+									"size": 		filesize(stats.size)
+								},
+								{
+									"objectType": 	"HttpActionHandler",
+									"method": 		"GET",
+									"url": 			Bewit(base_url+".geojson"),
+									"mediaType": 	"application/json",
+									"displayName": 	"geojson"
+								},
+								{
+									"objectType": 	"HttpActionHandler",
+									"method": 		"GET",
+									"url": 			Bewit(base_url+".kml"),
+									"mediaType": 	"application/vnd.google-earth.kml+xml",
+									"displayName": 	"kml"
+								},
+								{
+									"objectType": 	"HttpActionHandler",
+									"method": 		"GET",
+									"url": 			Bewit(base_url+".osm"),
+									"mediaType": 	"application/xml",
+									"displayName": 	"osm"
 								}
+								
 							],
 							"view": 	base_url+".html",
 							"share": 	base_url+".html",
@@ -657,7 +699,8 @@ module.exports = {
 		//console.log("Headers", req.headers)
 		console.log("Products", reg_id, ymd, id, fmt)
 		
-		var file 	= tmp_dir+"/"+region.bucket+"/"+ymd+"/"+id+"."+fmt
+		var pathName	= tmp_dir+"/"+region.bucket+"/"+ymd
+		var file 		= path.join( pathName, id+"."+fmt )
 		
 		switch(fmt) {
 			case 'html':
@@ -719,31 +762,135 @@ module.exports = {
 				
 			case 'gz':
 				if( fs.existsSync(file)) {
-					sendTopoJsonFile(res, file)
+					sendFile(res, file)
 				} else {
 					// Check on S3
 					existsOnS3(region.bucket, ymd, path.basename(file), function(err) {
 						if(!err) {
-							sendTopoJsonFile( res, file )
+							sendFile( res, file )
 						} else {
 							res.send(404, "file not found")
 						}
 					})
 				}
 				break
+			
+			case 'osm':
+				// fall through
+			case 'kml':
+				// fall through
+			case 'geojson':
+				
+				// We need to make it up if it does not exists
+				if( fs.existsSync(file)) {
+					sendFile( res, file )
+				} else {
+					
+					var topojsonFile 	= path.join(pathName, id + ".topojson")
+					var geojsonFile 	= path.join(pathName, id + ".geojson")
+											
+					function create_topojson(cb) {
+						// TopoJson file
+						if( ! fs.existsSync(topojsonFile)) {
+							console.log("topojson file does not exists", topojsonFile)
+							var cmd = "gunzip -c "+ topojsonFile+".gz > " + topojsonFile
+							console.log(cmd)
+							exec(cmd, function (error, stdout, stderr) {
+								console.log("gunzip err", error, stdout, stderr)
+								cb(error)
+							})
+						} else cb(null)
+					}
+					
+					function create_geojson(cb) {
+						if( ! fs.existsSync(geojsonFile)) {
+						
+							var precision = Math.pow(10, 5), round = isNaN(precision)
+							    ? function(x) { return x; }
+							    : function(x) { return Math.round(x * precision) / precision; };
+
+							// Convert TopoJSON back to GeoJSON.
+							var topology 	= JSON.parse(fs.readFileSync(topojsonFile, "utf8"));
+						    var type 		= require("topojson/lib/topojson/type");
+						    var topojson 	= require("topojson");
+						
+							for (var key in topology.objects) {
+								var object = topojson.feature(topology, topology.objects[key]);
+
+								type({
+									Feature: function(feature) {
+										//if (argv["id-property"] != null) {
+										//	feature.properties[argv["id-property"]] = feature.id;
+										//	delete feature.id;
+										//}
+										return this.defaults.Feature.call(this, feature);
+									},
+									point: function(point) {
+										point[0] = round(point[0]);
+										point[1] = round(point[1]);
+									}
+								}).object(object);
+
+							  fs.writeFileSync(geojsonFile, JSON.stringify(object), "utf8");
+							}
+						}
+						
+						cb(null);
+					}
+					
+					function create_kml(cb) {
+						var kmlFile = path.join(pathName, id + ".kml")
+						if( ! fs.existsSync(kmlFile)) {
+							var geojson	= JSON.parse(fs.readFileSync(geojsonFile, "utf8"));
+							var kml 	= tokml(geojson, {
+							    			name: id,
+											description: 'NASA GSFC Data'
+							});
+							fs.writeFileSync(kmlFile, kml, "utf8");
+						}
+						cb(null)
+					}
+
+					function create_osm(cb) {
+						var osmFile = path.join(pathName, id + ".osm")
+						if( ! fs.existsSync(osmFile)) {
+							console.log("create osm...")
+							var geojson	= JSON.parse(fs.readFileSync(geojsonFile, "utf8"));
+							console.log("tokml...")
+							var osm 	= osm_geojson.geojson2osm(geojson)
+							fs.writeFileSync(osmFile, osm, "utf8");	
+						} 
+						cb(null)
+					}
+					
+					async.series([
+						create_topojson,
+						create_geojson,
+						create_kml,
+						create_osm
+					], function(err) {
+						if( !err ) {
+							sendFile(res, file)
+						} else {
+							console.log("error", err)
+							res.send("Failed to generate file:"+id+"."+fmt, 404)
+						}
+					})
+				}
+				break;
 				
 			case 'png':
 				if( fs.existsSync(file)) {
 					// this is to avoid setting the session cookie for simple images
 					delete req.session;
 					
-					sendPngFile( res, file )
+					sendFile( res, file )
 				} else {
 					//console.log("png file does not exist", file)
 					// Check on S3
 					existsOnS3(region.bucket, ymd, path.basename(file), function(err) {
 						if(!err) {
-							sendPngFile( res, file )
+							sendFile( res, file )
 						} else {
 							res.send(404, "file not found")
 						}
