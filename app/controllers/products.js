@@ -72,10 +72,17 @@ var util	= require('util'),
 		var dirname 	= 	path.dirname(file)
 		
 		var mime_type = mime.lookup(path.basename(file))
-		console.log("Sending:", basename, dirname, " as ", mime_type, ext)
 		
-		res.header("Content-Type", mime_type)
-		if( ext == '.topojson') res.header("Content-Encoding", "gzip")
+		if( basename.indexOf(".topojson") > 0) {
+			res.header("Content-Type", "application/json")
+			res.header("Content-Encoding", "gzip")
+			console.log("sending .topojson application/json gzip", basename)
+		} else {
+			console.log("sending ", mime_type)
+			res.header("Content-Type", mime_type, basename)
+			console.log(ext, mime_type, "no encoding")
+		}
+		
 		res.header("Access-Control-Allow-Origin", "*")
 		res.sendfile(basename, {root: dirname})
 	}
@@ -758,6 +765,11 @@ module.exports = {
 				break;
 				
 			case 'topojson':
+				var acceptEncoding = req.headers['accept-encoding']
+				console.log('topojson requested header:', req.headers)
+				if( acceptEncoding.indexOf('gzip') < 0) {
+					console.log("does not accept gzip... we need to expand topojson...")
+				}
 				file += ".gz"
 				
 			case 'gz':
