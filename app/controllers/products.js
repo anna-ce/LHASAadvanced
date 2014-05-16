@@ -110,13 +110,14 @@ var util	= require('util'),
 		})
 	}
 	
-	function sendTRMMProducts(query, region, ymds, req, res ) {
+	function sendTRMMProducts(query, region, ymds, limit, req, res ) {
 		var tmp_dir 		= app.get("tmp_dir")
 		
 		var user			= req.session.user
 		var host			= req.protocol + "://" + req.headers.host
 		var originalUrl		= host + req.originalUrl
 		var results 		= []
+	
 		async.each( ymds, function(ymd, cb) {
 			// check if we have a product for that region and date
 			findTRMMProduct(region, ymd, function(err) {
@@ -193,6 +194,7 @@ var util	= require('util'),
 						}
 					}
 					results.push(entry)
+					if( results.length >= limit ) return cb(-1)
 				}
 				cb(null)
 			}) 
@@ -231,7 +233,7 @@ var util	= require('util'),
 		})
 	}
 	
-	function sendWrfProducts(query, region, ymds, req, res ) {
+	function sendWrfProducts(query, region, ymds, limit, req, res ) {
 		var tmp_dir 		= app.get("tmp_dir")
 		var user			= req.session.user
 		var host			= req.protocol + "://" + req.headers.host
@@ -314,6 +316,7 @@ var util	= require('util'),
 						}
 					}
 					results.push(entry)
+					if( results.length >= limit ) return cb(-1)
 				}
 				cb(null)
 			}) 
@@ -352,7 +355,7 @@ var util	= require('util'),
 		})
 	}
 	
-	function sendGFMSProducts(query, region, ymds, req, res ) {
+	function sendGFMSProducts(query, region, ymds, limit, req, res ) {
 		var tmp_dir 		= app.get("tmp_dir")
 		var user			= req.session.user
 		var host			= req.protocol + "://" + req.headers.host
@@ -435,6 +438,7 @@ var util	= require('util'),
 						}
 					}
 					results.push(entry)
+					if( results.length >= limit ) return cb(-1)
 				}
 				cb(null)
 			}) 
@@ -474,7 +478,7 @@ var util	= require('util'),
 		})
 	}
 	// localhost:7465/products/opensearch?q=surface_water&lat=18.58&lon=-72.36&startTime=2012-04-28&endTime=2012-12-28
-	function sendEO1Products(query, region, ymds, req, res ) {
+	function sendEO1Products(query, region, ymds, limit, req, res ) {
 		var tmp_dir 		= app.get("tmp_dir")
 		var user			= req.session.user
 		var host			= req.protocol + "://" + req.headers.host
@@ -587,6 +591,7 @@ var util	= require('util'),
 						}
 					}
 					results.push(entry)
+					if( results.length >= limit ) return cb(-1)
 				}
 				cb(null)
 			}) 
@@ -615,6 +620,7 @@ module.exports = {
 		var bbox			= req.query.bbox ? req.query.bbox.split(",").map(parseFloat) : undefined
 		var itemsPerPage	= req.query.itemsPerPage || 7
 		var startIndex		= req.query.startIndex || 1
+		var limit			= req.query.limit || 25
 		var startTime		= req.query.startTime ? moment(req.query.startTime, "YYYY-MM-DD") : moment()
 		var endTime			= req.query.endTime ? moment(req.query.endTime, "YYYY-MM-DD") : moment()
 		var lat				= req.query.lat ? parseFloat(req.query.lat) : undefined
@@ -655,23 +661,27 @@ module.exports = {
 		
 		// find region of interest
 		var region = findRegion(lat, lon)
-		if( region === undefined ) return res.send( json )
+		if( region === undefined ) {
+			console.log("Undefined region for ", lat, lon)
+			return res.send( json )
+		}
 			
 		var ymds = []
-		while( startTime.isBefore(endTime) || startTime.isSame(endTime)) {
-			var ymd = startTime.format("YYYYMMDD")
+		while( endTime.isAfter(startTime) || startTime.isSame(endTime)) {
+			var ymd = endTime.format("YYYYMMDD")
 			ymds.push(ymd)
-			startTime.add('days', 1);
+			endTime.subtract('days', 1);
 		}
 		
+		console.log("Searching for", query)
 		if( query == 'daily_precipitation') {
-			sendTRMMProducts(query, region, ymds, req, res )
+			sendTRMMProducts(query, region, ymds, limit, req, res )
 		} else if( query == 'daily_precipitation_24h_forecast') {
-			sendWrfProducts(query, region, ymds, req, res )
+			sendWrfProducts(query, region, ymds, limit, req, res )
 		} else if( query == 'flood_forecast') {
-			sendGFMSProducts(query, region, ymds, req, res )
+			sendGFMSProducts(query, region, ymds, limit, req, res )
 		} else if( query == 'surface_water') {
-			sendEO1Products(query, region, ymds, req, res )
+			sendEO1Products(query, region, ymds, limit, req, res )
 		}
 	},
 	

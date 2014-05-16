@@ -56,8 +56,8 @@ module.exports = {
 	},
 	update: function(json, cb ) {       
 		console.log("Update app ", json)
-		app.client.query("UPDATE applications SET (name, description, company, updated_at ) = ($1, $2, $3, $4) WHERE id= $5;", 
-				[json.name, json.description, json.company, json.updated_at, json.id], function(err, result) {
+		app.client.query("UPDATE applications SET (name, description, company, updated_at, secret ) = ($1, $2, $3, $4, $5) WHERE id= $6;", 
+				[json.name, json.description, json.company, json.updated_at, json.secret, json.id], function(err, result) {
 					console.log("update_local_record", err)
 					if( !err ) {
 						cb(err, result.rows[0])
