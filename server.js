@@ -85,8 +85,8 @@ function SendOAuthUnAuthorizedResponse( res, err ) {
 function FindCredentialsFunc(id, callback) {
 	console.log("Checking credentials for", id)
 	App.get_by_fbappid(id, function(err, data) {
-		console.log("App.get_by_fbappid", err)
-		if(!err) {
+		console.log("App.get_by_fbappid", err, data)
+		if(!err && data ) {
 			var credential = {
 				id: id,
 				key: data.secret,
@@ -180,6 +180,11 @@ app.all('/persona/logout',						persona.logout);
 app.get('/products/opensearch',					hawk_restrict, products.opensearch);
 app.get('/products/:region/:ymd/:id.:fmt?',		products.distribute);
 app.get('/products',							products.index);
+
+app.options('/products/opensearch',				function(req, res) {
+	console.log("OPTIONS on opensearch");
+	setOptionsHeaders(req, res)
+})
 
 // Applications
 app.get('/apps',								hawk_restrict, apps.index);

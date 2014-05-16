@@ -132,11 +132,12 @@ module.exports = {
 		var endTime			= req.query['endTime'] ? moment(req.query['endTime']) : moment()
 		var lat				= req.query['lat']
 		var lon				= req.query['lon']
+		var limit			= req.query['limit']
 		
-		if( user == undefined ) {
-			console.log("undefined user!")
-			return res.send(404)
-		}
+		//if( user == undefined ) {
+		//	console.log("undefined user!")
+		//	return res.send(404)
+		//}
 		console.log("opensearch")
 		
 		if( bbox && !ValidateBBox(bbox)) {
