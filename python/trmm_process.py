@@ -224,7 +224,7 @@ def process_trmm_region_thumbnail(rgb_subset_file, thn_width, thn_height, static
 		execute(cmd)
 		execute("rm "+tmp_file)
 	
-def process_trmm_region_topojson(subset_file, supersampled_file, supersampled_rgb_file, pixelsize, bbox, shp_file, geojson_file, topojson_file, topojson_gz_file):
+def process_trmm_region_topojson(dx, ymd, subset_file, supersampled_file, supersampled_rgb_file, pixelsize, bbox, shp_file, geojson_file, topojson_file, topojson_gz_file):
 	# we need to resample even higher to improve resolution
 	if force or not os.path.exists(supersampled_file):
 		cmd = "gdalwarp -overwrite -q -tr %f %f -te %f %f %f %f -r cubicspline -co COMPRESS=LZW %s %s"%(pixelsize/10, pixelsize/10, bbox[0], bbox[1], bbox[2], bbox[3], subset_file, supersampled_file)
@@ -243,10 +243,14 @@ def process_trmm_region_topojson(subset_file, supersampled_file, supersampled_rg
 		execute(cmd)
 	
 	if force or not os.path.exists(topojson_file):
-		cmd = "topojson --simplify-proportion 0.5  --bbox -p precip -o %s -- daily_precipitation=%s" % (topojson_file, geojson_file ) 
+		precip = "daily_precip_%s_%s" % (dx,ymd)
+		cmd = "topojson --simplify-proportion 0.5  --bbox -p precip -o %s -- %s=%s" % (topojson_file, precip, geojson_file ) 
 		execute(cmd)
 	
 	if force or not os.path.exists(topojson_gz_file):
+		if( force ):
+			execute("rm -f "+topojson_file)
+			
 		cmd = "gzip %s" % (topojson_file)
 		execute(cmd)
 	
@@ -276,7 +280,7 @@ def process_trmm_region_cleanup(dx, ymd):
 			os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s_1km.prj" % (dx,ymd)),
 			os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s_1km.shp" % (dx,ymd)),
 			os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s_1km.shx" % (dx,ymd)),
-			os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s_1km.tif" % (dx,ymd)),
+			#os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s_1km.tif" % (dx,ymd)),
 			os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s.topojson" % (dx,ymd)),
 			os.path.join(config.data_dir,"trmm", dx, ymd, "trmm_24_%s_%s_100m.*" % (dx,ymd)),
 
@@ -316,7 +320,7 @@ def process_trmm_region( dx ):
 	process_trmm_region_subset(output_file_180, bbox, subset_file, color_file, rgb_subset_file)
 	process_trmm_region_upsample(pixelsize, bbox, output_file_180, resampled_file)
 	process_trmm_region_thumbnail( rgb_subset_file, thn_width, thn_height, static_file,  thumbnail_file)
-	process_trmm_region_topojson( subset_file, supersampled_file, supersampled_rgb_file, pixelsize, bbox, shp_file, geojson_file, topojson_file, topojson_gz_file )
+	process_trmm_region_topojson( dx, ymd, subset_file, supersampled_file, supersampled_rgb_file, pixelsize, bbox, shp_file, geojson_file, topojson_file, topojson_gz_file )
 	
 	process_trmm_region_to_s3( dx, ymd, thumbnail_file, topojson_gz_file)
 

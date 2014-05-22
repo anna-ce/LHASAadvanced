@@ -9,6 +9,7 @@ var express 		= require('express'),
   	debug 			= require('debug')('server'),
 	eyes			= require('eyes'),
 	mkdirp			= require('mkdirp'),
+	crypto			= require('crypto'),
 	Hawk			= require('hawk'),
 	
 	home			= require('./app/controllers/home'),
@@ -47,6 +48,15 @@ for( var r in app.config.regions) {
 	var bucket = region['bucket']
 	var subdir = path.join(app.root, "tmp", bucket)
 	mkdirp(subdir)
+}
+
+// generate new_avatar
+function new_avatar( str ) {
+	var md5 	= crypto.createHash('md5').update(str).digest("hex");
+	grav_url 	= 'http://www.gravatar.com/avatar.php/'+md5
+	grav_url	+= "?s=32&d=identicon"
+	//console.log("Made gravatar:", grav_url)
+	return grav_url
 }
 
 // =========================================
@@ -108,7 +118,7 @@ function SetSessionCredential( req, res, err, credentials, artifacts, next ) {
 		req.session.credentials = credentials
 		var email = artifacts.ext
 		User.get_by_email(email, function(err, user) {
-			if( !err ) {
+			if( !err && user) {
 				req.session.user = user
 				console.log("hawk passed for ", email)
 				next()
@@ -118,12 +128,15 @@ function SetSessionCredential( req, res, err, credentials, artifacts, next ) {
 				var json = {
 					singly_id: md5,
 					md5: 	md5,
+					name: 	email,
 					email: 	email,
+					organization: 'TBD',
+					created_at: new Date(),
+					updated_at: new Date(),
 					gravatar: new_avatar(md5)
 				}
 
-				var user = new User(email, email, email, null, null, null, {});
-				user.save(json, function(err, user) {
+				User.save(json, function(err, user) {
 					if (!err) {
 						req.session.user = user
 						next()
@@ -215,6 +228,11 @@ app.get('/mapinfo/eo1',							mapinfo.eo1);
 app.get('/mapinfo/eo1/style',					mapinfo.eo1_style);
 app.get('/mapinfo/eo1/legend',					mapinfo.eo1_legend);
 app.get('/mapinfo/eo1/credits',					mapinfo.eo1_credits);
+
+app.get('/mapinfo/landslide_risk',				mapinfo.landslide_risk);
+app.get('/mapinfo/landslide_risk/style',		mapinfo.landslide_risk_style);
+app.get('/mapinfo/landslide_risk/legend',		mapinfo.landslide_risk_legend);
+app.get('/mapinfo/landslide_risk/credits',		mapinfo.landslide_risk_credits);
 
 //
 // returned to OPTIONS

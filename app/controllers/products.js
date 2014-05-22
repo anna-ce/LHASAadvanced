@@ -93,6 +93,134 @@ var util	= require('util'),
 		return dx
 	}
 	
+	// ===================================================
+	// Landslide Risk Product
+
+	function LandslideRiskProductId(region, ymd) {
+		return "landslide_risk_"+regionId(region)+"_"+ymd
+	}
+	
+	function findLandslideRiskProduct(region, ymd, cb ) {
+		var tmp_dir 	= app.get("tmp_dir")
+		var trmmid 		= LandslideRiskProductId(region, ymd)
+		var fileName 	= path.join(tmp_dir, region.bucket, ymd, trmmid + ".topojson.gz")
+		fs.exists(fileName, function(err) {
+			if( err ) {
+				cb(false)
+			} else {
+				cb(true)
+			}
+		})
+	}
+
+	function sendLandslideRiskProducts(query, region, ymds, limit, req, res ) {
+		var tmp_dir 		= app.get("tmp_dir")
+		
+		var user			= req.session.user
+		var host			= req.protocol + "://" + req.headers.host
+		var originalUrl		= host + req.originalUrl
+		var results 		= []
+	
+		async.each( ymds, function(ymd, cb) {
+			// check if we have a product for that region and date
+			findLandslideRiskProduct(region, ymd, function(err) {
+				if( !err ) {
+					// add product entry to result
+					var topojsonFile	= path.join(tmp_dir, region.bucket, ymd, LandslideRiskProductId(region, ymd)+".topojson.gz")
+					var stats 			= fs.statSync( topojsonFile )
+					
+					var duration		= 60 * 30
+					var credentials		= req.session.credentials
+					
+					function Bewit(url) {
+						var bewit = Hawk.uri.getBewit(url, { credentials: credentials, ttlSec: duration, ext: user.email })
+						url += "?bewit="+bewit
+						return url;
+					}
+					
+					var base_url = host+"/products/"+regionId(region)+"/"+ymd+"/"+LandslideRiskProductId(region, ymd)
+					var entry = {
+						"id": LandslideRiskProductId(region, ymd),
+						"image": [
+							{
+								"url": base_url+".thn.png",
+								"mediaType": "image/png",
+								"rel": "browse"
+							}
+						],
+						"properties": {
+							"source": 	"NASA GSFC",
+							"sensor": 	"LandslideModel",
+							"date": 	moment(ymd, "YYYYMMDD").format("YYYY-MM-DD"),
+							"bbox": 	region.bbox,
+							"size": 	filesize(stats.size)
+						},
+						"actions": {
+							"download": [
+								{
+									"objectType": 	"HttpActionHandler",
+									"method": 		"GET",
+									"url": 			Bewit(base_url+".topojson.gz"),
+									"mediaType": 	"application/json",
+									"displayName": 	"topojson",
+									"size": 		stats.size
+								}
+							],
+							"view": 	base_url+".html",
+							"share": 	base_url+".html",
+							"map": [
+								{
+									"objectType": 	"HttpActionHandler",
+									"id": 			"trmm_24_legend",
+									"method": 		"GET",
+									"url": 			host+"/mapinfo/landslide_risk/legend",
+									"mediaType": 	"test/html",
+									"displayName": 	"legend",
+								},
+								{
+									"objectType": 	"HttpActionHandler",
+									"id": 			"landslide_risk_style",
+									"method": 		"GET",
+									"url": 			host+"/mapinfo/landslide_risk/style",
+									"mediaType": 	"application/json",
+									"displayName": 	"style",
+								},
+								{
+									"objectType": 	"HttpActionHandler",
+									"id": 			"landslide_risk_credits",
+									"method": 		"GET",
+									"url": 			host+"/mapinfo/landslide_risk/credits",
+									"mediaType": 	"application/json",
+									"displayName": 	"credits",
+								}
+							]
+						}
+					}
+					results.push(entry)
+					if( results.length >= limit ) return cb(-1)
+				}
+				cb(null)
+			}) 
+		}, function(err) {
+			res.set("Access-Control-Allow-Origin", "*")
+			var json = {
+				"objectType": query,
+				"id": "urn:trmm:"+query,
+				"displayName": "Landslide Risk",
+				"replies": {
+					"url": originalUrl,
+					"mediaType": "application/activity+json",
+					"totalItems": results.length,
+					"items": results
+				}
+			}
+			res.send(json)
+		})				
+	}
+	
+	// ===================================================
+	// 24hr Daily Precip Product
+	
 	function TRMMProductId(region, ymd) {
 		return "trmm_24_"+regionId(region)+"_"+ymd
 	}
@@ -653,7 +781,8 @@ module.exports = {
 		if( (query != 'daily_precipitation') && 
 			(query != "daily_precipitation_24h_forecast") && 
 			(query != "flood_forecast") && 
-			(query != "surface_water")
+			(query != "surface_water") &&
+			(query != "landslide_risk")
 		) {
 			console.log("Invalid product", query)
 			return res.send(json)
@@ -682,6 +811,8 @@ module.exports = {
 			sendGFMSProducts(query, region, ymds, limit, req, res )
 		} else if( query == 'surface_water') {
 			sendEO1Products(query, region, ymds, limit, req, res )
+		} else if( query == 'landslide_risk') {
+			sendLandslideRiskProducts(query, region, ymds, limit, req, res )
 		}
 	},
 	
@@ -733,6 +864,20 @@ module.exports = {
 						image: 			image,
 						fbAppId: 		fbAppId,
 						description: 	"TRMM daily accumulated precipitation for "+region.name+" acquired on "+date.format("YYYY-MM-DD"),
+						date: 			date.format("YYYY-MM-DD"),
+						id: 			id,
+						region:  		region,
+						url: 		 	url,
+						topojson: 		topojson
+					})
+				} else if( id.indexOf('landslide_risk') >= 0 ) {
+					var date = moment(ymd, "YYYYMMDD")
+					
+					res.render("products/landsliderisk", {
+						layout: 		false,
+						image: 			image,
+						fbAppId: 		fbAppId,
+						description: 	"Landslide Risk for "+region.name+" acquired on "+date.format("YYYY-MM-DD"),
 						date: 			date.format("YYYY-MM-DD"),
 						id: 			id,
 						region:  		region,
