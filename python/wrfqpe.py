@@ -180,10 +180,14 @@ def process_wrf_file(dx, file_name):
 		execute(cmd)
 	
 	if force or not os.path.exists(topojson_file):
-		cmd = "topojson --simplify-proportion 0.5  --bbox -p forecast -o %s -- daily_precipitation_24hr_forecast=%s" % (topojson_file, geojson_file ) 
+		forecast 	= "precip_forecast_%s_%s" % (dx, ymd)
+		cmd 		= "topojson --simplify-proportion 0.5  --bbox -p forecast -o %s -- %s=%s" % (topojson_file, forecast, geojson_file ) 
 		execute(cmd)
 	
 	if force or not os.path.exists(topojson_gz_file):
+		if( force ):
+			execute("rm -f "+topojson_file)
+			
 		cmd = "gzip %s" % (topojson_file)
 		execute(cmd)
 	

@@ -17,8 +17,8 @@ day			= today.day
 #
 
 year		= 2014
-month		= 04
-day			= 31
+month		= 05
+day			= 21
 
 ym	 		= "%d%02d" % (year, month)
 ymd 		= "%d%02d%02d" % (year, month, day)

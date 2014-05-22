@@ -68,7 +68,10 @@ class GFMS:
 		if not os.path.exists(fullname):
 			if self.verbose:
 				print "retrieving ", path, " -> ", fullname
-			urllib.urlretrieve(path, fullname, reporthook)
+				urllib.urlretrieve(path, fullname, reporthook)
+			else:
+				urllib.urlretrieve(path, fullname)
+				
 		else:
 			print "highres exists:", fullname
 

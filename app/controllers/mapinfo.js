@@ -137,22 +137,22 @@ function get_gfms_24_legend() {
 	return html
 }
 
-function get_eo1_legend() {
-	var html = "<style id='eo1_legend_style' >"
-	html += ".eo1_map-legend {"
+function get_gfms_24_legend() {
+	var html = "<style id='gmdfs_24_legend_style' >"
+	html += ".gfms_24_map-legend {"
 	html += "	position: relative;"
 	html += "	float: right;"
 	html += "    line-height: 18px;"
 	html += "    color: #555;"
 	html += "}"
-	html += ".eo1_map-legend i {"
+	html += ".gfms_24_map-legend i {"
 	html += "    width: 32px;"
 	html += "    height: 16px;"
 	html += "    float: left;"
 	html += "    margin-right: 5px;"
 	html += "    opacity: 0.5;"
 	html += "}"
-	html += ".eo1_map-info {"
+	html += ".gfms_24_map-info {"
 	html += "    padding: 6px 8px;"
 	html += "   font: 14px/16px Arial, Helvetica, sans-serif;"
 	html += "    background: white;"
@@ -160,18 +160,72 @@ function get_eo1_legend() {
 	html += "    box-shadow: 0 0 15px rgba(0,0,0,0.2);"
 	html += "    border-radius: 5px;"
 	html += "}"
-	html += ".eo1_map-info h4 {"
+	html += ".gfms_24_map-info h4 {"
 	html += "    margin: 0 0 5px;"
 	html += "    color: #777;"
 	html += "}"
 	html += "</style>"
 	
-	html += "<div id='eo1_legend' class='eo1_map-info eo1_map-legend'>"
-	html += "	<i style='border-bottom:solid; color: #FF0000'></i>&nbsp;&nbsp;EO-1 Surface Water</br>"
+	html += "<div id='gfms_24_legend' class='gfms_24_map-info gfms_24_map-legend'>"
+	html += "	<i style='border-top:4px dotted #FFA500'></i>&nbsp;&nbsp;Warning<br/>"
+	html += "	<i style='border-top:4px dotted #FF0000'></i>&nbsp;&nbsp;Alert<br/>"
 	html += "	<br/>"
-	html += "	<a href='http://gsfc.nasa.gov/'>EO-1 Surface Water</a>"
+	html += "	<a href='http://flood.umd.edu/'>Flood Forecast Risk</a>"
 	html += "</div>&nbsp;&nbsp;"
 	return html
+}
+
+function get_landslide_risk_legend() {
+	var html = "<style id='landslide_risk_legend_style' >"
+	html += ".landslide_risk_map-legend {"
+	html += "	position: relative;"
+	html += "	float: right;"
+	html += "    line-height: 18px;"
+	html += "    color: #555;"
+	html += "}"
+	html += ".landslide_risk_map-legend i {"
+	html += "    width: 32px;"
+	html += "    height: 16px;"
+	html += "    float: left;"
+	html += "    margin-right: 5px;"
+	html += "    opacity: 0.5;"
+	html += "}"
+	html += ".landslide_risk_map-info {"
+	html += "    padding: 6px 8px;"
+	html += "   font: 14px/16px Arial, Helvetica, sans-serif;"
+	html += "    background: white;"
+	html += "    background: rgba(255,255,255,0.8);"
+	html += "    box-shadow: 0 0 15px rgba(0,0,0,0.2);"
+	html += "    border-radius: 5px;"
+	html += "}"
+	html += ".landslide_risk_map-info h4 {"
+	html += "    margin: 0 0 5px;"
+	html += "    color: #777;"
+	html += "}"
+	html += "</style>"
+	
+	html += "<div id='landslide_risk_legend' class='landslide_risk_map-info landslide_risk_map-legend'>"
+	html += "	<i style='border-bottom:solid; color: #FFA500'></i>&nbsp;&nbsp;Caution</br>"
+	html += "	<i style='border-bottom:solid; color: #FF0000'></i>&nbsp;&nbsp;Warning</br>"
+	html += "	<br/>"
+	html += "	<a href='http://gsfc.nasa.gov/'>Landslide Risk</a>"
+	html += "</div>&nbsp;&nbsp;"
+	return html
+}
+
+function get_landslide_risk_style() {
+	// topojson object name
+	var json = {
+		"{risk}==4": 	{
+			color: "#FFA500", 
+			weight:8
+		},
+		"{risk}==5":	{
+			color: "#FF0000", 
+			weight:10
+		}
+	}
+	return json
 }
 
 function get_trmm_24_style() {
@@ -316,6 +370,14 @@ function get_trmm_24_credits() {
 	return json;
 }
 
+function get_landslide_risk_credits() {
+	var json = {
+		"credits":  "NASA GSFC",
+		"url": 		"http://trmm.gsfc.nasa.gov/",
+	};
+	return json;
+}
+
 function get_wrf_24_credits() {
 	var json = {
 		"credits":  "NASA MSFC WRF",
@@ -438,6 +500,30 @@ module.exports = {
 	},
 	eo1_credits: function(req, res) {
 		var str = get_eo1_credits()
+	    res.header("Access-Control-Allow-Origin", "*");
+		res.set('Content-Type', 'application/json');		
+		res.send(str)
+	},
+	landslide_risk: function(req, res) {
+		var style 	= get_landslide_risk_style();
+		var html  	= get_landslide_risk_legend();
+		var credits = get_landslide_risk_credits();
+		res.render("mapinfo/landslide_risk", { style: style, html: html, credits: credits })
+	},
+	landslide_risk_style: function(req, res) {
+		var json = get_landslide_risk_style()
+	    res.header("Access-Control-Allow-Origin", "*");
+		res.set('Content-Type', 'application/json');		
+		res.send(json)
+	},
+	landslide_risk_legend: function(req, res) {
+		var html = get_landslide_risk_legend()
+	    res.header("Access-Control-Allow-Origin", "*");
+		res.set('Content-Type', 'text/html');		
+		res.send(html)
+	},
+	landslide_risk_credits: function(req, res) {
+		var str = get_landslide_risk_credits()
 	    res.header("Access-Control-Allow-Origin", "*");
 		res.set('Content-Type', 'application/json');		
 		res.send(str)
