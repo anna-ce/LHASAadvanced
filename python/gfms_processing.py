@@ -163,18 +163,18 @@ class GFMS:
 		self.execute(cmd)
 	
 		delete_files = [
-			os.path.join(config.data_dir,"wrf", dx, ymd, "gfms_24_%s_%s_4326.tif" % (dx,ymd)),
-			os.path.join(config.data_dir,"wrf", dx, ymd, "gfms_24_%s_%s.dbf" % (dx,ymd)),
-			os.path.join(config.data_dir,"wrf", dx, ymd, "gfms_24_%s_%s.prj" % (dx,ymd)),
-			os.path.join(config.data_dir,"wrf", dx, ymd, "gfms_24_%s_%s.shp" % (dx,ymd)),
-			os.path.join(config.data_dir,"wrf", dx, ymd, "gfms_24_%s_%s.shx" % (dx,ymd)),
-			os.path.join(config.data_dir,"wrf", dx, ymd, "gfms_24_%s_%s.geojson" % (dx,ymd)),
-			os.path.join(config.data_dir,"wrf", dx, ymd, "Routed_%s_hr_subset_%s.tif" % (ymd, dx)),
-			os.path.join(config.data_dir,"wrf", dx, ymd, "Routed_%s_subset_*" % (ymd)),
+			os.path.join(config.data_dir,"gfms", dx, ymd, "gfms_24_%s_%s_4326.tif" % (dx,ymd)),
+			os.path.join(config.data_dir,"gfms", dx, ymd, "gfms_24_%s_%s.dbf" % (dx,ymd)),
+			os.path.join(config.data_dir,"gfms", dx, ymd, "gfms_24_%s_%s.prj" % (dx,ymd)),
+			os.path.join(config.data_dir,"gfms", dx, ymd, "gfms_24_%s_%s.shp" % (dx,ymd)),
+			os.path.join(config.data_dir,"gfms", dx, ymd, "gfms_24_%s_%s.shx" % (dx,ymd)),
+			os.path.join(config.data_dir,"gfms", dx, ymd, "gfms_24_%s_%s.geojson" % (dx,ymd)),
+			os.path.join(config.data_dir,"gfms", dx, ymd, "Routed_%s_hr_subset_%s.tif" % (ymd, dx)),
+			os.path.join(config.data_dir,"gfms", dx, ymd, "Routed_%s_subset_*" % (ymd)),
 		]
 	
 		if not verbose:		# probably debugging, so do not dispose of artifacts
-			cmd = "rm "+ " ".join(delete_files)
+			cmd = "rm -f "+ " ".join(delete_files)
 			self.execute(cmd)
 			
 	def process_highres_d02(self, dt):

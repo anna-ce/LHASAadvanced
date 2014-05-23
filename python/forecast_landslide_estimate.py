@@ -66,8 +66,8 @@ def build_tif(dx, region, dir):
 	forecast_landslide_100m_bin_rgb 	= os.path.join(config.data_dir, "landslide_risk", dx, ymd, "landslide_risk_%s_%s_100m_rgb.tif" %(dx,ymd))
 	
 	
-	#color_file					= "./cluts/landslide_colors.txt"
-	color_file					= "./cluts/susmap_colors2.txt"
+	color_file					= "./cluts/landslide_colors.txt"
+	#color_file					= "./cluts/susmap_colors2.txt"
 	
 	shp_file 					= os.path.join(config.data_dir,"landslide_risk", dx, ymd, "landslide_risk_%s_%s.shp" % (dx,ymd))
 
@@ -171,10 +171,10 @@ def build_tif(dx, region, dir):
 		cmd = "gdaldem color-relief -alpha " +  forecast_landslide_bin + " " + color_file + " " + forecast_landslide_bin_rgb
 		if verbose:
 			print cmd
-			err = os.system(cmd)
-			if err != 0:
-				print('ERROR: slope file could not be generated:', err)
-				sys.exit(-1)
+		err = os.system(cmd)
+		if err != 0:
+			print('ERROR: slope file could not be generated:', err)
+			sys.exit(-1)
 	
 	# upsample it to smooth it
 	if force or not os.path.exists(forecast_landslide_100m_bin):
@@ -221,7 +221,7 @@ def build_tif(dx, region, dir):
 	if force or not os.path.exists(thumbnail_file):
 		cmd="gdalwarp -overwrite -q -multi -ts %d %d -r cubicspline -co COMPRESS=LZW %s %s" % (thn_width, thn_height, forecast_landslide_bin_rgb, tmp_file )
 		execute(cmd)
-		cmd = "composite -blend 60 %s %s %s" % ( tmp_file, static_file, thumbnail_file)
+		cmd = "composite -blend 80 %s %s %s" % ( tmp_file, static_file, thumbnail_file)
 		execute(cmd)
 		execute("rm "+tmp_file)
 

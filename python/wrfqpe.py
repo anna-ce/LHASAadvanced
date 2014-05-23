@@ -216,7 +216,7 @@ def process_wrf_file(dx, file_name):
 		os.path.join(config.data_dir,"wrf", dx, ymd, "wrf_24_%s_%s_4326_1km.shp" % (dx,ymd)),
 		os.path.join(config.data_dir,"wrf", dx, ymd, "wrf_24_%s_%s_4326_1km.shx" % (dx,ymd)),
 		os.path.join(config.data_dir,"wrf", dx, ymd, "wrf_24_%s_%s_4326_1km.geojson" % (dx,ymd)),
-		os.path.join(config.data_dir,"wrf", dx, ymd, "wrf_24_%s_%s.topojson" % (dx,ymd)),
+		#os.path.join(config.data_dir,"wrf", dx, ymd, "wrf_24_%s_%s.topojson" % (dx,ymd)),
 		os.path.join(config.data_dir,"wrf", dx, ymd, "wrf_24_%s_%s_4326_1km_rgb.tif" % (dx,ymd)),
 		os.path.join(config.data_dir,"wrf", dx, ymd, "wrf_24_%s_%s_lambert.tif" % (dx,ymd))
 	]
@@ -274,7 +274,7 @@ if __name__ == '__main__':
 		print("cwd to "+path)
 	ftp.cwd(path)
 	
-	process_wrf_d02_file()
+	#process_wrf_d02_file()
 	process_wrf_d03_file()
 	ftp.quit()
 	
