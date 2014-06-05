@@ -17,21 +17,29 @@ import config
 
 oneday		= timedelta(days=1)
 
-today 		= config.today
+#today 		= config.today
 year		= config.year
 month		= config.month
 day			= config.day
+ymd			= config.ymd
 
-print today
+#print today
 #year 		= 2013
 #month		= 10
 #day		= 1
-#today		= date(year, month, day)
 
+# Processing day
+today		= date(year, month, day)
 jd			= today.timetuple().tm_yday
 
+
 class MODIS:
-	def __init__( self, inpath, year, day, product, region, force, verbose ):
+	def execute(self, cmd):
+		if(self.verbose):
+			print cmd
+		os.system(cmd)
+		
+	def __init__( self, inpath, year, day, product, dx, region, force, verbose ):
 		self.inpath					= inpath
 		self.year				 	= year		
 		self.day				 	= day
@@ -43,13 +51,15 @@ class MODIS:
 		# Mosaic File Name
 		mosaic 			= str.format("MODIS_{0}{1}_mosaic_{2}D{2}OT.vrt", year, day, product)
 		swp				= str.format("MODIS_{0}{1}_{2}D{2}OT.tif", year, day, product)
+		rgb				= str.format("MODIS_{0}{1}_{2}D{2}OT.rgb.tif", year, day, product)
 		pnm 			= str.format("MODIS_{0}{1}_{2}D{2}OT.pnm", year, day, product)
 		pgm 			= str.format("MODIS_{0}{1}_{2}D{2}OT.pgm", year, day, product)
 		bmp 			= str.format("MODIS_{0}{1}_{2}D{2}OT.bmp", year, day, product)
 		geojson 		= str.format("MODIS_{0}{1}_{2}D{2}OT.geojson", year, day, product)
 		topojson 		= str.format("MODIS_{0}{1}_{2}D{2}OT.topojson", year, day, product)
-		tgz		 		= str.format("MODIS_{0}{1}_{2}D{2}OT.topojson.tgz", year, day, product)
+		tgz		 		= str.format("MODIS_{0}{1}_{2}D{2}OT.topojson.gz", year, day, product)
 		svg		 		= str.format("MODIS_{0}{1}_{2}D{2}OT.svg", year, day, product)
+		thn		 		= str.format("MODIS_{0}{1}_{2}D{2}OT.thn.png", year, day, product)
 		#png		 		= str.format("MODIS_{0}{1}_{2}D{2}OT.png", year, day, product)
 			
 		self.infile 	= os.path.join( inpath, mosaic )
@@ -62,6 +72,11 @@ class MODIS:
 		#self.png		= os.path.join( inpath, year, day, png )
 		#self.bmp		= os.path.join( inpath, year, day, bmp )
 		self.bmp		= os.path.join( inpath, bmp )
+		self.rgb		= os.path.join( inpath, rgb )
+		self.thumbnail_file = os.path.join( inpath, thn )
+		self.static_file = os.path.join( config.data_dir, "modis", dx, dx+"_static.tiff" )
+		
+		self.color_file	= "./cluts/modis_flood_map.txt"
 		
 		if self.verbose:
 			print self.infile
@@ -162,8 +177,11 @@ class MODIS:
 		band.WriteArray(data, 0, 0)
 		band.SetNoDataValue(0)
 
-		#dst_ds.SetGeoTransform( geotransform )
-		#dst_ds.SetProjection( projection )
+		geotransform = self.ds.GetGeoTransform()
+		projection   = self.ds.GetProjection()
+
+		dst_ds.SetGeoTransform( geotransform )
+		dst_ds.SetProjection( projection )
 
 		dst_ds 		= None
 		self.ds 	= None
@@ -187,53 +205,61 @@ class MODIS:
 		#	print( cmd )
 		#os.system(cmd)
 
-		# subset it, convert red band (band 1) and output to .pgm using PNM driver
-		cmd = "gdal_translate -b 1 -of BMP -ot Byte %s %s" % (self.swp, self.bmp)
-		os.system(cmd)
-		if verbose:
-			print( cmd )
-		os.system("rm -f "+self.bmp+".aux.xml")
+		# subset it, convert red band (band 1) and output to .bmp using BMP driver
+		if force or not os.path.exists(self.bmp):
+			cmd = "gdal_translate -b 1 -of BMP -ot Byte %s %s" % (self.swp, self.bmp)
+			self.execute(cmd)
+		
+			self.execute("rm -f "+self.bmp+".aux.xml")
 
 
 	def convert_to_geojson(self, res, xorg, yorg):
 		# Step 3
 		# create geojson
-		cmd = str.format("potrace -z black -a 1.5 -t 1 -i -b geojson -o {0} {1} -x {2} -L {3} -B {4} ", self.geojson, self.bmp, self.res, self.xorg, self.ymax ); 
-		if self.verbose:
-			print(cmd)
-		os.system(cmd)
+		if force or not os.path.exists(self.geojson):
+			cmd = str.format("potrace -z black -a 1.5 -t 1 -i -b geojson -o {0} {1} -x {2} -L {3} -B {4} ", self.geojson, self.bmp, self.res, self.xorg, self.ymax ); 
+			self.execute(cmd)
 
 	def convert_to_topojson(self):
 		# Step 4
 		# create topojson
-		cmd = str.format("topojson --bbox --simplify-proportion 0.5 {0} -o {1} ", self.geojson, self.topojson ); 
-		if self.verbose:
-			print(cmd)
-		os.system(cmd)
+		if force or not os.path.exists(self.tgz):
+			cmd = str.format("topojson --bbox --simplify-proportion 0.5 {0} -o {1} ", self.geojson, self.topojson ); 
+			self.execute(cmd)
 
-		# Step 4
-		# compress topojson without all the directories
-		cmd = str.format("tar -czf {0} -C {1}  {2} ", self.tgz, self.inpath, os.path.basename(self.topojson)); 
-		if self.verbose:
-			print(cmd)
-		os.system(cmd)
+			# compress topojson without all the directories
+			cmd = str.format("gzip {0} ", self.topojson); 
+			self.execute(cmd)
 
+	def thumbnail(self):		
+		thn_width   = self.region['thn_width']
+		thn_height  = self.region['thn_height']
+		
+		if force or not os.path.exists(self.rgb):
+			cmd = "gdaldem color-relief -q -alpha "+ self.swp + " " + self.color_file + " " + self.rgb
+			self.execute(cmd)
+		
+		tmp_file = self.thumbnail_file + ".tmp.tif"
+		if force or not os.path.exists(self.thumbnail_file):
+			cmd="gdalwarp -overwrite -q -multi -ts %d %d -r cubicspline -co COMPRESS=LZW %s %s" % (thn_width, thn_height, self.rgb, tmp_file )
+			self.execute(cmd)
+			cmd = "composite -blend 60 %s %s %s" % ( tmp_file, self.static_file, self.thumbnail_file)
+			self.execute(cmd)
+			#self.execute("rm "+tmp_file)
+		
 	# Delete all product
 	def clear(self):
 	 	all = os.path.join( self.inpath, "MODIS_*_%dD*" % self.product )
 		cmd = str.format("rm -f {0}", all );
-		if self.verbose:
-			print(cmd)
-		os.system(cmd)
+		self.execute(cmd)
 
 	def copy_to_s3(self):
 		bucketName 	= self.region['bucket']
 		
-		cmd = "./aws-copy.py --bucket "+bucketName+ " --file " + self.tgz
+		cmd = "./aws-copy.py --bucket "+bucketName + " --folder " + ymd +" --file " + self.tgz
 		if self.verbose:
 			cmd += " --verbose "
-			print cmd
-		os.system(cmd)
+		self.execute(cmd)
 			
 		
 def process_modis_region( dx , force, verbose ):
@@ -243,19 +269,21 @@ def process_modis_region( dx , force, verbose ):
 	print "Processing Modis for Region:", dx, region['name']	
 	
 	# Destination Directory
-	dir			= os.path.join(config.data_dir, "modis", dx)
+	dir			= os.path.join(config.data_dir, "modis", dx, ymd)
 	if not os.path.exists(dir):
 		os.mkdir(dir)
 	
 	# two-day product
 	product 	= 2
 	
-	app = MODIS(dir, str(year), "%02d"%jd, product, region, force, verbose)
+	app = MODIS(dir, str(year), "%02d"%jd, product, dx, region, force, verbose)
 	app.get_daily_modis_tiles()
 	app.open_geotiff()
 	#app.clear()
 	app.process()
-	#app.copy_to_s3()
+	app.thumbnail()
+	
+	app.copy_to_s3()
 	
 #
 # ======================================================================
@@ -285,7 +313,7 @@ if __name__ == '__main__':
 	force		= options.force
 	verbose		= options.verbose
 
-	process_modis_region("d02", force, verbose)
+	#process_modis_region("d02", force, verbose)
 	process_modis_region("d03", force, verbose)
 	
 

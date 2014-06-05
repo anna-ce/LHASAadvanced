@@ -88,7 +88,7 @@ function SendOAuthUnAuthorizedResponse( res, err ) {
 		'Status': "Unauthorized",
 		"WWW-Authenticate": "Hawk"
 	}
-	res.send("Unauthorized", headers, 401)
+	res.send("Unauthorized:"+err, headers, 401)
 }
 
 // Check that app is registered with us

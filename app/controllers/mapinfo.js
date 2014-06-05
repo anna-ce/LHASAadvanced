@@ -7,6 +7,43 @@ var request		= require('request');
 var debug		= require('debug')('mapinfo');
 var dust		= require('dustjs-linkedin');
 
+function get_eo1_legend() {
+	var html = "<style id='eo1_legend_style' >"
+	html += ".eo1_map-legend {"
+	html += "	position: relative;"
+	html += "	float: right;"
+	html += "    line-height: 18px;"
+	html += "    color: #555;"
+	html += "}"
+	html += ".eo1_map-legend i {"
+	html += "    width: 32px;"
+	html += "    height: 16px;"
+	html += "    float: left;"
+	html += "    margin-right: 5px;"
+	html += "    opacity: 0.5;"
+	html += "}"
+	html += ".eo1_map-info {"
+	html += "    padding: 6px 8px;"
+	html += "   font: 14px/16px Arial, Helvetica, sans-serif;"
+	html += "    background: white;"
+	html += "    background: rgba(255,255,255,0.8);"
+	html += "    box-shadow: 0 0 15px rgba(0,0,0,0.2);"
+	html += "    border-radius: 5px;"
+	html += "}"
+	html += ".eo1_map-info h4 {"
+	html += "    margin: 0 0 5px;"
+	html += "    color: #777;"
+	html += "}"
+	html += "</style>"
+	
+	html += "<div id='eo1_legend' class='eo1_map-info eo1_map-legend'>"
+	html += "	<i style='border-bottom:solid; color: #FF0000'></i>&nbsp;Water<br/>"
+	html += "	<br/>"
+	html += "	<a href='http://eo1.gsfc.nasa.gov/'>EO-1 Flood Map</a>"
+	html += "</div>&nbsp;&nbsp;"
+	return html
+}
+
 function get_trmm_24_legend() {
 	var html = "<style id='trmm_24_legend_style' >"
 	html += ".trmm_24_map-legend {"
@@ -95,44 +132,6 @@ function get_wrf_24_legend() {
 	html += "	<i style='border-top:4px dotted #4D004B'></i>144<br/>"
 	html += "	<br/>"
 	html += "	<a href='http://trmm.gsfc.nasa.gov/'>24hr Forecast Precip in mm</a>"
-	html += "</div>&nbsp;&nbsp;"
-	return html
-}
-
-function get_gfms_24_legend() {
-	var html = "<style id='gmdfs_24_legend_style' >"
-	html += ".gfms_24_map-legend {"
-	html += "	position: relative;"
-	html += "	float: right;"
-	html += "    line-height: 18px;"
-	html += "    color: #555;"
-	html += "}"
-	html += ".gfms_24_map-legend i {"
-	html += "    width: 32px;"
-	html += "    height: 16px;"
-	html += "    float: left;"
-	html += "    margin-right: 5px;"
-	html += "    opacity: 0.5;"
-	html += "}"
-	html += ".gfms_24_map-info {"
-	html += "    padding: 6px 8px;"
-	html += "   font: 14px/16px Arial, Helvetica, sans-serif;"
-	html += "    background: white;"
-	html += "    background: rgba(255,255,255,0.8);"
-	html += "    box-shadow: 0 0 15px rgba(0,0,0,0.2);"
-	html += "    border-radius: 5px;"
-	html += "}"
-	html += ".gfms_24_map-info h4 {"
-	html += "    margin: 0 0 5px;"
-	html += "    color: #777;"
-	html += "}"
-	html += "</style>"
-	
-	html += "<div id='gfms_24_legend' class='gfms_24_map-info gfms_24_map-legend'>"
-	html += "	<i style='border-top:4px dotted #FFA500'></i>&nbsp;&nbsp;Warning<br/>"
-	html += "	<i style='border-top:4px dotted #FF0000'></i>&nbsp;&nbsp;Alert<br/>"
-	html += "	<br/>"
-	html += "	<a href='http://flood.umd.edu/'>Flood Forecast Risk</a>"
 	html += "</div>&nbsp;&nbsp;"
 	return html
 }
