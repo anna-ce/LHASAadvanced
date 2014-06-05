@@ -59,10 +59,10 @@ class GFMS:
 				return
 			if total_size < 0:
 				# Unknown size
-				print 'Read %d blocks' % blocks_read
+				# print 'Read %d blocks' % blocks_read
 			else:
 				amount_read = blocks_read * block_size
-				print 'Read %d blocks, or %d/%d' % (blocks_read, amount_read, total_size)
+				#print 'Read %d blocks, or %d/%d' % (blocks_read, amount_read, total_size)
 			return
 					
 		if not os.path.exists(fullname):

@@ -78,7 +78,7 @@ var util	= require('util'),
 			res.header("Content-Encoding", "gzip")
 			console.log("sending .topojson application/json gzip", basename)
 		} else {
-			console.log("sending ", mime_type)
+			console.log("sending ", mime_type, basename, dirname)
 			res.header("Content-Type", mime_type, basename)
 			console.log(ext, mime_type, "no encoding")
 		}
@@ -757,7 +757,7 @@ module.exports = {
 		var host			= req.protocol + "://" + req.headers.host
 		var originalUrl		= host + req.originalUrl
 		
-		console.log("opensearch", originalUrl)
+		console.log("Product opensearch", originalUrl)
 		
 		if( bbox ) {
 			lon = (bbox[0]+bbox[2])/2.0
@@ -782,7 +782,7 @@ module.exports = {
 			(query != "daily_precipitation_24h_forecast") && 
 			(query != "flood_forecast") && 
 			(query != "surface_water") &&
-			(query != "landslide_risk")
+			(query != "landslide_forecast")
 		) {
 			console.log("Invalid product", query)
 			return res.send(json)
@@ -811,7 +811,7 @@ module.exports = {
 			sendGFMSProducts(query, region, ymds, limit, req, res )
 		} else if( query == 'surface_water') {
 			sendEO1Products(query, region, ymds, limit, req, res )
-		} else if( query == 'landslide_risk') {
+		} else if( query == 'landslide_forecast') {
 			sendLandslideRiskProducts(query, region, ymds, limit, req, res )
 		}
 	},
@@ -870,14 +870,14 @@ module.exports = {
 						url: 		 	url,
 						topojson: 		topojson
 					})
-				} else if( id.indexOf('landslide_risk') >= 0 ) {
+				} else if( id.indexOf('landslide_forecast') >= 0 ) {
 					var date = moment(ymd, "YYYYMMDD")
 					
-					res.render("products/landsliderisk", {
+					res.render("products/landslideforecast", {
 						layout: 		false,
 						image: 			image,
 						fbAppId: 		fbAppId,
-						description: 	"Landslide Risk for "+region.name+" acquired on "+date.format("YYYY-MM-DD"),
+						description: 	"Landslide Forecast for "+region.name+" acquired on "+date.format("YYYY-MM-DD"),
 						date: 			date.format("YYYY-MM-DD"),
 						id: 			id,
 						region:  		region,
@@ -899,6 +899,20 @@ module.exports = {
 						topojson: 		topojson
 					})
 					
+				} else if(id.indexOf('gfms_') >= 0) {
+					var date = moment(ymd, "YYYYMMDD")
+										
+					res.render("products/gmfs", {
+						layout: 		false,
+						image: 			image,
+						fbAppId: 		fbAppId,
+						description: 	"Flood Forecast for "+region.name+" acquired on "+date.format("YYYY-MM-DD"),
+						date: 			date.format("YYYY-MM-DD"),
+						id: 			id,
+						region:  		region,
+						url: 		 	url,
+						topojson: 		topojson
+					})
 				} else if(id.indexOf('EO1A') >= 0) {
 					var date = moment(ymd, "YYYYMMDD")
 										
@@ -915,7 +929,7 @@ module.exports = {
 					})
 					
 				} else {
-					res.send("Unknown file/id")
+					res.send("Unknown file/id:"+id)
 				}
 				break;
 				

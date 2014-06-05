@@ -35,6 +35,10 @@ def get_flood_forecast():
 	cmd = "./gfms_processing.py"
 	execute(cmd)
 
+def get_modis_floodmap():
+	cmd = "./modis_floodmap.py"
+	execute(cmd)
+
 #
 # ======================================================================
 #
@@ -53,4 +57,5 @@ if __name__ == '__main__':
 	get_daily_forecast()
 	get_flood_forecast()
 	get_landslide_forecast()
+	get_modis_floodmap()
 	
