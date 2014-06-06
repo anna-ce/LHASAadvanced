@@ -59,25 +59,21 @@ def build_tif(dx, region, dir):
 		print "**ERR: file not found", susmap
 		sys.exit(-1)
 
-	forecast_landslide_bin 		= os.path.join(config.data_dir, "landslide_risk", dx, ymd, "landslide_risk_%s_%s.tif" %(dx,ymd))
-	forecast_landslide_bin_rgb 	= os.path.join(config.data_dir, "landslide_risk", dx, ymd, "landslide_risk_%s_%s_rgb.tif" %(dx,ymd))
+	forecast_landslide_bin 				= os.path.join(config.data_dir, "landslide_nowcast", dx, ymd, "landslide_nowcast_%s_%s.tif" %(dx,ymd))
+	forecast_landslide_bin_rgb 			= os.path.join(config.data_dir, "landslide_nowcast", dx, ymd, "landslide_nowcast_%s_%s_rgb.tif" %(dx,ymd))
 
-	forecast_landslide_100m_bin 		= os.path.join(config.data_dir, "landslide_risk", dx, ymd, "landslide_risk_%s_%s_100m.tif" %(dx,ymd))
-	forecast_landslide_100m_bin_rgb 	= os.path.join(config.data_dir, "landslide_risk", dx, ymd, "landslide_risk_%s_%s_100m_rgb.tif" %(dx,ymd))
+	forecast_landslide_100m_bin 		= os.path.join(config.data_dir, "landslide_nowcast", dx, ymd, "landslide_nowcast_%s_%s_100m.tif" %(dx,ymd))
+	forecast_landslide_100m_bin_rgb 	= os.path.join(config.data_dir, "landslide_nowcast", dx, ymd, "landslide_nowcast_%s_%s_100m_rgb.tif" %(dx,ymd))
+		
+	color_file							= "./cluts/landslide_colors.txt"
 	
+	shp_file 							= os.path.join(config.data_dir,"landslide_nowcast", dx, ymd, "landslide_nowcast_%s_%s.shp" % (dx,ymd))
+	geojson_file 						= os.path.join(config.data_dir,"landslide_nowcast", dx, ymd, "landslide_nowcast_%s_%s.geojson" % (dx,ymd))
 	
-	color_file					= "./cluts/landslide_colors.txt"
-	#color_file					= "./cluts/susmap_colors2.txt"
-	
-	shp_file 					= os.path.join(config.data_dir,"landslide_risk", dx, ymd, "landslide_risk_%s_%s.shp" % (dx,ymd))
-
-	watch_geojson_file 			= os.path.join(config.data_dir,"landslide_risk", dx, ymd, "landslide_watch_%s_%s.geojson" % (dx,ymd))
-	warning_geojson_file 		= os.path.join(config.data_dir,"landslide_risk", dx, ymd, "landslide_warning_%s_%s.geojson" % (dx,ymd))
-	
-	topojson_file				= os.path.join(config.data_dir,"landslide_risk", dx, ymd, "landslide_risk_%s_%s.topojson" % (dx,ymd))
-	topojson_gz_file			= os.path.join(config.data_dir,"landslide_risk", dx, ymd, "landslide_risk_%s_%s.topojson.gz" % (dx,ymd))
-	thumbnail_file 				= os.path.join(config.data_dir,"landslide_risk", dx, ymd, "landslide_risk_%s_%s.thn.png" % (dx,ymd))
-	static_file 				= os.path.join(config.data_dir,"landslide_risk", dx, "%s_static.tiff" % (dx))
+	topojson_file						= os.path.join(config.data_dir,"landslide_nowcast", dx, ymd, "landslide_nowcast_%s_%s.topojson" % (dx,ymd))
+	topojson_gz_file					= os.path.join(config.data_dir,"landslide_nowcast", dx, ymd, "landslide_nowcast_%s_%s.topojson.gz" % (dx,ymd))
+	thumbnail_file 						= os.path.join(config.data_dir,"landslide_nowcast", dx, ymd, "landslide_nowcast_%s_%s.thn.png" % (dx,ymd))
+	static_file 						= os.path.join(config.data_dir,"landslide_nowcast", dx, "%s_static.tiff" % (dx))
 
 	if force or not os.path.exists(forecast_landslide_bin):
 		if verbose:
@@ -134,11 +130,10 @@ def build_tif(dx, region, dir):
 		# Set the thresholds based in rainfall limits
 		#rainfall_data[ numpy.where( rainfall_data <= limit_90_data)] 	= 0
 		arr = numpy.zeros(shape=(rainfall_nrows,rainfall_ncols))
-		
-		
+
 		#arr[smap_data<6] = -9999
-		arr[ rainfall_data >= limit_90_data] 	= 4		# yello Warning
-		arr[ rainfall_data >= limit_99_data] 	= 5		# Red Warning
+		arr[ rainfall_data >= limit_90_data] 	= 90		# yello Warning
+		arr[ rainfall_data >= limit_99_data] 	= 99		# Red Warning
 		
 		arr[smap_data<3] 	= 0
 		# susmap nodata value = 127
@@ -191,24 +186,17 @@ def build_tif(dx, region, dir):
 				print('ERROR: slope file could not be generated:', err)
 				sys.exit(-1)
 	
-	# Create Caution file
-	if force or not os.path.exists(watch_geojson_file):
-		if force:
-			execute("rm -f "+watch_geojson_file)
-		cmd = "gdal_contour -q -f GEOJSON -i 4 -a risk %s %s" % ( forecast_landslide_100m_bin, watch_geojson_file )
-		execute(cmd)
-
-	# Create Alert file
-	if force or not os.path.exists(warning_geojson_file):
-		if force:
-			execute("rm -f "+warning_geojson_file)
-		cmd = "gdal_contour -q -f GEOJSON -i 5 -a risk %s %s" % ( forecast_landslide_100m_bin, warning_geojson_file )
+	# Create shp file
+	if force or not os.path.exists(shp_file):
+		cmd = "gdal_contour -q -a forecast -fl 90 -fl 99 %s %s" % ( forecast_landslide_100m_bin, shp_file )
 		execute(cmd)
 	
+	if force or not os.path.exists(geojson_file):
+		cmd = "ogr2ogr -f geoJSON %s %s" %( geojson_file, shp_file) 
+		execute(cmd)
+
 	if force or not os.path.exists(topojson_file):
-		watch = "landslide_watch_%s_%s" % (dx, ymd)
-		warning	= "landslide_warning_%s_%s" % (dx, ymd)
-		cmd = "topojson --simplify-proportion 0.5  --bbox -p risk -o %s -- %s=%s %s=%s" % (topojson_file, watch, watch_geojson_file, warning, warning_geojson_file ) 
+		cmd = "topojson --simplify-proportion 0.5  --bbox -p forecast -o %s -- landslide_nowcast=%s" % (topojson_file, geojson_file ) 
 		execute(cmd)
 	
 	if force or not os.path.exists(topojson_gz_file):
@@ -221,7 +209,7 @@ def build_tif(dx, region, dir):
 	if force or not os.path.exists(thumbnail_file):
 		cmd="gdalwarp -overwrite -q -multi -ts %d %d -r cubicspline -co COMPRESS=LZW %s %s" % (thn_width, thn_height, forecast_landslide_bin_rgb, tmp_file )
 		execute(cmd)
-		cmd = "composite -blend 80 %s %s %s" % ( tmp_file, static_file, thumbnail_file)
+		cmd = "composite %s %s %s" % ( tmp_file, static_file, thumbnail_file)
 		execute(cmd)
 		execute("rm "+tmp_file)
 
@@ -245,7 +233,7 @@ def generate_map( dx ):
 		print "Processing Forecast Landslide Map for Region:", dx, region['name']	
 	
 	# Destination Directory
-	dir			= os.path.join(config.data_dir, "landslide_risk", dx, ymd)
+	dir			= os.path.join(config.data_dir, "landslide_nowcast", dx, ymd)
 	if not os.path.exists(dir):
 		os.makedirs(dir)
 

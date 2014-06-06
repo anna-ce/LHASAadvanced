@@ -117,6 +117,10 @@ function SetSessionCredential( req, res, err, credentials, artifacts, next ) {
 	} else {
 		req.session.credentials = credentials
 		var email = artifacts.ext
+        // check valid email
+        if( (email == null) || (email == undefined) || (email.indexOf('@') < 0) ) {
+            return SendOAuthUnAuthorizedResponse(res, "Invalid email")
+        }
 		User.get_by_email(email, function(err, user) {
 			if( !err && user) {
 				req.session.user = user
@@ -229,10 +233,10 @@ app.get('/mapinfo/eo1/style',					mapinfo.eo1_style);
 app.get('/mapinfo/eo1/legend',					mapinfo.eo1_legend);
 app.get('/mapinfo/eo1/credits',					mapinfo.eo1_credits);
 
-app.get('/mapinfo/landslide_risk',				mapinfo.landslide_risk);
-app.get('/mapinfo/landslide_risk/style',		mapinfo.landslide_risk_style);
-app.get('/mapinfo/landslide_risk/legend',		mapinfo.landslide_risk_legend);
-app.get('/mapinfo/landslide_risk/credits',		mapinfo.landslide_risk_credits);
+app.get('/mapinfo/landslide_nowcast',			mapinfo.landslide_nowcast);
+app.get('/mapinfo/landslide_nowcast/style',		mapinfo.landslide_nowcast_style);
+app.get('/mapinfo/landslide_nowcast/legend',	mapinfo.landslide_nowcast_legend);
+app.get('/mapinfo/landslide_nowcast/credits',	mapinfo.landslide_nowcast_credits);
 
 //
 // returned to OPTIONS

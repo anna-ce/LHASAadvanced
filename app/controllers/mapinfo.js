@@ -45,21 +45,21 @@ function get_eo1_legend() {
 }
 
 function get_trmm_24_legend() {
-	var html = "<style id='trmm_24_legend_style' >"
-	html += ".trmm_24_map-legend {"
+	var html = "<style id='daily_precipitation_legend_style' >"
+	html += ".daily_precipitation_map-legend {"
 	html += "	position: relative;"
 	html += "	float: right;"
 	html += "    line-height: 18px;"
 	html += "    color: #555;"
 	html += "}"
-	html += ".trmm_24_map-legend i {"
+	html += ".daily_precipitation_map-legend i {"
 	html += "    width: 32px;"
 	html += "    height: 16px;"
 	html += "    float: left;"
 	html += "    margin-right: 5px;"
 	html += "    opacity: 0.5;"
 	html += "}"
-	html += ".trmm_24_map-info {"
+	html += ".daily_precipitation_map-info {"
 	html += "    padding: 6px 8px;"
 	html += "   font: 14px/16px Arial, Helvetica, sans-serif;"
 	html += "    background: white;"
@@ -67,13 +67,13 @@ function get_trmm_24_legend() {
 	html += "    box-shadow: 0 0 15px rgba(0,0,0,0.2);"
 	html += "    border-radius: 5px;"
 	html += "}"
-	html += ".trmm_24_map-info h4 {"
+	html += ".daily_precipitation_map-info h4 {"
 	html += "    margin: 0 0 5px;"
 	html += "    color: #777;"
 	html += "}"
 	html += "</style>"
 	
-	html += "<div id='trmm_24_legend' class='trmm_24_map-info trmm_24_map-legend'>"
+	html += "<div id='daily_precipitation_legend' class='daily_precipitation_map-info daily_precipitation_map-legend'>"
 	html += "	<i style='border-bottom:solid; color: #E0F3DB'></i>&nbsp;&nbsp;2<br/>"
 	html += "	<i style='border-bottom:solid; color: #CCEBC5'></i>&nbsp;&nbsp;3<br/>"
 	html += "	<i style='border-bottom:solid; color: #A8DDB5'></i>&nbsp;&nbsp;5<br/>"
@@ -91,21 +91,21 @@ function get_trmm_24_legend() {
 }
 
 function get_wrf_24_legend() {
-	var html = "<style id='wrf_24_legend_style' >"
-	html += ".wrf_24_map-legend {"
+	var html = "<style id='daily_precipitation_24h_forecast_legend_style' >"
+	html += ".daily_precipitation_24h_forecast_map-legend {"
 	html += "	position: relative;"
 	html += "	float: right;"
 	html += "    line-height: 18px;"
 	html += "    color: #555;"
 	html += "}"
-	html += ".wrf_24_map-legend i {"
+	html += ".daily_precipitation_24h_forecast_map-legend i {"
 	html += "    width: 32px;"
 	html += "    height: 16px;"
 	html += "    float: left;"
 	html += "    margin-right: 5px;"
 	html += "    opacity: 0.5;"
 	html += "}"
-	html += ".wrf_24_map-info {"
+	html += ".daily_precipitation_24h_forecast_map-info {"
 	html += "    padding: 6px 8px;"
 	html += "   font: 14px/16px Arial, Helvetica, sans-serif;"
 	html += "    background: white;"
@@ -113,45 +113,45 @@ function get_wrf_24_legend() {
 	html += "    box-shadow: 0 0 15px rgba(0,0,0,0.2);"
 	html += "    border-radius: 5px;"
 	html += "}"
-	html += ".wrf_24_map-info h4 {"
+	html += ".daily_precipitation_24h_forecast_map-info h4 {"
 	html += "    margin: 0 0 5px;"
 	html += "    color: #777;"
 	html += "}"
 	html += "</style>"
 	
-	html += "<div id='wrf_24_legend' class='wrf_24_map-info wrf_24_map-legend'>"
-	html += "	<i style='border-top:1px dotted #E0F3DB'></i>&nbsp;&nbsp;2<br/>"
-	html += "	<i style='border-top:1px dotted #CCEBC5'></i>&nbsp;&nbsp;3<br/>"
-	html += "	<i style='border-top:2px dotted #A8DDB5'></i>&nbsp;&nbsp;5<br/>"
-	html += "	<i style='border-top:3px dotted #7BCCC4'></i>&nbsp;&nbsp;8<br/>"
-	html += "	<i style='border-top:4px dotted #4EB3D3'></i>&nbsp;13<br/>"
-	html += "	<i style='border-top:4px dotted #2B8CBE'></i>&nbsp;21<br/>"
-	html += "	<i style='border-top:4px dotted #0868AC'></i>&nbsp;34<br/>"
-	html += "	<i style='border-top:4px dotted #084081'></i>&nbsp;55<br/>"
-	html += "	<i style='border-top:4px dotted #810F7C'></i>&nbsp;89<br/>"
-	html += "	<i style='border-top:4px dotted #4D004B'></i>144<br/>"
+	html += "<div id='daily_precipitation_24h_forecast_legend' class='daily_precipitation_24h_forecast_map-info daily_precipitation_24h_forecast_map-legend'>"
+	html += "	<i style='border-bottom:1px dotted #E0F3DB'></i>&nbsp;&nbsp;2<br/>"
+	html += "	<i style='border-bottom:1px dotted #CCEBC5'></i>&nbsp;&nbsp;3<br/>"
+	html += "	<i style='border-bottom:2px dotted #A8DDB5'></i>&nbsp;&nbsp;5<br/>"
+	html += "	<i style='border-bottom:3px dotted #7BCCC4'></i>&nbsp;&nbsp;8<br/>"
+	html += "	<i style='border-bottom:4px dotted #4EB3D3'></i>&nbsp;13<br/>"
+	html += "	<i style='border-bottom:4px dotted #2B8CBE'></i>&nbsp;21<br/>"
+	html += "	<i style='border-bottom:4px dotted #0868AC'></i>&nbsp;34<br/>"
+	html += "	<i style='border-bottom:4px dotted #084081'></i>&nbsp;55<br/>"
+	html += "	<i style='border-bottom:4px dotted #810F7C'></i>&nbsp;89<br/>"
+	html += "	<i style='border-bottom:4px dotted #4D004B'></i>144<br/>"
 	html += "	<br/>"
-	html += "	<a href='http://trmm.gsfc.nasa.gov/'>24hr Forecast Precip in mm</a>"
+	html += "	<a href='http://wrf.msfc.nasa.gov/'>24hr Forecast Precip in mm</a>"
 	html += "</div>&nbsp;&nbsp;"
 	return html
 }
 
 function get_gfms_24_legend() {
-	var html = "<style id='gmdfs_24_legend_style' >"
-	html += ".gfms_24_map-legend {"
+	var html = "<style id='flood_forecast_legend_style' >"
+	html += ".flood_forecast_map-legend {"
 	html += "	position: relative;"
 	html += "	float: right;"
 	html += "    line-height: 18px;"
 	html += "    color: #555;"
 	html += "}"
-	html += ".gfms_24_map-legend i {"
+	html += ".flood_forecast_map-legend i {"
 	html += "    width: 32px;"
 	html += "    height: 16px;"
 	html += "    float: left;"
 	html += "    margin-right: 5px;"
 	html += "    opacity: 0.5;"
 	html += "}"
-	html += ".gfms_24_map-info {"
+	html += ".flood_forecast_map-info {"
 	html += "    padding: 6px 8px;"
 	html += "   font: 14px/16px Arial, Helvetica, sans-serif;"
 	html += "    background: white;"
@@ -159,37 +159,37 @@ function get_gfms_24_legend() {
 	html += "    box-shadow: 0 0 15px rgba(0,0,0,0.2);"
 	html += "    border-radius: 5px;"
 	html += "}"
-	html += ".gfms_24_map-info h4 {"
+	html += ".flood_forecast_map-info h4 {"
 	html += "    margin: 0 0 5px;"
 	html += "    color: #777;"
 	html += "}"
 	html += "</style>"
 	
-	html += "<div id='gfms_24_legend' class='gfms_24_map-info gfms_24_map-legend'>"
-	html += "	<i style='border-top:4px dotted #FFA500'></i>&nbsp;&nbsp;Warning<br/>"
-	html += "	<i style='border-top:4px dotted #FF0000'></i>&nbsp;&nbsp;Alert<br/>"
+	html += "<div id='flood_forecast_legend' class='flood_forecast_map-info flood_forecast_map-legend'>"
+	html += "	<i style='border-bottom:4px dotted #FFA500'></i>&nbsp;&nbsp;Warning<br/>"
+	html += "	<i style='border-bottom:4px dotted #FF0000'></i>&nbsp;&nbsp;Alert<br/>"
 	html += "	<br/>"
-	html += "	<a href='http://flood.umd.edu/'>Flood Forecast Risk</a>"
+	html += "	<a href='http://flood.umd.edu/'>Flood Nowcast</a>"
 	html += "</div>&nbsp;&nbsp;"
 	return html
 }
 
-function get_landslide_risk_legend() {
-	var html = "<style id='landslide_risk_legend_style' >"
-	html += ".landslide_risk_map-legend {"
+function get_landslide_nowcast_legend() {
+	var html = "<style id='landslide_nowcast_legend_style' >"
+	html += ".landslide_nowcast_map-legend {"
 	html += "	position: relative;"
 	html += "	float: right;"
 	html += "    line-height: 18px;"
 	html += "    color: #555;"
 	html += "}"
-	html += ".landslide_risk_map-legend i {"
+	html += ".landslide_nowcast_map-legend i {"
 	html += "    width: 32px;"
 	html += "    height: 16px;"
 	html += "    float: left;"
 	html += "    margin-right: 5px;"
 	html += "    opacity: 0.5;"
 	html += "}"
-	html += ".landslide_risk_map-info {"
+	html += ".landslide_nowcast_map-info {"
 	html += "    padding: 6px 8px;"
 	html += "   font: 14px/16px Arial, Helvetica, sans-serif;"
 	html += "    background: white;"
@@ -197,29 +197,29 @@ function get_landslide_risk_legend() {
 	html += "    box-shadow: 0 0 15px rgba(0,0,0,0.2);"
 	html += "    border-radius: 5px;"
 	html += "}"
-	html += ".landslide_risk_map-info h4 {"
+	html += ".landslide_nowcast_map-info h4 {"
 	html += "    margin: 0 0 5px;"
 	html += "    color: #777;"
 	html += "}"
 	html += "</style>"
 	
-	html += "<div id='landslide_risk_legend' class='landslide_risk_map-info landslide_risk_map-legend'>"
+	html += "<div id='landslide_nowcast_legend' class='landslide_nowcast_map-info landslide_nowcast_map-legend'>"
 	html += "	<i style='border-bottom:solid; color: #FFA500'></i>&nbsp;&nbsp;Caution</br>"
 	html += "	<i style='border-bottom:solid; color: #FF0000'></i>&nbsp;&nbsp;Warning</br>"
 	html += "	<br/>"
-	html += "	<a href='http://gsfc.nasa.gov/'>Landslide Risk</a>"
+	html += "	<a href='http://gsfc.nasa.gov/'>Landslide Nowcast</a>"
 	html += "</div>&nbsp;&nbsp;"
 	return html
 }
 
-function get_landslide_risk_style() {
+function get_landslide_nowcast_style() {
 	// topojson object name
 	var json = {
-		"{risk}==4": 	{
+		"{forecast}==90": 	{
 			color: "#FFA500", 
 			weight:8
 		},
-		"{risk}==5":	{
+		"{forecast}==99":	{
 			color: "#FF0000", 
 			weight:10
 		}
@@ -369,10 +369,10 @@ function get_trmm_24_credits() {
 	return json;
 }
 
-function get_landslide_risk_credits() {
+function get_landslide_nowcast_credits() {
 	var json = {
 		"credits":  "NASA GSFC",
-		"url": 		"http://trmm.gsfc.nasa.gov/",
+		"url": 		"http://trmm.gsfc.nasa.gov/publications_dir/potential_landslide.html",
 	};
 	return json;
 }
@@ -395,8 +395,8 @@ function get_gfms_24_credits() {
 
 function get_eo1_credits() {
 	var json = {
-		"credits":  "GSFC",
-		"url": 		"http://gsfc.nasa.gov/",
+		"credits":  "EO-1 GSFC",
+		"url": 		"http://eo1.gsfc.nasa.gov/",
 	};
 	return json;
 }
@@ -503,26 +503,26 @@ module.exports = {
 		res.set('Content-Type', 'application/json');		
 		res.send(str)
 	},
-	landslide_risk: function(req, res) {
-		var style 	= get_landslide_risk_style();
-		var html  	= get_landslide_risk_legend();
-		var credits = get_landslide_risk_credits();
-		res.render("mapinfo/landslide_risk", { style: style, html: html, credits: credits })
+	landslide_nowcast: function(req, res) {
+		var style 	= get_landslide_nowcast_style();
+		var html  	= get_landslide_nowcast_legend();
+		var credits = get_landslide_nowcast_credits();
+		res.render("mapinfo/landslide_nowcast", { style: style, html: html, credits: credits })
 	},
-	landslide_risk_style: function(req, res) {
-		var json = get_landslide_risk_style()
+	landslide_nowcast_style: function(req, res) {
+		var json = get_landslide_nowcast_style()
 	    res.header("Access-Control-Allow-Origin", "*");
 		res.set('Content-Type', 'application/json');		
 		res.send(json)
 	},
-	landslide_risk_legend: function(req, res) {
-		var html = get_landslide_risk_legend()
+	landslide_nowcast_legend: function(req, res) {
+		var html = get_landslide_nowcast_legend()
 	    res.header("Access-Control-Allow-Origin", "*");
 		res.set('Content-Type', 'text/html');		
 		res.send(html)
 	},
-	landslide_risk_credits: function(req, res) {
-		var str = get_landslide_risk_credits()
+	landslide_nowcast_credits: function(req, res) {
+		var str = get_landslide_nowcast_credits()
 	    res.header("Access-Control-Allow-Origin", "*");
 		res.set('Content-Type', 'application/json');		
 		res.send(str)
