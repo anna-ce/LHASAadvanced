@@ -27,11 +27,11 @@ def get_daily_forecast():
 	cmd = "./wrfqpe.py "
 	execute(cmd)
 
-def get_landslide_forecast():
-	cmd = "./forecast_landslide_estimate.py"
+def get_landslide_nowcast():
+	cmd = "./landslide_nowcast.py"
 	execute(cmd)
 
-def get_flood_forecast():
+def get_flood_nowcast():
 	cmd = "./gfms_processing.py"
 	execute(cmd)
 
@@ -55,7 +55,7 @@ if __name__ == '__main__':
 
 	get_daily_precipitation()
 	get_daily_forecast()
-	get_flood_forecast()
-	get_landslide_forecast()
+	get_flood_nowcast()
+	get_landslide_nowcast()
 	get_modis_floodmap()
 	

@@ -94,15 +94,15 @@ var util	= require('util'),
 	}
 	
 	// ===================================================
-	// Landslide Risk Product
+	// Landslide Nowcast Product
 
-	function LandslideRiskProductId(region, ymd) {
-		return "landslide_risk_"+regionId(region)+"_"+ymd
+	function LandslideNowcastProductId(region, ymd) {
+		return "landslide_nowcast_"+regionId(region)+"_"+ymd
 	}
 	
-	function findLandslideRiskProduct(region, ymd, cb ) {
+	function findLandslideNowcastProduct(region, ymd, cb ) {
 		var tmp_dir 	= app.get("tmp_dir")
-		var trmmid 		= LandslideRiskProductId(region, ymd)
+		var trmmid 		= LandslideNowcastProductId(region, ymd)
 		var fileName 	= path.join(tmp_dir, region.bucket, ymd, trmmid + ".topojson.gz")
 		fs.exists(fileName, function(err) {
 			if( err ) {
@@ -113,7 +113,7 @@ var util	= require('util'),
 		})
 	}
 
-	function sendLandslideRiskProducts(query, region, ymds, limit, req, res ) {
+	function sendLandslideNowcastProducts(query, region, ymds, limit, req, res ) {
 		var tmp_dir 		= app.get("tmp_dir")
 		
 		var user			= req.session.user
@@ -123,10 +123,10 @@ var util	= require('util'),
 	
 		async.each( ymds, function(ymd, cb) {
 			// check if we have a product for that region and date
-			findLandslideRiskProduct(region, ymd, function(err) {
+			findLandslideNowcastProduct(region, ymd, function(err) {
 				if( !err ) {
 					// add product entry to result
-					var topojsonFile	= path.join(tmp_dir, region.bucket, ymd, LandslideRiskProductId(region, ymd)+".topojson.gz")
+					var topojsonFile	= path.join(tmp_dir, region.bucket, ymd, LandslideNowcastProductId(region, ymd)+".topojson.gz")
 					var stats 			= fs.statSync( topojsonFile )
 					
 					var duration		= 60 * 30
@@ -138,9 +138,9 @@ var util	= require('util'),
 						return url;
 					}
 					
-					var base_url = host+"/products/"+regionId(region)+"/"+ymd+"/"+LandslideRiskProductId(region, ymd)
+					var base_url = host+"/products/"+regionId(region)+"/"+ymd+"/"+LandslideNowcastProductId(region, ymd)
 					var entry = {
-						"id": LandslideRiskProductId(region, ymd),
+						"id": LandslideNowcastProductId(region, ymd),
 						"image": [
 							{
 								"url": base_url+".thn.png",
@@ -171,25 +171,25 @@ var util	= require('util'),
 							"map": [
 								{
 									"objectType": 	"HttpActionHandler",
-									"id": 			"trmm_24_legend",
+									"id": 			"landslide_nowcast_legend",
 									"method": 		"GET",
-									"url": 			host+"/mapinfo/landslide_risk/legend",
+									"url": 			host+"/mapinfo/landslide_nowcast/legend",
 									"mediaType": 	"test/html",
 									"displayName": 	"legend",
 								},
 								{
 									"objectType": 	"HttpActionHandler",
-									"id": 			"landslide_risk_style",
+									"id": 			"landslide_nowcast_style",
 									"method": 		"GET",
-									"url": 			host+"/mapinfo/landslide_risk/style",
+									"url": 			host+"/mapinfo/landslide_nowcast/style",
 									"mediaType": 	"application/json",
 									"displayName": 	"style",
 								},
 								{
 									"objectType": 	"HttpActionHandler",
-									"id": 			"landslide_risk_credits",
+									"id": 			"landslide_nowcast_credits",
 									"method": 		"GET",
-									"url": 			host+"/mapinfo/landslide_risk/credits",
+									"url": 			host+"/mapinfo/landslide_nowcast/credits",
 									"mediaType": 	"application/json",
 									"displayName": 	"credits",
 								}
@@ -206,7 +206,7 @@ var util	= require('util'),
 			var json = {
 				"objectType": query,
 				"id": "urn:trmm:"+query,
-				"displayName": "Landslide Risk",
+				"displayName": "Landslide Nowcast",
 				"replies": {
 					"url": originalUrl,
 					"mediaType": "application/activity+json",
@@ -782,7 +782,7 @@ module.exports = {
 			(query != "daily_precipitation_24h_forecast") && 
 			(query != "flood_forecast") && 
 			(query != "surface_water") &&
-			(query != "landslide_forecast")
+			(query != "landslide_nowcast")
 		) {
 			console.log("Invalid product", query)
 			return res.send(json)
@@ -811,8 +811,8 @@ module.exports = {
 			sendGFMSProducts(query, region, ymds, limit, req, res )
 		} else if( query == 'surface_water') {
 			sendEO1Products(query, region, ymds, limit, req, res )
-		} else if( query == 'landslide_forecast') {
-			sendLandslideRiskProducts(query, region, ymds, limit, req, res )
+		} else if( query == 'landslide_nowcast') {
+			sendLandslideNowcastProducts(query, region, ymds, limit, req, res )
 		}
 	},
 	
@@ -870,14 +870,14 @@ module.exports = {
 						url: 		 	url,
 						topojson: 		topojson
 					})
-				} else if( id.indexOf('landslide_forecast') >= 0 ) {
+				} else if( id.indexOf('landslide_nowcast') >= 0 ) {
 					var date = moment(ymd, "YYYYMMDD")
 					
-					res.render("products/landslideforecast", {
+					res.render("products/landslidenowcast", {
 						layout: 		false,
 						image: 			image,
 						fbAppId: 		fbAppId,
-						description: 	"Landslide Forecast for "+region.name+" acquired on "+date.format("YYYY-MM-DD"),
+						description: 	"Landslide Nowcast for "+region.name+" acquired on "+date.format("YYYY-MM-DD"),
 						date: 			date.format("YYYY-MM-DD"),
 						id: 			id,
 						region:  		region,
@@ -906,7 +906,7 @@ module.exports = {
 						layout: 		false,
 						image: 			image,
 						fbAppId: 		fbAppId,
-						description: 	"Flood Forecast for "+region.name+" acquired on "+date.format("YYYY-MM-DD"),
+						description: 	"Flood Nowcast for "+region.name+" acquired on "+date.format("YYYY-MM-DD"),
 						date: 			date.format("YYYY-MM-DD"),
 						id: 			id,
 						region:  		region,
