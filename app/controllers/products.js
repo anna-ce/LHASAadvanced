@@ -93,6 +93,49 @@ var util	= require('util'),
 		return dx
 	}
 	
+	function sendLocationProducts(req, res ) {
+        var lat    = req.query.lat
+        var lon    = req.query.lon
+        var user    = req.session.user
+        
+        if( user == undefined ) return res.send(400, "invalid user")
+        
+        // validate lat/lon
+        if( lat < -90 || lat > 90 ) return res.send(400, "invalid latitude")
+        if( lon < -180 || lat > 180 ) return res.send(400, "invalid longitude")
+        
+        var region      = findRegion(lat,lon)
+        if( region == undefined ) {
+            logger.error("invalid region", lat, lon)
+            return res.send(400)
+        }
+        
+        var json = {
+            "type": "FeatureCollection",
+            "features": [
+                { "type": "Feature",
+                "properties": {
+                    "source":   "NASA GSFC",
+                    "date":     moment().format("YYY-MM-DD"),
+                    "landslide_nowcast":        1,
+                    "landslide_forecast":       2,
+                    "flood_nowcast":            2,
+                    "flood_forecast":           3,
+                    "precipitation_nowcast":    15,
+                    "precipitation_forecast":   23,
+                    "soil_moisture_nowcast":    2.5,
+                    "soil_moisture_forecast":   5.3,
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [ user.longitude, user.latitude ]
+                }}
+            ]
+        }
+        console.log("sendLocationProducts", json)
+        res.send(json)
+	}
+    
 	// ===================================================
 	// Landslide Nowcast Product
 
@@ -782,7 +825,8 @@ module.exports = {
 			(query != "daily_precipitation_24h_forecast") && 
 			(query != "flood_forecast") && 
 			(query != "surface_water") &&
-			(query != "landslide_nowcast")
+			(query != "landslide_nowcast") &&
+            (query != "location_cast")
 		) {
 			console.log("Invalid product", query)
 			return res.send(json)
@@ -803,7 +847,9 @@ module.exports = {
 		}
 		
 		console.log("Searching for", query)
-		if( query == 'daily_precipitation') {
+		if( query == 'location_cast') {
+			sendLocationProducts(req, res )            
+    	} else if( query == 'daily_precipitation') {
 			sendTRMMProducts(query, region, ymds, limit, req, res )
 		} else if( query == 'daily_precipitation_24h_forecast') {
 			sendWrfProducts(query, region, ymds, limit, req, res )
