@@ -138,7 +138,7 @@ function get_wrf_24_legend() {
 
 function get_gfms_24_legend() {
 	var html = "<style id='flood_nowcast_legend_style' >"
-	html += ".flood_forecast_map-legend {"
+	html += ".flood_nowcast_map-legend {"
 	html += "	position: relative;"
 	html += "	float: right;"
 	html += "    line-height: 18px;"
