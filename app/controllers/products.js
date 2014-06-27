@@ -823,7 +823,7 @@ module.exports = {
 		// This for products we support
 		if( (query != 'daily_precipitation') && 
 			(query != "daily_precipitation_24h_forecast") && 
-			(query != "flood_forecast") && 
+			(query != "flood_nowcast") && 
 			(query != "surface_water") &&
 			(query != "landslide_nowcast") &&
             (query != "location_cast")
@@ -853,7 +853,7 @@ module.exports = {
 			sendTRMMProducts(query, region, ymds, limit, req, res )
 		} else if( query == 'daily_precipitation_24h_forecast') {
 			sendWrfProducts(query, region, ymds, limit, req, res )
-		} else if( query == 'flood_forecast') {
+		} else if( query == 'flood_nowcast') {
 			sendGFMSProducts(query, region, ymds, limit, req, res )
 		} else if( query == 'surface_water') {
 			sendEO1Products(query, region, ymds, limit, req, res )
