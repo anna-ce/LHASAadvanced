@@ -28,16 +28,17 @@ def generate_map( dx ):
 	if verbose:
 		print "Processing Susceptibility Map for Region:", dx, region['name']	
 	
-	color_file		= os.path.join("./cluts", 	"susmap_colors2.txt")
+	color_file				= os.path.join("./cluts", 	"susmap_colors2.txt")
+	basedir					= "susmap.2"
 	
-	input_file				= os.path.join(config.data_dir, "susmap", 	"susmap_"+ dx + ".tif")
-	input_file_warped		= os.path.join(config.data_dir, "susmap", 	"susmap_"+ dx + "_warped.tif")
-	rgb_output_file			= os.path.join(config.data_dir, "susmap", 	"susmap_"+ dx + "_rgb.tif")
-	output_file_shp			= os.path.join(config.data_dir, "susmap", 	"susmap_"+ dx + ".shp")
-	output_file_geojson		= os.path.join(config.data_dir, "susmap", 	"susmap_"+ dx + ".geojson")
-	output_file_topojson	= os.path.join(config.data_dir, "susmap", 	"susmap_"+ dx + ".topojson")
-	mbtiles_dir				= os.path.join(config.data_dir, "susmap", 	"mbtiles_"+ dx)
-	mbtiles_fname 			= os.path.join(config.data_dir, "susmap", 	"susmap_"+ dx + ".mbtiles")
+	input_file				= os.path.join(config.data_dir, basedir, "susmap_"+ dx + ".tif")
+	input_file_warped		= os.path.join(config.data_dir, basedir, "susmap_"+ dx + "_warped.tif")
+	rgb_output_file			= os.path.join(config.data_dir, basedir, "susmap_"+ dx + "_rgb.tif")
+	output_file_shp			= os.path.join(config.data_dir, basedir, "susmap_"+ dx + ".shp")
+	output_file_geojson		= os.path.join(config.data_dir, basedir, "susmap_"+ dx + ".geojson")
+	output_file_topojson	= os.path.join(config.data_dir, basedir, "susmap_"+ dx + ".topojson")
+	mbtiles_dir				= os.path.join(config.data_dir, basedir, "mbtiles_"+ dx)
+	mbtiles_fname 			= os.path.join(config.data_dir, basedir, "susmap_"+ dx + ".mbtiles")
 	
 	# get raster size
 	src_ds 			= gdal.Open( input_file )
@@ -104,6 +105,6 @@ if __name__ == '__main__':
 	#	print('ERROR: Python bindings of GDAL 1.9.2 required', version_num)
 	#	sys.exit(1)
 
-	#generate_map('d03')
+	generate_map('d03')
 	generate_map('d02')
 	print "Done."

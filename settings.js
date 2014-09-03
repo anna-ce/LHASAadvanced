@@ -15,10 +15,9 @@ var express 		= require('express'),
 	winston 		= require('winston'),
 	facebook		= require('./lib/facebook'),
 	GitHubApi 		= require("github"),
-	shortid			= require('shortid');
-	
-	
+	shortid			= require('shortid')
   	require('winston-papertrail').Papertrail;
+
 
 	global.logger = new winston.Logger({
 		transports: [

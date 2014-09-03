@@ -15,6 +15,9 @@ import urllib
 from lxml import etree
 import codecs
 from xml.sax.saxutils import escape
+import psycopg2
+import ppygis
+from psycopg2.extensions import adapt
 
 #import xml.etree.ElementTree as ET
 
@@ -28,7 +31,7 @@ import config
 # osm2pgsql --create -d dk -U postgres -S db.style db2.osm
 #
 
-def toOSM( row ):
+def getvars(row):
 	id			= row[1] 
 	year 		= int(row[2])
 	month		= int(row[3])
@@ -67,8 +70,8 @@ def toOSM( row ):
 		
 	comments				= escape(row[18][0:2045])
 	location_description 	= row[19]
-	location_accuracy	 	= row[20]
-	landslide_size		 	= row[21]
+	location_accuracy	 	= row[21]
+	landslide_size		 	= row[22]
 	
 	# we need to check the length of the link and see if it exists
 	#if len(link) >= 255:
@@ -87,6 +90,39 @@ def toOSM( row ):
 		damages= fatalities[0:254]
 		print '** fatalities > 255 for record id:'+id
 		
+	return id,year,month,day,date,latitude,longitude,time,country,nearest_places,hazard_type,landslide_type,trigger,storm_name,fatalities,injuries,source_name,source_link,comments,location_description,location_accuracy,landslide_size
+
+def updateDB(row, cursor):
+	id,year,month,day,date,latitude,longitude,time,country,nearest_places,hazard_type,landslide_type,trigger,storm_name,fatalities,injuries,source_name,source_link,comments,location_description,location_accuracy,landslide_size=getvars(row)
+	way = "Point( %f %f)" % (longitude, latitude)
+	cmd = "UPDATE planet_osm_point SET way= ST_TRANSFORM(ST_GeomFromText('POINT(%f %f)', 4326),900913), github='' where id=%d;" % (longitude, latitude, int(id)+5741)
+	print id, cmd
+	cursor.execute(cmd)
+	
+def insertDB(row, cursor):
+	id,year,month,day,date,latitude,longitude,time,country,nearest_places,hazard_type,landslide_type,trigger,storm_name,fatalities,injuries,source_name,source_link,comments,location_description,location_accuracy,landslide_size=getvars(row)
+	#print id,year,month,day,date,latitude,longitude,time,country,nearest_places,hazard_type,landslide_type,trigger,storm_name,fatalities,injuries,source_name,source_link,comments,location_description,location_accuracy,landslide_size
+	way = "Point( %f %f)" % (longitude, latitude)
+	cmd = "INSERT INTO planet_osm_point (date,time,country,nearest_places, hazard_type,landslide_type,trigger,storm_name,fatalities,injuries,source_name,source_link,comments,location_description,location_accuracy,landslide_size,way)"
+	cmt	= adapt(comments) 
+	sl  = adapt(source_link)
+	sn	= adapt(source_name)
+	np	= adapt(nearest_places)
+	
+	if cmt == None:
+		cmt = ''
+	if fatalities == '':
+		fatalities=0
+	if injuries == '':
+		injuries=0
+		
+	cmd +=	" VALUES('%s', '%s', %s, %s,'%s','%s','%s','%s',%s, %s, %s,%s,%s,'%s','%s','%s',ST_TRANSFORM(ST_GeomFromText('%s', 4326), 900913)" % (date,time,adapt(country),np, hazard_type,landslide_type,trigger,storm_name,fatalities,injuries,sn,sl,cmt,location_description,location_accuracy,landslide_size,way )
+	print id, way, cmd
+	cursor.execute(cmd)
+	
+def toOSM( row ):
+	id,year,month,day,date,latitude,longitude,time,country,nearest_places,hazard_type,landslide_type,trigger,storm_name,fatalities,injuries,source_name,source_link,comments,location_description,location_accuracy,landslide_size=getvars(row)
+
 	osm = '<node id=\"' + id +'\" version="1" uid="1" user="dalia_kirschbaum" changeset="1"'
 	osm += ' lat="%.5f" lon="%.5f"' % (latitude, longitude) 
 	osm += ' visible="true" timestamp="'+ date +'">\n'
@@ -124,7 +160,7 @@ def toOSM( row ):
 		osm += '    <tag k="dk:location_description" v="' + location_description + '" />\n'
 
 	if location_accuracy:
-		osm += '    <tag k="dk:location_description" v="' + location_accuracy + '" />\n'
+		osm += '    <tag k="dk:location_accuracy" v="' + location_accuracy + '" />\n'
 
 	if landslide_size:
 		osm += '    <tag k="dk:landslide_size" v="' + landslide_size + '" />\n'
@@ -135,27 +171,8 @@ def toOSM( row ):
 	
 def to_geojson( row ):
 	json 		= ""
-	id			= row[1] 
-	
-	date 		= "%04d-%02d-%02d" % ( int(row[2]), int(row[3]), int(row[4]))
-	latitude	= row[6].toFixed(5)
-	longitude	= row[7].toFixed(5)
+	id,year,month,day,date,latitude,longitude,time,country,nearest_places,hazard_type,landslide_type,trigger,storm_name,fatalities,injuries,source_name,source_link=getvars(row)
 
-	country					= row[8]
-	nearest_places			= row[9]
-	hazard_type	 			= row[10] 
-	landslide_type			= row[11]
-	trigger					= row[12]
-	storm_name				= row[13]
-	fatalities				= row[14]
-	injuries				= row[15]
-	source_name				= row[16]
-	source_link				= row[17]
-	comments				= row[18]
-	location_description 	= row[19]
-	location_accuracy	 	= row[20]
-	landslide_size		 	= row[21]
-	
 	
 	json = '{ type: "Feature",\n'
 	json +='  properties: {\n'
@@ -204,6 +221,7 @@ if __name__ == '__main__':
 	apg_input = parser.add_argument_group('Input')
 
 	apg_input.add_argument("-x", "--xml", action='store_true', help="generate OSM from Excel XML file")
+	apg_input.add_argument("-d", "--db", action='store_true', help="insert into DB")
 	apg_input.add_argument("-i", "--input", help="Inputfile file")
 
 	apg_output = parser.add_argument_group('Output')
@@ -211,7 +229,8 @@ if __name__ == '__main__':
 
 	options = parser.parse_args()
 	
-	xml 	= options.xml
+	db 			= options.db
+	xml 		= options.xml
 	_infile		= options.input
 	_outfile	= options.output
 	
@@ -222,22 +241,28 @@ if __name__ == '__main__':
 		#header= evts.next()
 		#print header
 		
-	if xml:
-		# db = config.db_xml
-		# db = "db2-2.xml"
+	if db:
+		dbhost 		= os.environ['DBHOST']
+		dbname 		= os.environ['DBNAME']
+		dbport 		= os.environ['DBPORT']
+		user 		= os.environ['DBOWNER']
+		password 	= os.environ['PGPASS']
+	
+		assert (dbhost),	"Set DBHOST"
+		assert (dbname),	"Set DBNAME"
+		assert (dbport),	"Set DBPORT"
+		assert (user),		"Set DBOWNER"
+		assert (password),	"Set PGPASS"
+	
+		print dbhost, dbname, dbport, user
 		
-		# Notes: 
-		#  Need to remove xmlns default workspace in file
-		#  Need to remove unused worksheets and retain the data one
-		#
-		filename	= os.path.join(config.data_dir, _infile)
-		outfile		= os.path.join( config.data_dir, _outfile)
-		
-		#f = open(outfile,'w')
-		f = codecs.open(outfile, mode="w", encoding="utf-8")
-		f.write("<?xml version='1.0' encoding='UTF-8'?>")
-		f.write("<osm version='0.6' generator='PGC'>")
-		
+		str= "host=%s dbname=%s port=%s user=%s password=%s"% (dbhost,dbname,dbport,user,password)
+		print "connect to", str
+	
+		connection 	= psycopg2.connect(str)
+		cursor 		= connection.cursor()
+
+		filename	= os.path.join(config.data_dir, "glc", _infile)
 		print "parse:", filename
 		namespaces = {'ss': 'urn:schemas-microsoft-com:office:spreadsheet', 'x': 'urn:schemas-microsoft-com:office:excel', 'html': 'http://www.w3.org/TR/REC-html40', 'o': 'urn:schemas-microsoft-com:office:office'}
 		parser 	= etree.XMLParser(encoding="utf-8")
@@ -249,7 +274,7 @@ if __name__ == '__main__':
 		rindex   = 1 
 		for row in rows:
 			cells = row.xpath('.//Cell', namespaces=namespaces)
-			arr = ["" for i in range(0,22)]
+			arr = ["" for i in range(0,26)]
 			i = 0
 			for cell in cells:
 				#print cell.attrib
@@ -286,11 +311,94 @@ if __name__ == '__main__':
 							text 	= data[0].text.encode('utf-8')
 							arr[i] 	= text							
 						else:
-							print "Invalid type", data_type, data[0].text
+							print "Invalid type", i, data_type, data[0].text, rindex
 							arr[i] = "****" #data[0].text.encode('utf-8')
-							sys.exit(-1)
+							#sys.exit(-1)
 							
 						#print i, data_type, arr[i]
+						
+				if i >= len(arr):
+					break
+						
+			if( arr[1] ):
+				#insertDB(arr, cursor)
+				updateDB(arr, cursor)
+			
+			rindex += 1
+		
+		connection.commit()
+		cursor.close()
+		connection.close()
+					
+		sys.exit(0)
+		
+	if xml:
+		
+		# Notes: 
+		#  Need to remove xmlns default workspace in file
+		#  Need to remove unused worksheets and retain the data one
+		#
+		filename	= os.path.join(config.data_dir, "glc", _infile)
+		outfile		= os.path.join( config.data_dir, "glc", _outfile)
+		
+		#f = open(outfile,'w')
+		f = codecs.open(outfile, mode="w", encoding="utf-8")
+		f.write("<?xml version='1.0' encoding='UTF-8'?>")
+		f.write("<osm version='0.6' generator='PGC'>")
+		
+		print "parse:", filename
+		namespaces = {'ss': 'urn:schemas-microsoft-com:office:spreadsheet', 'x': 'urn:schemas-microsoft-com:office:excel', 'html': 'http://www.w3.org/TR/REC-html40', 'o': 'urn:schemas-microsoft-com:office:office'}
+		parser 	= etree.XMLParser(encoding="utf-8")
+		doc 	= etree.parse(filename, parser=parser)
+		root	= doc.getroot()
+		rows 	= root.xpath('.//Row', namespaces=namespaces)
+		
+		del rows[0]
+		rindex   = 1 
+		for row in rows:
+			cells = row.xpath('.//Cell', namespaces=namespaces)
+			arr = ["" for i in range(0,26)]
+			i = 0
+			for cell in cells:
+				#print cell.attrib
+				#print cell.attrib.get('{urn:schemas-microsoft-com:office:spreadsheet}Index')
+				index = cell.attrib.get('{urn:schemas-microsoft-com:office:spreadsheet}Index')
+				#print index
+				if( index ):
+					i = int(index)
+				else:
+					i = i+1
+				
+				href = cell.attrib.get('{urn:schemas-microsoft-com:office:spreadsheet}HRef')
+				if href and i>16:
+					arr[i] = href
+				else:
+					data = cell.xpath('.//Data', namespaces=namespaces)
+					if data:
+						data_type = data[0].attrib.get('{urn:schemas-microsoft-com:office:spreadsheet}Type')
+						
+						if data_type == 'Number':
+							text 	= data[0].text.encode('utf-8')
+							arr[i] 	= text
+						elif data_type == 'String':
+							if data[0].text:
+								string = data[0].text.encode('utf-8','ignore')
+
+								arr[i] 	= string
+								arr[i] 	= arr[i].replace( '"', 'inches')
+								arr[i] 	= arr[i].replace( '&', 'and')
+								arr[i] 	= arr[i].replace( '<CR>', '\n')
+								arr[i] 	= arr[i].replace( '<br />', '\n')
+								
+						elif data_type == 'DateTime':
+							text 	= data[0].text.encode('utf-8')
+							arr[i] 	= text							
+						else:
+							print "Invalid type", i, data_type, data[0].text, rindex
+							arr[i] = "****" #data[0].text.encode('utf-8')
+							#sys.exit(-1)
+							
+						print i, data_type, arr[i]
 						
 				if i >= len(arr):
 					break
