@@ -36,7 +36,6 @@ if __name__ == '__main__':
 	verbose		= options.verbose
 	fileName	= options.file[0]
 	bucket		= options.bucket[0]
-	folder		= options.folder[0]
 	
 	# copy mbtiles to S3
 	if verbose:
@@ -55,7 +54,11 @@ if __name__ == '__main__':
 
 	from boto.s3.key import Key
 	k 			= Key(mybucket)
-	k.key 		= folder+"/"+fname
+	
+	if options.folder:
+		k.key = options.folder[0] + "/" + fname
+	else:
+		k.key = fname
 
 	if verbose:
 		print "storing to s3:", bucket, k.key
