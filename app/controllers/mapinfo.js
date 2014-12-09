@@ -74,6 +74,7 @@ function get_trmm_24_legend() {
 	html += "</style>"
 	
 	html += "<div id='daily_precipitation_legend' class='daily_precipitation_map-info daily_precipitation_map-legend'>"
+	html += "	<i style='border-bottom:solid; color: #FFFFFF'></i>&nbsp;&nbsp;1<br/>"
 	html += "	<i style='border-bottom:solid; color: #E0F3DB'></i>&nbsp;&nbsp;2<br/>"
 	html += "	<i style='border-bottom:solid; color: #CCEBC5'></i>&nbsp;&nbsp;3<br/>"
 	html += "	<i style='border-bottom:solid; color: #A8DDB5'></i>&nbsp;&nbsp;5<br/>"
@@ -120,6 +121,7 @@ function get_wrf_24_legend() {
 	html += "</style>"
 	
 	html += "<div id='daily_precipitation_24h_forecast_legend' class='daily_precipitation_24h_forecast_map-info daily_precipitation_24h_forecast_map-legend'>"
+	html += "	<i style='border-bottom:1px dotted #FFFFFF'></i>&nbsp;&nbsp;1<br/>"
 	html += "	<i style='border-bottom:1px dotted #E0F3DB'></i>&nbsp;&nbsp;2<br/>"
 	html += "	<i style='border-bottom:1px dotted #CCEBC5'></i>&nbsp;&nbsp;3<br/>"
 	html += "	<i style='border-bottom:2px dotted #A8DDB5'></i>&nbsp;&nbsp;5<br/>"
@@ -276,6 +278,11 @@ function get_trmm_24_style() {
 function get_wrf_24_style() {
 	// topojson object name
 	var json = {
+		"{forecast}==1": 	{
+			color: "#FFFFFF", 
+			weight:1,
+			dashArray: "10 5"
+		},
 		"{forecast}==2": 	{
 			color: "#F7FCF0", 
 			weight:1,

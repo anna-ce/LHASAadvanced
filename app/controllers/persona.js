@@ -35,7 +35,7 @@ module.exports = {
 
 				User.get_by_email(email, function(err, user) {
 					if (!err && user) {
-						console.log("found user by email")
+						//console.log("found user by email")
 						req.session.user = user
 						res.send(200);
 					} else {
