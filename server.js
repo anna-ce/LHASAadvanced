@@ -194,8 +194,12 @@ app.all('/persona/logout',						persona.logout);
 //app.get('/social/facebook',					social.facebook);
 //app.get('/social/twitter',					social.twitter);
 
+app.get('/products/:region/landslide_nowcast',	products.landslide_nowcast_list);
+app.get('/products/:region/trmm',				products.trmm_list);
+
 app.get('/products/opensearch',					hawk_restrict, products.opensearch);
 app.get('/products/:region/:ymd/:id.:fmt?',		products.distribute);
+app.get('/products/map/:region/:ymd/:id.:fmt?',	products.map);
 app.get('/products',							products.index);
 
 app.options('/products/opensearch',				function(req, res) {

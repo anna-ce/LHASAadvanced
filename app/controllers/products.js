@@ -739,7 +739,7 @@ var util	= require('util'),
 									"id": 			"gfms_24_legend",
 									"method": 		"GET",
 									"url": 			host+"/mapinfo/eo1/legend",
-									"mediaType": 	"test/html",
+									"mediaType": 	"text/html",
 									"displayName": 	"legend",
 								},
 								{
@@ -887,7 +887,7 @@ module.exports = {
 				region = app.config.regions.d03
 				break;
 			default:
-				res.send("Invalid Region", 401)
+				return res.send("Invalid Region", 401)
 		}
 		
 		//console.log("Headers", req.headers)
@@ -899,8 +899,9 @@ module.exports = {
 		switch(fmt) {
 			case 'html':
 				var fbAppId 	= app.config.fbAppId;
-				var image 		= req.protocol + "://" + host +"/products/" + reg_id + "/" + ymd + "/" + id + ".thn.png"
-				var topojson 	= req.protocol + "://" + host +"/products/" + reg_id + "/" + ymd + "/" + id + ".topojson.gz"
+				var fname		= id + "_"+reg_id+"_"+ymd
+				var image 		= req.protocol + "://" + host +"/products/" + reg_id + "/" + ymd + "/" + fname + ".thn.png"
+				var topojson 	= req.protocol + "://" + host +"/products/" + reg_id + "/" + ymd + "/" + fname + ".topojson.gz"
 				
 				if( id.indexOf('trmm_24') >= 0 ) {
 					var date = moment(ymd, "YYYYMMDD")
@@ -912,7 +913,10 @@ module.exports = {
 						description: 	"TRMM daily accumulated precipitation for "+region.name+" acquired on "+date.format("YYYY-MM-DD"),
 						date: 			date.format("YYYY-MM-DD"),
 						id: 			id,
+						ymd: 			ymd, 
 						region:  		region,
+						reg_id: 		reg_id,
+						fname: 			fname+".topojson.gz",
 						url: 		 	url,
 						topojson: 		topojson
 					})
@@ -926,7 +930,10 @@ module.exports = {
 						description: 	"Landslide Nowcast for "+region.name+" acquired on "+date.format("YYYY-MM-DD"),
 						date: 			date.format("YYYY-MM-DD"),
 						id: 			id,
+						ymd: 			ymd, 
 						region:  		region,
+						reg_id: 		reg_id,
+						fname: 			fname+".topojson.gz",
 						url: 		 	url,
 						topojson: 		topojson
 					})
@@ -981,7 +988,7 @@ module.exports = {
 				
 			case 'topojson':
 				var acceptEncoding = req.headers['accept-encoding']
-				console.log('topojson requested header:', req.headers)
+				//console.log('topojson requested header:', req.headers)
 				if( acceptEncoding.indexOf('gzip') < 0) {
 					console.log("does not accept gzip... we need to expand topojson...")
 				}
@@ -1125,5 +1132,178 @@ module.exports = {
 				}
 				break
 		}
+	},
+	
+	landslide_nowcast_list: function(req, res) {
+		var reg_id 	= req.params.region
+		var tmp_dir = app.get("tmp_dir")
+		var user	= req.session.user
+			
+		console.log("landslide_nowcast_list", reg_id)
+		switch(reg_id) {
+			case 'd02':
+				region = app.config.regions.d02
+				break;
+			case 'd03':
+				region = app.config.regions.d03
+				break;
+			default:
+				return res.send("Invalid Region", 401)
+		}
+		
+		var dirName	= tmp_dir+"/"+region.bucket+"/*"
+		var ymds 	= []
+
+		function checkDir(dirName, cb) {
+			var arr 	= dirName.split("/")
+			var ymd 	= arr[arr.length-1]
+			var fName	= path.join( dirName, "landslide_nowcast_"+reg_id+"_"+ymd+".topojson.gz")
+			fs.exists(fName, function(exists) {
+				if( exists ) {
+					ymds.push(ymd)
+				} 
+				cb(null)
+			})
+		}
+
+		glob( dirName, function (err, files) {
+			if( !err && files.length > 0 ) {
+				async.each(files, checkDir, function(err) {
+					res.render("products/landslide_nowcast_list", {
+						user: user,
+						region_id: reg_id,
+						ymds: ymds.sort(function(a, b){return a<b})
+					})
+				})
+				//cb(null, files)
+			} else {
+				//cb(-1)				
+			}
+		})
+	},
+	
+	trmm_list: function(req,res) {
+		var reg_id 	= req.params.region
+		var tmp_dir = app.get("tmp_dir")
+		var user	= req.session.user
+			
+		console.log("landslide_nowcast_list", reg_id)
+		switch(reg_id) {
+			case 'd02':
+				region = app.config.regions.d02
+				break;
+			case 'd03':
+				region = app.config.regions.d03
+				break;
+			default:
+				return res.send("Invalid Region", 401)
+		}
+		
+		var dirName	= tmp_dir+"/"+region.bucket+"/*"
+		var ymds 	= []
+
+		function checkDir(dirName, cb) {
+			var arr 	= dirName.split("/")
+			var ymd 	= arr[arr.length-1]
+			var fName	= path.join( dirName, "trmm_24_"+reg_id+"_"+ymd+".topojson.gz")
+			fs.exists(fName, function(exists) {
+				if( exists ) {
+					ymds.push(parseInt(ymd))
+				} 
+				cb(null)
+			})
+		}
+
+		glob( dirName, function (err, files) {
+			if( !err && files.length > 0 ) {
+				async.each(files, checkDir, function(err) {
+					res.render("products/trmm_24_list", {
+						user: user,
+						region_id: reg_id,
+						//ymds: ymds.sort(function(a, b){return a>b})
+						ymds: ymds.sort().reverse()
+					})
+				})
+				//cb(null, files)
+			} else {
+				//cb(-1)				
+			}
+		})
+	},
+	
+	map: function(req,res) {
+		var reg_id 		= req.params.region
+		var ymd			= req.params.ymd
+		var id			= req.params.id
+		var host		= req.headers.host
+		var date 		= moment(ymd, "YYYYMMDD")
+		var user		= req.session.user
+			 
+		var fname		= id
+		var topojson 	= req.protocol + "://" + host +"/products/" + reg_id + "/" + ymd + "/" + fname
+		
+		console.log("map", topojson)
+			
+		switch(reg_id) {
+			case 'd02':
+				region = app.config.regions.d02
+				break;
+			case 'd03':
+				region = app.config.regions.d03
+				break;
+			default:
+				res.send("Invalid Region", 401)
+				return
+		}
+		
+		console.log("map", id, reg_id)
+		
+		var product = 'landslide_nowcast'
+		if( id.indexOf('trmm_24') >= 0 ) {
+			product = 'trmm_24'
+		}
+		
+		var mapinfos = [
+				{
+					"objectType": 	"HttpActionHandler",
+					"id": 			product+"_legend",
+					"method": 		"GET",
+					"url": 			"/mapinfo/"+product+"/legend",
+					"mediaType": 	"test/html",
+					"displayName": 	"legend",
+				},
+				{
+					"objectType": 	"HttpActionHandler",
+					"id": 			product+"_style",
+					"method": 		"GET",
+					"url": 			"/mapinfo/"+product+"/style",
+					"mediaType": 	"application/json",
+					"displayName": 	"style",
+				},
+				{
+					"objectType": 	"HttpActionHandler",
+					"id": 			product+"_credits",
+					"method": 		"GET",
+					"url": 			"/mapinfo/"+product+"/credits",
+					"mediaType": 	"application/json",
+					"displayName": 	"credits",
+				}
+			]
+
+		console.log(mapinfos)
+			
+		res.render("products/map", {
+			layout: 		false,
+			user:  			user,
+			description: 	"Product for "+region.name+" acquired on "+date.format("YYYY-MM-DD"),
+			date: 			date.format("YYYY-MM-DD"),
+			id: 			id,
+			ymd: 			ymd, 
+			region:  		region,
+			worldmapid: 	app.config.worldmapid,
+			fname: 			fname,
+			topojson: 		topojson,
+			mapinfos: 		mapinfos
+		})		
 	}
 }

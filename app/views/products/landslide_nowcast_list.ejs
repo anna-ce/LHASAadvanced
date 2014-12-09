@@ -1,0 +1,14 @@
+<div class='container'>
+<div class='row'>
+<h3>Landslide Nowcasts</h3>
+<br/>
+<br/>
+<br/>
+	<ul>
+	<% for(var d in ymds) { var ymd = ymds[d] %>
+		<li> <a href='/products/<%= region_id %>/<%= ymd %>/landslide_nowcast'><%=ymd%></a></li>
+	<%}%>
+	</ul>
+
+</div>
+</div>

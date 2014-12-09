@@ -1,0 +1,14 @@
+<div class='container'>
+<div class='row'>
+<h3>TRMM 24hr Rain Accumulation</h3>
+<br/>
+<br/>
+<br/>
+	<ul>
+	<% for(var d in ymds) { var ymd = ymds[d] %>
+		<li> <a href='/products/<%= region_id %>/<%= ymd %>/trmm_24'><%=ymd%></a></li>
+	<%}%>
+	</ul>
+
+</div>
+</div>

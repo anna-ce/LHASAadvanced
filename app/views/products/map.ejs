@@ -1,0 +1,150 @@
+<style>
+.table-scrollable { height: 500px; overflow: auto; }
+</style>
+
+<div class='container'>
+	<h3><%= region.name %> </h3>
+	<h3><%= id.split('.')[0] %> </h3>
+	<div class='row'>
+		 <div id='map' style="width:868px;height:695px;" ondrop="handleDrop(event);" ondragover="allowDrop(event);"></div>
+	</div>
+	<br/>
+	<div class='row'>
+		<div id='legends'></div>
+	</div>
+</div>
+
+
+<div id='errors' class="alert alert-danger" style="display:none"></div>
+<br/>
+<div class="container" id='results'>
+</div>
+
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.3.5/bootstrap-select.min.css">
+<link rel="stylesheet" href="/css/customlegend.css" />
+<link rel="stylesheet" href="/css/datepicker.css" />
+
+
+<!--[if lte IE 8]>
+  <link rel="stylesheet" href="/css/MarkerCluster.Default.ie.css" />
+<![endif]-->
+
+<!-- Mapbox -->
+<link href='//api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.css' rel='stylesheet' />
+
+<script src='http://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js'></script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>	
+<script src="/js/d3.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script src="http://d3js.org/queue.v1.min.js"></script>
+
+<script src="/js/dust-full.js"></script>
+<script src="/js/LStyledTopojson.js"></script>
+<script src="/js/moment.js"></script>
+
+<script>
+	var hide_legends 			= 0;
+	var styles 					= [];
+	var legends 				= {};
+	var credits 				= [];
+	
+    var id_property				= "0"
+    var date_property 			= "1"
+    var trigger_property 		= "2"
+    var fatalities_property		= "3"
+    var loc_acc_property		= "4"
+    var landslide_size_property	= "5"
+    var storm_property			= "6"
+    var landslide_type_property	= "7"
+
+    var region                  = <%- JSON.stringify(region) %>    
+    
+	var map = L.mapbox.map('map', '<%= region.map_id %>', { minZoom:<%= region.min_zoom %>, maxZoom: <%= region.max_zoom %> })
+    .setView([<%= region.target %>], <%= region.min_zoom %>);
+		  
+    var base_layer_options 			= {}
+    var topo_map 					= "Topo Map"
+    var grey_map 					= "Grey Map"
+    base_layer_options[topo_map]  	= L.mapbox.tileLayer('<%= region.map_id %>',{ attribution: 'MapBox'}).addTo(map)
+    base_layer_options[grey_map] 	= L.mapbox.tileLayer('<%= worldmapid %>')
+
+    var overlay_layer_options 		= {}
+	var map_controls 				= L.control.layers(base_layer_options, overlay_layer_options).addTo(map);
+   
+    L.control.scale().addTo(map);
+ 
+	var bbox_geojson = {
+		"type": "Feature",
+			"properties": {},
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[<%= region.bbox[0] %>, <%= region.bbox[1] %>],
+					[<%= region.bbox[0] %>, <%= region.bbox[3] %>],
+					[<%= region.bbox[2] %>, <%= region.bbox[3] %>],
+					[<%= region.bbox[2] %>, <%= region.bbox[1] %>],
+					[<%= region.bbox[0] %>, <%= region.bbox[1] %>]
+				]
+			}
+	};
+	
+	//var bbox_Layer 	=  L.geoJson(null, { style:  { color: '#000000', weight: 2 } });
+	//bbox_Layer.addData(bbox_geojson);
+	//bbox_Layer.addTo(map);
+	//map_controls.addOverlay( bbox_Layer, "bbox" );
+	
+		var name = "<%=fname%>";
+		var topojsonFile= "<%=topojson%>";
+		var mapinfos = <%- JSON.stringify(mapinfos) %>
+		var id =  'landslide_nowcast'
+			
+		loadData( topojsonFile, id, mapinfos );
+	
+	map.on('overlayadd', function(a) {
+		for( var i in legends ) {
+			if( i == a.name ) {
+				legends[i].display = true;
+				if( hide_legends == 0 ) $('#'+legends[i].legend).show();
+			} 
+		}
+	})
+
+	map.on('overlayremove', function(a) {
+		for( var i in legends ) {
+			if( i == a.name ) {
+				legends[i].display = false;
+				if( hide_legends == 0 ) $('#'+legends[i].legend).hide();
+			}
+		}
+	})
+	
+	map.on('load', function(a) {
+		styles 	= [];
+		legends = {};
+		credits = [];
+	})
+	
+    // install click event
+    map.on('click', function(e) {
+        var latlng = e.latlng
+        var lat = latlng.lat.toFixed(2)
+        var lng	= latlng.lng.toFixed(2)
+        $('#lnglat').val(lng +", "+lat)
+    })
+</script>
+
+<script>
+	
+	function clearErrors() {
+		$('#errors').html("");
+		$('#errors').hide();
+	}
+	
+	function flash(msg) {
+		$('#errors').html(msg);
+		$('#errors').show();
+	}
+	
+</script>
