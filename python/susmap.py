@@ -13,8 +13,8 @@ from osgeo import osr, gdal
 # Site configuration
 import config
 
-verbose = 1
-force 	= 1
+verbose = 0
+force 	= 0
 
 def execute( cmd ):
 	if verbose:
@@ -32,6 +32,7 @@ def generate_map( dx ):
 	basedir					= "susmap.2"
 	
 	input_file				= os.path.join(config.data_dir, basedir, "susmap_"+ dx + ".tif")
+	input_file_bool			= os.path.join(config.data_dir, basedir, "susmap_"+ dx + "_bool.tif")
 	input_file_warped		= os.path.join(config.data_dir, basedir, "susmap_"+ dx + "_warped.tif")
 	rgb_output_file			= os.path.join(config.data_dir, basedir, "susmap_"+ dx + "_rgb.tif")
 	output_file_shp			= os.path.join(config.data_dir, basedir, "susmap_"+ dx + ".shp")
@@ -78,7 +79,35 @@ def generate_map( dx ):
 
 		cmd = "rm -rf "+ mbtiles_dir
 		execute(cmd)
-				
+		
+	# generate boolean map from original image
+	if force or not os.path.exists(input_file_bool):
+		if verbose:
+			print "generate bool susceptibility map", input_file_bool
+		drv 	= gdal.GetDriverByName('GTiff')
+		src_ds 	= gdal.Open( input_file )
+	
+		out_ds 	= drv.CreateCopy(input_file_bool, src_ds, 0, [ 'COMPRESS=DEFLATE' ] )
+		band 	= out_ds.GetRasterBand(1)
+		data 	= band.ReadAsArray(0, 0, out_ds.RasterXSize, out_ds.RasterYSize )
+
+		# 1-5, 15 is water/no_data
+		
+		data[data==15]  = 0
+		data[data==1]  	= 0
+		data[data>1] 	= 1
+		
+		ct = gdal.ColorTable()
+
+		ct.SetColorEntry( 0, (0, 0, 0, 255))
+		ct.SetColorEntry( 1, (255,	255, 255, 255))
+		
+		band.SetRasterColorTable(ct)
+		band.WriteArray(data, 0, 0)
+		
+		out_ds	= None
+		src_ds	= None
+		
 	if 0:
 		cmd = "gdal_contour -a risk " + rgb_output_file+ " "+ output_file_shp + " -i 1"
 		if verbose:
@@ -100,10 +129,14 @@ def generate_map( dx ):
 # Main
 #
 if __name__ == '__main__':
-	#version_num = int(gdal.VersionInfo('VERSION_NUM'))
-	#if version_num != 1920: # because of GetGeoTransform(can_return_null)
-	#	print('ERROR: Python bindings of GDAL 1.9.2 required', version_num)
-	#	sys.exit(1)
+	
+	parser = argparse.ArgumentParser(description='Process susceptibility maps')
+	apg_input = parser.add_argument_group('Input')
+	apg_input.add_argument("-f", "--force", 	action='store_true', help="Forces new product to be generated")
+	apg_input.add_argument("-v", "--verbose", 	action='store_true', help="Verbose on/off")
+	options 	= parser.parse_args()
+	force		= options.force
+	verbose		= options.verbose
 
 	generate_map('d03')
 	generate_map('d02')

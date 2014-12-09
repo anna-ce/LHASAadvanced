@@ -36,11 +36,7 @@ if __name__ == '__main__':
 	verbose		= options.verbose
 	fileName	= options.file[0]
 	bucket		= options.bucket[0]
-	
-	# copy mbtiles to S3
-	if verbose:
-		print "Copying "+ fileName+" to bucket:"+bucket
-		
+			
 	aws_access_key 			= os.environ.get('AWS_ACCESSKEYID')
 	aws_secret_access_key 	= os.environ.get('AWS_SECRETACCESSKEY')
 	
@@ -60,8 +56,12 @@ if __name__ == '__main__':
 	else:
 		k.key = fname
 
-	if verbose:
-		print "storing to s3:", bucket, k.key
+	# Check if it already exists
+	possible_key = mybucket.get_key(k.key)
 	
-	k.set_contents_from_filename(fileName)
-	mybucket.set_acl('public-read', k.key )
+	if force or not possible_key:
+		if verbose:
+			print "storing to s3:", bucket, k.key
+	
+		k.set_contents_from_filename(fileName)
+		mybucket.set_acl('public-read', k.key )

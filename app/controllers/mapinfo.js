@@ -204,7 +204,6 @@ function get_landslide_nowcast_legend() {
 	html += "</style>"
 	
 	html += "<div id='landslide_nowcast_legend' class='landslide_nowcast_map-info landslide_nowcast_map-legend'>"
-	html += "	<i style='border-bottom:solid; color: #FFA500'></i>&nbsp;&nbsp;Caution</br>"
 	html += "	<i style='border-bottom:solid; color: #FF0000'></i>&nbsp;&nbsp;Warning</br>"
 	html += "	<br/>"
 	html += "	<a href='http://gsfc.nasa.gov/'>Landslide Nowcast</a>"
@@ -215,13 +214,9 @@ function get_landslide_nowcast_legend() {
 function get_landslide_nowcast_style() {
 	// topojson object name
 	var json = {
-		"{forecast}==90": 	{
-			color: "#FFA500", 
-			weight:8
-		},
-		"{forecast}==99":	{
+		"{nowcast}==1":	{
 			color: "#FF0000", 
-			weight:10
+			weight:1
 		}
 	}
 	return json
@@ -230,6 +225,10 @@ function get_landslide_nowcast_style() {
 function get_trmm_24_style() {
 	// topojson object name
 	var json = {
+		"{precip}==1": 	{
+			color: "#FFFFFF", 
+			weight:1
+		},
 		"{precip}==2": 	{
 			color: "#F7FCF0", 
 			weight:1
