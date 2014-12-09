@@ -44,7 +44,7 @@ def save_tiff(dx, data, fname, ds):
 		print "Created", fullName
 		
 # Generate Curren
-def build_tif(dx, region, dir):
+def build_tif(dx, region, dir, date):
 	region 		= config.regions[dx]
 	bbox		= region['bbox']
 	tzoom   	= region['tiles-zoom']
@@ -74,8 +74,13 @@ def build_tif(dx, region, dir):
 	# Find the antecedent rainfall boolean 95th percentile accumulation file for the area
 	ant_rainfall_bool 	= os.path.join(config.data_dir,"ant_r", dx, ymd, "ant_r_%s_bool.tif" % (ymd))
 	if not os.path.exists(ant_rainfall_bool):
-		print "**ERR: file not found", ant_rainfall_bool
-		sys.exit(-1)
+		print "** antecedent file not found, building it", ant_rainfall_bool
+		cmd = "antecedent_rainfall.py --region "+dx+ " --date "+date
+		if verbose:
+			cmd += " -v"
+		if force:
+			cmd += " -f"
+		execute(cmd)
 	
 	# Find the daily rainfall accumulation file for the area from yesterday
 	daily_rainfall 	= os.path.join(config.data_dir,"trmm", dx, yymd, "trmm_24_%s_%s_1km.tif" % (dx,yymd))
@@ -105,7 +110,7 @@ def build_tif(dx, region, dir):
 	thumbnail_file 						= os.path.join(config.data_dir,"landslide_nowcast", dx, ymd, "landslide_nowcast_%s_%s.thn.png" % (dx,ymd))
 	static_file 						= os.path.join(config.data_dir,"landslide_nowcast", dx, "%s_static.tiff" % (dx))
 
-	if 1: #force or not os.path.exists(forecast_landslide_bin):
+	if force or not os.path.exists(forecast_landslide_bin):
 		if verbose:
 			"Processing forecast landslide model for %s..." % config.ym
 			
@@ -318,7 +323,7 @@ def build_tif(dx, region, dir):
 		
 	execute(cmd)
 	
-def generate_map( dx ):
+def generate_map( dx, date ):
 	# make sure it exists
 	region		= config.regions[dx]
 	
@@ -330,7 +335,7 @@ def generate_map( dx ):
 	if not os.path.exists(dir):
 		os.makedirs(dir)
 
-	build_tif(dx, region, dir )
+	build_tif(dx, region, dir, date )
 
 # =======================================================================
 # Main
@@ -365,6 +370,6 @@ if __name__ == '__main__':
 	yday		= yesterday.day
 	yymd		= "%d%02d%02d" % (yyear, ymonth, yday)
 	
-	generate_map(region)
+	generate_map(region, date)
 	
 	print "Done."

@@ -899,7 +899,7 @@ module.exports = {
 		switch(fmt) {
 			case 'html':
 				var fbAppId 	= app.config.fbAppId;
-				var fname		= id + "_"+reg_id+"_"+ymd
+				var fname		= id //+ "_"+reg_id+"_"+ymd
 				var image 		= req.protocol + "://" + host +"/products/" + reg_id + "/" + ymd + "/" + fname + ".thn.png"
 				var topojson 	= req.protocol + "://" + host +"/products/" + reg_id + "/" + ymd + "/" + fname + ".topojson.gz"
 				
@@ -1241,9 +1241,7 @@ module.exports = {
 			 
 		var fname		= id
 		var topojson 	= req.protocol + "://" + host +"/products/" + reg_id + "/" + ymd + "/" + fname
-		
-		console.log("map", topojson)
-			
+					
 		switch(reg_id) {
 			case 'd02':
 				region = app.config.regions.d02
@@ -1255,9 +1253,7 @@ module.exports = {
 				res.send("Invalid Region", 401)
 				return
 		}
-		
-		console.log("map", id, reg_id)
-		
+				
 		var product = 'landslide_nowcast'
 		if( id.indexOf('trmm_24') >= 0 ) {
 			product = 'trmm_24'
@@ -1289,8 +1285,6 @@ module.exports = {
 					"displayName": 	"credits",
 				}
 			]
-
-		console.log(mapinfos)
 			
 		res.render("products/map", {
 			layout: 		false,

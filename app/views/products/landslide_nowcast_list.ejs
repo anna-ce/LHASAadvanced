@@ -6,7 +6,7 @@
 <br/>
 	<ul>
 	<% for(var d in ymds) { var ymd = ymds[d] %>
-		<li> <a href='/products/<%= region_id %>/<%= ymd %>/landslide_nowcast'><%=ymd%></a></li>
+		<li> <a href='/products/<%= region_id %>/<%= ymd %>/landslide_nowcast_<%=region_id%>_<%=ymd%>'><%=ymd%></a></li>
 	<%}%>
 	</ul>
 
