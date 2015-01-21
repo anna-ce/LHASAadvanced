@@ -76,11 +76,11 @@ var util	= require('util'),
 		if( basename.indexOf(".topojson") > 0) {
 			res.header("Content-Type", "application/json")
 			res.header("Content-Encoding", "gzip")
-			console.log("sending .topojson application/json gzip", basename)
+			//console.log("sending .topojson application/json gzip", basename)
 		} else {
-			console.log("sending ", mime_type, basename, dirname)
+			//console.log("sending ", mime_type, basename, dirname)
 			res.header("Content-Type", mime_type, basename)
-			console.log(ext, mime_type, "no encoding")
+			//console.log(ext, mime_type, "no encoding")
 		}
 		
 		res.header("Access-Control-Allow-Origin", "*")
