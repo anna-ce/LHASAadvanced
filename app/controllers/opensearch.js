@@ -87,7 +87,7 @@ var fs 			 			= require('fs'),
 
 			if( _.contains(sources, asset)) {
 				var productQuery = productQueries[asset]
-				logger.info("Trying to query", asset, product)
+				logger.info("Trying to query", asset, product, limit)
 				productQuery(req, user, credentials, host, product, bbox, lat, lon, startTime, endTime, startIndex, itemsPerPage, limit, function(err, json) {
 					if(!err && json) {
 						var index = 0
@@ -170,7 +170,7 @@ module.exports = {
 		var lon				= parseFloat(req.query['lon'])
 		var limit			= req.query['limit'] || 100
 					
-		console.log("opensearch")
+		console.log("opensearch", req.query)
 		
 		if( bbox && !ValidateBBox(bbox)) {
 			return res.send(400, "Invalid BBox")
