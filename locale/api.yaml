@@ -1,0 +1,156 @@
+en:
+  results: "%{results} results"
+  
+  menu:
+    home: Home
+    products: Products
+    opensearch: OpenSearch
+    applications: Applications
+    register: Register
+    list: List
+    query: Query
+            
+  tabs:
+    general: General
+    metadata: Metadata
+    actions: Actions
+    
+  actions:
+    actions: actions
+    download: download
+    browse: browse
+    process: process
+    share: share
+    like: like
+    task: task
+    map: map
+  products:
+    search: search
+    surface_water: Flood Map
+    frost: Frost
+  stream:
+    displayName: Publisher Flood Surface Water Products
+
+  properties:
+    properties: properties
+    description: description
+    source: source
+    sensor: sensor
+    date: date
+    bbox: bbox
+    size: size
+    centerlat: centerlat
+    centerlon: centerlon
+    duration: duration
+    resolution: resolution
+    cloud: cloud cover
+    copyright: copyright
+
+  sources:
+    radarsat2: CSA Radarsat2
+    l8: NASA Landsat-8
+    dfo: Dartmouth Flood Observatory - Colorado
+    eo1: NASA EO-1
+    modis: NASA MODIS
+    alos2: JAXA ALOS-2
+
+  sensors:
+    sar: SAR
+    ali: ALI
+    modis: MODIS
+    l8: OLI
+    dfo: MODIS/l8
+    alos2: PALSAR-2
+
+  duration:
+    hours: "%{hours} hours"
+    minutes: "%{minutes} minutes"
+    seconds: "%{seconds} seconds"
+
+  formats:
+    topojson: topojson
+    topojsongz: topojson.gz
+    osmbz2: osm.bz2
+    geotiff: geotiff
+    png: png
+    jpg: jpg
+    date: "YYYY-MM-DD"
+
+  products:
+    surface_water: Flood Map
+    landslide_catalog: Landslide Catalog
+    landslide_nowcast: Landslide Forecast
+    landslide_forecast: Landslide Forecast
+    landslide_susceptibility: Landslide Susceptibility
+    daily_precipitation: Last 24hr Precip
+    precipitation_nowcast: Daily Precip Accumulation
+    precipitation_forecast: Daily Precip Forecast
+    flood_forecast: Flood Forecast
+    flood_nowcast: Flood Nowcast
+    flood_catalog: Flood Catalog
+    frost: Frost
+    
+  filesize:
+    B: B
+    KB: KB
+    MB: MB
+    GB: GB
+    TB: TB
+
+  mapinfo:
+    credits: credits
+    style: style
+    legend: legend
+    
+  legend:
+    radarsat2:
+      title: Flood Map
+      credits: NASA GSFC
+      source: 
+        label: Source
+        source: CSA/MDA
+      legend: Surface Water
+    dfo:
+      title: Flood Map
+      credits: Dartmouth Flood Observatory
+      source: 
+        label: Source
+        source: DFO
+      legend: Surface Water
+    l8:
+      title: Flood Map
+      credits: NASA GSFC
+      source: 
+        label: Source
+        source: NASA
+      legend: Surface Water
+
+    eo1_ali:
+      title: Flood Map
+      credits: NASA GSFC
+      source: 
+        label: Source
+        source: NASA
+      legend: Surface Water
+
+    modis:
+      title: Flood Map
+      credits: NASA GSFC
+      source: 
+        label: Source
+        source: NASA
+      legend: Surface Water
+        
+    frost:
+      title: Frost Map
+      credits: NASA SERVIR/RCMRD
+      source: 
+        label: Source
+        source: SERVIR/RCMRD
+      legend:
+        no_data: No Data
+        very_severe_frost: Very Severe Frost
+        severe_frost: Severe Frost
+        moderate_frost: Moderate frost
+        minor_frost: Minor Frost Pockets
+        no_frost: No Frost

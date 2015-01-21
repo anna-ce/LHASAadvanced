@@ -24,7 +24,8 @@ var express 		= require('express'),
 	apps			= require('./app/controllers/apps'),
 	products		= require('./app/controllers/products'),
 	mapinfo			= require('./app/controllers/mapinfo');
-	
+
+
 var app = module.exports = express();
 
 global.app 			= app;
@@ -38,6 +39,8 @@ require(supportEnv)
 
 // load settings
 require('./settings').boot(app)  
+
+var products_planetlabs	= require('./lib/products_planetlabs');
 
 // load controllers
 require('./lib/boot')(app, { verbose: !module.parent });
@@ -187,6 +190,8 @@ app.get('/test/:id', 							test.index);
 app.get('/test',								test.index);
 
 app.get('/opensearch',							if_authorized, opensearch.index);
+app.get('/opensearch/classic',					if_authorized, opensearch.classic);
+app.get('/opensearch/description',				opensearch.description);
 
 app.all('/persona/verify',						persona.verify);
 app.all('/persona/logout',						persona.logout);
@@ -194,10 +199,20 @@ app.all('/persona/logout',						persona.logout);
 //app.get('/social/facebook',					social.facebook);
 //app.get('/social/twitter',					social.twitter);
 
+app.get('/products/planetlabs/:id',							products_planetlabs.index);
+app.get('/products/planetlabs/:id/thn',						products_planetlabs.thn);
+app.get('/products/planetlabs/:id/full',					products_planetlabs.full);
+app.get('/products/planetlabs/:id/map',						products_planetlabs.map);
+app.get('/products/planetlabs/:id/process',					products_planetlabs.process);
+app.get('/products/planetlabs/:id/surface_water.topojson',		products_planetlabs.topojson);
+app.get('/products/planetlabs/:id/surface_water.topojson.gz',	products_planetlabs.topojsongz);
+
 app.get('/products/:region/landslide_nowcast',	products.landslide_nowcast_list);
 app.get('/products/:region/trmm',				products.trmm_list);
 
-app.get('/products/opensearch',					hawk_restrict, products.opensearch);
+//app.get('/products/opensearch',					hawk_restrict, products.opensearch);
+app.get('/products/opensearch',					hawk_restrict, opensearch.index);
+
 app.get('/products/:region/:ymd/:id.:fmt?',		products.distribute);
 app.get('/products/map/:region/:ymd/:id.:fmt?',	products.map);
 app.get('/products',							products.index);
@@ -263,7 +278,7 @@ function setAuthHeaders(req, res, next) {
 // ===========================================================
 // port set based on NODE_ENV settings (production, development or test)
 debug("trying to start on port:"+ app.get('port'));
-
+console.log("App Root Dir", app.root_dir)
 s3.synchronize();
 
 if (!module.parent) {

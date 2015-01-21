@@ -51,35 +51,43 @@ def generate_map( dx ):
 	region			= config.regions[dx]
 	tzoom			= region['tiles-zoom']
 
+	# Modified to accomodate issues with ojo-tiler -> Mapbox
+	
 	# increase resolution by 100 and do cubic spline interpolation to smooth the rater
-	if force or not os.path.exists(input_file_warped):		
-		cmd = "gdalwarp -ts "+ str(xres) + " 0 -r cubicspline -multi -co 'TFW=YES' " + input_file + " " + input_file_warped
-		execute(cmd)
+	#if force or not os.path.exists(input_file_warped):		
+	#	cmd = "gdalwarp -ts "+ str(xres) + " 0 -r cubicspline -multi -co 'TFW=YES' " + input_file + " " + input_file_warped
+	#	execute(cmd)
 	
 	# colorize interpolated raster
-	if force or not os.path.exists(rgb_output_file):		
-		cmd = "gdaldem color-relief -alpha -of GTiff "+input_file_warped+" " + color_file + " " + rgb_output_file
-		execute(cmd)
+	#if force or not os.path.exists(rgb_output_file):		
+	#	cmd = "gdaldem color-relief -alpha -of GTiff "+input_file_warped+" " + color_file + " " + rgb_output_file
+	#	execute(cmd)
 
 	# generate mbtiles
-	if force or not os.path.exists(mbtiles_fname):		
-		cmd = "./gdal2tiles.py -z "+ tzoom + " " + rgb_output_file  + " " + mbtiles_dir
-		execute(cmd)
+	#if force or not os.path.exists(mbtiles_fname):		
+	#	cmd = "./gdal2tiles.py -z "+ tzoom + " " + rgb_output_file  + " " + mbtiles_dir
+	#	execute(cmd)
 
-		cmd = "./mb-util " + mbtiles_dir  + " " + mbtiles_fname
-		execute(cmd)
+	#	cmd = "./mb-util " + mbtiles_dir  + " " + mbtiles_fname
+	#	execute(cmd)
 
 	# copy mbtiles to S3
-	if force or not os.path.exists(mbtiles_fname):
-		bucketName = region['bucket']
-		cmd = "aws-copy.py --bucket "+bucketName+ " --file " + mbtiles_fname
-		if verbose:
-			cmd += " --verbose "
-		execute(cmd)
+	#if force or not os.path.exists(mbtiles_fname):
+	#	bucketName = region['bucket']
+	#	cmd = "aws-copy.py --bucket "+bucketName+ " --file " + mbtiles_fname
+	#	if verbose:
+	#		cmd += " --verbose "
+	#	execute(cmd)
 
-		cmd = "rm -rf "+ mbtiles_dir
-		execute(cmd)
+	#	cmd = "rm -rf "+ mbtiles_dir
+	#	execute(cmd)
 		
+	# Modification: Just recolor initial raster at 1km
+	# colorize interpolated raster
+	if force or not os.path.exists(rgb_output_file):		
+		cmd = "gdaldem color-relief -alpha -of GTiff "+input_file+" " + color_file + " " + rgb_output_file
+		execute(cmd)
+	
 	# generate boolean map from original image
 	if force or not os.path.exists(input_file_bool):
 		if verbose:
@@ -134,10 +142,11 @@ if __name__ == '__main__':
 	apg_input = parser.add_argument_group('Input')
 	apg_input.add_argument("-f", "--force", 	action='store_true', help="Forces new product to be generated")
 	apg_input.add_argument("-v", "--verbose", 	action='store_true', help="Verbose on/off")
+	apg_input.add_argument("-r", "--region", 	required=True, help="Region d02|d03")
 	options 	= parser.parse_args()
 	force		= options.force
 	verbose		= options.verbose
+	region		= options.region
 
-	generate_map('d03')
-	generate_map('d02')
+	generate_map(region)
 	print "Done."

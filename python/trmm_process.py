@@ -26,9 +26,9 @@ class TRMM:
 	def __init__( self, dt, force, verbose ):
 		arr 			= dt.split("-")
 		
-		self.month			= int(arr[0])
-		self.day			= int(arr[1])
-		self.year			= int(arr[2])
+		self.year			= int(arr[0])
+		self.month			= int(arr[1])
+		self.day			= int(arr[2])
 	
 		
 		self.ymd 			= "%d%02d%02d" % (self.year, self.month, self.day)		
@@ -91,7 +91,14 @@ class TRMM:
 		
 		except:
 			print "FTP login Error", sys.exc_info()[0]
-			sys.exit(1)
+			
+			# Try alternate
+			try:
+				print "Try alternate", gis_path
+				filepath = gis_path
+				ftp.cwd(filepath)
+			except:
+				sys.exit(1)
 
 		for f in self.trmm_gis_files:
 			local_filename = os.path.join(self.trmm_3B42RT_dir, f)

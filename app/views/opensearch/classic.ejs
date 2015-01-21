@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+	<title>OJO-Bot Publisher</title>
+	<link rel="icon" href="/favicon.png" type="image/png">
+	
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.3.5/bootstrap-select.min.css">
+    <link rel="stylesheet" href="/css/persona-buttons.css"  />	
+	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>	
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+	<script src="https://login.persona.org/include.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.3.5/bootstrap-select.min.js"></script>
+
+	<link rel="stylesheet" href="/css/customlegend.css" />
+	<link rel="stylesheet" href="/css/datepicker.css" />
+	<link rel="stylesheet" href="/css/classicmap.css" />
+
+	<!-- Mapbox 2.1.5 	-->
+	<link href='//api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
+	<script src='http://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js'></script>
+
+	<script src="/js/bootstrap-datepicker.js"></script>
+	<script src="http://d3js.org/topojson.v1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+  </head>
+
+  <body>
+	<div class="container">
+		<nav class="navbar navbar-default" role='navigation'>
+		    <div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"><img alt='logo'src='/img/logo.png' width='32' /></a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav" id="menus">
+	 			  <li><a href="/">Home</a></li>
+	 			  <li><a href="/products">Products</a></li>
+  					
+				  <li class="dropdown">
+		          	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Applications <b class="caret"></b></a>
+		            <ul class="dropdown-menu">
+						<li><a href="/apps/form">Register</a></li>
+						<li><a href="/apps/">List</a></li>
+					</ul>
+				  </li>
+
+				  <li class="dropdown">
+		          	<a href="#" class="dropdown-toggle" data-toggle="dropdown">OpenSearch <b class="caret"></b></a>
+		            <ul class="dropdown-menu">
+						<li><a href="/opensearch/classic">Query</a></li>
+					</ul>
+				  </li>
+				  
+				</ul>				
+	      	</div>
+	    </nav>
+		<% if(typeof user == 'undefined') { %>
+		<div class="persona-button login" id='signin'>
+			<span>Sign in with your Email</span>
+		</div>
+		<% } else {%>
+			<div class="btn-group login">
+				<button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+					<i class='glyphicon glyphicon-user'></i>&nbsp;<%= user.name %>
+					<span class="caret"></span>
+				</button>
+	
+				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="/users/<%= user.id %>">View Profile</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:signout();"><i class="glyphicon glyphicon-log-out"></i>&nbsp;Logout</a></li>
+				</ul>
+			</div>
+		<% } %>
+		
+	    <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+			<div class="list-group">
+				<a href="/about" class="list-group-item">About</a>
+				<a href="/contact" class="list-group-item">Contact</a>
+			</div>
+			
+			<% if( (typeof user != 'undefined') ) { %>
+			<div id="query" style="display:none">
+				<i class='glyphicon glyphicon-search'></i>&nbsp;<a href="javascript:ShowForm();">Query</a><br/>
+				<div class='well' id='query_container' style="display:none">
+					<form class="form-group" action="javascript:SubmitQuery();">
+						<input type='hidden', name='_csrf', id='_csrf', value='' />
+					    <div class="form-group">
+					      <label for="box">Area:</label>
+							  <select id='area' class="selectpicker">
+								<option value='0.25'>Small</option>
+								<option value='0.5'>Medium</option>
+								<option value='1.0'>Large</option>
+							</select>
+					    </div>
+				
+					    <div class="form-group">
+					      <label for="lnglat">Lon, Lat: </label>
+					      	<input id="lnglat" size='12' value="-72.36,18.58">
+					    </div>
+					    <div class="form-group">
+					      <label for="q">Search:</label>
+							  <select id='q' class="selectpicker">
+								<option value='landslide_nowcast'>landslide_nowcast</option>
+								<option value='surface_water'> surface_water</option>
+								<option value='daily_precipitation'> daily_precipitation</option>
+								<option value='daily_precipitation_24h_forecast'> daily_precipitation_24h_forecast</option>
+								<option value='flood_nowcast'> flood_nowcast</option>
+								<option value='rgb_composite' checked=true> rgb_composite</option>
+							</select>
+					    </div>
+					    <div class="form-group">
+					      <label for="startTime">Start_time:</label>
+						  <input id="startTime" size="10" type="text" value="2012-01-02" readonly="" type='text'>
+					    </div>
+					    <div class="form-group">
+					      <label for="endTime">End_time:  </label>
+						  <input id="endTime" size="10" type="text" value="2014-01-01" readonly="" type='text'>
+					    </div>
+						<% if(typeof nodes != 'undefined') { %> 
+						<div class="form-group">
+							<label for='sources'>Sources:</label>
+							<select id='sources' class="selectpicker" multiple="multiple">
+								<% for( var n in nodes ) {  %>
+								 	<% if( nodes[n].checked ) {  %>
+										<option selected value="<%= nodes[n].source %>"><%= nodes[n].source %></option>
+									<% } else {%>
+										<option value="<%= nodes[n].source %>"><%= nodes[n].source %></option>
+									<%}%>
+								<%}%>
+							</select>
+						</div>
+						<% } %>
+					    <div class="form-group">
+					      <label for="limit">Limit:</label>
+					      	<input id="limit" size='2' value="50">
+					    </div>
+										
+					    <button type='submit' class="btn btn-primary">Submit</button>
+					</form>
+				</div>
+			</div>
+			<% } %>
+		
+	    </div>
+			   
+		<div class="container">
+			<h3>OpenSearch</h3>
+			<div class='row'>
+				<div class='col-xs-6'></div>
+				<div class='col-xs-6'>
+				 	<div id='map' style="width:840px;height:610px;" ondrop="handleDrop(event);" ondragover="allowDrop(event);" ></div>
+				</div>
+			</div>
+			<br/>
+		</div>
+
+		<div class="container" id='results'></div>
+											
+		<br/>
+		<hr/>
+		
+		<div class='footer'>
+			<a href='mailto:dalia.b.kirschbaum@nasa.gov'>Problems/questions? Contact Me</a>&nbsp;-&nbsp;
+			<a href='/privacy'>Privacy Statement</a>
+			<div class="pull-right">
+				WARNING: Experimental Only!
+				<img src='/img/nasalogo.png' width=64>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		$('.selectpicker').selectpicker();
+			
+		// Personna stuff
+		function signout() {
+			console.log("signout")
+			$.ajax({
+				type: 'POST',
+				url: 	'/persona/logout', 
+				async: true,
+				success: function(res, status, xhr) {
+					console.log("onlogout success")
+				    navigator.id.logout();
+					window.location.reload(true)
+				},
+				error: function(xhr, status, err) {
+					navigator.id.logout();
+					console.log("Logout failure: " + err);
+				}
+			})
+		}
+		
+		$(function() {
+		  $('#signin').on('click', function(event) {
+		    event.preventDefault();
+		    navigator.id.request();
+		  });
+
+		  // replaced by signout
+		  $('#signout').on('click', function(event) {
+		    event.preventDefault();
+		    navigator.id.logout();
+		  });
+
+		  var loggedInUserEmail = 'bob@example.com';
+
+		  <% if( typeof user != 'undefined' ) { %>
+			  loggedInUserEmail = '<%= user.email %>'
+		  <% } %>
+	  
+	  
+		  // Mozilla Persona integration
+		  navigator.id.watch({
+		    loggedInUser: loggedInUserEmail,
+		    onlogin: function(assertion) {
+	  		    //if( email ) return;
+			  	//var token = '';
+				//console.log("onlogin token:", token)
+				$.ajax({
+					type: 'POST',
+					url: 	'/persona/verify', 
+					async: true,
+					data: {assertion: assertion}, // _csrf: token},
+					success: function(res, status, xhr) {
+						console.log("onlogin success")
+						window.location.reload(true)},
+					error: function(xhr, status, err) {
+						navigator.id.logout();
+						alert("Login failure: " + status);
+					}
+				});
+		    },
+		    onlogout: function() {
+			    //navigator.id.logout();
+				// window.location = "/persona/logout";
+			  	//if( email == null) {
+				//  $.post('/persona/logout', function() {
+				//	  email = null;
+				//	  window.location = "/";
+				//  });
+		  	  //}
+		    }
+		  });  
+		});
+		
+	</script>
+
+	<!--
+	<script type="text/javascript">
+	  var analytics=analytics||[];(function(){var e=["identify","track","trackLink","trackForm","trackClick","trackSubmit","page","pageview","ab","alias","ready","group"],t=function(e){return function(){analytics.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var n=0;n<e.length;n++)analytics[e[n]]=t(e[n])})(),analytics.load=function(e){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=("https:"===document.location.protocol?"https://":"http://")+"d2dq2ahtl5zl1z.cloudfront.net/analytics.js/v1/"+e+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n)};
+	  analytics.load("bntdtjc60i");
+	</script>
+	-->
+
+<script>
+	L.mapbox.accessToken 		= "<%= mapbox_token %>"
+	var map = L.mapbox.map('map', '<%= region.map_id %>', { minZoom:2, maxZoom: <%= region.max_zoom %> } )
+	.setView([<%= region.target %>], 7)
+	
+	var map_controls = L.control.layers({
+	    'Topo Map': L.mapbox.tileLayer('<%= region.map_id %>',{ attribution: 'MapBox'}).addTo(map)
+	}, {}).addTo(map);
+	
+	
+	var marker_me = L.marker([<%= region.target[0] %>,<%= region.target[1] %> ], {
+	    icon: L.mapbox.marker.icon({
+	      'marker-color': '#f86767'
+	    })
+	}).addTo(map);
+	
+	var delta 	= 0.2;
+	var lat		= <%= region.target[0] %>
+	var lng		= <%= region.target[1] %>
+	var latlon_poly = [ 
+		 L.latLng(lat-delta, lng-delta),
+		 L.latLng(lat+delta, lng-delta),
+		 L.latLng(lat+delta, lng+delta),
+		 L.latLng(lat-delta, lng+delta),
+		 L.latLng(lat-delta, lng-delta)
+	];
+	var options 	= {color: '#787878 ', weight:2, opacity: 0.8};
+
+	var newqueryLayer 	= L.polyline(latlon_poly, options).addTo(map);
+	map_controls.addOverlay( newqueryLayer, 'query bbox' );
+		
+	L.control.scale().addTo(map);
+	
+	$('#lnglat').val("<%= region.target[1] %>,<%= region.target[0] %>")
+	
+	var query_results 	= {};
+	var footprints		= [];
+	
+	$('#query').show();
+	//$('#dp_startTime').datepicker();
+	//$('#dp_endTime').datepicker();
+	//$.datepicker.formatDate("yyyy-mm-dd")
+	$('#startTime').datepicker( {format: "yyyy-mm-dd"});
+	$('#endTime').datepicker({format: "yyyy-mm-dd"});
+	
+	var stop 	= new Date();
+	var start 	= new Date(stop.getFullYear()-3, stop.getMonth(), stop.getDate(), 0,0,0,0)
+	$('#endTime').datepicker("setValue", stop);
+	$('#startTime').datepicker("setValue", start);
+	
+	function ShowForm() {
+		$('#query_container').toggle();
+	}
+
+  	function NavTab( str, id ) {
+		//console.log(str + ","+id);
+		$('#general-'+id).hide();
+		$('#metadata-'+id).hide();
+		$('#actions-'+id).hide();
+
+		$('#tab-general-'+id).attr('class', '');
+		$('#tab-metadata-'+id).attr('class', '');
+		$('#tab-actions-'+id).attr('class', '');
+		
+		$('#'+str+'-'+id).show();
+		$('#tab-'+str+'-'+id).attr('class', 'active');
+		
+		//FB.XFBML.parse(); // This will render all tags on the page
+		//twttr.widgets.load();
+  	}
+	
+	function FormatResponseElement(key, el) {
+		var html = "<div class='well'>";
+		html += key
+		html += "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>";
+		html += "<table class='table table-condensed'>";
+		html += "<tr><td width='150'>"
+		
+		var id = el["@id"]
+		
+		// take last image
+		var image_url = el.image[0];
+		if (image_url.url) image_url = image_url.url; 
+		
+		html += "&nbsp;<a href='"+ image_url+"'><img class='img-thumbnail' id='"+id+"' src=\'"+image_url+"\' width='140' ondragstart='handleDrag(event);' /></a>";
+		html += "<a href='javascript:footprint(\""+id+"\");'><img src='/img/footprint.png' width=32 /></a>"
+		html += "</td><td>"
+		
+		if( true ) {
+		html += "<ul class='nav nav-tabs'>"
+		
+		var general_fn 		= "javascript:NavTab('general','" + id + "');";
+		var metadata_fn 	= "javascript:NavTab('metadata','" + id + "');";
+		var actions_fn 		= "javascript:NavTab('actions','" + id + "');";
+		var tab_general_id 	= 'tab-general-'+id;
+		var tab_metadata_id	= 'tab-metadata-'+id;
+		var tab_actions_id 	= 'tab-actions-'+id;
+		
+		html += "  <li class='active' id="+ tab_general_id+"><a href="+general_fn+">general</a></li>"
+		html += "  <li id="+tab_metadata_id+"><a href="+metadata_fn+">metadata</a></li>"
+		html += "  <li id="+tab_actions_id+"><a href="+actions_fn+">actions</a></li>"
+		html += "</ul>"
+		}
+	
+		// General Div
+		if( true ) {
+			html += "<div id='general-"+id + "'>"
+			html += "<table class='table table-condensed'>";
+			html += "<tr><td>id</td><td><b>"+el["@id"]+"</td></tr>";
+			html += "<tr><td>type</td><td><b>" + el["@type"] + "</b></td></tr>"
+			
+			if (el.properties.source) {
+				html += "<tr><td>source</td><td><b>" + el.properties.source["@value"] + "</b></td></tr>"
+			}
+
+			if (el.properties.resolution) {
+				html += "<tr><td>resolution</td><td><b>" + el.properties.resolution["@value"] + "</b></td></tr>"
+			}
+			
+			if (el.displayName) {
+				html += "<tr><td>name</td><td><b>" + el.displayName+ "</b></td></tr>"
+			}
+			
+			if (el.properties.date) {
+				html += "<tr><td>name</td><td><b>" + el.properties.date["@value"]+ "</b></td></tr>"
+			}
+				
+			html += "</table>"
+			html += "</div>"
+		}
+		
+		// Metadata Div
+		if( true ) {
+			html += "<div id='metadata-"+id +"' style='display:none'>"
+			html += "<table class='table table-condensed'>"
+			$.each(el.properties, function(key, prop) {
+				var el = prop
+				if( key != "geometry") {
+					html += "<tr><td><b>"+ prop["@label"] + ":</b></td><td>" + prop["@value"] + "</td></tr>"
+				} else {
+					// html += "<tr><td><b>geometry:</b></td><td>" + el["coordinates"] + "</td></tr>"				
+				}
+			})
+			html += "</table></div>"
+		}
+		
+		//Action Div
+		if( true ) {
+			html += "<div id='actions-"+id +"' style='display:none'>"
+			html += "<table class='table table-condensed'>"
+			html += "<tr><td width='100'></td><td>"
+		
+			var action = el.action;
+			// can be a has or an array
+			var typof = typeof action
+			
+			for( var a in action ) {
+				var actionName = action[a].displayName
+				html += "<b>- "+actionName+"</b>"
+				html += "<br/>"
+				var using = action[a].using
+				for( var u in using ) {
+					var el = using[u]
+					if( !el["@type"] ) {
+						console.log("Missing el @typw for ", actionName)
+					} else if( el["@type"].indexOf("HttpRequest") > 0) {
+						if( el.method == 'GET') {
+							var displayName = el.displayName || el.mediaType
+							html += "&nbsp;&nbsp;&nbsp;&nbsp;<a href='" + el.url+"'>" + displayName
+							if( el.size ) html += " ("+el.size+")"
+							if( el.duration ) html += " (" + el.duration + ")"
+							html  += "</a>&nbsp;"
+						}
+					}
+				}
+				html += "<br/>"
+			}
+			
+			html += "</td></tr></table></div>"
+			html += "</td></tr>"
+			html += "</table></div>";
+		}
+			
+		if( false ) {
+			$.each(el.action, function(key, val) {			
+				var typof = typeof el.actions[key]
+			
+				switch(typof) {
+				case 'object':
+					html += "<b>- "+key+"</b>"
+					html += "<br/>"
+					$.each(el.actions[key], function(k, el) {
+						if( el.objectType == 'HttpActionHandler') {
+							if( el.method == 'GET') {
+								html += "&nbsp;&nbsp;&nbsp;&nbsp;<a href='" + el.url+"'>" + el.displayName
+								if( el.size ) html += " ("+el.size+")"
+								if( el.duration ) html += " (" + el.duration + ")"
+								html  += "</a>&nbsp;"
+							}
+						}
+					})
+					break;
+				case 'string':
+					// special cases
+					//console.log("String key:"+key+" "+el.actions[key])
+					switch(key) {
+						case 'share':
+							html += "<b>- "+key+"</b>"
+							html += "<br/>"
+						
+							html += "&nbsp;&nbsp;&nbsp;&nbsp;"
+						
+							// Facebook
+							html += "<div class='fb-share-button' "
+							html += "data-href='" + el.actions[key] + "' "
+							html += "data-type='button' "
+							html += "></div>&nbsp;"
+						
+							//var fbpost	= "javascript:FBPost('" + el.actions[key] + "');";
+							//html += "<a href="+fbpost+">Facebook</a>&nbsp;"
+						
+							// Twitter
+							html += "<a href='https://twitter.com/intent/tweet' class='twitter-hashtag-button' "
+							html += "data-text='You may found this product interesting '"
+							html += " data-url='" + el.actions[key] + "' "
+							html += " data-lang='en' data-related='geoss'>GEOSS Tweet</a>"
+					
+							break;
+					
+						case 'like':
+							break;
+						default:
+							html += "- <a href='"+el.actions[key]+"'>"+key+"</a>";
+							break;
+					}
+					break;
+				default:
+					console.log("unhandled typof:"+typof)
+					break;
+				}
+				html += "<br/>"
+			})
+		
+			//$.each(el.actions.download, function(key, val) {
+			//	html += "<a href='"+ val.url+"'>"+val.displayName +" ("+val.size+")</a><br/>"
+			//})
+		
+			//html += "<br/>Browse <a href='"+el.actions.browse+"'>Link</a>"
+			//html += "<br/>Process"
+		
+			html += "</td></tr></table></div>"
+			html += "</td></tr>"
+			html += "</table></div>";
+		}
+	
+		$('#results').append(html)
+	}
+		
+	function SubmitQuery() {
+		var nodes = <%- JSON.stringify(nodes) %>
+		
+		var lnglat 		= $('#lnglat').val().split(',');
+		var lng			= lnglat[0];
+		var lat			= lnglat[1]
+		var area		= $('#area').val();
+		var q			= $('#q').val();
+		var startTime	= $('#startTime').val();
+		var endTime		= $('#endTime').val();
+		var limit		= $('#limit').val();
+		
+		var sources = $('#sources').val()
+		
+		var url = "<%=opensearch_url%>";
+		url += "?q="+q;
+		url += "&lat="+lat;
+		url += "&lon="+lng;
+		url += "&area="+area;
+		url += "&startTime="+startTime;
+		url += "&endTime="+endTime;
+		url += "&limit="+limit;
+		
+		if( sources == null ) return
+		
+		url += "&sources="+sources.join(",")
+		
+		query_results 	= {};
+		footprints		= [];
+		
+		//$('#results').html("")
+		console.log("GET", url);
+		
+		$.ajax({
+			dataType: "json",
+			url: url,
+			success: function( data ) {
+				if( data.errCode ) {
+					var html 	= "<div class='well'>"
+					var results = data.errMsg[0] 
+					html += results + "<br/></div"
+					$('#results').html(html)
+					
+				} else {
+					var count = data.items.length
+					console.log("Success..."+count)
+					var html = "<div class='well'>"
+				
+					var result_format 	= "Results: %d"
+					var results 		= result_format.replace("%d", count.toString()) 
+				
+					html += results + "<br/></div"
+					$('#results').html(html)
+			
+					$.each( data.items, function( key, val ) {
+						//console.log("Formatting item "+key)
+						var id = val["@id"]
+						query_results[id] = val;
+						FormatResponseElement(key+1,val);
+					});
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+  			  	console.log(textStatus, errorThrown);
+			}
+		})
+	}
+	
+	ShowForm();
+  
+    // install click event
+  	map.on('click', function(e) {
+		console.log("map click")
+		var latlng 	= e.latlng;
+		var lat 	= parseFloat(latlng.lat.toFixed(2));
+		var lng		= parseFloat(latlng.lng.toFixed(2));
+		
+		marker_me.setLatLng( latlng );
+		$('#lnglat').val(lng +", "+lat);
+		
+		var delta  	= parseFloat($('#area').val());	
+		var minlat 	= lat - delta;
+		var maxlat	= lat + delta;
+		var minlon	= lng - delta;
+		var maxlon	= lng + delta;
+		
+		var latlon_poly = [ 
+			 L.latLng(minlat, minlon),
+			 L.latLng(maxlat, minlon),
+			 L.latLng(maxlat, maxlon),
+			 L.latLng(minlat, maxlon),
+			 L.latLng(minlat, minlon)
+		];
+		console.log("query bbox", lat, lng, delta, minlat, minlon, maxlat, maxlon)
+		newqueryLayer.setLatLngs(latlon_poly)
+  	})
+ 
+	function FBPost( url ) {
+		console.log("FBPost:"+url);
+		FB.login(function(){
+			FB.api('/me/ojo-nasa:share', 'post', 
+				{	'geoss_product': url,
+					'value':'SELF'
+			}, function(response) { console.log("FB resp:"+JSON.stringify(response)); });
+		}, {scope: 'publish_actions'});
+	}
+	
+	// array of long,lat coordinates from GeoJSON
+	// return sw corner and ne corner in lat lon
+	function fromPolygon(arr) {
+		var sw_lat=90, 	ne_lat=-90;
+		var sw_lon=180, ne_lon=-180;
+		
+		for( var i in arr ) {
+			var lonlat = arr[i]
+			// lon
+			if(lonlat[0] < sw_lon) sw_lon = lonlat[0]
+			if(lonlat[0] > ne_lon) ne_lon = lonlat[0]
+			//lat
+			if(lonlat[1] < sw_lat) sw_lat = lonlat[1]
+			if(lonlat[1] > ne_lat) ne_lat = lonlat[1]
+		}
+		return [[sw_lat,sw_lon],[ne_lat,ne_lon]]
+	}
+	
+	function addThumbnailToMap(result, id) {
+		var bbox = fromPolygon(result.geometry.coordinates[0])
+		
+		console.log(bbox)
+			
+		var imageBounds = L.latLngBounds(bbox)
+		var image 		= result.image[0]
+		var url 		= image.url
+			
+		console.log("Add to map", url, JSON.stringify(imageBounds))
+		var options 	= {opacity: 0.8, attribution: result.properties.source["@value"]}
+		
+		var newLayer 	= L.imageOverlay(url, imageBounds, options).addTo(map);
+		map_controls.addOverlay( newLayer, id )
+	}
+	
+	function footprint(id) {
+		var found = _.find(footprints, function(footprint) {
+			if( footprint == id ) {
+				console.log("id already in footprints", id)
+				return true
+			} else {
+				return false
+			}
+		})
+		if(found) return;
+		console.log("Showing footprint of ", id)
+				
+		var result 		= query_results[id];
+		var bbox 		= result.geometry.coordinates[0]
+		var latlon_poly = []
+		for( var b in bbox) {
+			latlon_poly.push( bbox[b].reverse().map(parseFloat))
+		}
+					
+		var options 	= {color: '#3300CC ', weight:2, opacity: 0.8, attribution: result.properties.source["@value"]}
+		var newLayer 	= L.polyline(latlon_poly, options).addTo(map);
+		map_controls.addOverlay( newLayer, id );
+
+		// Add to footprints
+		footprints.push(id)
+	}
+	
+	
+	function handleDrop(event) {
+		event.stopPropagation(); // Stops some browsers from redirecting.
+		event.preventDefault();
+
+		var files 	= event.dataTransfer.files;
+		
+		console.log("handleDrop", JSON.stringify(files))
+		
+		for( var i=0; i<files.length; i++) {
+			var file = files[i];
+			console.log("dropped:"+JSON.stringify(file));	
+		}
+		
+		var id = event.dataTransfer.getData('Text');
+		
+		console.log("handleDrop id", id)
+		
+		if( id != null && id != undefined && id != '') {
+			console.log( "dropped id:"+id );
+			var result 	= query_results[id];
+
+			// addThumbnailToMap(result,id) 
+
+			// find the download action
+			for( var a in result.action){
+				var action = result.action[a]
+				if( action['@type'] == 'ojo:download' ) {
+					var using = action.using
+					for( var u in using ) {
+						var uses 		= using[u]
+						var url			= uses.url
+						var mediaType 	= uses.mediaType
+							 
+						console.log(url, mediaType)
+							
+						if( url.indexOf(".png") > 0 ) {
+							// add image overlay
+							var bbox = result.geometry.coordinates[0]
+							var imageBounds = [bbox[0].reverse().map(parseFloat), bbox[2].reverse().map(parseFloat)]
+						
+							console.log("Add to map", JSON.stringify(imageBounds))
+							var options 	= {opacity: 0.8, attribution: result.properties.source["@value"]}
+							var newLayer 	= L.imageOverlay(url, imageBounds, options).addTo(map);
+							map_controls.addOverlay( newLayer, id );
+							break;
+						} else if( (url.indexOf(".topojson.gz")<0) && (url.indexOf(".topojson")>0)) {
+							console.log("loading topojson", url)
+							$.ajax({
+								type: 'GET',
+								url: url,
+								async: true
+							})
+							.success( function(data) {
+								if( data && data.objects ) {
+									console.log("Returned good data")
+					
+									var data 	= topojson.feature(data, data.objects['surface_water']);
+				
+									var newLayer =  L.geoJson(null, { style: { color: '#ff0000', weight: 1 }})
+									newLayer.addData(data);
+									newLayer.addTo(map);
+									map_controls.addOverlay( newLayer, id );
+								} else {
+									console.log("Returned bad data")
+								}
+							})
+							.fail(function(jqxhr, textStatus, error ) { 
+								var err = textStatus + ', ' + error;
+								alert( "Request Failed: " + err);
+							});
+							break
+						} else if( mediaType == 'image/tiff') {
+							addThumbnailToMap(result, id) 
+							break;
+						}
+					}
+				} else {
+					addThumbnailToMap(result,id) 
+				}
+			}
+		}
+	}
+	
+	function allowDrop(event) {
+		event.preventDefault();    // cancel the ev event
+	}
+
+	function handleDrag(event) {
+		var id = event.target.id
+		event.dataTransfer.setData('Text', id);		
+		//console.log( "drag: " + id);
+	}
+</script>
+
+</body>
+</html>

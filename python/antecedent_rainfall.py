@@ -57,7 +57,7 @@ def get_trmm_data(dt, region):
 	if force:
 		cmd += " -f "
 	
-	cmd += "--date " + dt
+	cmd += " --date " + dt
 	cmd += " --region " + region
 	
 	if verbose:
@@ -74,7 +74,8 @@ def process_region(dx, idx, weight, ymd):
 		print "file does not exist", trmm_file
 		sys.exit(-1)
 	
-	print "Processing", trmm_file, idx, weight
+	if verbose:
+		print "Processing", trmm_file, idx, weight
 	
 	src_ds 			= gdal.Open( trmm_file)
 	band 			= src_ds.GetRasterBand(1)
@@ -94,8 +95,8 @@ def process_region(dx, idx, weight, ymd):
 
 
 def save_tif(fname, data, ds, type, ct):
-	#if verbose:
-	print "saving", fname
+	if verbose:
+		print "saving", fname
 		
 	format 		= "GTiff"
 	driver 		= gdal.GetDriverByName( format )
@@ -125,8 +126,8 @@ if __name__ == '__main__':
 
 	apg_input.add_argument("-f", "--force", 	action='store_true', help="forces new product to be generated")
 	apg_input.add_argument("-v", "--verbose", 	action='store_true', help="Verbose Flag")
-	apg_input.add_argument("-r", "--region", 	required=True, help="Region: d02|d03")
-	apg_input.add_argument("-d", "--date", 		required=True, help="Date: 2014-11-20")
+	apg_input.add_argument("-r", "--region", 	required=True, 		 help="Region: d02|d03")
+	apg_input.add_argument("-d", "--date", 		required=True, 		 help="Date: 2014-11-20")
 	
 	options = parser.parse_args()
 
@@ -151,7 +152,7 @@ if __name__ == '__main__':
 	
 	for i in range(1,61):	# days 1...60
 		d 			= today + datetime.timedelta(days= -i)
-		dt			= d.strftime('%m-%d-%Y')
+		dt			= d.strftime('%Y-%m-%d')
 		f			= float(i)
 		weight		= 1.0/math.pow(f,0.5)
 		sum_weights	+= weight
@@ -161,8 +162,8 @@ if __name__ == '__main__':
 		day			= d.day
 		ymd 		= "%d%02d%02d" % (year, month, day)
 
-		trmm_dir 	=  os.path.join(config.data_dir,"trmm", region, ymd)
-		trmm_file 	=  os.path.join(trmm_dir, "trmm_24_"+region+"_"+ymd+"_1km.tif")
+		trmm_dir 	= os.path.join(config.data_dir,"trmm", region, ymd)
+		trmm_file 	= os.path.join(trmm_dir, "trmm_24_"+region+"_"+ymd+"_1km.tif")
 	
 		if not os.path.exists(trmm_file):
 			get_trmm_data(dt, region)
@@ -179,7 +180,7 @@ if __name__ == '__main__':
 	
 	output_fileName			=  os.path.join(smos_reg_daily_dir, "ant_r_" + starting_ymd + ".tif")
 	output_bool_fileName	=  os.path.join(smos_reg_daily_dir, "ant_r_" + starting_ymd + "_bool.tif")
-	thresholds_fileName		=  os.path.join(smos_dir, "%s_95ar.tif" % region)
+	thresholds_fileName		=  os.path.join(smos_dir, "%s_50ar.tif" % region)
 	
 	t_ds 					= gdal.Open( thresholds_fileName)
 	band 					= t_ds.GetRasterBand(1)
@@ -190,9 +191,9 @@ if __name__ == '__main__':
 	#save_tif(output_fileName, antecedent_data, t_ds, gdal.GDT_UInt16, 0)
 	save_tif(output_fileName, antecedent_data, t_ds, gdal.GDT_Float32, 0)
 	
-	#if verbose:
-	print "Loaded Rainfall Thresholds:", thresholds_fileName, numpy.min(tdata), numpy.mean(tdata), numpy.max(tdata)
-	print "Antecedent Rainfall Data:", numpy.min(antecedent_data), numpy.mean(antecedent_data), numpy.max(antecedent_data)
+	if verbose:
+		print "Loaded Rainfall Thresholds:", thresholds_fileName, numpy.min(tdata), numpy.mean(tdata), numpy.max(tdata)
+		print "Antecedent Rainfall Data:", numpy.min(antecedent_data), numpy.mean(antecedent_data), numpy.max(antecedent_data)
 	
 	data_result				= (antecedent_data>tdata)
 	
@@ -200,5 +201,6 @@ if __name__ == '__main__':
 		
 	# Once we're done, close properly the dataset
 	t_ds		= None
-	# Save file
-	print "Done."
+
+	if verbose:
+		print "Done."

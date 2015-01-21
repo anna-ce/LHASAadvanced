@@ -15,7 +15,9 @@ var express 		= require('express'),
 	winston 		= require('winston'),
 	facebook		= require('./lib/facebook'),
 	GitHubApi 		= require("github"),
-	shortid			= require('shortid')
+	i18n			= require('./lib/i18n-abide'),
+	shortid			= require('shortid');
+
   	require('winston-papertrail').Papertrail;
 
 
@@ -192,6 +194,15 @@ function bootApplication(app) {
 	  next();
 	});
 	
+	app.use(i18n.abide({
+		supported_languages: ['en', 'es', 'fr', 'pt'],
+		//supported_languages: ['en', 'fr', 'es', 'pt', 'de'],
+		default_lang: 'en',
+		translation_directory: 'locale',
+		translation_type: 'transiflex',
+		logger: console
+	}));
+	
 	// expose the "messages" local variable when views are rendered
 	app.use(function(req, res, next){
 
@@ -234,6 +245,8 @@ function bootApplication(app) {
 	app.use(function(req, res, next){
 	  res.status(404).render('404', { layout: false, url: req.originalUrl })
 	})
+	
+	app.root_dir = __dirname
 	
 	//app_set_env('SENDGRID_USER')
 	//app_set_env('SENDGRID_KEY')	
