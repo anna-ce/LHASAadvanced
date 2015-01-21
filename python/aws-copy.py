@@ -22,7 +22,7 @@ verbose		= 0
 #
 if __name__ == '__main__':
 	
-	parser 		= argparse.ArgumentParser(description='MODIS Processing')
+	parser 		= argparse.ArgumentParser(description='AWS Copy')
 	apg_input 	= parser.add_argument_group('Input')
 	apg_input.add_argument("-f", "--force",   action='store_true', help="force it")
 	apg_input.add_argument("-v", "--verbose", action='store_true', help="Verbose Flag")

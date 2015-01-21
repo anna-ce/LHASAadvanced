@@ -1,0 +1,154 @@
+<style>
+.table-scrollable { height: 500px; overflow: auto; }
+</style>
+
+<div class='container'>
+	<h3>Planet-Labs Scene: <%= id %> </h3>
+	<h4>Product: <%= query %> </h4>
+	<div class='row'>
+		 <div id='map' style="width:868px;height:695px;" ondrop="handleDrop(event);" ondragover="allowDrop(event);"></div>
+	</div>
+	<br/>
+	<div class='row'>
+		<div id='legends'></div>
+	</div>
+</div>
+
+
+<div id='errors' class="alert alert-danger" style="display:none"></div>
+<br/>
+<div class="container" id='results'>
+</div>
+
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.3.5/bootstrap-select.min.css">
+<link rel="stylesheet" href="/css/customlegend.css" />
+<link rel="stylesheet" href="/css/datepicker.css" />
+
+
+<!--[if lte IE 8]>
+  <link rel="stylesheet" href="/css/MarkerCluster.Default.ie.css" />
+<![endif]-->
+
+<!-- Mapbox -->
+<link href='//api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.css' rel='stylesheet' />
+
+<script src='http://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js'></script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>	
+<script src="/js/d3.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script src="http://d3js.org/queue.v1.min.js"></script>
+
+<script src="/js/dust-full.js"></script>
+<script src="/js/LStyledTopojson.js"></script>
+<script src="/js/moment.js"></script>
+
+<script>
+	var hide_legends 			= 0;
+	var styles 					= [];
+	var legends 				= {};
+	var credits 				= [];
+    
+	L.mapbox.accessToken 		= "<%- mapbox_accessToken %>"
+	
+	var map = L.mapbox.map('map', '<%= map_id %>', { minZoom:1, maxZoom: 19 })
+	map.setView([<%= target %>], 10);
+		  
+    var base_layer_options 			= {}
+    var topo_map 					= "Topo Map"
+    var grey_map 					= "Grey Map"
+    base_layer_options[topo_map]  	= L.mapbox.tileLayer('<%= map_id %>',{ attribution: 'MapBox'}).addTo(map)
+    base_layer_options[grey_map] 	= L.mapbox.tileLayer('<%= worldmapid %>')
+
+	//var bbox_geojson = <%- JSON.stringify(data.geometry) %>
+	//var bbox_Layer 	=  L.geoJson(null, { style:  { color: '#000000', weight: 2 } });
+	//bbox_Layer.addData(bbox_geojson);
+	
+	var thn_url = "<%= thn %>"
+	if (thn_url != "null") {
+		var properties	=  <%- JSON.stringify(data.properties) %>
+		var imageBounds =  L.latLngBounds(<%- JSON.stringify(bounds) %>)
+		
+		var options 	= {opacity: 0.8, attribution: properties.source["@value"] }
+		var imageLayer 	= L.imageOverlay("<%= thn %>", imageBounds, options).addTo(map);
+		var scene_id	= "<%= id %>"
+	}
+	
+	var topojson_url = "<%= topojson %>"
+	if( topojson_url != "null") {
+		var imageLayer = L.geoJson(null, { style: { color: '#ff0000', weight: 1 }})
+		var polyline_options = {
+			    color: '#0000FF'
+			};
+			
+		d3.json("<%= topojson %>", function(error, data) {
+			if( !error && data ) {
+				var product = topojson.feature(data, data.objects.surface_water)
+				imageLayer.addData(product);
+			} else {
+				console.log("loaded topojson:"+error)				
+			}
+		})
+	}
+	
+    var marker = L.marker(new L.LatLng(<%=target[0]%>,<%= target[1]%>), {
+        icon: L.mapbox.marker.icon({
+            'marker-color': 'ff8888'
+        }),
+    });
+    
+    marker.bindPopup("Satellite Position");
+    marker.addTo(map);
+	
+	//var mbtiles_layer 	= new L.TileLayer('http://ojo-tiler,herokuapp.com/v2/ojo-global/4Mw10x/{z}/{x}/{y}.png', 
+	//		{ tms: true, opacity: 0.5, attribution: 'Planet-Labs'});
+
+    var overlay_layer_options 		= {
+		// 'Planet_labs Scene':			mbtiles_layer.addTo(map),
+		// "Outline": bbox_Layer.addTo(map),
+		"Image": imageLayer.addTo(map)
+    }
+	
+	var map_controls 				= L.control.layers(base_layer_options, overlay_layer_options).addTo(map);
+   
+    L.control.scale().addTo(map);
+ 
+	map.on('overlayadd', function(a) {
+		for( var i in legends ) {
+			if( i == a.name ) {
+				legends[i].display = true;
+				if( hide_legends == 0 ) $('#'+legends[i].legend).show();
+			} 
+		}
+	})
+
+	map.on('overlayremove', function(a) {
+		for( var i in legends ) {
+			if( i == a.name ) {
+				legends[i].display = false;
+				if( hide_legends == 0 ) $('#'+legends[i].legend).hide();
+			}
+		}
+	})
+	
+	map.on('load', function(a) {
+		styles 	= [];
+		legends = {};
+		credits = [];
+	})
+</script>
+
+<script>
+	
+	function clearErrors() {
+		$('#errors').html("");
+		$('#errors').hide();
+	}
+	
+	function flash(msg) {
+		$('#errors').html(msg);
+		$('#errors').show();
+	}
+	
+</script>

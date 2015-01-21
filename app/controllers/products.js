@@ -178,6 +178,7 @@ var util	= require('util'),
 					function Bewit(url) {
 						var bewit = Hawk.uri.getBewit(url, { credentials: credentials, ttlSec: duration, ext: user.email })
 						url += "?bewit="+bewit
+						console.log("Bewit=", bewit)
 						return url;
 					}
 					

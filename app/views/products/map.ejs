@@ -61,7 +61,7 @@
 
     var region                  = <%- JSON.stringify(region) %>    
     
-	var map = L.mapbox.map('map', '<%= region.map_id %>', { minZoom:<%= region.min_zoom %>, maxZoom: <%= region.max_zoom %> })
+	var map = L.mapbox.map('map', '<%= region.map_id %>', { minZoom:2, maxZoom: <%= region.max_zoom %> })
     .setView([<%= region.target %>], <%= region.min_zoom %>);
 		  
     var base_layer_options 			= {}

@@ -10,6 +10,7 @@ import argparse
 
 from osgeo import osr, gdal
 from ftplib import FTP
+import datetime
 from datetime import date, timedelta
 from which import *
 from dateutil.parser import parse
@@ -43,7 +44,7 @@ def save_tiff(dx, data, fname, ds):
 	if verbose:
 		print "Created", fullName
 		
-# Generate Curren
+# Generate Current
 def build_tif(dx, region, dir, date):
 	region 		= config.regions[dx]
 	bbox		= region['bbox']
@@ -53,16 +54,16 @@ def build_tif(dx, region, dir, date):
 	thn_height  = region['thn_height']
 	bucketName 	= region['bucket']
 
-	# get the 60th percentile rainfall limits
-	limit_60 = os.path.join(config.data_dir,"ant_r", "%s_60r.tif" % (dx))
-	if not os.path.exists(limit_60):
-		print "**ERR: file not found", limit_60
+	# get the low percentile rainfall limits
+	limit_low = os.path.join(config.data_dir,"ant_r", "%s_50r.tif" % (dx))
+	if not os.path.exists(limit_low):
+		print "**ERR: file not found", limit_low
 		sys.exit(-1)
 
-	# get the 80th percentile rainfall limits
-	limit_80 = os.path.join(config.data_dir,"ant_r", "%s_80r.tif" % (dx))
-	if not os.path.exists(limit_80):
-		print "**ERR: file not found", limit_80
+	# get the high percentile rainfall limits
+	limit_high = os.path.join(config.data_dir,"ant_r", "%s_90r.tif" % (dx))
+	if not os.path.exists(limit_high):
+		print "**ERR: file not found", limit_high
 		sys.exit(-1)
 
 	# get the 95th percentile antecedent rainfall limits
@@ -73,8 +74,7 @@ def build_tif(dx, region, dir, date):
 
 	# Find the antecedent rainfall boolean 95th percentile accumulation file for the area
 	ant_rainfall_bool 	= os.path.join(config.data_dir,"ant_r", dx, ymd, "ant_r_%s_bool.tif" % (ymd))
-	if not os.path.exists(ant_rainfall_bool):
-		print "** antecedent file not found, building it", ant_rainfall_bool
+	if force or not os.path.exists(ant_rainfall_bool):
 		cmd = "antecedent_rainfall.py --region "+dx+ " --date "+date
 		if verbose:
 			cmd += " -v"
@@ -143,8 +143,7 @@ def build_tif(dx, region, dir, date):
 	
 		assert( smap_ncols == rainfall_ncols)
 		assert( smap_nrows == rainfall_nrows)
-		
-			
+
 		if verbose:
 			print "Loading ", ant_rainfall_bool
 
@@ -161,55 +160,43 @@ def build_tif(dx, region, dir, date):
 			print "cols %d rows %d" %(ant_rainfall_ncols, ant_rainfall_nrows)
 
 		if verbose:
-			print "Loading ", limit_60
+			print "Loading ", limit_low
 			
-		limit_60_ds		= gdal.Open( limit_60 )
-		limit_60_ncols 	= limit_60_ds.RasterXSize
-		limit_60_nrows 	= limit_60_ds.RasterYSize
-		limit_60_band 	= limit_60_ds.GetRasterBand(1)
-		limit_60_data 	= limit_60_band.ReadAsArray(0, 0, limit_60_ncols, limit_60_nrows )
+		limit_low_ds		= gdal.Open( limit_low )
+		limit_low_ncols 	= limit_low_ds.RasterXSize
+		limit_low_nrows 	= limit_low_ds.RasterYSize
+		limit_low_band 		= limit_low_ds.GetRasterBand(1)
+		limit_low_data 		= limit_low_band.ReadAsArray(0, 0, limit_low_ncols, limit_low_nrows )
 
-		assert( smap_ncols == limit_60_ncols)
-		assert( smap_nrows == limit_60_nrows)
+		assert( smap_ncols == limit_low_ncols)
+		assert( smap_nrows == limit_low_nrows)
 		
 		if verbose:
-			print "Loading ", limit_80
+			print "Loading ", limit_high
 			
-		limit_80_ds		= gdal.Open( limit_80 )
-		limit_80_ncols 	= limit_80_ds.RasterXSize
-		limit_80_nrows 	= limit_80_ds.RasterYSize
-		limit_80_band 	= limit_80_ds.GetRasterBand(1)
-		limit_80_data 	= limit_80_band.ReadAsArray(0, 0, limit_80_ncols, limit_80_nrows )
+		limit_high_ds		= gdal.Open( limit_high )
+		limit_high_ncols 	= limit_high_ds.RasterXSize
+		limit_high_nrows 	= limit_high_ds.RasterYSize
+		limit_high_band 	= limit_high_ds.GetRasterBand(1)
+		limit_high_data 	= limit_high_band.ReadAsArray(0, 0, limit_high_ncols, limit_high_nrows )
 
-		assert( smap_ncols == limit_80_ncols)
-		assert( smap_nrows == limit_80_nrows)
-
-		#if verbose:
-		#	print "Loading ", limit_95
-			
-		#limit_95_ds		= gdal.Open( limit_95 )
-		#limit_95_ncols 	= limit_95_ds.RasterXSize
-		#limit_95_nrows 	= limit_95_ds.RasterYSize
-		#limit_95_band 	= limit_95_ds.GetRasterBand(1)
-		#imit_95_data 	= limit_95_band.ReadAsArray(0, 0, limit_95_ncols, limit_95_nrows )
-
-		#assert( smap_ncols == limit_95_ncols)
-		#assert( smap_nrows == limit_95_nrows)
+		assert( smap_ncols == limit_high_ncols)
+		assert( smap_nrows == limit_high_nrows)
 
 		# Step 2
-		# 60th percentile current rainfall raster
-		rr_60 = numpy.zeros(shape=(rainfall_nrows,rainfall_ncols))
-		rr_60[rainfall_data > limit_60_data] = 1
+		# low percentile current rainfall raster
+		rr_low = numpy.zeros(shape=(rainfall_nrows,rainfall_ncols))
+		rr_low[rainfall_data > limit_low_data] = 1
 		
 		if verbose:
-			save_tiff(dx, rr_60,"rr_60", smap_ds)
+			save_tiff(dx, rr_low,"rr_low", smap_ds)
 			
 		# Step 3
-		# 80th percentile current rainfall raster
-		rr_80 = numpy.zeros(shape=(rainfall_nrows,rainfall_ncols))
-		rr_80[rainfall_data > limit_80_data] = 1
+		# high percentile current rainfall raster
+		rr_high = numpy.zeros(shape=(rainfall_nrows,rainfall_ncols))
+		rr_high[rainfall_data > limit_high_data] = 1
 		if verbose:
-			save_tiff(dx, rr_80, "rr_80", smap_ds)
+			save_tiff(dx, rr_high, "rr_high", smap_ds)
 			
 		# inverted antecedent boolean raster
 		iabr = numpy.zeros(shape=(ant_rainfall_nrows,ant_rainfall_ncols))
@@ -219,11 +206,11 @@ def build_tif(dx, region, dir, date):
 			
 		# Step 4
 		# antecedent boolean raster is ant_rainfall_data
-		step_8_1 = numpy.logical_and(ant_rainfall_data_bool, rr_60)
+		step_8_1 = numpy.logical_and(ant_rainfall_data_bool, rr_low)
 		if verbose:
 			save_tiff(dx, step_8_1, "step_8_1", smap_ds)
 		
-		step_8_2 = numpy.logical_and(iabr, rr_80)
+		step_8_2 = numpy.logical_and(iabr, rr_high)
 		if verbose:
 			save_tiff(dx, step_8_2, "step_8_2", smap_ds)
 		
@@ -249,9 +236,8 @@ def build_tif(dx, region, dir, date):
 		rainfall_ds 	= None
 		ant_rainfall_ds = None
 		cur_ds			= None
-		limit_60_ds		= None
-		limit_80_ds		= None
-		#limit_95_ds		= None
+		limit_low_ds	= None
+		limit_high_ds	= None
 
 	# Now let's colorize it
 	if 1: #force or not os.path.exists(forecast_landslide_bin_rgb):
@@ -344,21 +330,23 @@ if __name__ == '__main__':
 	
 	parser 		= argparse.ArgumentParser(description='Generate Forecast Landslide Estimates')
 	apg_input 	= parser.add_argument_group('Input')
-	
+		
 	apg_input.add_argument("-f", "--force", 	action='store_true', help="Forces new products to be generated")
 	apg_input.add_argument("-v", "--verbose", 	action='store_true', help="Verbose Flag")
 	apg_input.add_argument("-r", "--region", 	required=True, help="Region: d02|d03")
-	apg_input.add_argument("-d", "--date", 		required=True, help="date: 2014-11-20")
+	apg_input.add_argument("-d", "--date", 		help="date: 2014-11-20 or today if not defined")
+	
+	todaystr	= date.today().strftime("%Y-%m-%d")
 	
 	options 	= parser.parse_args()
 	force		= options.force
 	verbose		= options.verbose
 	region		= options.region
-	date		= options.date
+	dt			= options.date or todaystr
 	
 	assert(config.regions[region])
-
-	today		= parse(date)
+	
+	today		= parse(dt)
 	year		= today.year
 	month		= today.month
 	day			= today.day
@@ -370,6 +358,9 @@ if __name__ == '__main__':
 	yday		= yesterday.day
 	yymd		= "%d%02d%02d" % (yyear, ymonth, yday)
 	
-	generate_map(region, date)
+	if verbose:
+		print "generating forecast for", today.strftime("%Y-%m-%d")
+		
+	generate_map(region, dt)
 	
 	print "Done."
