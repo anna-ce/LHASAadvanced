@@ -7,7 +7,7 @@ import sys, os, inspect, math
 # Amazon S3
 import boto
 import uuid
-import os, datetime, glob
+import os, datetime, glob, shutil
 from boto.s3.connection import S3Connection
 from datetime import timedelta
 
@@ -31,7 +31,6 @@ dirs	= [	"ant_r/d02",
 			"trmm/d02",
 			"trmm/d03"
 		]
-
 	
 def manage_buckets(conn, dl):
 	for b in buckets:
@@ -64,10 +63,9 @@ def manage_folder(f, dl):
 		if dt < dl:
 			msg = "** delete "+f
 			print basename, year, month, day, msg
-			os.remove(f)
+			shutil.rmtree(f)
 		
-def manage_local_dirs(dl):
-	data_dir = config.data_dir
+def manage_local_dirs(dl, data_dir):
 	for d in dirs:
 		folder 	= os.path.join(data_dir, d)
 		print folder
@@ -83,6 +81,7 @@ if __name__ == '__main__':
 	
 	parser 		= argparse.ArgumentParser(description='AWS Mange')
 	apg_input 	= parser.add_argument_group('Input')
+	
 	apg_input.add_argument("-f", "--force",   action='store_true', help="force it")
 	apg_input.add_argument("-v", "--verbose", action='store_true', help="Verbose Flag")
 	
@@ -94,12 +93,13 @@ if __name__ == '__main__':
 	aws_access_key 			= os.environ.get('AWS_ACCESSKEYID')
 	aws_secret_access_key 	= os.environ.get('AWS_SECRETACCESSKEY')
 	
-	conn = S3Connection(aws_access_key, aws_secret_access_key)
+	conn 	= S3Connection(aws_access_key, aws_secret_access_key)
 	
 	today 	= datetime.date.today()
 	delta	= timedelta(days=90)
 	dl		= today - delta
 	
 	manage_buckets(conn, dl)
-	#manage_local_dirs(dl)
+	manage_local_dirs(dl, config.data_dir )
+	manage_local_dirs(dl, "/Users/patricecappelaere/Development/ojo/ojo-bot/tmp")
 	
