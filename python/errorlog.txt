@@ -2637,3 +2637,1544 @@ cd /Users/patricecappelaere/Development/ojo/ojo-wiki
 heroku pgbackups:capture --app ojo-wiki HEROKU_POSTGRESQL_ORANGE_URL --expire
 heroku pgbackups:capture --app ojo-wiki HEROKU_POSTGRESQL_ORANGE_URL --expire
 process_all.sh Done: Wed Jan 21 08:36:53 EST 2015
+Starting processing: Thu Jan 22 08:20:18 EST 2015
+composite: Unknown field with tag 33550 (0x830e) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 33922 (0x8482) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+bounds: -92.68333 6.16683 -75.85007 19.08332 (spherical)
+pre-quantization: 1.87m (0.0000168°) 1.44m (0.0000129°)
+topology: 29 arcs, 8501 points
+post-quantization: 187m (0.00168°) 144m (0.00129°)
+simplification: effective minimum area 6.39e-10
+simplification: retained 6427 / 8492 points (76%)
+prune: retained 29 / 29 arcs (100%)
+Checking trmmopen.gsfc.nasa.gov/pub/gis/201501 for latest file...
+Downloading it... 3B42RT.2015012121.7.1day.tif
+Downloading it... 3B42RT.2015012121.7.1day.tfw
+reading /Users/patricecappelaere/landslide/data/trmm/3B42RT/20150121/3B42RT.2015012121.7.1day.tif
+gdaldem color-relief -q -alpha -of GTiff /Users/patricecappelaere/landslide/data/trmm/20150121/trmm_24_20150121_180.tif cluts/green-blue-gr.txt /Users/patricecappelaere/landslide/data/trmm/20150121/trmm_24_20150121_rgb.tif
+process_trmm_region: d02 0.00833333333333
+gdalwarp -overwrite -q -co COMPRESS=LZW -te -92.683333 6.166667 -75.850000 19.083333 /Users/patricecappelaere/landslide/data/trmm/20150121/trmm_24_20150121_180.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150121/trmm_24_d02_20150121.tif
+gdaldem color-relief -q -alpha -of GTiff /Users/patricecappelaere/landslide/data/trmm/d02/20150121/trmm_24_d02_20150121.tif cluts/green-blue-gr.txt /Users/patricecappelaere/landslide/data/trmm/d02/20150121/trmm_24_d02_20150121_rgb.tif
+pixelsize 0.00833333333333
+gdalwarp -overwrite -q -tr 0.00833333333333 0.00833333333333 -te -92.683333 6.166667 -75.850000 19.083333 -co COMPRESS=LZW /Users/patricecappelaere/landslide/data/trmm/20150121/trmm_24_20150121_180.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150121/trmm_24_d02_20150121_1km.tif
+gdaldem color-relief -q -alpha -of GTiff /Users/patricecappelaere/landslide/data/trmm/d02/20150121/trmm_24_d02_20150121_1km.tif cluts/green-blue-gr.txt /Users/patricecappelaere/landslide/data/trmm/d02/20150121/trmm_24_d02_20150121_1km_rgb.tif
+gdalwarp -overwrite -q -multi -ts 389 298 -r cubicspline -co COMPRESS=LZW /Users/patricecappelaere/landslide/data/trmm/d02/20150121/trmm_24_d02_20150121_rgb.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150121/trmm_24_d02_20150121.thn.png.tmp.tif
+composite -blend 60 /Users/patricecappelaere/landslide/data/trmm/d02/20150121/trmm_24_d02_20150121.thn.png.tmp.tif /Users/patricecappelaere/landslide/data/trmm/d02/d02_static.tiff /Users/patricecappelaere/landslide/data/trmm/d02/20150121/trmm_24_d02_20150121.thn.png
+rm /Users/patricecappelaere/landslide/data/trmm/d02/20150121/trmm_24_d02_20150121.thn.png.tmp.tif
+gdalwarp -overwrite -q -tr 0.000833 0.000833 -te -92.683333 6.166667 -75.850000 19.083333 -r cubicspline -co COMPRESS=LZW /Users/patricecappelaere/landslide/data/trmm/d02/20150121/trmm_24_d02_20150121.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150121/trmm_24_d02_20150121_100m.tif
+gdaldem color-relief -q -alpha -of GTiff /Users/patricecappelaere/landslide/data/trmm/d02/20150121/trmm_24_d02_20150121_100m.tif cluts/green-blue-gr.txt /Users/patricecappelaere/landslide/data/trmm/d02/20150121/trmm_24_d02_20150121_100m_rgb.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_1.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_1.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_1.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_1.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_1.tif.bmp -x 0.000833 -L -92.683333 -B 6.166835 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_1.tif.topojson --simplify-proportion 0.75 -p precip=1 -- precip=/Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_1.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_1.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson/precip_1.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_2.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_2.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150121bounds: -92.68333 6.16683 -75.85028 19.08333 (spherical)
+pre-quantization: 1.87m (0.0000168°) 1.44m (0.0000129°)
+topology: 33 arcs, 6457 points
+post-quantization: 187m (0.00168°) 144m (0.00129°)
+simplification: effective minimum area 6.32e-10
+simplification: retained 4900 / 6447 points (76%)
+prune: retained 33 / 33 arcs (100%)
+bounds: -92.68333 6.16683 -75.85007 19.08328 (spherical)
+pre-quantization: 1.87m (0.0000168°) 1.44m (0.0000129°)
+topology: 29 arcs, 5069 points
+post-quantization: 187m (0.00168°) 144m (0.00129°)
+simplification: effective minimum area 6.27e-10
+simplification: retained 3850 / 5055 points (76%)
+prune: retained 29 / 29 arcs (100%)
+bounds: -92.68333 6.1668 -75.85007 18.94155 (spherical)
+pre-quantization: 1.87m (0.0000168°) 1.42m (0.0000128°)
+topology: 18 arcs, 3146 points
+post-quantization: 187m (0.00168°) 142m (0.00128°)
+simplification: effective minimum area 6.33e-10
+simplification: retained 2392 / 3141 points (76%)
+prune: retained 18 / 18 arcs (100%)
+bounds: -92.68313 6.16683 -75.85007 18.82476 (spherical)
+pre-quantization: 1.87m (0.0000168°) 1.41m (0.0000127°)
+topology: 13 arcs, 2093 points
+post-quantization: 187m (0.00168°) 141m (0.00127°)
+simplification: effective minimum area 3.23e-10
+simplification: retained 1589 / 2083 points (76%)
+prune: retained 13 / 13 arcs (100%)
+/levels/level_2.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_2.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_2.tif.bmp -x 0.000833 -L -92.683333 -B 6.166835 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_2.tif.topojson --simplify-proportion 0.75 -p precip=2 -- precip=/Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_2.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_2.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson/precip_2.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_3.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_3.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_3.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_3.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_3.tif.bmp -x 0.000833 -L -92.683333 -B 6.166835 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_3.tif.topojson --simplify-proportion 0.75 -p precip=3 -- precip=/Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_3.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_3.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson/precip_3.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_5.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_5.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_5.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_5.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_5.tif.bmp -x 0.000833 -L -92.683333 -B 6.166835 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_5.tif.topojson --simplify-proportion 0.75 -p precip=5 -- precip=/Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_5.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_5.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson/precip_5.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_8.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_8.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_8.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_8.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_8.tif.bmp -x 0.000833 -L -92.683333 -B 6.166835 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_8.tif.topojson --simplify-proportion 0.75 -p precip=8 -- precip=/Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_8.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_8.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d02/201501bounds: -92.68333 6.16683 -75.85007 9.8766 (spherical)
+pre-quantization: 1.87m (0.0000168°) 0.413m (0.00000371°)
+topology: 7 arcs, 1503 points
+post-quantization: 187m (0.00168°) 41.3m (0.000371°)
+simplification: effective minimum area 4.72e-10
+simplification: retained 1140 / 1501 points (76%)
+prune: retained 7 / 7 arcs (100%)
+bounds: -92.68333 6.16683 -75.91839 8.72705 (spherical)
+pre-quantization: 1.86m (0.0000168°) 0.285m (0.00000256°)
+topology: 4 arcs, 1180 points
+post-quantization: 186m (0.00168°) 28.5m (0.000256°)
+simplification: effective minimum area 5.84e-10
+simplification: retained 894 / 1180 points (76%)
+prune: retained 4 / 4 arcs (100%)
+bounds: -92.05304 6.16683 -76.11458 8.5641 (spherical)
+pre-quantization: 1.77m (0.0000159°) 0.267m (0.00000240°)
+topology: 4 arcs, 836 points
+post-quantization: 177m (0.00159°) 26.7m (0.000240°)
+simplification: effective minimum area 6.37e-10
+simplification: retained 633 / 833 points (76%)
+prune: retained 4 / 4 arcs (100%)
+21/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson/precip_8.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_13.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_13.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_13.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_13.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_13.tif.bmp -x 0.000833 -L -92.683333 -B 6.166835 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_13.tif.topojson --simplify-proportion 0.75 -p precip=13 -- precip=/Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_13.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_13.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson/precip_13.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_21.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_21.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_21.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_21.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_21.tif.bmp -x 0.000833 -L -92.683333 -B 6.166835 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_21.tif.topojson --simplify-proportion 0.75 -p precip=21 -- precip=/Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_21.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_21.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson/precip_21.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_34.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_34.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_34.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_34.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_34.tif.bmp -x 0.000833 -L -92.683333 -B 6.166835 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_34.tif.topojson --simplify-proportion 0.75 -p precip=34 -- precip=/Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_34.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_34.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson/precip_34.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_55.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_55.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_55.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_55.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_55.tif.bmp -x 0.000833 -L -92.683333 -B 6.166835 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/bounds: -82.88285 6.16683 -76.28659 8.14897 (spherical)
+pre-quantization: 0.734m (0.00000660°) 0.220m (0.00000198°)
+topology: 2 arcs, 634 points
+post-quantization: 73.4m (0.000660°) 22.0m (0.000198°)
+simplification: effective minimum area 4.35e-10
+simplification: retained 480 / 634 points (76%)
+prune: retained 2 / 2 arcs (100%)
+bounds: -77.26177 6.34668 -76.64179 7.94689 (spherical)
+pre-quantization: 0.0689m (6.20e-7°) 0.178m (0.00000160°)
+topology: 2 arcs, 146 points
+post-quantization: 6.89m (0.0000620°) 17.8m (0.000160°)
+simplification: effective minimum area 1.86e-9
+simplification: retained 114 / 146 points (78%)
+prune: retained 2 / 2 arcs (100%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+trmm merging of  /Users/patricecappelaere/landslide/data/trmm/d02/20150121
+wrote /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson/trmm_levels.geojson  with features: 141
+stdout: 
+stderr: bounds: -92.6833 6.1668 -75.8501 19.0833 (spherical)
+pre-quantization: 1.87m (0.0000168°) 1.44m (0.0000129°)
+topology: 141 arcs, 22419 points
+post-quantization: 187m (0.00168°) 144m (0.00129°)
+prune: retained 141 / 141 arcs (100%)
+
+storing to s3: ojo-d2 20150121/trmm_24_d02_20150121.topojson.gz
+storing to s3: ojo-d2 20150121/trmm_24_d02_20150121.thn.png
+level_55.tif.topojson --simplify-proportion 0.75 -p precip=55 -- precip=/Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_55.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_55.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson/precip_55.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_89.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_89.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_89.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_89.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_89.tif.bmp -x 0.000833 -L -92.683333 -B 6.166835 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_89.tif.topojson --simplify-proportion 0.75 -p precip=89 -- precip=/Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_89.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_89.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson/precip_89.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_144.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_144.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_144.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_144.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_144.tif.bmp -x 0.000833 -L -92.683333 -B 6.166835 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_144.tif.topojson --simplify-proportion 0.75 -p precip=144 -- precip=/Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_144.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150121/levels/level_144.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d02/20150121/geojson/precip_144.geojson
+node trmm_merge.js d02 20150121
+./aws-copy.py --bucket ojo-d2 --folder 20150121 --file /Users/patricecappelaere/landslide/data/trmm/d02/20150121/trmm_24_d02_20150121.topojson.gz --verbose
+./aws-copy.py --bucket ojo-d2 --folder 20150121 --file /Users/patricecappelaere/landslide/data/trmm/d02/20150121/trmm_24_d02_20150121.thn.png --verbose
+Done.
+trmm_process.py  -v  --date 2015-01-21 --region d02
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150121/trmm_24_d02_20150121_1km.tif 1 1.0
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150120/trmm_24_d02_20150120_1km.tif 2 0.707106781187
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150119/trmm_24_d02_20150119_1km.tif 3 0.57735026919
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150118/trmm_24_d02_20150118_1km.tif 4 0.5
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150117/trmm_24_d02_20150117_1km.tif 5 0.4472135955
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150116/trmm_24_d02_20150116_1km.tif 6 0.408248290464
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150115/trmm_24_d02_20150115_1km.tif 7 0.377964473009
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150114/trmm_24_d02_20150114_1km.tif 8 0.353553390593
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150113/trmm_24_d02_20150113_1km.tif 9 0.333333333333
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150112/trmm_24_d02_20150112_1km.tif 10 0.316227766017
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150111/trmm_24_d02_20150111_1km.tif 11 0.301511344578
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150110/trmm_24_d02_20150110_1km.tif 12 0.288675134595
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150109/trmm_24_d02_20150109_1km.tif 13 0.277350098113
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150108/trmm_24_d02_20150108_1km.tif 14 0.267261241912
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150107/trmm_24_d02_20150107_1km.tif 15 0.258198889747
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150106/trmm_24_d02_20150106_1km.tif 16 0.25
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150105/trmm_24_d02_20150105_1km.tif 17 0.242535625036
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150104/trmm_24_d02_20150104_1km.tif 18 0.235702260396
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150103/trmm_24_d02_20150103_1km.tif 19 0.229415733871
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150102/trmm_24_d02_20150102_1km.tif 20 0.22360679775
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150101/trmm_24_d02_20150101_1km.tif 21 0.218217890236
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141231/trmm_24_d02_20141231_1km.tif 22 0.213200716356
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141230/trmm_24_d02_20141230_1km.tif 23 0.208514414057
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141229/trmm_24_d02_20141229_1km.tif 24 0.204124145232
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141228/trmm_24_d02_20141228_1km.tif 25 0.2
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141227/trmm_24_d02_20141227_1km.tif 26 0.196116135138
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141226/trmm_24_d02_20141226_1km.tif 27 0.19245008973
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141225/trmm_24_d02_20141225_1km.tif 28 0.188982236505
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141224/trmm_24_d02_20141224_1km.tif 29 0.185695338177
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141223/trmm_24_d02_20141223_1km.tif 30 0.182574185835
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141222/trmm_24_d02_20141222_1km.tif 31 0.179605302027
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141221/trmm_24_d02_20141221_1km.tif 32 0.176776695297
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141220/trmm_24_d02_20141220_1km.tif 33 0.174077655956
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141219/trmm_24_d02_20141219_1km.tif 34 0.171498585143
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141218/trmm_24_d02_20141218_1km.tif 35 0.169030850946
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141217/trmm_24_d02_20141217_1km.tif 36 0.166666666667
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141216/trmm_24_d02_20141216_1km.tif 37 0.164398987305
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141215/trmm_24_d02_20141215_1km.tif 38 0.162221421131
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141214/trmm_24_d02_20141214_1km.tif 39 0.160128153805
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141213/trmm_24_d02_20141213_1km.tif 40 0.158113883008
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141212/trmm_24_d02_20141212_1km.tif 41 0.156173761889
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141211/trmm_24_d02_20141211_1km.tif 42 0.154303349962
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141210/trmm_24_d02_20141210_1km.tif 43 0.152498570333
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141209/trmm_24_d02_20141209_1km.tif 44 0.150755672289
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141208/trmm_24_d02_20141208_1km.tif 45 0.1490711985
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141207/trmm_24_d02_20141207_1km.tif 46 0.147441956155
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141206/trmm_24_d02_20141206_1km.tif 47 0.145864991498
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141205/trmm_24_d02_20141205_1km.tif 48 0.144337567297
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141204/trmm_24_d02_20141204_1km.tif 49 0.142857142857
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141203/trmm_24_d02_20141203_1km.tif 50 0.141421356237
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141202/trmm_24_d02_20141202_1km.tif 51 0.140028008403
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141201/trmm_24_d02_20141201_1km.tif 52 0.138675049056
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141130/trmm_24_d02_20141130_1km.tif 53 0.137360563949
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141129/trmm_24_d02_20141129_1km.tif 54 0.136082763488
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141128/trmm_24_d02_20141128_1km.tif 55 0.134839972493
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141127/trmm_24_d02_20141127_1km.tif 56 0.133630620956
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141126/trmm_24_d02_20141126_1km.tif 57 0.132453235707
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141125/trmm_24_d02_20141125_1km.tif 58 0.13130643286
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141124/trmm_24_d02_20141124_1km.tif 59 0.130188910981
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141123/trmm_24_d02_20141123_1km.tif 60 0.129099444874
+Normalized by 14.0960389476
+saving /Users/patricecappelaere/landslide/data/ant_r/d02/20150122/ant_r_20150122.tif
+Loaded Rainfall Thresholds: /Users/patricecappelaere/landslide/data/ant_r/d02_50ar.tif 3.91778765307 10.9254501971 30.5381773633
+Antecedent Rainfall Data: 0.0 2.62020243052 30.348846134
+saving /Users/patricecappelaere/landslide/data/ant_r/d02/20150122/ant_r_20150122_bool.tif
+Done.
+0...10...20...30...40...50...60...70...80...90...100 - done.
+bounds: -85 7.025 -76 9.9979 (spherical)
+pre-quantization: 1.00m (0.00000900°) 0.331m (0.00000297°)
+topology: 54 arcs, 3598 points
+post-quantization: 100m (0.000900°) 33.1m (0.000297°)
+simplification: effective minimum area 6.45e-10
+simplification: retained 1907 / 3596 points (53%)
+prune: retained 54 / 54 arcs (100%)
+composite: Unknown field with tag 33550 (0x830e) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 33922 (0x8482) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+storing to s3: ojo-d2 20150122/landslide_nowcast_d02_20150122.topojson.gz
+storing to s3: ojo-d2 20150122/landslide_nowcast_d02_20150122.thn.png
+generating forecast for 2015-01-22
+Processing Forecast Landslide Map for Region: d02 Central America
+antecedent_rainfall.py --region d02 --date 2015-01-22 -v
+Loading  /Users/patricecappelaere/landslide/data/susmap.2/susmap_d02_bool.tif
+Loading  /Users/patricecappelaere/landslide/data/trmm/d02/20150121/trmm_24_d02_20150121_1km.tif
+Loading  /Users/patricecappelaere/landslide/data/ant_r/d02/20150122/ant_r_20150122_bool.tif
+cols 2020 rows 1550
+Loading  /Users/patricecappelaere/landslide/data/ant_r/d02_50r.tif
+Loading  /Users/patricecappelaere/landslide/data/ant_r/d02_90r.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/rr_low.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/rr_high.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/iabr.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/step_8_1.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/step_8_2.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/step_8_3.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/step_8_4.tif
+gdaldem color-relief -alpha /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/landslide_nowcast_d02_20150122.tif ./cluts/landslide_colors.txt /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/landslide_nowcast_d02_20150122_rgb.tif
+gdal_translate  -q -scale 0 1 0 65535 /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/landslide_nowcast_d02_20150122_rgb.tif -b 1 -of PNM -ot Byte /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/landslide_nowcast_d02_20150122_rgb.tif.pgm
+rm -f /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/landslide_nowcast_d02_20150122_rgb.tif.pgm.aux.xml
+potrace -z black -a 1.5 -t 2 -i -b geojson -o /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/landslide_nowcast_d02_20150122_rgb.tif.pgm.geojson /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/landslide_nowcast_d02_20150122_rgb.tif.pgm -x 0.00833333333333 -L -92.6833333333 -B 6.16666666668 
+topojson -o /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/landslide_nowcast_d02_20150122_rgb.tif.pgm.topojson --simplify-proportion 0.5 -p nowcast=1 -- landslide_nowcast=/Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/landslide_nowcast_d02_20150122_rgb.tif.pgm.geojson
+gzip /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/landslide_nowcast_d02_20150122_rgb.tif.pgm.topojson
+mv /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/landslide_nowcast_d02_20150122_rgb.tif.pgm.topojson.gz /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/landslide_nowcast_d02_20150122.topojson.gz
+gdalwarp -overwrite -q -multi -ts 389 298 -r cubicspline -co COMPRESS=LZW /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/landslide_nowcast_d02_20150122_rgb.tif /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/landslide_nowcast_d02_20150122.thn.png.tmp.tif
+composite /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/landslide_nowcast_d02_20150122.thn.png.tmp.tif /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/d02_static.tiff /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/landslide_nowcast_d02_20150122.thn.png
+rm /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/landslide_nowcast_d02_20150122.thn.png.tmp.tif
+./aws-copy.py --bucket ojo-d2 --folder 20150122 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/landslide_nowcast_d02_20150122.topojson.gz --verbose
+./aws-copy.py --bucket ojo-d2 --folder 20150122 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150122/landslide_nowcast_d02_20150122.thn.png --verbose
+Done.
+composite: Unknown field with tag 33550 (0x830e) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 33922 (0x8482) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+bounds: -74.94167 16.35036 -64.97482 21.13252 (spherical)
+pre-quantization: 1.11m (0.00000997°) 0.532m (0.00000478°)
+topology: 8 arcs, 1176 points
+post-quantization: 111m (0.000997°) 53.2m (0.000478°)
+simplification: effective minimum area 3.49e-10
+simplification: retained 896 / 1173 points (76%)
+prune: retained 8 / 8 arcs (100%)
+Checking trmmopen.gsfc.nasa.gov/pub/gis/201501 for latest file...
+process_trmm_region: d03 0.00833333333333
+gdalwarp -overwrite -q -co COMPRESS=LZW -te -74.941667 16.350000 -64.975000 21.425000 /Users/patricecappelaere/landslide/data/trmm/20150121/trmm_24_20150121_180.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150121/trmm_24_d03_20150121.tif
+gdaldem color-relief -q -alpha -of GTiff /Users/patricecappelaere/landslide/data/trmm/d03/20150121/trmm_24_d03_20150121.tif cluts/green-blue-gr.txt /Users/patricecappelaere/landslide/data/trmm/d03/20150121/trmm_24_d03_20150121_rgb.tif
+pixelsize 0.00833333333333
+gdalwarp -overwrite -q -tr 0.00833333333333 0.00833333333333 -te -74.941667 16.350000 -64.975000 21.425000 -co COMPRESS=LZW /Users/patricecappelaere/landslide/data/trmm/20150121/trmm_24_20150121_180.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150121/trmm_24_d03_20150121_1km.tif
+gdaldem color-relief -q -alpha -of GTiff /Users/patricecappelaere/landslide/data/trmm/d03/20150121/trmm_24_d03_20150121_1km.tif cluts/green-blue-gr.txt /Users/patricecappelaere/landslide/data/trmm/d03/20150121/trmm_24_d03_20150121_1km_rgb.tif
+gdalwarp -overwrite -q -multi -ts 400 204 -r cubicspline -co COMPRESS=LZW /Users/patricecappelaere/landslide/data/trmm/d03/20150121/trmm_24_d03_20150121_rgb.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150121/trmm_24_d03_20150121.thn.png.tmp.tif
+composite -blend 60 /Users/patricecappelaere/landslide/data/trmm/d03/20150121/trmm_24_d03_20150121.thn.png.tmp.tif /Users/patricecappelaere/landslide/data/trmm/d03/d03_static.tiff /Users/patricecappelaere/landslide/data/trmm/d03/20150121/trmm_24_d03_20150121.thn.png
+rm /Users/patricecappelaere/landslide/data/trmm/d03/20150121/trmm_24_d03_20150121.thn.png.tmp.tif
+gdalwarp -overwrite -q -tr 0.000833 0.000833 -te -74.941667 16.350000 -64.975000 21.425000 -r cubicspline -co COMPRESS=LZW /Users/patricecappelaere/landslide/data/trmm/d03/20150121/trmm_24_d03_20150121.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150121/trmm_24_d03_20150121_100m.tif
+gdaldem color-relief -q -alpha -of GTiff /Users/patricecappelaere/landslide/data/trmm/d03/20150121/trmm_24_d03_20150121_100m.tif cluts/green-blue-gr.txt /Users/patricecappelaere/landslide/data/trmm/d03/20150121/trmm_24_d03_20150121_100m_rgb.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_1.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_1.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_1.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_1.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_1.tif.bmp -x 0.000833 -L -74.941667 -B 16.350364 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_1.tif.topojson --simplify-proportion 0.75 -p precip=1 -- precip=/Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_1.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_1.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson/precip_1.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_2.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_2.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_2.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_2.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_2.tif.bmp -x 0.000833 -L -74.941667 -B 16.350364 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_2.tif.topojson --simplify-proportion 0.75 -p precip=bounds: -74.94167 16.35036 -70.45848 19.19904 (spherical)
+pre-quantization: 0.499m (0.00000448°) 0.317m (0.00000285°)
+topology: 3 arcs, 427 points
+post-quantization: 49.9m (0.000448°) 31.7m (0.000285°)
+simplification: effective minimum area 4.85e-10
+simplification: retained 327 / 427 points (77%)
+prune: retained 3 / 3 arcs (100%)
+bounds: -74.94167 16.35036 -70.57259 19.1439 (spherical)
+pre-quantization: 0.486m (0.00000437°) 0.311m (0.00000279°)
+topology: 3 arcs, 387 points
+post-quantization: 48.6m (0.000437°) 31.1m (0.000279°)
+simplification: effective minimum area 4.43e-10
+simplification: retained 297 / 387 points (77%)
+prune: retained 3 / 3 arcs (100%)
+bounds: -74.94167 17.38829 -72.47821 19.04979 (spherical)
+pre-quantization: 0.274m (0.00000246°) 0.185m (0.00000166°)
+topology: 2 arcs, 306 points
+post-quantization: 27.4m (0.000246°) 18.5m (0.000166°)
+simplification: effective minimum area 2.61e-10
+simplification: retained 234 / 306 points (76%)
+prune: retained 2 / 2 arcs (100%)
+bounds: -73.02752 18.3717 -72.56849 18.92649 (spherical)
+pre-quantization: 0.0510m (4.59e-7°) 0.0617m (5.55e-7°)
+topology: 1 arcs, 105 points
+post-quantization: 5.10m (0.0000459°) 6.17m (0.0000555°)
+simplification: effective minimum area 1.03e-9
+simplification: retained 81 / 105 points (77%)
+prune: retained 1 / 1 arcs (100%)
+2 -- precip=/Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_2.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_2.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson/precip_2.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_3.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_3.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_3.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_3.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_3.tif.bmp -x 0.000833 -L -74.941667 -B 16.350364 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_3.tif.topojson --simplify-proportion 0.75 -p precip=3 -- precip=/Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_3.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_3.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson/precip_3.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_5.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_5.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_5.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_5.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_5.tif.bmp -x 0.000833 -L -74.941667 -B 16.350364 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_5.tif.topojson --simplify-proportion 0.75 -p precip=5 -- precip=/Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_5.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_5.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson/precip_5.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_8.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_8.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_8.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_8.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_8.tif.bmp -x 0.000833 -L -74.941667 -B 16.350364 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_8.tif.topojson --simplify-proportion 0.75 -p precip=8 -- precip=/Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_8.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_8.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson/precip_8.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_13.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_13.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_13.tif.bmp
+potrace -i -z blbounds: -72.8849 18.49531 -72.71742 18.71233 (spherical)
+pre-quantization: 0.0186m (1.67e-7°) 0.0241m (2.17e-7°)
+topology: 1 arcs, 57 points
+post-quantization: 1.86m (0.0000167°) 2.41m (0.0000217°)
+simplification: effective minimum area 1.21e-9
+simplification: retained 45 / 57 points (79%)
+prune: retained 1 / 1 arcs (100%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+ack -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_13.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_13.tif.bmp -x 0.000833 -L -74.941667 -B 16.350364 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_13.tif.topojson --simplify-proportion 0.75 -p precip=13 -- precip=/Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_13.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_13.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson/precip_13.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_21.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_21.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_21.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_21.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_21.tif.bmp -x 0.000833 -L -74.941667 -B 16.350364 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_21.tif.topojson --simplify-proportion 0.75 -p precip=21 -- precip=/Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_21.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_21.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson/precip_21.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_34.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_34.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_34.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_34.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_34.tif.bmp -x 0.000833 -L -74.941667 -B 16.350364 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_34.tif.topojson --simplify-proportion 0.75 -p precip=34 -- precip=/Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_34.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_34.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson/precip_34.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_55.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_55.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_55.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_55.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_55.tif.bmp -x 0.000833 -L -74.941667 -B 16.350364 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_55.tif.topojson --simplify-proportion 0.75 -p precip=55 -- precip=/Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_55.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_55.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d03/201501bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+trmm merging of  /Users/patricecappelaere/landslide/data/trmm/d03/20150121
+wrote /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson/trmm_levels.geojson  with features: 18
+stdout: 
+stderr: bounds: -74.9417 16.3504 -64.9748 21.1325 (spherical)
+pre-quantization: 1.11m (0.00000997°) 0.532m (0.00000478°)
+topology: 18 arcs, 1880 points
+post-quantization: 111m (0.000997°) 53.2m (0.000478°)
+prune: retained 18 / 18 arcs (100%)
+
+storing to s3: ojo-d3 20150121/trmm_24_d03_20150121.topojson.gz
+storing to s3: ojo-d3 20150121/trmm_24_d03_20150121.thn.png
+21/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson/precip_55.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_89.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_89.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_89.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_89.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_89.tif.bmp -x 0.000833 -L -74.941667 -B 16.350364 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_89.tif.topojson --simplify-proportion 0.75 -p precip=89 -- precip=/Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_89.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_89.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson/precip_89.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_144.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_144.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_144.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_144.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_144.tif.bmp -x 0.000833 -L -74.941667 -B 16.350364 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_144.tif.topojson --simplify-proportion 0.75 -p precip=144 -- precip=/Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_144.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150121/levels/level_144.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d03/20150121/geojson/precip_144.geojson
+node trmm_merge.js d03 20150121
+./aws-copy.py --bucket ojo-d3 --folder 20150121 --file /Users/patricecappelaere/landslide/data/trmm/d03/20150121/trmm_24_d03_20150121.topojson.gz --verbose
+./aws-copy.py --bucket ojo-d3 --folder 20150121 --file /Users/patricecappelaere/landslide/data/trmm/d03/20150121/trmm_24_d03_20150121.thn.png --verbose
+Done.
+trmm_process.py  -v  --date 2015-01-21 --region d03
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150121/trmm_24_d03_20150121_1km.tif 1 1.0
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150120/trmm_24_d03_20150120_1km.tif 2 0.707106781187
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150119/trmm_24_d03_20150119_1km.tif 3 0.57735026919
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150118/trmm_24_d03_20150118_1km.tif 4 0.5
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150117/trmm_24_d03_20150117_1km.tif 5 0.4472135955
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150116/trmm_24_d03_20150116_1km.tif 6 0.408248290464
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150115/trmm_24_d03_20150115_1km.tif 7 0.377964473009
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150114/trmm_24_d03_20150114_1km.tif 8 0.353553390593
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150113/trmm_24_d03_20150113_1km.tif 9 0.333333333333
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150112/trmm_24_d03_20150112_1km.tif 10 0.316227766017
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150111/trmm_24_d03_20150111_1km.tif 11 0.301511344578
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150110/trmm_24_d03_20150110_1km.tif 12 0.288675134595
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150109/trmm_24_d03_20150109_1km.tif 13 0.277350098113
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150108/trmm_24_d03_20150108_1km.tif 14 0.267261241912
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150107/trmm_24_d03_20150107_1km.tif 15 0.258198889747
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150106/trmm_24_d03_20150106_1km.tif 16 0.25
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150105/trmm_24_d03_20150105_1km.tif 17 0.242535625036
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150104/trmm_24_d03_20150104_1km.tif 18 0.235702260396
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150103/trmm_24_d03_20150103_1km.tif 19 0.229415733871
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150102/trmm_24_d03_20150102_1km.tif 20 0.22360679775
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150101/trmm_24_d03_20150101_1km.tif 21 0.218217890236
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141231/trmm_24_d03_20141231_1km.tif 22 0.213200716356
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141230/trmm_24_d03_20141230_1km.tif 23 0.208514414057
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141229/trmm_24_d03_20141229_1km.tif 24 0.204124145232
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141228/trmm_24_d03_20141228_1km.tif 25 0.2
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141227/trmm_24_d03_20141227_1km.tif 26 0.196116135138
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141226/trmm_24_d03_20141226_1km.tif 27 0.19245008973
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141225/trmm_24_d03_20141225_1km.tif 28 0.188982236505
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141224/trmm_24_d03_20141224_1km.tif 29 0.185695338177
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141223/trmm_24_d03_20141223_1km.tif 30 0.182574185835
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141222/trmm_24_d03_20141222_1km.tif 31 0.179605302027
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141221/trmm_24_d03_20141221_1km.tif 32 0.176776695297
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141220/trmm_24_d03_20141220_1km.tif 33 0.174077655956
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141219/trmm_24_d03_20141219_1km.tif 34 0.171498585143
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141218/trmm_24_d03_20141218_1km.tif 35 0.169030850946
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141217/trmm_24_d03_20141217_1km.tif 36 0.166666666667
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141216/trmm_24_d03_20141216_1km.tif 37 0.164398987305
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141215/trmm_24_d03_20141215_1km.tif 38 0.162221421131
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141214/trmm_24_d03_20141214_1km.tif 39 0.160128153805
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141213/trmm_24_d03_20141213_1km.tif 40 0.158113883008
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141212/trmm_24_d03_20141212_1km.tif 41 0.156173761889
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141211/trmm_24_d03_20141211_1km.tif 42 0.154303349962
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141210/trmm_24_d03_20141210_1km.tif 43 0.152498570333
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141209/trmm_24_d03_20141209_1km.tif 44 0.150755672289
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141208/trmm_24_d03_20141208_1km.tif 45 0.1490711985
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141207/trmm_24_d03_20141207_1km.tif 46 0.147441956155
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141206/trmm_24_d03_20141206_1km.tif 47 0.145864991498
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141205/trmm_24_d03_20141205_1km.tif 48 0.144337567297
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141204/trmm_24_d03_20141204_1km.tif 49 0.142857142857
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141203/trmm_24_d03_20141203_1km.tif 50 0.141421356237
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141202/trmm_24_d03_20141202_1km.tif 51 0.140028008403
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141201/trmm_24_d03_20141201_1km.tif 52 0.138675049056
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141130/trmm_24_d03_20141130_1km.tif 53 0.137360563949
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141129/trmm_24_d03_20141129_1km.tif 54 0.136082763488
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141128/trmm_24_d03_20141128_1km.tif 55 0.134839972493
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141127/trmm_24_d03_20141127_1km.tif 56 0.133630620956
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141126/trmm_24_d03_20141126_1km.tif 57 0.132453235707
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141125/trmm_24_d03_20141125_1km.tif 58 0.13130643286
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141124/trmm_24_d03_20141124_1km.tif 59 0.130188910981
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141123/trmm_24_d03_20141123_1km.tif 60 0.129099444874
+Normalized by 14.0960389476
+saving /Users/patricecappelaere/landslide/data/ant_r/d03/20150122/ant_r_20150122.tif
+Loaded Rainfall Thresholds: /Users/patricecappelaere/landslide/data/ant_r/d03_50ar.tif 0.846885022685 2.33470941667 7.96392162178
+Antecedent Rainfall Data: 0.0116935457791 1.12592954265 9.84228868055
+saving /Users/patricecappelaere/landslide/data/ant_r/d03/20150122/ant_r_20150122_bool.tif
+Done.
+0...10...20...30...40...50...60...70...80...90...100 - done.
+bounds: -73 18.7009 -72.7981 18.8688 (spherical)
+pre-quantization: 0.0225m (2.02e-7°) 0.0187m (1.68e-7°)
+topology: 1 arcs, 81 points
+post-quantization: 2.25m (0.0000202°) 1.87m (0.0000168°)
+simplification: effective minimum area 1.38e-9
+simplification: retained 43 / 81 points (53%)
+prune: retained 1 / 1 arcs (100%)
+composite: Unknown field with tag 33550 (0x830e) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 33922 (0x8482) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+storing to s3: ojo-d3 20150122/landslide_nowcast_d03_20150122.topojson.gz
+storing to s3: ojo-d3 20150122/landslide_nowcast_d03_20150122.thn.png
+generating forecast for 2015-01-22
+Processing Forecast Landslide Map for Region: d03 Hispaniola
+antecedent_rainfall.py --region d03 --date 2015-01-22 -v
+Loading  /Users/patricecappelaere/landslide/data/susmap.2/susmap_d03_bool.tif
+Loading  /Users/patricecappelaere/landslide/data/trmm/d03/20150121/trmm_24_d03_20150121_1km.tif
+Loading  /Users/patricecappelaere/landslide/data/ant_r/d03/20150122/ant_r_20150122_bool.tif
+cols 1196 rows 609
+Loading  /Users/patricecappelaere/landslide/data/ant_r/d03_50r.tif
+Loading  /Users/patricecappelaere/landslide/data/ant_r/d03_90r.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/rr_low.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/rr_high.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/iabr.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/step_8_1.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/step_8_2.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/step_8_3.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/step_8_4.tif
+gdaldem color-relief -alpha /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/landslide_nowcast_d03_20150122.tif ./cluts/landslide_colors.txt /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/landslide_nowcast_d03_20150122_rgb.tif
+gdal_translate  -q -scale 0 1 0 65535 /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/landslide_nowcast_d03_20150122_rgb.tif -b 1 -of PNM -ot Byte /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/landslide_nowcast_d03_20150122_rgb.tif.pgm
+rm -f /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/landslide_nowcast_d03_20150122_rgb.tif.pgm.aux.xml
+potrace -z black -a 1.5 -t 2 -i -b geojson -o /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/landslide_nowcast_d03_20150122_rgb.tif.pgm.geojson /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/landslide_nowcast_d03_20150122_rgb.tif.pgm -x 0.00833333333333 -L -74.9416666667 -B 16.35 
+topojson -o /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/landslide_nowcast_d03_20150122_rgb.tif.pgm.topojson --simplify-proportion 0.5 -p nowcast=1 -- landslide_nowcast=/Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/landslide_nowcast_d03_20150122_rgb.tif.pgm.geojson
+gzip /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/landslide_nowcast_d03_20150122_rgb.tif.pgm.topojson
+mv /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/landslide_nowcast_d03_20150122_rgb.tif.pgm.topojson.gz /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/landslide_nowcast_d03_20150122.topojson.gz
+gdalwarp -overwrite -q -multi -ts 400 204 -r cubicspline -co COMPRESS=LZW /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/landslide_nowcast_d03_20150122_rgb.tif /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/landslide_nowcast_d03_20150122.thn.png.tmp.tif
+composite /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/landslide_nowcast_d03_20150122.thn.png.tmp.tif /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/d03_static.tiff /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/landslide_nowcast_d03_20150122.thn.png
+rm /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/landslide_nowcast_d03_20150122.thn.png.tmp.tif
+./aws-copy.py --bucket ojo-d3 --folder 20150122 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/landslide_nowcast_d03_20150122.topojson.gz --verbose
+./aws-copy.py --bucket ojo-d3 --folder 20150122 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150122/landslide_nowcast_d03_20150122.thn.png --verbose
+Done.
+Restarting -v dynos... done
+ !    Invalid argument: "-v"
+Usage: heroku pgbackups:capture [DATABASE]
+
+ capture a backup from a database id
+
+ if no DATABASE is specified, defaults to DATABASE_URL
+
+ -e, --expire  # if no slots are available, destroy the oldest manual backup to make room
+
+ !    Invalid argument: "-v"
+Usage: heroku pgbackups:capture [DATABASE]
+
+ capture a backup from a database id
+
+ if no DATABASE is specified, defaults to DATABASE_URL
+
+ -e, --expire  # if no slots are available, destroy the oldest manual backup to make room
+
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+./landslide_nowcast.py --region d02 
+./landslide_nowcast.py --region d03 
+cd /Users/patricecappelaere/Development/ojo/ojo-streamer
+cd /Users/patricecappelaere/Development/ojo/ojo-streamer
+heroku restart --app ojo-streamer
+heroku restart --app ojo-streamer
+heroku pgbackups:capture --app ojo-streamer HEROKU_POSTGRESQL_COPPER_URL --expire
+heroku pgbackups:capture --app ojo-streamer HEROKU_POSTGRESQL_COPPER_URL --expire
+cd /Users/patricecappelaere/Development/ojo/ojo-wiki
+cd /Users/patricecappelaere/Development/ojo/ojo-wiki
+heroku pgbackups:capture --app ojo-wiki HEROKU_POSTGRESQL_ORANGE_URL --expire
+heroku pgbackups:capture --app ojo-wiki HEROKU_POSTGRESQL_ORANGE_URL --expire
+process_all.sh Done: Thu Jan 22 08:27:14 EST 2015
+Starting processing: Fri Jan 23 08:27:23 EST 2015
+composite: Unknown field with tag 33550 (0x830e) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 33922 (0x8482) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+bounds: -92.68333 6.16683 -75.85007 19.03465 (spherical)
+pre-quantization: 1.87m (0.0000168°) 1.43m (0.0000129°)
+topology: 26 arcs, 9626 points
+post-quantization: 187m (0.00168°) 143m (0.00129°)
+simplification: effective minimum area 3.27e-10
+simplification: retained 7257 / 9608 points (76%)
+prune: retained 26 / 26 arcs (100%)
+Checking trmmopen.gsfc.nasa.gov/pub/gis/201501 for latest file...
+Downloading it... 3B42RT.2015012221.7.1day.tif
+Downloading it... 3B42RT.2015012221.7.1day.tfw
+reading /Users/patricecappelaere/landslide/data/trmm/3B42RT/20150122/3B42RT.2015012221.7.1day.tif
+gdaldem color-relief -q -alpha -of GTiff /Users/patricecappelaere/landslide/data/trmm/20150122/trmm_24_20150122_180.tif cluts/green-blue-gr.txt /Users/patricecappelaere/landslide/data/trmm/20150122/trmm_24_20150122_rgb.tif
+process_trmm_region: d02 0.00833333333333
+gdalwarp -overwrite -q -co COMPRESS=LZW -te -92.683333 6.166667 -75.850000 19.083333 /Users/patricecappelaere/landslide/data/trmm/20150122/trmm_24_20150122_180.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150122/trmm_24_d02_20150122.tif
+gdaldem color-relief -q -alpha -of GTiff /Users/patricecappelaere/landslide/data/trmm/d02/20150122/trmm_24_d02_20150122.tif cluts/green-blue-gr.txt /Users/patricecappelaere/landslide/data/trmm/d02/20150122/trmm_24_d02_20150122_rgb.tif
+pixelsize 0.00833333333333
+gdalwarp -overwrite -q -tr 0.00833333333333 0.00833333333333 -te -92.683333 6.166667 -75.850000 19.083333 -co COMPRESS=LZW /Users/patricecappelaere/landslide/data/trmm/20150122/trmm_24_20150122_180.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150122/trmm_24_d02_20150122_1km.tif
+gdaldem color-relief -q -alpha -of GTiff /Users/patricecappelaere/landslide/data/trmm/d02/20150122/trmm_24_d02_20150122_1km.tif cluts/green-blue-gr.txt /Users/patricecappelaere/landslide/data/trmm/d02/20150122/trmm_24_d02_20150122_1km_rgb.tif
+gdalwarp -overwrite -q -multi -ts 389 298 -r cubicspline -co COMPRESS=LZW /Users/patricecappelaere/landslide/data/trmm/d02/20150122/trmm_24_d02_20150122_rgb.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150122/trmm_24_d02_20150122.thn.png.tmp.tif
+composite -blend 60 /Users/patricecappelaere/landslide/data/trmm/d02/20150122/trmm_24_d02_20150122.thn.png.tmp.tif /Users/patricecappelaere/landslide/data/trmm/d02/d02_static.tiff /Users/patricecappelaere/landslide/data/trmm/d02/20150122/trmm_24_d02_20150122.thn.png
+rm /Users/patricecappelaere/landslide/data/trmm/d02/20150122/trmm_24_d02_20150122.thn.png.tmp.tif
+gdalwarp -overwrite -q -tr 0.000833 0.000833 -te -92.683333 6.166667 -75.850000 19.083333 -r cubicspline -co COMPRESS=LZW /Users/patricecappelaere/landslide/data/trmm/d02/20150122/trmm_24_d02_20150122.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150122/trmm_24_d02_20150122_100m.tif
+gdaldem color-relief -q -alpha -of GTiff /Users/patricecappelaere/landslide/data/trmm/d02/20150122/trmm_24_d02_20150122_100m.tif cluts/green-blue-gr.txt /Users/patricecappelaere/landslide/data/trmm/d02/20150122/trmm_24_d02_20150122_100m_rgb.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_1.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_1.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_1.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_1.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_1.tif.bmp -x 0.000833 -L -92.683333 -B 6.166835 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_1.tif.topojson --simplify-proportion 0.75 -p precip=1 -- precip=/Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_1.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_1.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson/precip_1.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_2.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_2.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150122bounds: -92.68333 6.16683 -75.85007 18.97078 (spherical)
+pre-quantization: 1.87m (0.0000168°) 1.42m (0.0000128°)
+topology: 30 arcs, 7734 points
+post-quantization: 187m (0.00168°) 142m (0.00128°)
+simplification: effective minimum area 4.49e-10
+simplification: retained 5854 / 7724 points (76%)
+prune: retained 30 / 30 arcs (100%)
+bounds: -92.68333 6.16683 -75.85007 18.92637 (spherical)
+pre-quantization: 1.87m (0.0000168°) 1.42m (0.0000128°)
+topology: 30 arcs, 6982 points
+post-quantization: 187m (0.00168°) 142m (0.00128°)
+simplification: effective minimum area 6.27e-10
+simplification: retained 5292 / 6976 points (76%)
+prune: retained 30 / 30 arcs (100%)
+bounds: -92.68333 6.16683 -75.85007 18.85571 (spherical)
+pre-quantization: 1.87m (0.0000168°) 1.41m (0.0000127°)
+topology: 15 arcs, 5039 points
+post-quantization: 187m (0.00168°) 141m (0.00127°)
+simplification: effective minimum area 6.39e-10
+simplification: retained 3808 / 5036 points (76%)
+prune: retained 15 / 15 arcs (100%)
+bounds: -92.68333 6.16683 -76.0471 18.76156 (spherical)
+pre-quantization: 1.85m (0.0000166°) 1.40m (0.0000126°)
+topology: 12 arcs, 4188 points
+post-quantization: 185m (0.00166°) 140m (0.00126°)
+simplification: effective minimum area 6.16e-10
+simplification: retained 3159 / 4179 points (76%)
+prune: retained 12 / 12 arcs (100%)
+/levels/level_2.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_2.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_2.tif.bmp -x 0.000833 -L -92.683333 -B 6.166835 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_2.tif.topojson --simplify-proportion 0.75 -p precip=2 -- precip=/Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_2.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_2.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson/precip_2.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_3.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_3.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_3.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_3.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_3.tif.bmp -x 0.000833 -L -92.683333 -B 6.166835 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_3.tif.topojson --simplify-proportion 0.75 -p precip=3 -- precip=/Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_3.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_3.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson/precip_3.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_5.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_5.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_5.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_5.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_5.tif.bmp -x 0.000833 -L -92.683333 -B 6.166835 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_5.tif.topojson --simplify-proportion 0.75 -p precip=5 -- precip=/Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_5.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_5.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson/precip_5.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_8.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_8.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_8.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_8.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_8.tif.bmp -x 0.000833 -L -92.683333 -B 6.166835 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_8.tif.topojson --simplify-proportion 0.75 -p precip=8 -- precip=/Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_8.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_8.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d02/201501bounds: -92.68333 6.16683 -76.18077 16.82495 (spherical)
+pre-quantization: 1.84m (0.0000165°) 1.19m (0.0000107°)
+topology: 13 arcs, 2981 points
+post-quantization: 184m (0.00165°) 119m (0.00107°)
+simplification: effective minimum area 5.30e-10
+simplification: retained 2258 / 2975 points (76%)
+prune: retained 13 / 13 arcs (100%)
+bounds: -87.17687 6.16683 -76.31355 10.22172 (spherical)
+pre-quantization: 1.21m (0.0000109°) 0.451m (0.00000406°)
+topology: 8 arcs, 1376 points
+post-quantization: 121m (0.00109°) 45.1m (0.000406°)
+simplification: effective minimum area 5.98e-10
+simplification: retained 1048 / 1375 points (76%)
+prune: retained 8 / 8 arcs (100%)
+bounds: -86.49946 6.16683 -76.46185 9.30709 (spherical)
+pre-quantization: 1.12m (0.0000100°) 0.349m (0.00000314°)
+topology: 3 arcs, 491 points
+post-quantization: 112m (0.00100°) 34.9m (0.000314°)
+simplification: effective minimum area 4.74e-10
+simplification: retained 375 / 491 points (76%)
+prune: retained 3 / 3 arcs (100%)
+22/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson/precip_8.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_13.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_13.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_13.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_13.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_13.tif.bmp -x 0.000833 -L -92.683333 -B 6.166835 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_13.tif.topojson --simplify-proportion 0.75 -p precip=13 -- precip=/Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_13.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_13.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson/precip_13.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_21.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_21.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_21.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_21.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_21.tif.bmp -x 0.000833 -L -92.683333 -B 6.166835 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_21.tif.topojson --simplify-proportion 0.75 -p precip=21 -- precip=/Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_21.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_21.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson/precip_21.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_34.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_34.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_34.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_34.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_34.tif.bmp -x 0.000833 -L -92.683333 -B 6.166835 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_34.tif.topojson --simplify-proportion 0.75 -p precip=34 -- precip=/Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_34.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_34.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson/precip_34.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_55.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_55.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_55.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_55.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_55.tif.bmp -x 0.000833 -L -92.683333 -B 6.166835 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/bounds: -78.20579 6.16683 -76.62976 7.14034 (spherical)
+pre-quantization: 0.175m (0.00000158°) 0.108m (9.74e-7°)
+topology: 2 arcs, 250 points
+post-quantization: 17.5m (0.000158°) 10.8m (0.0000974°)
+simplification: effective minimum area 3.90e-10
+simplification: retained 192 / 250 points (77%)
+prune: retained 2 / 2 arcs (100%)
+bounds: -77.20821 6.16683 -76.81174 6.98375 (spherical)
+pre-quantization: 0.0441m (3.97e-7°) 0.0908m (8.17e-7°)
+topology: 1 arcs, 137 points
+post-quantization: 4.41m (0.0000397°) 9.08m (0.0000817°)
+simplification: effective minimum area 3.33e-10
+simplification: retained 106 / 137 points (77%)
+prune: retained 1 / 1 arcs (100%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+trmm merging of  /Users/patricecappelaere/landslide/data/trmm/d02/20150122
+wrote /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson/trmm_levels.geojson  with features: 127
+stdout: 
+stderr: bounds: -92.6833 6.1668 -75.8501 19.0334 (spherical)
+pre-quantization: 1.87m (0.0000168°) 1.43m (0.0000129°)
+topology: 140 arcs, 29349 points
+post-quantization: 187m (0.00168°) 143m (0.00129°)
+prune: retained 140 / 140 arcs (100%)
+
+storing to s3: ojo-d2 20150122/trmm_24_d02_20150122.topojson.gz
+storing to s3: ojo-d2 20150122/trmm_24_d02_20150122.thn.png
+level_55.tif.topojson --simplify-proportion 0.75 -p precip=55 -- precip=/Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_55.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_55.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson/precip_55.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_89.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_89.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_89.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_89.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_89.tif.bmp -x 0.000833 -L -92.683333 -B 6.166835 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_89.tif.topojson --simplify-proportion 0.75 -p precip=89 -- precip=/Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_89.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_89.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson/precip_89.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_144.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_144.tif /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_144.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_144.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_144.tif.bmp -x 0.000833 -L -92.683333 -B 6.166835 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_144.tif.topojson --simplify-proportion 0.75 -p precip=144 -- precip=/Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_144.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson /Users/patricecappelaere/landslide/data/trmm/d02/20150122/levels/level_144.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d02/20150122/geojson/precip_144.geojson
+node trmm_merge.js d02 20150122
+./aws-copy.py --bucket ojo-d2 --folder 20150122 --file /Users/patricecappelaere/landslide/data/trmm/d02/20150122/trmm_24_d02_20150122.topojson.gz --verbose
+./aws-copy.py --bucket ojo-d2 --folder 20150122 --file /Users/patricecappelaere/landslide/data/trmm/d02/20150122/trmm_24_d02_20150122.thn.png --verbose
+Done.
+trmm_process.py  -v  --date 2015-01-22 --region d02
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150122/trmm_24_d02_20150122_1km.tif 1 1.0
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150121/trmm_24_d02_20150121_1km.tif 2 0.707106781187
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150120/trmm_24_d02_20150120_1km.tif 3 0.57735026919
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150119/trmm_24_d02_20150119_1km.tif 4 0.5
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150118/trmm_24_d02_20150118_1km.tif 5 0.4472135955
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150117/trmm_24_d02_20150117_1km.tif 6 0.408248290464
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150116/trmm_24_d02_20150116_1km.tif 7 0.377964473009
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150115/trmm_24_d02_20150115_1km.tif 8 0.353553390593
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150114/trmm_24_d02_20150114_1km.tif 9 0.333333333333
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150113/trmm_24_d02_20150113_1km.tif 10 0.316227766017
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150112/trmm_24_d02_20150112_1km.tif 11 0.301511344578
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150111/trmm_24_d02_20150111_1km.tif 12 0.288675134595
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150110/trmm_24_d02_20150110_1km.tif 13 0.277350098113
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150109/trmm_24_d02_20150109_1km.tif 14 0.267261241912
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150108/trmm_24_d02_20150108_1km.tif 15 0.258198889747
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150107/trmm_24_d02_20150107_1km.tif 16 0.25
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150106/trmm_24_d02_20150106_1km.tif 17 0.242535625036
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150105/trmm_24_d02_20150105_1km.tif 18 0.235702260396
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150104/trmm_24_d02_20150104_1km.tif 19 0.229415733871
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150103/trmm_24_d02_20150103_1km.tif 20 0.22360679775
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150102/trmm_24_d02_20150102_1km.tif 21 0.218217890236
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20150101/trmm_24_d02_20150101_1km.tif 22 0.213200716356
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141231/trmm_24_d02_20141231_1km.tif 23 0.208514414057
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141230/trmm_24_d02_20141230_1km.tif 24 0.204124145232
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141229/trmm_24_d02_20141229_1km.tif 25 0.2
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141228/trmm_24_d02_20141228_1km.tif 26 0.196116135138
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141227/trmm_24_d02_20141227_1km.tif 27 0.19245008973
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141226/trmm_24_d02_20141226_1km.tif 28 0.188982236505
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141225/trmm_24_d02_20141225_1km.tif 29 0.185695338177
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141224/trmm_24_d02_20141224_1km.tif 30 0.182574185835
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141223/trmm_24_d02_20141223_1km.tif 31 0.179605302027
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141222/trmm_24_d02_20141222_1km.tif 32 0.176776695297
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141221/trmm_24_d02_20141221_1km.tif 33 0.174077655956
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141220/trmm_24_d02_20141220_1km.tif 34 0.171498585143
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141219/trmm_24_d02_20141219_1km.tif 35 0.169030850946
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141218/trmm_24_d02_20141218_1km.tif 36 0.166666666667
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141217/trmm_24_d02_20141217_1km.tif 37 0.164398987305
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141216/trmm_24_d02_20141216_1km.tif 38 0.162221421131
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141215/trmm_24_d02_20141215_1km.tif 39 0.160128153805
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141214/trmm_24_d02_20141214_1km.tif 40 0.158113883008
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141213/trmm_24_d02_20141213_1km.tif 41 0.156173761889
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141212/trmm_24_d02_20141212_1km.tif 42 0.154303349962
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141211/trmm_24_d02_20141211_1km.tif 43 0.152498570333
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141210/trmm_24_d02_20141210_1km.tif 44 0.150755672289
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141209/trmm_24_d02_20141209_1km.tif 45 0.1490711985
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141208/trmm_24_d02_20141208_1km.tif 46 0.147441956155
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141207/trmm_24_d02_20141207_1km.tif 47 0.145864991498
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141206/trmm_24_d02_20141206_1km.tif 48 0.144337567297
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141205/trmm_24_d02_20141205_1km.tif 49 0.142857142857
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141204/trmm_24_d02_20141204_1km.tif 50 0.141421356237
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141203/trmm_24_d02_20141203_1km.tif 51 0.140028008403
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141202/trmm_24_d02_20141202_1km.tif 52 0.138675049056
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141201/trmm_24_d02_20141201_1km.tif 53 0.137360563949
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141130/trmm_24_d02_20141130_1km.tif 54 0.136082763488
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141129/trmm_24_d02_20141129_1km.tif 55 0.134839972493
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141128/trmm_24_d02_20141128_1km.tif 56 0.133630620956
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141127/trmm_24_d02_20141127_1km.tif 57 0.132453235707
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141126/trmm_24_d02_20141126_1km.tif 58 0.13130643286
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141125/trmm_24_d02_20141125_1km.tif 59 0.130188910981
+Processing /Users/patricecappelaere/landslide/data/trmm/d02/20141124/trmm_24_d02_20141124_1km.tif 60 0.129099444874
+Normalized by 14.0960389476
+saving /Users/patricecappelaere/landslide/data/ant_r/d02/20150123/ant_r_20150123.tif
+Loaded Rainfall Thresholds: /Users/patricecappelaere/landslide/data/ant_r/d02_50ar.tif 3.91778765307 10.9254501971 30.5381773633
+Antecedent Rainfall Data: 0.0 2.68266467567 33.5051213495
+saving /Users/patricecappelaere/landslide/data/ant_r/d02/20150123/ant_r_20150123_bool.tif
+Done.
+0...10...20...30...40...50...60...70...80...90...100 - done.
+bounds: -84.2496 7.025 -76.5 9.9979 (spherical)
+pre-quantization: 0.862m (0.00000775°) 0.331m (0.00000297°)
+topology: 10 arcs, 762 points
+post-quantization: 86.2m (0.000775°) 33.1m (0.000297°)
+simplification: effective minimum area 8.36e-10
+simplification: retained 402 / 762 points (53%)
+prune: retained 10 / 10 arcs (100%)
+composite: Unknown field with tag 33550 (0x830e) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 33922 (0x8482) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+storing to s3: ojo-d2 20150123/landslide_nowcast_d02_20150123.topojson.gz
+storing to s3: ojo-d2 20150123/landslide_nowcast_d02_20150123.thn.png
+generating forecast for 2015-01-23
+Processing Forecast Landslide Map for Region: d02 Central America
+antecedent_rainfall.py --region d02 --date 2015-01-23 -v
+Loading  /Users/patricecappelaere/landslide/data/susmap.2/susmap_d02_bool.tif
+Loading  /Users/patricecappelaere/landslide/data/trmm/d02/20150122/trmm_24_d02_20150122_1km.tif
+Loading  /Users/patricecappelaere/landslide/data/ant_r/d02/20150123/ant_r_20150123_bool.tif
+cols 2020 rows 1550
+Loading  /Users/patricecappelaere/landslide/data/ant_r/d02_50r.tif
+Loading  /Users/patricecappelaere/landslide/data/ant_r/d02_90r.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/rr_low.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/rr_high.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/iabr.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/step_8_1.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/step_8_2.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/step_8_3.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/step_8_4.tif
+gdaldem color-relief -alpha /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.tif ./cluts/landslide_colors.txt /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif
+gdal_translate  -q -scale 0 1 0 65535 /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif -b 1 -of PNM -ot Byte /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm
+rm -f /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.aux.xml
+potrace -z black -a 1.5 -t 2 -i -b geojson -o /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.geojson /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm -x 0.00833333333333 -L -92.6833333333 -B 6.16666666668 
+topojson -o /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.topojson --simplify-proportion 0.5 -p nowcast=1 -- landslide_nowcast=/Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.geojson
+gzip /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.topojson
+mv /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.topojson.gz /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.topojson.gz
+gdalwarp -overwrite -q -multi -ts 389 298 -r cubicspline -co COMPRESS=LZW /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.thn.png.tmp.tif
+composite /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.thn.png.tmp.tif /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/d02_static.tiff /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.thn.png
+rm /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.thn.png.tmp.tif
+./aws-copy.py --bucket ojo-d2 --folder 20150123 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.topojson.gz --verbose
+./aws-copy.py --bucket ojo-d2 --folder 20150123 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.thn.png --verbose
+Done.
+composite: Unknown field with tag 33550 (0x830e) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 33922 (0x8482) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+bounds: -74.94167 16.35036 -64.97482 20.85333 (spherical)
+pre-quantization: 1.11m (0.00000997°) 0.501m (0.00000450°)
+topology: 13 arcs, 1573 points
+post-quantization: 111m (0.000997°) 50.1m (0.000450°)
+simplification: effective minimum area 3.92e-10
+simplification: retained 1206 / 1573 points (77%)
+prune: retained 13 / 13 arcs (100%)
+Checking trmmopen.gsfc.nasa.gov/pub/gis/201501 for latest file...
+process_trmm_region: d03 0.00833333333333
+gdalwarp -overwrite -q -co COMPRESS=LZW -te -74.941667 16.350000 -64.975000 21.425000 /Users/patricecappelaere/landslide/data/trmm/20150122/trmm_24_20150122_180.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150122/trmm_24_d03_20150122.tif
+gdaldem color-relief -q -alpha -of GTiff /Users/patricecappelaere/landslide/data/trmm/d03/20150122/trmm_24_d03_20150122.tif cluts/green-blue-gr.txt /Users/patricecappelaere/landslide/data/trmm/d03/20150122/trmm_24_d03_20150122_rgb.tif
+pixelsize 0.00833333333333
+gdalwarp -overwrite -q -tr 0.00833333333333 0.00833333333333 -te -74.941667 16.350000 -64.975000 21.425000 -co COMPRESS=LZW /Users/patricecappelaere/landslide/data/trmm/20150122/trmm_24_20150122_180.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150122/trmm_24_d03_20150122_1km.tif
+gdaldem color-relief -q -alpha -of GTiff /Users/patricecappelaere/landslide/data/trmm/d03/20150122/trmm_24_d03_20150122_1km.tif cluts/green-blue-gr.txt /Users/patricecappelaere/landslide/data/trmm/d03/20150122/trmm_24_d03_20150122_1km_rgb.tif
+gdalwarp -overwrite -q -multi -ts 400 204 -r cubicspline -co COMPRESS=LZW /Users/patricecappelaere/landslide/data/trmm/d03/20150122/trmm_24_d03_20150122_rgb.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150122/trmm_24_d03_20150122.thn.png.tmp.tif
+composite -blend 60 /Users/patricecappelaere/landslide/data/trmm/d03/20150122/trmm_24_d03_20150122.thn.png.tmp.tif /Users/patricecappelaere/landslide/data/trmm/d03/d03_static.tiff /Users/patricecappelaere/landslide/data/trmm/d03/20150122/trmm_24_d03_20150122.thn.png
+rm /Users/patricecappelaere/landslide/data/trmm/d03/20150122/trmm_24_d03_20150122.thn.png.tmp.tif
+gdalwarp -overwrite -q -tr 0.000833 0.000833 -te -74.941667 16.350000 -64.975000 21.425000 -r cubicspline -co COMPRESS=LZW /Users/patricecappelaere/landslide/data/trmm/d03/20150122/trmm_24_d03_20150122.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150122/trmm_24_d03_20150122_100m.tif
+gdaldem color-relief -q -alpha -of GTiff /Users/patricecappelaere/landslide/data/trmm/d03/20150122/trmm_24_d03_20150122_100m.tif cluts/green-blue-gr.txt /Users/patricecappelaere/landslide/data/trmm/d03/20150122/trmm_24_d03_20150122_100m_rgb.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_1.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_1.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_1.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_1.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_1.tif.bmp -x 0.000833 -L -74.941667 -B 16.350364 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_1.tif.topojson --simplify-proportion 0.75 -p precip=1 -- precip=/Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_1.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_1.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson/precip_1.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_2.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_2.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_2.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_2.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_2.tif.bmp -x 0.000833 -L -74.941667 -B 16.350364 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_2.tif.topojson --simplify-proportion 0.75 -p precip=bounds: -74.94167 16.35036 -64.97482 19.195 (spherical)
+pre-quantization: 1.11m (0.00000997°) 0.316m (0.00000284°)
+topology: 5 arcs, 621 points
+post-quantization: 111m (0.000997°) 31.6m (0.000284°)
+simplification: effective minimum area 2.87e-10
+simplification: retained 476 / 620 points (77%)
+prune: retained 5 / 5 arcs (100%)
+bounds: -74.94167 16.35036 -64.97482 19.08468 (spherical)
+pre-quantization: 1.11m (0.00000997°) 0.304m (0.00000273°)
+topology: 4 arcs, 372 points
+post-quantization: 111m (0.000997°) 30.4m (0.000273°)
+simplification: effective minimum area 2.74e-10
+simplification: retained 286 / 370 points (77%)
+prune: retained 4 / 4 arcs (100%)
+bounds: -73.16127 18.3342 -64.97495 18.97653 (spherical)
+pre-quantization: 0.910m (0.00000819°) 0.0714m (6.42e-7°)
+topology: 2 arcs, 210 points
+post-quantization: 91.0m (0.000819°) 7.14m (0.0000642°)
+simplification: effective minimum area 3.86e-10
+simplification: retained 162 / 210 points (77%)
+prune: retained 2 / 2 arcs (100%)
+bounds: -73.05236 18.41332 -64.97482 18.86508 (spherical)
+pre-quantization: 0.898m (0.00000808°) 0.0502m (4.52e-7°)
+topology: 2 arcs, 154 points
+post-quantization: 89.8m (0.000808°) 5.02m (0.0000452°)
+simplification: effective minimum area 1.47e-10
+simplification: retained 120 / 154 points (78%)
+prune: retained 2 / 2 arcs (100%)
+2 -- precip=/Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_2.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_2.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson/precip_2.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_3.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_3.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_3.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_3.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_3.tif.bmp -x 0.000833 -L -74.941667 -B 16.350364 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_3.tif.topojson --simplify-proportion 0.75 -p precip=3 -- precip=/Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_3.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_3.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson/precip_3.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_5.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_5.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_5.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_5.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_5.tif.bmp -x 0.000833 -L -74.941667 -B 16.350364 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_5.tif.topojson --simplify-proportion 0.75 -p precip=5 -- precip=/Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_5.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_5.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson/precip_5.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_8.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_8.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_8.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_8.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_8.tif.bmp -x 0.000833 -L -74.941667 -B 16.350364 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_8.tif.topojson --simplify-proportion 0.75 -p precip=8 -- precip=/Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_8.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_8.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson/precip_8.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_13.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_13.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_13.tif.bmp
+potrace -i -z blbounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+ack -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_13.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_13.tif.bmp -x 0.000833 -L -74.941667 -B 16.350364 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_13.tif.topojson --simplify-proportion 0.75 -p precip=13 -- precip=/Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_13.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_13.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson/precip_13.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_21.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_21.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_21.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_21.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_21.tif.bmp -x 0.000833 -L -74.941667 -B 16.350364 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_21.tif.topojson --simplify-proportion 0.75 -p precip=21 -- precip=/Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_21.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_21.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson/precip_21.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_34.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_34.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_34.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_34.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_34.tif.bmp -x 0.000833 -L -74.941667 -B 16.350364 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_34.tif.topojson --simplify-proportion 0.75 -p precip=34 -- precip=/Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_34.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_34.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson/precip_34.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_55.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_55.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_55.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_55.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_55.tif.bmp -x 0.000833 -L -74.941667 -B 16.350364 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_55.tif.topojson --simplify-proportion 0.75 -p precip=55 -- precip=/Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_55.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_55.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d03/201501bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+trmm merging of  /Users/patricecappelaere/landslide/data/trmm/d03/20150122
+wrote /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson/trmm_levels.geojson  with features: 26
+stdout: 
+stderr: bounds: -74.9417 16.3504 -64.9748 20.8533 (spherical)
+pre-quantization: 1.11m (0.00000997°) 0.501m (0.00000450°)
+topology: 26 arcs, 2250 points
+post-quantization: 111m (0.000997°) 50.1m (0.000450°)
+prune: retained 26 / 26 arcs (100%)
+
+storing to s3: ojo-d3 20150122/trmm_24_d03_20150122.topojson.gz
+storing to s3: ojo-d3 20150122/trmm_24_d03_20150122.thn.png
+22/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson/precip_55.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_89.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_89.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_89.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_89.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_89.tif.bmp -x 0.000833 -L -74.941667 -B 16.350364 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_89.tif.topojson --simplify-proportion 0.75 -p precip=89 -- precip=/Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_89.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_89.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson/precip_89.geojson
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_144.tif
+gdal_translate -q -of PNM -expand gray /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_144.tif /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_144.tif.bmp
+potrace -i -z black -a 1.5 -t 3 -b geojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_144.tif.geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_144.tif.bmp -x 0.000833 -L -74.941667 -B 16.350364 
+topojson -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_144.tif.topojson --simplify-proportion 0.75 -p precip=144 -- precip=/Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_144.tif.geojson
+topojson-geojson --precision 4 -o /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson /Users/patricecappelaere/landslide/data/trmm/d03/20150122/levels/level_144.tif.topojson
+mv /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson/precip.json /Users/patricecappelaere/landslide/data/trmm/d03/20150122/geojson/precip_144.geojson
+node trmm_merge.js d03 20150122
+./aws-copy.py --bucket ojo-d3 --folder 20150122 --file /Users/patricecappelaere/landslide/data/trmm/d03/20150122/trmm_24_d03_20150122.topojson.gz --verbose
+./aws-copy.py --bucket ojo-d3 --folder 20150122 --file /Users/patricecappelaere/landslide/data/trmm/d03/20150122/trmm_24_d03_20150122.thn.png --verbose
+Done.
+trmm_process.py  -v  --date 2015-01-22 --region d03
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150122/trmm_24_d03_20150122_1km.tif 1 1.0
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150121/trmm_24_d03_20150121_1km.tif 2 0.707106781187
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150120/trmm_24_d03_20150120_1km.tif 3 0.57735026919
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150119/trmm_24_d03_20150119_1km.tif 4 0.5
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150118/trmm_24_d03_20150118_1km.tif 5 0.4472135955
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150117/trmm_24_d03_20150117_1km.tif 6 0.408248290464
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150116/trmm_24_d03_20150116_1km.tif 7 0.377964473009
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150115/trmm_24_d03_20150115_1km.tif 8 0.353553390593
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150114/trmm_24_d03_20150114_1km.tif 9 0.333333333333
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150113/trmm_24_d03_20150113_1km.tif 10 0.316227766017
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150112/trmm_24_d03_20150112_1km.tif 11 0.301511344578
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150111/trmm_24_d03_20150111_1km.tif 12 0.288675134595
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150110/trmm_24_d03_20150110_1km.tif 13 0.277350098113
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150109/trmm_24_d03_20150109_1km.tif 14 0.267261241912
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150108/trmm_24_d03_20150108_1km.tif 15 0.258198889747
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150107/trmm_24_d03_20150107_1km.tif 16 0.25
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150106/trmm_24_d03_20150106_1km.tif 17 0.242535625036
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150105/trmm_24_d03_20150105_1km.tif 18 0.235702260396
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150104/trmm_24_d03_20150104_1km.tif 19 0.229415733871
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150103/trmm_24_d03_20150103_1km.tif 20 0.22360679775
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150102/trmm_24_d03_20150102_1km.tif 21 0.218217890236
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20150101/trmm_24_d03_20150101_1km.tif 22 0.213200716356
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141231/trmm_24_d03_20141231_1km.tif 23 0.208514414057
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141230/trmm_24_d03_20141230_1km.tif 24 0.204124145232
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141229/trmm_24_d03_20141229_1km.tif 25 0.2
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141228/trmm_24_d03_20141228_1km.tif 26 0.196116135138
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141227/trmm_24_d03_20141227_1km.tif 27 0.19245008973
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141226/trmm_24_d03_20141226_1km.tif 28 0.188982236505
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141225/trmm_24_d03_20141225_1km.tif 29 0.185695338177
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141224/trmm_24_d03_20141224_1km.tif 30 0.182574185835
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141223/trmm_24_d03_20141223_1km.tif 31 0.179605302027
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141222/trmm_24_d03_20141222_1km.tif 32 0.176776695297
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141221/trmm_24_d03_20141221_1km.tif 33 0.174077655956
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141220/trmm_24_d03_20141220_1km.tif 34 0.171498585143
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141219/trmm_24_d03_20141219_1km.tif 35 0.169030850946
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141218/trmm_24_d03_20141218_1km.tif 36 0.166666666667
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141217/trmm_24_d03_20141217_1km.tif 37 0.164398987305
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141216/trmm_24_d03_20141216_1km.tif 38 0.162221421131
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141215/trmm_24_d03_20141215_1km.tif 39 0.160128153805
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141214/trmm_24_d03_20141214_1km.tif 40 0.158113883008
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141213/trmm_24_d03_20141213_1km.tif 41 0.156173761889
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141212/trmm_24_d03_20141212_1km.tif 42 0.154303349962
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141211/trmm_24_d03_20141211_1km.tif 43 0.152498570333
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141210/trmm_24_d03_20141210_1km.tif 44 0.150755672289
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141209/trmm_24_d03_20141209_1km.tif 45 0.1490711985
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141208/trmm_24_d03_20141208_1km.tif 46 0.147441956155
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141207/trmm_24_d03_20141207_1km.tif 47 0.145864991498
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141206/trmm_24_d03_20141206_1km.tif 48 0.144337567297
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141205/trmm_24_d03_20141205_1km.tif 49 0.142857142857
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141204/trmm_24_d03_20141204_1km.tif 50 0.141421356237
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141203/trmm_24_d03_20141203_1km.tif 51 0.140028008403
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141202/trmm_24_d03_20141202_1km.tif 52 0.138675049056
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141201/trmm_24_d03_20141201_1km.tif 53 0.137360563949
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141130/trmm_24_d03_20141130_1km.tif 54 0.136082763488
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141129/trmm_24_d03_20141129_1km.tif 55 0.134839972493
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141128/trmm_24_d03_20141128_1km.tif 56 0.133630620956
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141127/trmm_24_d03_20141127_1km.tif 57 0.132453235707
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141126/trmm_24_d03_20141126_1km.tif 58 0.13130643286
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141125/trmm_24_d03_20141125_1km.tif 59 0.130188910981
+Processing /Users/patricecappelaere/landslide/data/trmm/d03/20141124/trmm_24_d03_20141124_1km.tif 60 0.129099444874
+Normalized by 14.0960389476
+saving /Users/patricecappelaere/landslide/data/ant_r/d03/20150123/ant_r_20150123.tif
+Loaded Rainfall Thresholds: /Users/patricecappelaere/landslide/data/ant_r/d03_50ar.tif 0.846885022685 2.33470941667 7.96392162178
+Antecedent Rainfall Data: 0.0115847662448 1.07476804828 10.3900212601
+saving /Users/patricecappelaere/landslide/data/ant_r/d03/20150123/ant_r_20150123_bool.tif
+Done.
+0...10...20...30...40...50...60...70...80...90...100 - done.
+bounds: -73 18.7009 -72.7981 18.8688 (spherical)
+pre-quantization: 0.0225m (2.02e-7°) 0.0187m (1.68e-7°)
+topology: 1 arcs, 81 points
+post-quantization: 2.25m (0.0000202°) 1.87m (0.0000168°)
+simplification: effective minimum area 1.38e-9
+simplification: retained 43 / 81 points (53%)
+prune: retained 1 / 1 arcs (100%)
+composite: Unknown field with tag 33550 (0x830e) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 33922 (0x8482) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+storing to s3: ojo-d3 20150123/landslide_nowcast_d03_20150123.topojson.gz
+storing to s3: ojo-d3 20150123/landslide_nowcast_d03_20150123.thn.png
+generating forecast for 2015-01-23
+Processing Forecast Landslide Map for Region: d03 Hispaniola
+antecedent_rainfall.py --region d03 --date 2015-01-23 -v
+Loading  /Users/patricecappelaere/landslide/data/susmap.2/susmap_d03_bool.tif
+Loading  /Users/patricecappelaere/landslide/data/trmm/d03/20150122/trmm_24_d03_20150122_1km.tif
+Loading  /Users/patricecappelaere/landslide/data/ant_r/d03/20150123/ant_r_20150123_bool.tif
+cols 1196 rows 609
+Loading  /Users/patricecappelaere/landslide/data/ant_r/d03_50r.tif
+Loading  /Users/patricecappelaere/landslide/data/ant_r/d03_90r.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/rr_low.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/rr_high.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/iabr.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/step_8_1.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/step_8_2.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/step_8_3.tif
+Created /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/step_8_4.tif
+gdaldem color-relief -alpha /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.tif ./cluts/landslide_colors.txt /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif
+gdal_translate  -q -scale 0 1 0 65535 /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif -b 1 -of PNM -ot Byte /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm
+rm -f /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.aux.xml
+potrace -z black -a 1.5 -t 2 -i -b geojson -o /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.geojson /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm -x 0.00833333333333 -L -74.9416666667 -B 16.35 
+topojson -o /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.topojson --simplify-proportion 0.5 -p nowcast=1 -- landslide_nowcast=/Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.geojson
+gzip /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.topojson
+mv /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.topojson.gz /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.topojson.gz
+gdalwarp -overwrite -q -multi -ts 400 204 -r cubicspline -co COMPRESS=LZW /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.thn.png.tmp.tif
+composite /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.thn.png.tmp.tif /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/d03_static.tiff /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.thn.png
+rm /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.thn.png.tmp.tif
+./aws-copy.py --bucket ojo-d3 --folder 20150123 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.topojson.gz --verbose
+./aws-copy.py --bucket ojo-d3 --folder 20150123 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.thn.png --verbose
+Done.
+Restarting -v dynos... done
+ !    Invalid argument: "-v"
+Usage: heroku pgbackups:capture [DATABASE]
+
+ capture a backup from a database id
+
+ if no DATABASE is specified, defaults to DATABASE_URL
+
+ -e, --expire  # if no slots are available, destroy the oldest manual backup to make room
+
+ !    Invalid argument: "-v"
+Usage: heroku pgbackups:capture [DATABASE]
+
+ capture a backup from a database id
+
+ if no DATABASE is specified, defaults to DATABASE_URL
+
+ -e, --expire  # if no slots are available, destroy the oldest manual backup to make room
+
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+./landslide_nowcast.py --region d02 
+./landslide_nowcast.py --region d03 
+cd /Users/patricecappelaere/Development/ojo/ojo-streamer
+cd /Users/patricecappelaere/Development/ojo/ojo-streamer
+heroku restart --app ojo-streamer
+heroku restart --app ojo-streamer
+heroku pgbackups:capture --app ojo-streamer HEROKU_POSTGRESQL_COPPER_URL --expire
+heroku pgbackups:capture --app ojo-streamer HEROKU_POSTGRESQL_COPPER_URL --expire
+cd /Users/patricecappelaere/Development/ojo/ojo-wiki
+cd /Users/patricecappelaere/Development/ojo/ojo-wiki
+heroku pgbackups:capture --app ojo-wiki HEROKU_POSTGRESQL_ORANGE_URL --expire
+heroku pgbackups:capture --app ojo-wiki HEROKU_POSTGRESQL_ORANGE_URL --expire
+process_all.sh Done: Fri Jan 23 08:34:24 EST 2015
+Starting processing: Fri Jan 23 08:41:27 EST 2015
+0...10...20...30...40...50...60...70...80...90...100 - done.
+bounds: -84.2496 7.025 -76.5 9.9979 (spherical)
+pre-quantization: 0.862m (0.00000775°) 0.331m (0.00000297°)
+topology: 10 arcs, 762 points
+post-quantization: 86.2m (0.000775°) 33.1m (0.000297°)
+simplification: effective minimum area 8.36e-10
+simplification: retained 402 / 762 points (53%)
+prune: retained 10 / 10 arcs (100%)
+generating forecast for 2015-01-23
+Processing Forecast Landslide Map for Region: d02 Central America
+gdaldem color-relief -alpha /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.tif ./cluts/landslide_colors.txt /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif
+topojson -o /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.topojson --simplify-proportion 0.5 -p nowcast=1 -- landslide_nowcast=/Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.geojson
+gzip /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.topojson
+mv /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.topojson.gz /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.topojson.gz
+./aws-copy.py --bucket ojo-d2 --folder 20150123 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.topojson.gz --verbose
+./aws-copy.py --bucket ojo-d2 --folder 20150123 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.thn.png --verbose
+Done.
+0...10...20...30...40...50...60...70...80...90...100 - done.
+bounds: -73 18.7009 -72.7981 18.8688 (spherical)
+pre-quantization: 0.0225m (2.02e-7°) 0.0187m (1.68e-7°)
+topology: 1 arcs, 81 points
+post-quantization: 2.25m (0.0000202°) 1.87m (0.0000168°)
+simplification: effective minimum area 1.38e-9
+simplification: retained 43 / 81 points (53%)
+prune: retained 1 / 1 arcs (100%)
+generating forecast for 2015-01-23
+Processing Forecast Landslide Map for Region: d03 Hispaniola
+gdaldem color-relief -alpha /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.tif ./cluts/landslide_colors.txt /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif
+topojson -o /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.topojson --simplify-proportion 0.5 -p nowcast=1 -- landslide_nowcast=/Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.geojson
+gzip /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.topojson
+mv /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.topojson.gz /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.topojson.gz
+./aws-copy.py --bucket ojo-d3 --folder 20150123 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.topojson.gz --verbose
+./aws-copy.py --bucket ojo-d3 --folder 20150123 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.thn.png --verbose
+Done.
+Restarting -v dynos... done
+ !    Invalid argument: "-v"
+Usage: heroku pgbackups:capture [DATABASE]
+
+ capture a backup from a database id
+
+ if no DATABASE is specified, defaults to DATABASE_URL
+
+ -e, --expire  # if no slots are available, destroy the oldest manual backup to make room
+
+ !    Invalid argument: "-v"
+Usage: heroku pgbackups:capture [DATABASE]
+
+ capture a backup from a database id
+
+ if no DATABASE is specified, defaults to DATABASE_URL
+
+ -e, --expire  # if no slots are available, destroy the oldest manual backup to make room
+
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+./landslide_nowcast.py --region d02 
+./landslide_nowcast.py --region d03 
+cd /Users/patricecappelaere/Development/ojo/ojo-streamer
+cd /Users/patricecappelaere/Development/ojo/ojo-streamer
+heroku restart --app ojo-streamer
+heroku restart --app ojo-streamer
+heroku pgbackups:capture --app ojo-streamer HEROKU_POSTGRESQL_COPPER_URL --expire
+heroku pgbackups:capture --app ojo-streamer HEROKU_POSTGRESQL_COPPER_URL --expire
+cd /Users/patricecappelaere/Development/ojo/ojo-wiki
+cd /Users/patricecappelaere/Development/ojo/ojo-wiki
+heroku pgbackups:capture --app ojo-wiki HEROKU_POSTGRESQL_ORANGE_URL --expire
+heroku pgbackups:capture --app ojo-wiki HEROKU_POSTGRESQL_ORANGE_URL --expire
+process_all.sh Done: Fri Jan 23 08:41:31 EST 2015
+Starting processing: Fri Jan 23 08:41:49 EST 2015
+0...10...20...30...40...50...60...70...80...90...100 - done.
+bounds: -84.2496 7.025 -76.5 9.9979 (spherical)
+pre-quantization: 0.862m (0.00000775°) 0.331m (0.00000297°)
+topology: 10 arcs, 762 points
+post-quantization: 86.2m (0.000775°) 33.1m (0.000297°)
+simplification: effective minimum area 8.36e-10
+simplification: retained 402 / 762 points (53%)
+prune: retained 10 / 10 arcs (100%)
+generating forecast for 2015-01-23
+Processing Forecast Landslide Map for Region: d02 Central America
+gdaldem color-relief -alpha /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.tif ./cluts/landslide_colors.txt /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif
+topojson -o /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.topojson --simplify-proportion 0.5 -p nowcast=1 -- landslide_nowcast=/Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.geojson
+gzip /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.topojson
+mv /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.topojson.gz /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.topojson.gz
+./aws-copy.py --bucket ojo-d2 --folder 20150123 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.topojson.gz --verbose
+./aws-copy.py --bucket ojo-d2 --folder 20150123 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.thn.png --verbose
+Done.
+0...10...20...30...40...50...60...70...80...90...100 - done.
+bounds: -73 18.7009 -72.7981 18.8688 (spherical)
+pre-quantization: 0.0225m (2.02e-7°) 0.0187m (1.68e-7°)
+topology: 1 arcs, 81 points
+post-quantization: 2.25m (0.0000202°) 1.87m (0.0000168°)
+simplification: effective minimum area 1.38e-9
+simplification: retained 43 / 81 points (53%)
+prune: retained 1 / 1 arcs (100%)
+generating forecast for 2015-01-23
+Processing Forecast Landslide Map for Region: d03 Hispaniola
+gdaldem color-relief -alpha /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.tif ./cluts/landslide_colors.txt /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif
+topojson -o /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.topojson --simplify-proportion 0.5 -p nowcast=1 -- landslide_nowcast=/Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.geojson
+gzip /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.topojson
+mv /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.topojson.gz /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.topojson.gz
+./aws-copy.py --bucket ojo-d3 --folder 20150123 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.topojson.gz --verbose
+./aws-copy.py --bucket ojo-d3 --folder 20150123 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.thn.png --verbose
+Done.
+Restarting -v dynos... done
+ !    Invalid argument: "-v"
+Usage: heroku pgbackups:capture [DATABASE]
+
+ capture a backup from a database id
+
+ if no DATABASE is specified, defaults to DATABASE_URL
+
+ -e, --expire  # if no slots are available, destroy the oldest manual backup to make room
+
+ !    Invalid argument: "-v"
+Usage: heroku pgbackups:capture [DATABASE]
+
+ capture a backup from a database id
+
+ if no DATABASE is specified, defaults to DATABASE_URL
+
+ -e, --expire  # if no slots are available, destroy the oldest manual backup to make room
+
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+./landslide_nowcast.py --region d02 
+./landslide_nowcast.py --region d03 
+cd /Users/patricecappelaere/Development/ojo/ojo-streamer
+cd /Users/patricecappelaere/Development/ojo/ojo-streamer
+heroku restart --app ojo-streamer
+heroku restart --app ojo-streamer
+heroku pgbackups:capture --app ojo-streamer HEROKU_POSTGRESQL_COPPER_URL --expire
+heroku pgbackups:capture --app ojo-streamer HEROKU_POSTGRESQL_COPPER_URL --expire
+cd /Users/patricecappelaere/Development/ojo/ojo-wiki
+cd /Users/patricecappelaere/Development/ojo/ojo-wiki
+heroku pgbackups:capture --app ojo-wiki HEROKU_POSTGRESQL_ORANGE_URL --expire
+heroku pgbackups:capture --app ojo-wiki HEROKU_POSTGRESQL_ORANGE_URL --expire
+process_all.sh Done: Fri Jan 23 08:41:53 EST 2015
+Starting processing: Fri Jan 23 09:19:41 EST 2015
+0...10...20...30...40...50...60...70...80...90...100 - done.
+bounds: -84.2496 7.025 -76.5 9.9979 (spherical)
+pre-quantization: 0.862m (0.00000775°) 0.331m (0.00000297°)
+topology: 10 arcs, 762 points
+post-quantization: 86.2m (0.000775°) 33.1m (0.000297°)
+simplification: effective minimum area 8.36e-10
+simplification: retained 402 / 762 points (53%)
+prune: retained 10 / 10 arcs (100%)
+generating forecast for 2015-01-23
+Processing Forecast Landslide Map for Region: d02 Central America
+gdaldem color-relief -alpha /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.tif ./cluts/landslide_colors.txt /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif
+topojson -o /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.topojson --simplify-proportion 0.5 -p nowcast=1 -- landslide_nowcast=/Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.geojson
+gzip /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.topojson
+mv /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.topojson.gz /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.topojson.gz
+./aws-copy.py --bucket ojo-d2 --folder 20150123 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.topojson.gz --verbose
+./aws-copy.py --bucket ojo-d2 --folder 20150123 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.thn.png --verbose
+Done.
+0...10...20...30...40...50...60...70...80...90...100 - done.
+bounds: -73 18.7009 -72.7981 18.8688 (spherical)
+pre-quantization: 0.0225m (2.02e-7°) 0.0187m (1.68e-7°)
+topology: 1 arcs, 81 points
+post-quantization: 2.25m (0.0000202°) 1.87m (0.0000168°)
+simplification: effective minimum area 1.38e-9
+simplification: retained 43 / 81 points (53%)
+prune: retained 1 / 1 arcs (100%)
+generating forecast for 2015-01-23
+Processing Forecast Landslide Map for Region: d03 Hispaniola
+gdaldem color-relief -alpha /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.tif ./cluts/landslide_colors.txt /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif
+topojson -o /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.topojson --simplify-proportion 0.5 -p nowcast=1 -- landslide_nowcast=/Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.geojson
+gzip /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.topojson
+mv /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.topojson.gz /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.topojson.gz
+./aws-copy.py --bucket ojo-d3 --folder 20150123 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.topojson.gz --verbose
+./aws-copy.py --bucket ojo-d3 --folder 20150123 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.thn.png --verbose
+Done.
+Restarting dynos... done
+
+HEROKU_POSTGRESQL_COPPER_URL (DATABASE_URL)  ----backup--->  b011
+
+[0KPending... -[0KPending...  \[0KPending...  |[0KCapturing... start /[0KCapturing... 0B -[0KCapturing... 0B \[0KCapturing... 0B |[0KCapturing... 0B /[0KCapturing... 3.83MB -[0KCapturing... done
+[0KStoring... done
+
+
+HEROKU_POSTGRESQL_ORANGE_URL (DATABASE_URL)  ----backup--->  b011
+
+[0KPending... -[0KCapturing... start \[0KCapturing... 0B |[0KCapturing... 0B /[0KCapturing... 0B -[0KCapturing... 0B \[0KCapturing... 0B |[0KCapturing... 0B /[0KCapturing... done
+[0KStoring... done
+
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+./landslide_nowcast.py --region d02 
+./landslide_nowcast.py --region d03 
+cd /Users/patricecappelaere/Development/ojo/ojo-streamer
+heroku restart --app ojo-streamer
+heroku pgbackups:capture --app ojo-streamer HEROKU_POSTGRESQL_COPPER_URL --expire
+cd /Users/patricecappelaere/Development/ojo/ojo-wiki
+heroku pgbackups:capture --app ojo-wiki HEROKU_POSTGRESQL_ORANGE_URL --expire
+process_all.sh Done: Fri Jan 23 09:20:06 EST 2015
+Starting processing: Fri Jan 23 09:25:52 EST 2015
+0...10...20...30...40...50...60...70...80...90...100 - done.
+bounds: -84.2496 7.025 -76.5 9.9979 (spherical)
+pre-quantization: 0.862m (0.00000775°) 0.331m (0.00000297°)
+topology: 10 arcs, 762 points
+post-quantization: 86.2m (0.000775°) 33.1m (0.000297°)
+simplification: effective minimum area 8.36e-10
+simplification: retained 402 / 762 points (53%)
+prune: retained 10 / 10 arcs (100%)
+generating forecast for 2015-01-23
+Processing Forecast Landslide Map for Region: d02 Central America
+gdaldem color-relief -alpha /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.tif ./cluts/landslide_colors.txt /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif
+topojson -o /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.topojson --simplify-proportion 0.5 -p nowcast=1 -- landslide_nowcast=/Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.geojson
+gzip /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.topojson
+mv /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.topojson.gz /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.topojson.gz
+./aws-copy.py --bucket ojo-d2 --folder 20150123 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.topojson.gz --verbose
+./aws-copy.py --bucket ojo-d2 --folder 20150123 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.thn.png --verbose
+Done.
+0...10...20...30...40...50...60...70...80...90...100 - done.
+bounds: -73 18.7009 -72.7981 18.8688 (spherical)
+pre-quantization: 0.0225m (2.02e-7°) 0.0187m (1.68e-7°)
+topology: 1 arcs, 81 points
+post-quantization: 2.25m (0.0000202°) 1.87m (0.0000168°)
+simplification: effective minimum area 1.38e-9
+simplification: retained 43 / 81 points (53%)
+prune: retained 1 / 1 arcs (100%)
+generating forecast for 2015-01-23
+Processing Forecast Landslide Map for Region: d03 Hispaniola
+gdaldem color-relief -alpha /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.tif ./cluts/landslide_colors.txt /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif
+topojson -o /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.topojson --simplify-proportion 0.5 -p nowcast=1 -- landslide_nowcast=/Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.geojson
+gzip /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.topojson
+mv /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.topojson.gz /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.topojson.gz
+./aws-copy.py --bucket ojo-d3 --folder 20150123 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.topojson.gz --verbose
+./aws-copy.py --bucket ojo-d3 --folder 20150123 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.thn.png --verbose
+Done.
+Restarting dynos... done
+
+HEROKU_POSTGRESQL_COPPER_URL (DATABASE_URL)  ----backup--->  b012
+
+[0KPending... -[0KPending...  \[0KCapturing... start |[0KCapturing... 0B /[0KCapturing... 0B -[0KCapturing... 3.8MB \[0KCapturing... done
+[0KStoring... done
+
+
+HEROKU_POSTGRESQL_ORANGE_URL (DATABASE_URL)  ----backup--->  b012
+
+[0KPending... -[0KPending...  \[0KPending...  |[0KCapturing... start /[0KCapturing... start -[0KCapturing... start \[0KCapturing... start |[0KCapturing... 0B /[0KCapturing... 2.47MB -[0KCapturing... done
+[0KStoring... 2.47MB \[0KStoring... done
+
+** bucket: ojo-d2
+** bucket: ojo-d3
+/Users/patricecappelaere/landslide/data/ant_r/d02
+/Users/patricecappelaere/landslide/data/ant_r/d03
+/Users/patricecappelaere/landslide/data/landslide_nowcast/d02
+/Users/patricecappelaere/landslide/data/landslide_nowcast/d03
+/Users/patricecappelaere/landslide/data/trmm
+/Users/patricecappelaere/landslide/data/trmm/3B42RT
+/Users/patricecappelaere/landslide/data/trmm/d02
+/Users/patricecappelaere/landslide/data/trmm/d03
+/Users/patricecappelaere/Development/ojo/ojo-bot/tmp/ant_r/d02
+/Users/patricecappelaere/Development/ojo/ojo-bot/tmp/ant_r/d03
+/Users/patricecappelaere/Development/ojo/ojo-bot/tmp/landslide_nowcast/d02
+/Users/patricecappelaere/Development/ojo/ojo-bot/tmp/landslide_nowcast/d03
+/Users/patricecappelaere/Development/ojo/ojo-bot/tmp/trmm
+/Users/patricecappelaere/Development/ojo/ojo-bot/tmp/trmm/3B42RT
+/Users/patricecappelaere/Development/ojo/ojo-bot/tmp/trmm/d02
+/Users/patricecappelaere/Development/ojo/ojo-bot/tmp/trmm/d03
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+./landslide_nowcast.py --region d02 
+./landslide_nowcast.py --region d03 
+cd /Users/patricecappelaere/Development/ojo/ojo-streamer
+heroku restart --app ojo-streamer
+heroku pgbackups:capture --app ojo-streamer HEROKU_POSTGRESQL_COPPER_URL --expire
+cd /Users/patricecappelaere/Development/ojo/ojo-wiki
+heroku pgbackups:capture --app ojo-wiki HEROKU_POSTGRESQL_ORANGE_URL --expire
+python aws-manage.py
+process_all.sh Done: Fri Jan 23 09:26:15 EST 2015
+Starting processing: Fri Jan 23 09:30:00 EST 2015
+0...10...20...30...40...50...60...70...80...90...100 - done.
+bounds: -84.2496 7.025 -76.5 9.9979 (spherical)
+pre-quantization: 0.862m (0.00000775°) 0.331m (0.00000297°)
+topology: 10 arcs, 762 points
+post-quantization: 86.2m (0.000775°) 33.1m (0.000297°)
+simplification: effective minimum area 8.36e-10
+simplification: retained 402 / 762 points (53%)
+prune: retained 10 / 10 arcs (100%)
+generating forecast for 2015-01-23
+Processing Forecast Landslide Map for Region: d02 Central America
+gdaldem color-relief -alpha /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.tif ./cluts/landslide_colors.txt /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif
+topojson -o /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.topojson --simplify-proportion 0.5 -p nowcast=1 -- landslide_nowcast=/Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.geojson
+gzip /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.topojson
+mv /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123_rgb.tif.pgm.topojson.gz /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.topojson.gz
+./aws-copy.py --bucket ojo-d2 --folder 20150123 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.topojson.gz --verbose
+./aws-copy.py --bucket ojo-d2 --folder 20150123 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150123/landslide_nowcast_d02_20150123.thn.png --verbose
+Done.
+0...10...20...30...40...50...60...70...80...90...100 - done.
+bounds: -73 18.7009 -72.7981 18.8688 (spherical)
+pre-quantization: 0.0225m (2.02e-7°) 0.0187m (1.68e-7°)
+topology: 1 arcs, 81 points
+post-quantization: 2.25m (0.0000202°) 1.87m (0.0000168°)
+simplification: effective minimum area 1.38e-9
+simplification: retained 43 / 81 points (53%)
+prune: retained 1 / 1 arcs (100%)
+generating forecast for 2015-01-23
+Processing Forecast Landslide Map for Region: d03 Hispaniola
+gdaldem color-relief -alpha /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.tif ./cluts/landslide_colors.txt /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif
+topojson -o /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.topojson --simplify-proportion 0.5 -p nowcast=1 -- landslide_nowcast=/Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.geojson
+gzip /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.topojson
+mv /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123_rgb.tif.pgm.topojson.gz /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.topojson.gz
+./aws-copy.py --bucket ojo-d3 --folder 20150123 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.topojson.gz --verbose
+./aws-copy.py --bucket ojo-d3 --folder 20150123 --file /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150123/landslide_nowcast_d03_20150123.thn.png --verbose
+Done.
+Restarting dynos... done
+
+HEROKU_POSTGRESQL_COPPER_URL (DATABASE_URL)  ----backup--->  b013
+
+[0KPending... -[0KPending...  \[0KPending...  |[0KPending...  /[0KPending...  -[0KPending...  \[0KCapturing... start |[0KCapturing... 3.82MB /[0KCapturing... done
+[0KStoring... done
+
+
+HEROKU_POSTGRESQL_ORANGE_URL (DATABASE_URL)  ----backup--->  b013
+
+[0KPending... -[0KPending...  \[0KPending...  |[0KCapturing... start /[0KCapturing... start -[0KCapturing... done
+[0KStoring... done
+
+** bucket: ojo-d2
+** bucket: ojo-d3
+/Users/patricecappelaere/landslide/data/ant_r/d02
+/Users/patricecappelaere/landslide/data/ant_r/d03
+/Users/patricecappelaere/landslide/data/landslide_nowcast/d02
+/Users/patricecappelaere/landslide/data/landslide_nowcast/d03
+/Users/patricecappelaere/landslide/data/trmm
+/Users/patricecappelaere/landslide/data/trmm/3B42RT
+/Users/patricecappelaere/landslide/data/trmm/d02
+/Users/patricecappelaere/landslide/data/trmm/d03
+/Users/patricecappelaere/Development/ojo/ojo-bot/tmp/ant_r/d02
+/Users/patricecappelaere/Development/ojo/ojo-bot/tmp/ant_r/d03
+/Users/patricecappelaere/Development/ojo/ojo-bot/tmp/landslide_nowcast/d02
+/Users/patricecappelaere/Development/ojo/ojo-bot/tmp/landslide_nowcast/d03
+/Users/patricecappelaere/Development/ojo/ojo-bot/tmp/trmm
+/Users/patricecappelaere/Development/ojo/ojo-bot/tmp/trmm/3B42RT
+/Users/patricecappelaere/Development/ojo/ojo-bot/tmp/trmm/d02
+/Users/patricecappelaere/Development/ojo/ojo-bot/tmp/trmm/d03
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+./landslide_nowcast.py --region d02 
+./landslide_nowcast.py --region d03 
+cd /Users/patricecappelaere/Development/ojo/ojo-streamer
+heroku restart --app ojo-streamer
+heroku pgbackups:capture --app ojo-streamer HEROKU_POSTGRESQL_COPPER_URL --expire
+cd /Users/patricecappelaere/Development/ojo/ojo-wiki
+heroku pgbackups:capture --app ojo-wiki HEROKU_POSTGRESQL_ORANGE_URL --expire
+python aws-manage.py
+process_all.sh Done: Fri Jan 23 09:30:19 EST 2015

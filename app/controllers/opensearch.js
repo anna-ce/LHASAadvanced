@@ -1,24 +1,24 @@
-var fs 			 			= require('fs'),
-	util					= require('util'),
-	async					= require('async'),
-	moment					= require('moment'),
-	eyes					= require('eyes'),
-	Hawk					= require('hawk'),
-	filesize 				= require('filesize'),
-	Request					= require('request'),
-	_						= require('underscore'),
-	debug					= require('debug')('opensearch'),
-	query_eo1				= require("../../lib/query_eo1"),
-	query_l8				= require("../../lib/query_l8"),
-	query_modis				= require("../../lib/query_modis.js"),
-	query_radarsat2			= require("../../lib/query_radarsat2"),
-	query_dfo				= require("../../lib/query_dfo"),
-	query_digiglobe			= require("../../lib/query_digiglobe"),
-	query_modislst			= require("../../lib/query_modislst"),
-	query_trmm				= require("../../lib/query_trmm"),
-	query_landslide_nowcast	= require("../../lib/query_landslide_nowcast"),
-	query_planet_labs		= require("../../lib/query_planet_labs")
-	
+var fs 			 				= require('fs'),
+	util						= require('util'),
+	async						= require('async'),
+	moment						= require('moment'),
+	eyes						= require('eyes'),
+	Hawk						= require('hawk'),
+	filesize 					= require('filesize'),
+	Request						= require('request'),
+	_							= require('underscore'),
+	debug						= require('debug')('opensearch'),
+	query_eo1					= require("../../lib/query_eo1"),
+	query_l8					= require("../../lib/query_l8"),
+	query_modis					= require("../../lib/query_modis.js"),
+	query_radarsat2				= require("../../lib/query_radarsat2"),
+	query_dfo					= require("../../lib/query_dfo"),
+	query_digiglobe				= require("../../lib/query_digiglobe"),
+	query_modislst				= require("../../lib/query_modislst"),
+	query_trmm					= require("../../lib/query_trmm"),
+	query_landslide_nowcast		= require("../../lib/query_landslide_nowcast"),
+	query_planet_labs			= require("../../lib/query_planet_labs"),
+	query_locationcast			= require("../../lib/query_locationcast")
 	;
 
 	productQueries = {
@@ -29,6 +29,7 @@ var fs 			 			= require('fs'),
 		"landsat_8": 			query_l8.QueryLandsat8,
 		"modis": 				query_modis.QueryModis,
 		"modis_lst":			query_modislst.QueryModisLST,
+		"ojo": 					query_locationcast.QueryLocationCast,
 		"planet_labs": 			query_planet_labs.QueryPlanetLabs,
 		"radarsat_2": 			query_radarsat2.QueryRadarsat2,
 		"trmm": 				query_trmm.QueryTRMM
@@ -88,22 +89,27 @@ var fs 			 			= require('fs'),
 			if( _.contains(sources, asset)) {
 				var productQuery = productQueries[asset]
 				logger.info("Trying to query", asset, product, limit)
-				productQuery(req, user, credentials, host, product, bbox, lat, lon, startTime, endTime, startIndex, itemsPerPage, limit, function(err, json) {
-					if(!err && json) {
-						var index = 0
-						for( var item in json.replies.items ) {
-							debug("added", json.replies.items[item]['@id'])
-							items.push(json.replies.items[item])
-							index += 1
-						}
-						logger.info("Added", index, "items to replies")
-						cb(null)
-					} else {
-						errMsg = json
-						logger.info("error", json)
-						cb(-1)
-					}					
-				})
+				try {
+					productQuery(req, user, credentials, host, product, bbox, lat, lon, startTime, endTime, startIndex, itemsPerPage, limit, function(err, json) {
+						if(!err && json) {
+							var index = 0
+							for( var item in json.replies.items ) {
+								debug("added", json.replies.items[item]['@id'])
+								items.push(json.replies.items[item])
+								index += 1
+							}
+							logger.info("Added", index, "items to replies")
+							cb(null)
+						} else {
+							errMsg = json
+							logger.info("error", json)
+							cb(null)
+						}					
+					})
+				} catch(e) {
+					logger.info("ProductQuery Exception", e)
+					cb(null)
+				}
 			} else {
 				debug(asset, " not selected")
 			}

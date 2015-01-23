@@ -75,15 +75,19 @@ var express 		= require('express'),
 		
 		bootApplication(app)
 		
-		var appId			= process.env.fbAppId
-		var appSecret		= process.env.fbSecret
+		var appId				= process.env.fbAppId
+		var appSecret			= process.env.fbSecret
+		var mapboxToken			= process.env.MAPBOX_PUBLIC_TOKEN
+		
 		assert(appId)
 		assert(appSecret)
+		assert(mapboxToken)
 		
-		app.config.fbAppId	= appId
-		app.config.fbSecret	= appSecret
+		app.config.fbAppId		= appId
+		app.config.fbSecret		= appSecret
+		app.config.mapboxToken	= mapboxToken
 		
-		app.facebook		= facebook.init(appId, appSecret)
+		app.facebook			= facebook.init(appId, appSecret)
 
 		app.facebook.GenerateSecret(function(err, secret) {
 			logger.info("Application Hawk Key:", err,secret)

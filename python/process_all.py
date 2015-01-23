@@ -50,26 +50,29 @@ def get_modis_floodmap():
 def restart_ojo_streamer():
 	cmd = "cd /Users/patricecappelaere/Development/ojo/ojo-streamer"
 	print cmd
-	execute(cmd)
+	os.system(cmd)
 	
 	cmd = "heroku restart --app ojo-streamer"
 	print cmd
-	execute(cmd)
+	os.system(cmd)
 
 def backup_ojo_streamer():
 	cmd = "heroku pgbackups:capture --app ojo-streamer HEROKU_POSTGRESQL_COPPER_URL --expire"
 	print cmd
-	execute(cmd)
+	os.system(cmd)
 
 def backup_ojo_wiki():
 	cmd = "cd /Users/patricecappelaere/Development/ojo/ojo-wiki"
 	print cmd
-	execute(cmd)
+	os.system(cmd)
 
 	cmd = "heroku pgbackups:capture --app ojo-wiki HEROKU_POSTGRESQL_ORANGE_URL --expire"
 	print cmd
-	execute(cmd)
+	os.system(cmd)
 	
+def cleanup():
+	cmd = "python aws-manage.py"
+	execute(cmd)
 #
 # ======================================================================
 #
@@ -103,4 +106,5 @@ if __name__ == '__main__':
 	restart_ojo_streamer()
 	backup_ojo_streamer()
 	backup_ojo_wiki()
+	cleanup()
 	
