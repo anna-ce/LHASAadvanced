@@ -100,6 +100,7 @@ def build_tif(dx, region, dir, date):
 	forecast_landslide_100m_bin 		= os.path.join(config.data_dir, "landslide_nowcast", dx, ymd, "landslide_nowcast_%s_%s_100m.tif" %(dx,ymd))
 	forecast_landslide_100m_bin_rgb 	= os.path.join(config.data_dir, "landslide_nowcast", dx, ymd, "landslide_nowcast_%s_%s_100m_rgb.tif" %(dx,ymd))
 		
+	
 	color_file							= "./cluts/landslide_colors.txt"
 	
 	shp_file 							= os.path.join(config.data_dir,"landslide_nowcast", dx, ymd, "landslide_nowcast_%s_%s.shp" % (dx,ymd))
@@ -289,11 +290,7 @@ def build_tif(dx, region, dir, date):
 		cmd = "composite %s %s %s" % ( tmp_file, static_file, thumbnail_file)
 		execute(cmd)
 		execute("rm "+tmp_file)
-	
-	if not verbose:
-		files = [ "*.tif", file,file+".geojson", file+".geojson",forecast_landslide_bin, forecast_landslide_bin_rgb   ]
-		execute("rm -f "+" ".join(files))
-		
+			
 	cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + ymd + " --file " + topojson_gz_file
 	if verbose:
 		cmd += " --verbose"
@@ -305,9 +302,26 @@ def build_tif(dx, region, dir, date):
 	if verbose:
 		cmd += " --verbose"
 	if force:
-		cmd += " --force"
-		
+		cmd += " --force"	
 	execute(cmd)
+
+	cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + ymd + " --file " + forecast_landslide_bin
+	if verbose:
+		cmd += " --verbose"
+	if force:
+		cmd += " --force"	
+	execute(cmd)
+	
+	if not verbose:
+		files = [	forecast_landslide_bin_rgb,
+					forecast_landslide_100m_bin,
+					forecast_landslide_100m_bin_rgb, 
+					file,file+".geojson", 
+					file+".geojson",
+					forecast_landslide_bin, 
+					forecast_landslide_bin_rgb   ]
+		execute("rm -f "+" ".join(files))
+	
 	
 def generate_map( dx, date ):
 	# make sure it exists
