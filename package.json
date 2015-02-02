@@ -27,7 +27,7 @@
     "mime-types": "1.0.1",
     "mkdirp": "0.4.0",
     "moment": "~2.5.1",
-    "gdal", "0.4.1",
+    "gdal": "0.4.1",
     "osm-and-geojson": "0.1.2",
     "pg": "~2.11.1",
     "querystring": "0.2.0",
