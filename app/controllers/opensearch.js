@@ -141,7 +141,7 @@ var fs 			 				= require('fs'),
 module.exports = {
 	classic: function(req, res) {
 		var host 	= req.protocol+"://"+req.headers.host
-		var region 	= app.config.regions.d05
+		var region 	= app.config.regions.d02
 		var user	= req.session.user
 		
 		res.render( "opensearch/classic", {

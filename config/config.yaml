@@ -21,7 +21,7 @@
         "d02": {
             "name":		      "Central America",
             "bbox":         [-92.68, 6.17, -75.85, 19.08 ],
-            "target":       [12.63, -84.27],
+            "target":       [9.84, -84.14],
             "min_zoom":     7,
             "max_zoom":     18,
             "map_id":       "cappelaere.map-mx5g2tn3",
@@ -114,9 +114,14 @@
          	"checked":  	false
           },
           {
-         	"source": 		"planet_labs",
+          "source": 		"ojo",
          	"href": 		"/opensearch",
          	"checked":  	true
+          },
+          {
+         	"source": 		"planet_labs",
+         	"href": 		"/opensearch",
+         	"checked":  	false
           },
         	{
         		"source": 		"radarsat_2",
