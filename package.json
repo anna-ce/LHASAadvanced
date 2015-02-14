@@ -7,7 +7,7 @@
   "author": {
     "name": "Patrice G. Cappelaere",
     "email": "pat@cappelaere.com"
-  },
+  }, 
   "dependencies": {
     "async": "~0.2.10",
     "aws-sdk": "~2.0.0-rc9",
