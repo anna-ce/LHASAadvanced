@@ -9522,3 +9522,264 @@ heroku pgbackups:capture --app ojo-streamer HEROKU_POSTGRESQL_COPPER_URL --expir
 cd /Users/patricecappelaere/Development/ojo/ojo-wiki
 heroku pgbackups:capture --app ojo-wiki HEROKU_POSTGRESQL_ORANGE_URL --expire
 process_all.sh Done: Thu Feb 12 11:34:22 EST 2015
+Starting processing: Fri Feb 13 08:00:00 EST 2015
+composite: Unknown field with tag 33550 (0x830e) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 33922 (0x8482) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+bounds: -92.68333 6.1667 -76.75971 19.08333 (spherical)
+pre-quantization: 1.77m (0.0000159°) 1.44m (0.0000129°)
+topology: 27 arcs, 5507 points
+post-quantization: 177m (0.00159°) 144m (0.00129°)
+simplification: effective minimum area 5.98e-10
+simplification: retained 4177 / 5499 points (76%)
+prune: retained 27 / 27 arcs (100%)
+bounds: -92.68333 6.16683 -76.84269 19.08333 (spherical)
+pre-quantization: 1.76m (0.0000158°) 1.44m (0.0000129°)
+topology: 22 arcs, 3902 points
+post-quantization: 176m (0.00158°) 144m (0.00129°)
+simplification: effective minimum area 5.99e-10
+simplification: retained 2965 / 3896 points (76%)
+prune: retained 22 / 22 arcs (100%)
+bounds: -92.68333 6.16683 -76.90973 19.08333 (spherical)
+pre-quantization: 1.75m (0.0000158°) 1.44m (0.0000129°)
+topology: 14 arcs, 2790 points
+post-quantization: 175m (0.00158°) 144m (0.00129°)
+simplification: effective minimum area 6.07e-10
+simplification: retained 2120 / 2788 points (76%)
+prune: retained 14 / 14 arcs (100%)
+bounds: -92.68333 6.16683 -77.03012 18.9841 (spherical)
+pre-quantization: 1.74m (0.0000157°) 1.43m (0.0000128°)
+topology: 9 arcs, 1881 points
+post-quantization: 174m (0.00157°) 143m (0.00128°)
+simplification: effective minimum area 5.96e-10
+simplification: retained 1428 / 1879 points (76%)
+prune: retained 9 / 9 arcs (100%)
+bounds: -92.53808 6.16683 -77.25987 18.71396 (spherical)
+pre-quantization: 1.70m (0.0000153°) 1.40m (0.0000125°)
+topology: 10 arcs, 1554 points
+post-quantization: 170m (0.00153°) 140m (0.00125°)
+simplification: effective minimum area 5.65e-10
+simplification: retained 1185 / 1552 points (76%)
+prune: retained 10 / 10 arcs (100%)
+bounds: -92.38978 6.16683 -81.17673 15.48444 (spherical)
+pre-quantization: 1.25m (0.0000112°) 1.04m (0.00000932°)
+topology: 4 arcs, 692 points
+post-quantization: 125m (0.00112°) 104m (0.000932°)
+simplification: effective minimum area 7.66e-10
+simplification: retained 527 / 691 points (76%)
+prune: retained 4 / 4 arcs (100%)
+bounds: -92.18353 6.16683 -81.46066 15.22209 (spherical)
+pre-quantization: 1.19m (0.0000107°) 1.01m (0.00000906°)
+topology: 3 arcs, 435 points
+post-quantization: 119m (0.00107°) 101m (0.000906°)
+simplification: effective minimum area 4.30e-10
+simplification: retained 333 / 435 points (77%)
+prune: retained 3 / 3 arcs (100%)
+bounds: -83.31907 9.71118 -81.73438 11.17129 (spherical)
+pre-quantization: 0.176m (0.00000158°) 0.162m (0.00000146°)
+topology: 1 arcs, 217 points
+post-quantization: 17.6m (0.000158°) 16.2m (0.000146°)
+simplification: effective minimum area 9.77e-10
+simplification: retained 165 / 217 points (76%)
+prune: retained 1 / 1 arcs (100%)
+bounds: -83.09673 10.13374 -82.02962 10.91988 (spherical)
+pre-quantization: 0.119m (0.00000107°) 0.0874m (7.86e-7°)
+topology: 1 arcs, 145 points
+post-quantization: 11.9m (0.000107°) 8.74m (0.0000786°)
+simplification: effective minimum area 8.64e-10
+simplification: retained 111 / 145 points (77%)
+prune: retained 1 / 1 arcs (100%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+trmm merging of  /Users/patricecappelaere/landslide/data/trmm/d02/20150212
+wrote /Users/patricecappelaere/landslide/data/trmm/d02/20150212/geojson/trmm_levels.geojson  with features: 90
+stdout: 
+stderr: bounds: -92.6833 6.1667 -76.7597 19.0833 (spherical)
+pre-quantization: 1.77m (0.0000159°) 1.44m (0.0000129°)
+topology: 91 arcs, 13011 points
+post-quantization: 177m (0.00159°) 144m (0.00129°)
+prune: retained 91 / 91 arcs (100%)
+
+reading /Users/patricecappelaere/landslide/data/trmm/3B42RT/20150212/3B42RT.2015021221.7.1day.tif
+pixelsize 0.00833333333333
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150212/levels/level_1.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150212/levels/level_2.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150212/levels/level_3.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150212/levels/level_5.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150212/levels/level_8.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150212/levels/level_13.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150212/levels/level_21.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150212/levels/level_34.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150212/levels/level_55.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150212/levels/level_89.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150212/levels/level_144.tif
+0...10...20...30...40...50...60...70...80...90...100 - done.
+bounds: -92 14.75 -91 15.25 (spherical)
+pre-quantization: 0.111m (0.00000100°) 0.0556m (5.00e-7°)
+topology: 3 arcs, 107 points
+post-quantization: 11.1m (0.000100°) 5.56m (0.0000500°)
+simplification: effective minimum area 5.91e-9
+simplification: retained 60 / 107 points (56%)
+prune: retained 3 / 3 arcs (100%)
+composite: Unknown field with tag 33550 (0x830e) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 33922 (0x8482) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+Done.
+composite: Unknown field with tag 33550 (0x830e) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 33922 (0x8482) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+bounds: -73.38964 17.10743 -64.97497 19.22612 (spherical)
+pre-quantization: 0.936m (0.00000842°) 0.236m (0.00000212°)
+topology: 5 arcs, 581 points
+post-quantization: 93.6m (0.000842°) 23.6m (0.000212°)
+simplification: effective minimum area 4.67e-10
+simplification: retained 446 / 581 points (77%)
+prune: retained 5 / 5 arcs (100%)
+bounds: -73.3405 17.32646 -64.97482 19.0616 (spherical)
+pre-quantization: 0.930m (0.00000837°) 0.193m (0.00000174°)
+topology: 4 arcs, 436 points
+post-quantization: 93.0m (0.000837°) 19.3m (0.000174°)
+simplification: effective minimum area 5.66e-10
+simplification: retained 336 / 436 points (77%)
+prune: retained 4 / 4 arcs (100%)
+bounds: -73.30614 18.04671 -64.97482 18.99251 (spherical)
+pre-quantization: 0.926m (0.00000833°) 0.105m (9.46e-7°)
+topology: 3 arcs, 283 points
+post-quantization: 92.6m (0.000833°) 10.5m (0.0000946°)
+simplification: effective minimum area 6.40e-10
+simplification: retained 219 / 283 points (77%)
+prune: retained 3 / 3 arcs (100%)
+bounds: -73.25305 18.13669 -64.97482 18.89921 (spherical)
+pre-quantization: 0.921m (0.00000828°) 0.0848m (7.63e-7°)
+topology: 2 arcs, 202 points
+post-quantization: 92.1m (0.000828°) 8.48m (0.0000763°)
+simplification: effective minimum area 3.28e-10
+simplification: retained 156 / 202 points (77%)
+prune: retained 2 / 2 arcs (100%)
+bounds: -73.1794 18.24794 -64.97482 18.79762 (spherical)
+pre-quantization: 0.912m (0.00000821°) 0.0611m (5.50e-7°)
+topology: 2 arcs, 186 points
+post-quantization: 91.2m (0.000821°) 6.11m (0.0000550°)
+simplification: effective minimum area 4.77e-10
+simplification: retained 144 / 186 points (77%)
+prune: retained 2 / 2 arcs (100%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+trmm merging of  /Users/patricecappelaere/landslide/data/trmm/d03/20150212
+wrote /Users/patricecappelaere/landslide/data/trmm/d03/20150212/geojson/trmm_levels.geojson  with features: 16
+stdout: 
+stderr: bounds: -73.3896 17.1074 -64.9748 19.2261 (spherical)
+pre-quantization: 0.936m (0.00000842°) 0.236m (0.00000212°)
+topology: 16 arcs, 1301 points
+post-quantization: 93.6m (0.000842°) 23.6m (0.000212°)
+prune: retained 16 / 16 arcs (100%)
+
+pixelsize 0.00833333333333
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150212/levels/level_1.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150212/levels/level_2.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150212/levels/level_3.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150212/levels/level_5.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150212/levels/level_8.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150212/levels/level_13.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150212/levels/level_21.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150212/levels/level_34.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150212/levels/level_55.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150212/levels/level_89.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150212/levels/level_144.tif
+0...10...20...30...40...50...60...70...80...90...100 - done.
+bounds: -73 18.7009 -72.7981 18.8688 (spherical)
+pre-quantization: 0.0225m (2.02e-7°) 0.0187m (1.68e-7°)
+topology: 1 arcs, 81 points
+post-quantization: 2.25m (0.0000202°) 1.87m (0.0000168°)
+simplification: effective minimum area 1.38e-9
+simplification: retained 43 / 81 points (53%)
+prune: retained 1 / 1 arcs (100%)
+composite: Unknown field with tag 33550 (0x830e) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 33922 (0x8482) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+Done.
+Restarting dynos... done
+Heroku Toolbelt is currently updating. Please wait a few seconds and try your command again.
+Heroku Toolbelt is currently updating. Please wait a few seconds and try your command again.
+** bucket: ojo-d2
+** bucket: ojo-d3
+/Users/patricecappelaere/landslide/data/ant_r/d02
+/Users/patricecappelaere/landslide/data/ant_r/d03
+/Users/patricecappelaere/landslide/data/landslide_nowcast/d02
+/Users/patricecappelaere/landslide/data/landslide_nowcast/d03
+/Users/patricecappelaere/landslide/data/trmm
+20141114 2014 11 14 ** delete /Users/patricecappelaere/landslide/data/trmm/20141114
+/Users/patricecappelaere/landslide/data/trmm/3B42RT
+20141114 2014 11 14 ** delete /Users/patricecappelaere/landslide/data/trmm/3B42RT/20141114
+/Users/patricecappelaere/landslide/data/trmm/d02
+20141114 2014 11 14 ** delete /Users/patricecappelaere/landslide/data/trmm/d02/20141114
+/Users/patricecappelaere/landslide/data/trmm/d03
+20141114 2014 11 14 ** delete /Users/patricecappelaere/landslide/data/trmm/d03/20141114
+/Users/patricecappelaere/Development/ojo/ojo-bot/tmp/ant_r/d02
+/Users/patricecappelaere/Development/ojo/ojo-bot/tmp/ant_r/d03
+/Users/patricecappelaere/Development/ojo/ojo-bot/tmp/landslide_nowcast/d02
+/Users/patricecappelaere/Development/ojo/ojo-bot/tmp/landslide_nowcast/d03
+/Users/patricecappelaere/Development/ojo/ojo-bot/tmp/trmm
+/Users/patricecappelaere/Development/ojo/ojo-bot/tmp/trmm/3B42RT
+/Users/patricecappelaere/Development/ojo/ojo-bot/tmp/trmm/d02
+/Users/patricecappelaere/Development/ojo/ojo-bot/tmp/trmm/d03
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+cd /Users/patricecappelaere/Development/ojo/ojo-streamer
+heroku restart --app ojo-streamer
+heroku pgbackups:capture --app ojo-streamer HEROKU_POSTGRESQL_COPPER_URL --expire
+cd /Users/patricecappelaere/Development/ojo/ojo-wiki
+heroku pgbackups:capture --app ojo-wiki HEROKU_POSTGRESQL_ORANGE_URL --expire
+process_all.sh Done: Fri Feb 13 08:06:33 EST 2015
+Starting processing: Sat Feb 14 08:00:00 EST 2015
+FTP Error <class 'ftplib.error_perm'>
+FTP Error <class 'ftplib.error_perm'>
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+process_all.sh Done: Sat Feb 14 08:00:01 EST 2015

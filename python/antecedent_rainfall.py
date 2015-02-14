@@ -121,7 +121,7 @@ def save_tif(fname, data, ds, type, ct):
 if __name__ == '__main__':
 	#global antecedent_data
 	
-	parser 		= argparse.ArgumentParser(description='WRF Processing')
+	parser 		= argparse.ArgumentParser(description='Antecedent Rainfall Processing')
 	apg_input 	= parser.add_argument_group('Input')
 
 	apg_input.add_argument("-f", "--force", 	action='store_true', help="forces new product to be generated")

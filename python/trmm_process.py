@@ -138,7 +138,7 @@ class TRMM:
 	
 	def process_trmm_region_subset(self, global_file, bbox, subset_file, clut_file, rgb_subset_file):
 		if force or not os.path.exists(subset_file):
-			cmd = "gdalwarp -overwrite -q -co COMPRESS=LZW -te %f %f %f %f %s %s" % (bbox[0], bbox[1], bbox[2], bbox[3], global_file, subset_file)
+			cmd = "gdalwarp -overwrite -q -te %f %f %f %f %s %s" % (bbox[0], bbox[1], bbox[2], bbox[3], global_file, subset_file)
 			self.execute(cmd)
 		
 		if force or not os.path.exists(rgb_subset_file):
@@ -262,20 +262,33 @@ class TRMM:
 		
 		src_ds = None	
 	
-	def process_trmm_region_to_s3( self, dx, thumbnail_file, topojson_gz_file):
+	def process_trmm_region_to_s3( self, dx, thumbnail_file, topojson_gz_file, tif_file):
 		# copy mbtiles to S3
 		region 		= config.regions[dx]
 		bucketName 	= region['bucket']
 		folder		= self.ymd
 	 
+		cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + self.ymd + " --file " + tif_file
+		if verbose:
+			cmd += " --verbose"
+		#if force:
+		cmd += " --force"
+		
+		self.execute(cmd)
+	
 		cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + self.ymd + " --file " + topojson_gz_file
 		if verbose:
 			cmd += " --verbose"
+		#if force:
+		cmd += " --force"
+			
 		self.execute(cmd)
 
 		cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + self.ymd + " --file " + thumbnail_file
 		if verbose:
 			cmd += " --verbose"
+		#if force:
+		cmd += " --force"
 		self.execute(cmd)
 	
 	def process_trmm_region_cleanup(self, dx):
@@ -311,6 +324,7 @@ class TRMM:
 		pixelsize   = region['pixelsize']
 		thn_width   = region['thn_width']
 		thn_height  = region['thn_height']
+		bucketName 	= region['bucket']
     
 		if verbose:
 			print "process_trmm_region:", dx, pixelsize
@@ -327,6 +341,8 @@ class TRMM:
 		geojson_file 			= os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24_%s_%s_1km.geojson" % (dx,self.ymd))
 		topojson_file			= os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24_%s_%s.topojson" % (dx,self.ymd))
 		topojson_gz_file		= os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24_%s_%s.topojson.gz" % (dx,self.ymd))
+
+		self.process_trmm_region_subset(self.output_file_180, bbox, subset_file, self.color_file, rgb_subset_file)
 	
 		if force or not os.path.exists(resampled_file):
 			self.process_trmm_region_subset(self.output_file_180, bbox, subset_file, self.color_file, rgb_subset_file)
@@ -340,8 +356,8 @@ class TRMM:
 			cmd = "node trmm_merge.js "+dx+ " " + self.ymd
 			self.execute(cmd)
 			
-			self.process_trmm_region_to_s3( dx, thumbnail_file, topojson_gz_file)
-
+		self.process_trmm_region_to_s3( dx, thumbnail_file, topojson_gz_file, subset_file)
+		
 		self.process_trmm_region_cleanup(dx)
 		
 		
