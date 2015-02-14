@@ -29,7 +29,7 @@
     "mkdirp": "0.4.0",
     "moment": "~2.5.1",
     "osm-and-geojson": "0.1.2",
-    "pg": "~2.11.1",
+    "pg": "4.2.0",
     "request": "2.33.0",
     "sendgrid": "1.0.2",
     "shortid": "2.0.0",
