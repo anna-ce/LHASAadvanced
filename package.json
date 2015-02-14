@@ -21,6 +21,7 @@
     "eyes": "0.1.8",
     "fbgraph": "~0.2.9",
     "filesize": "2.0.3",
+    "geopix": "git://github.com/cappelaere/geopix.git",
     "github": "0.1.15",
     "glob": "~3.2.8",
     "hawk": "2.1.2",
@@ -55,6 +56,6 @@
     "start": "node server.js"
   },
   "engines": {
-    "node": ">= 0.10.22"
+    "node": ">= 0.12.0"
   }
 }
