@@ -5,6 +5,8 @@
 # Daily processing of all products
 #
 import sys, os, argparse
+from datetime import date, timedelta
+
 try:
 	from osgeo import osr, gdal
 except:
@@ -19,13 +21,16 @@ def execute(cmd):
 		cmd += " -f"
 	
 	if(verbose):
-		print cmd
 		cmd += " -v"
-	
+		print cmd	
+		
 	os.system(cmd)
 	
-def get_daily_precipitation():
-	cmd = "./trmm_process.py "
+def get_daily_precipitation(dt):
+	cmd = "./trmm_process.py --region d02 --date %s" % dt
+	execute(cmd)
+
+	cmd = "./trmm_process.py --region d03 --date %s" % dt
 	execute(cmd)
 
 def get_daily_forecast():
@@ -34,6 +39,7 @@ def get_daily_forecast():
 
 def get_landslide_nowcast():
 	cmd = "./landslide_nowcast.py --region d02 "
+		
 	execute(cmd)
 
 	cmd = "./landslide_nowcast.py --region d03 "
@@ -98,13 +104,16 @@ if __name__ == '__main__':
 	force		= options.force or force
 	verbose		= options.verbose or verbose
 
-	#get_daily_precipitation()
+	today		= date.today()
+	dt			= today.strftime("%Y-%m-%d")
+	
+	get_daily_precipitation(dt)
 	#get_daily_forecast()
 	#get_flood_nowcast()
-	get_landslide_nowcast()
+	#get_landslide_nowcast()
 	#get_modis_floodmap()
-	restart_ojo_streamer()
-	backup_ojo_streamer()
-	backup_ojo_wiki()
-	cleanup()
+	#restart_ojo_streamer()
+	#backup_ojo_streamer()
+	#backup_ojo_wiki()
+	#cleanup()
 	
