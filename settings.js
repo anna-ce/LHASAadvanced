@@ -1,13 +1,16 @@
 var express 		= require('express'),
 	util			= require('util'),
 	partials 		= require('express-partials'),
+	session4 		= require('express-session'),
+	cookieParser 	= require('cookie-parser'),
+	favicon			= require('serve-favicon'),
 	assert			= require('assert'),
 	fs				= require('fs'),
 	path			= require('path'),
 	debug 			= require('debug')('server'),
 	engines			= require('consolidate'),
 	pg 				= require('pg'),
-	PGStore 		= require('connect-pg'),
+	pgSession 		= require('connect-pg-simple')(session4),
 	ejs				= require('ejs'),
 	crypto 			= require('crypto'),
 	eyes			= require('eyes'),
@@ -16,7 +19,8 @@ var express 		= require('express'),
 	facebook		= require('./lib/facebook'),
 	GitHubApi 		= require("github"),
 	i18n			= require('./lib/i18n-abide'),
-	shortid			= require('shortid');
+	shortid			= require('shortid')
+;
 
   	require('winston-papertrail').Papertrail;
 
@@ -134,34 +138,39 @@ function bootApplication(app) {
 	app.set('view options', { layout: 'layout.ejs' })
 
 	// cookieParser should be above session
-	app.use(express.cookieParser(process.env.COOKIEHASH))
+	app.use(cookieParser(process.env.COOKIEHASH))
 
 	// bodyParser should be above methodOverride
 	// app.use(express.bodyParser())
-	app.use(express.json());
-	app.use(express.urlencoded());
+	//app.use(express.json());
+	//app.use(express.urlencoded());
 	
-	app.use(express.methodOverride())
+	//app.use(express.methodOverride())
 
 	var conString 	= process.env.DATABASE_URL || "tcp://nodepg:password@localhost:5432/dk";
 	logger.info("Connecting to db:", conString)
 		
- 	function pgConnect (callback) {
-		pg.connect(conString, function (err, client, done) {			
-			if (err) {
-				logger.info(JSON.stringify(err));
-			}
-			if (client) {
-				callback(client);
-			}
-			done()	// THIS IS CRITICAL TO RETURN CLIENT TO THE POOL.... GRRRR!
-		});
-    };	
+ 	//function pgConnect (callback) {
+	//	pg.connect(conString, function (err, client, done) {			
+	//		if (err) {
+	//			logger.info(JSON.stringify(err));
+	//		}
+	//		if (client) {
+	//			callback(client);
+	//		}
+	//		done()	// THIS IS CRITICAL TO RETURN CLIENT TO THE POOL.... GRRRR!
+	//	});
+    //};	
 		
-	app.use(express.session({
-		  secret: app.sessionSecret,
-		  cookie: { maxAge: 1 * 360000}, //1 Hour*24 in milliseconds
-		  store: new PGStore(pgConnect)
+	app.use(session4({
+		secret: app.sessionSecret,
+		cookie: { maxAge: 1 * 360000}, //1 Hour*24 in milliseconds
+		store: new pgSession({
+			  pg : pg,
+			  conString : conString,
+			  tableName : 'session'
+		}),
+		resave: 	true
 	}))
 
 	app.client = new pg.Client(conString);
@@ -178,7 +187,7 @@ function bootApplication(app) {
 	  });
 	});
 	
-	app.use(express.favicon())
+	app.use(favicon(__dirname + '/public/favicon.png'));	
 		
 	//app.use(express.csrf());
 	app.use(function(req, res, next) {
@@ -231,7 +240,7 @@ function bootApplication(app) {
 	  next();
 	});
 	
-	app.use(app.router)
+	//app.use(app.router)
 	
 	// Error Handling
 	app.use(function(err, req, res, next){
