@@ -40,13 +40,13 @@ function copyFromS3(bucket, key, cb ) {
 			var fileName = path.join(tmp_dir, bucket, key)
 			var dir		 = path.dirname(fileName)
 			
-			console.log("copyFromS3", bucket, key, dir, fileName)
+			//console.log("copyFromS3", bucket, key, dir, fileName)
 			
 			// make sure folder exists
 			mkdirp.sync(dir)
 
 			if( dir != fileName ) {
-				console.log("Trying to copy", fileName)
+				//console.log("Trying to copy", fileName)
 			
 				var out 		= fs.createWriteStream(fileName)	
 				var buff 		= new Buffer(data.Body, "binary")
@@ -58,7 +58,7 @@ function copyFromS3(bucket, key, cb ) {
 			}
 			
 		} else {
-			console.log("NOT Found it on S3", fname)
+			logger.error("NOT Found it on S3", fname)
 		}
 		cb(err)
 	})
@@ -70,7 +70,7 @@ function synchronizeFile( bucket, key, size, cb ) {
 	//console.log("Checking", fName)
 	if( !fs.existsSync(fName) ) {
 		if( fName.indexOf(".mbtiles") < 0 ) {
-			console.log("**", fName, "does NOT exist")
+			//console.log("**", fName, "does NOT exist")
 			copyFromS3(bucket, key, cb ) 
 		} else {
 			cb(null)
@@ -79,7 +79,7 @@ function synchronizeFile( bucket, key, size, cb ) {
 		// could check file size as well
 		var stats = fs.statSync(fName)
 		if( !stats.isDirectory() && (stats.size != size) ){
-			console.log("Different size - update", fName)
+			//console.log("Different size - update", fName)
 			copyFromS3(bucket, key, cb ) 			
 		} else {
 			cb(null)
@@ -117,14 +117,14 @@ module.exports = {
 		
 		if( fs.existsSync( fileName )) {
 			// return it
-			console.log("Found file in cache...", fileName)
+			//console.log("Found file in cache...", fileName)
 			get_cached_data(fileName, function(err, json ) {
 				res.send(json)				
 			})
 			return;
 		}
 		
-		console.log("File ", fileName, " does not exists... fetching it from s3...")
+		//console.log("File ", fileName, " does not exists... fetching it from s3...")
 		
 		var options = {Bucket: bucket, Key: id};
 		if( ifNoneMatch ) 	options["IfNoneMatch"] 		= ifNoneMatch
