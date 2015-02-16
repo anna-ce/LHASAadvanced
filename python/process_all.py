@@ -6,6 +6,9 @@
 #
 import sys, os, argparse
 from datetime import date, timedelta
+from subprocess import call
+from smtplib import SMTP_SSL as SMTP  
+from email.mime.text import MIMEText
 
 try:
 	from osgeo import osr, gdal
@@ -16,6 +19,30 @@ except:
 force 	= 0
 verbose = 0
 	
+def emailErrorFile():
+	try:
+		# Read Error File
+		textfile 	= "./errorlog.txt"
+		fp 			= open(textfile, 'rb')
+		msg 		= MIMEText(fp.read())
+		fp.close()
+		
+		me			= os.environ['FASTMAIL_USER']
+		password 	= os.environ['FASTMAIL_PASSWORD']
+		smtp		= os.environ['FASTMAIL_SMTP']
+		
+		msg['Subject'] 	= 'Error processing daily landslide'
+		msg['From'] 	= me
+		msg['To'] 		= me
+		print "sending error email to ", me
+		# Send the message via our own SMTP server, but don't include the envelope header.
+		s = SMTP(smtp)
+		s.login(me, password)
+		s.sendmail(me, [me], msg.as_string())
+		s.quit()
+	except Exception as e:
+		print "exception sending email exception", e
+		
 def execute(cmd):
 	if( force ):
 		cmd += " -f"
@@ -24,7 +51,10 @@ def execute(cmd):
 		cmd += " -v"
 		print cmd	
 		
-	os.system(cmd)
+	err = call(cmd, shell=True)
+	if err > 0:
+		print "process_all execute err", err
+		emailErrorFile()
 	
 def get_daily_precipitation(dt):
 	cmd = "./trmm_process.py --region d02 --date %s" % dt
@@ -97,7 +127,7 @@ if __name__ == '__main__':
 		sys.exit(-1)
 	
 	
-	apg_input.add_argument("-f", "--force", action='store_true', help="forces new prodcuts to be re-generated")
+	apg_input.add_argument("-f", "--force", action='store_true', help="Forces new products to be re-generated")
 	apg_input.add_argument("-v", "--verbose", action='store_true', help="Verbose Flag")
 	
 	options 	= parser.parse_args()
@@ -107,13 +137,16 @@ if __name__ == '__main__':
 	today		= date.today()
 	dt			= today.strftime("%Y-%m-%d")
 	
-	get_daily_precipitation(dt)
+	yesterday	= today - timedelta(1)
+	ydt			= yesterday.strftime("%Y-%m-%d")
+	
+	get_daily_precipitation(ydt)
 	#get_daily_forecast()
 	#get_flood_nowcast()
-	#get_landslide_nowcast()
+	get_landslide_nowcast()
 	#get_modis_floodmap()
-	#restart_ojo_streamer()
-	#backup_ojo_streamer()
-	#backup_ojo_wiki()
-	#cleanup()
+	restart_ojo_streamer()
+	backup_ojo_streamer()
+	backup_ojo_wiki()
+	cleanup()
 	

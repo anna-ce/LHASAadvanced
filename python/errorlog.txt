@@ -9783,3 +9783,28 @@ FTP Error <class 'ftplib.error_perm'>
 FTP Error <class 'ftplib.error_perm'>
 Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
 process_all.sh Done: Sat Feb 14 08:00:01 EST 2015
+Starting processing: Sun Feb 15 08:00:00 EST 2015
+FTP Error <class 'ftplib.error_perm'>
+FTP Error <class 'ftplib.error_perm'>
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+process_all.sh Done: Sun Feb 15 08:00:01 EST 2015
+Starting processing: Mon Feb 16 08:00:00 EST 2015
+FTP Error <class 'ftplib.error_perm'>
+FTP Error <class 'ftplib.error_perm'>
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+process_all.sh Done: Mon Feb 16 08:00:01 EST 2015
+Starting processing: Mon Feb 16 08:03:26 EST 2015
+FTP Error <class 'ftplib.error_perm'>
+FTP Error <class 'ftplib.error_perm'>
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+process_all.sh Done: Mon Feb 16 08:03:28 EST 2015
+Starting processing: Mon Feb 16 09:42:33 EST 2015
+FTP Error <class 'ftplib.error_perm'>
+FTP Error <class 'ftplib.error_perm'>
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+process_all.sh Done: Mon Feb 16 09:42:34 EST 2015
+Starting processing: Mon Feb 16 09:48:14 EST 2015
+FTP Error <class 'ftplib.error_perm'>
+FTP Error <class 'ftplib.error_perm'>
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+process_all.sh Done: Mon Feb 16 09:48:17 EST 2015

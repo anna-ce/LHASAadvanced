@@ -66,7 +66,7 @@ def manage_folder(f, dl):
 			shutil.rmtree(f)
 		
 def manage_local_dirs(dl, data_dir):
-	for d in dirs:
+	for d in buckets:
 		folder 	= os.path.join(data_dir, d)
 		print folder
 		lst 	= glob.glob(folder+'/[0-9]*')

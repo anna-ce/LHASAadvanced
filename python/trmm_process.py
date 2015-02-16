@@ -89,18 +89,21 @@ class TRMM:
 			ftp.login()               					# user anonymous, passwd anonymous@
 			ftp.cwd(filepath)
 		
-		except:
-			print "FTP login Error", sys.exc_info()[0]
+		except Exception as e:
+			print "FTP login Error", sys.exc_info()[0], e
 			
 			# Try alternate
 			try:
 				print "Try alternate", gis_path
 				filepath = gis_path
 				ftp.cwd(filepath)
-			except:
-				sys.exit(1)
+			except Exception as e:
+				print "Exception", e
+				sys.exit(-1)
 
+		print self.trmm_gis_files
 		for f in self.trmm_gis_files:
+			print "Trying to download", f
 			local_filename = os.path.join(self.trmm_3B42RT_dir, f)
 			if not os.path.exists(local_filename):
 				if verbose:
@@ -109,11 +112,11 @@ class TRMM:
 				try:
 					ftp.retrbinary("RETR " + f, file.write)
 					file.close()
-				except:
-					print "FTP Error", sys.exc_info()[0]
+				except Exception as e:
+					print "TRMM FTP Error", sys.exc_info()[0], e					
 					os.remove(local_filename)
 					ftp.close();
-					sys.exit(1)
+					sys.exit(-2)
 
 		ftp.close()
 
