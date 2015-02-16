@@ -91,7 +91,7 @@ function sync_bucket( bucket, marker ) {
 	var options = {Bucket: bucket, Marker: marker};
 	app.s3.listObjects(options, function(err, data) {
 		if( !err ) {
-			//console.log(data)
+			//console.log(data.Contents)
 			async.eachSeries( data.Contents, function( el, cb) {
 				synchronizeFile(bucket, el.Key, el.Size, cb)
 			}, function(err) {
