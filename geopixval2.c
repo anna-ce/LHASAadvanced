@@ -3,16 +3,7 @@
 #include <strings.h>
 #include <math.h>
 
-//#include "geotiff.h"
-#include "xtiffio.h"
-#include "geo_normalize.h"
-#include "geo_simpletags.h"
-#include "geovalues.h"
 #include "tiffio.h"
-
-#include "geo_tiffp.h" /* external TIFF interface */
-#include "geo_keyp.h" /* private interface */
-#include "geokeys.h"
 
 int verbose = 1;
 	
@@ -26,21 +17,14 @@ int main(int argc, char *argv[]) {
 	int xsize, ysize, dtype, bs;
 
 	TIFF *tif 	= (TIFF *)0;  /* TIFF-level descriptor */
-	GTIF *gtif 	= (GTIF *)0; /* GeoKey-level descriptor */
 
 	if( verbose ) printf("%s %f %f\n", fname, lat, lng);
 
-	tif = XTIFFOpen(fname, "r");
+	tif = TIFFOpen(fname, "r");
 	if (!tif) {
 		printf("Failed opeing %s\n", fname);
 		exit(-1);
 	};
-
-	gtif = GTIFNew(tif);
-	if (!gtif) {
-		fprintf(stderr, "failed in GTIFNew\n");
-		exit(-1);
-	}
 
 	TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &xsize);
 	TIFFGetField(tif, TIFFTAG_IMAGELENGTH, &ysize);
@@ -58,20 +42,6 @@ int main(int argc, char *argv[]) {
 	double *data;
 	int count;
 	double xmin, ymax, xres, yres;
-		
-	if ((gtif->gt_methods.get)(tif, GTIFF_TIEPOINTS, &count, &data)) {
-		if( verbose ) {
-			printf("GTIFF_TIEPOINTS: ");
-			for (int i = 0; i < count; i++) {
-				printf("%-17.15g ", data[i]);
-			}
-			printf("\n");
-		}
-		xmin 	= data[3];	// min long
-		ymax	= data[4];	// max lat
-		
-		_GTIFFree(data);
-	}
 	
     if (TIFFGetField(tif, TIFFTAG_GEOTIEPOINTS, &count, &data)) {
 		if( verbose ) {
@@ -81,22 +51,9 @@ int main(int argc, char *argv[]) {
 			}
 			printf("\n");
 		}
+		xmin 	= data[3];	// min long
+		ymax	= data[4];	// max lat
     }
- 
- 
-	if ((gtif->gt_methods.get)(tif, GTIFF_PIXELSCALE, &count, &data )) {
-		if( verbose ) {
-			printf("GTIFF_PIXELSCALE: ");
-			for (int i = 0; i < count; i++) {
-				printf("%-17.15g ", data[i]);
-			}
-			printf("\n");
-		}	
-		
-		xres 	= data[0];
-		yres 	= data[1];
-		_GTIFFree(data);
-	}
 	
     if (TIFFGetField(tif, TIFFTAG_GEOPIXELSCALE, &count, &data)) {
 		if( verbose ) {
@@ -106,19 +63,9 @@ int main(int argc, char *argv[]) {
 			}
 			printf("\n");
 		}
+		xres 	= data[0];
+		yres 	= data[1];
     }
-	
-	
-	if ((gtif->gt_methods.get)(tif, GTIFF_TRANSMATRIX, &count, &data )) {
-		if( verbose ) {
-			printf("GTIFF_TRANSMATRIX: ");
-			for (int i = 0; i < count; i++) {
-				printf("%-17.15g ", data[i]);
-			}
-			printf("\n");
-		}	
-		_GTIFFree(data);
-	}
 
 	if( verbose ) printf("%f %f %f %f\n", xmin, ymax, xres, yres);
 
@@ -184,6 +131,5 @@ int main(int argc, char *argv[]) {
 	
 	free(buf);
   
-	if (tif)	XTIFFClose(tif);
-	if (gtif) 	GTIFFree(gtif);
+	if (tif)	TIFFClose(tif);
 }
