@@ -95,7 +95,7 @@ function sync_bucket( bucket, marker ) {
 			async.eachSeries( data.Contents, function( el, cb) {
 				synchronizeFile(bucket, el.Key, el.Size, cb)
 			}, function(err) {
-				console.log("synchronized done", err)
+				//console.log("synchronized done", err)
 				if( data.IsTruncated ) syncBucket(bucket, data.NextMarker)
 			})
 		} else {
@@ -165,6 +165,6 @@ module.exports = {
 	synchronize: function() {
 		sync_bucket('ojo-d3', "")
 		sync_bucket('ojo-d2', "")	
-		console.log("/tmp synchronized with S3")	
+		logger.info("/tmp synchronized with S3")	
 	}
 };
