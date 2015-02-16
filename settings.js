@@ -19,8 +19,13 @@ var express 		= require('express'),
 	facebook		= require('./lib/facebook'),
 	GitHubApi 		= require("github"),
 	i18n			= require('./lib/i18n-abide'),
-	shortid			= require('shortid')
-;
+	
+	bodyParser 		= require('body-parser'),
+	errorHandler 	= require('errorhandler'),
+	methodOverride 	= require('method-override'),
+	multer 			= require('multer'),
+	
+	shortid			= require('shortid');
 
   	require('winston-papertrail').Papertrail;
 
@@ -139,28 +144,11 @@ function bootApplication(app) {
 
 	// cookieParser should be above session
 	app.use(cookieParser(process.env.COOKIEHASH))
-
-	// bodyParser should be above methodOverride
-	// app.use(express.bodyParser())
-	//app.use(express.json());
-	//app.use(express.urlencoded());
 	
-	//app.use(express.methodOverride())
+	app.use(methodOverride())
 
 	var conString 	= process.env.DATABASE_URL || "tcp://nodepg:password@localhost:5432/dk";
 	logger.info("Connecting to db:", conString)
-		
- 	//function pgConnect (callback) {
-	//	pg.connect(conString, function (err, client, done) {			
-	//		if (err) {
-	//			logger.info(JSON.stringify(err));
-	//		}
-	//		if (client) {
-	//			callback(client);
-	//		}
-	//		done()	// THIS IS CRITICAL TO RETURN CLIENT TO THE POOL.... GRRRR!
-	//	});
-    //};	
 		
 	app.use(session4({
 		secret: app.sessionSecret,
@@ -170,7 +158,8 @@ function bootApplication(app) {
 			  conString : conString,
 			  tableName : 'session'
 		}),
-		resave: 	true
+		resave: 	true,
+		saveUninitialized: true
 	}))
 
 	app.client = new pg.Client(conString);
@@ -186,26 +175,28 @@ function bootApplication(app) {
 		}
 	  });
 	});
-	
+
+	app.use(bodyParser.json());
+	app.use(bodyParser.urlencoded({ extended: true }));
 	app.use(favicon(__dirname + '/public/favicon.png'));	
 		
 	//app.use(express.csrf());
-	app.use(function(req, res, next) {
+	//app.use(function(req, res, next) {
 		//res.locals.token = req.csrfToken();
 		//console.log('csrf:', res.locals.token);
-		next()
-	});
+	//	next()
+		//});
 
-	app.use(function(req, res, next) {
-	  req.raw_post = '';
-	  req.setEncoding('utf8');
+	//app.use(function(req, res, next) {
+	//  req.raw_post = '';
+	//  req.setEncoding('utf8');
 
-	  req.on('data', function(chunk) { 
-	    req.raw_post += chunk;
-	  });
+	//  req.on('data', function(chunk) { 
+	//    req.raw_post += chunk;
+	//  });
 
-	  next();
-	});
+	//  next();
+	//});
 	
 	app.use(i18n.abide({
 		supported_languages: ['en', 'es', 'fr', 'pt'],
@@ -215,17 +206,21 @@ function bootApplication(app) {
 		translation_type: 'transiflex',
 		logger: console
 	}));
+
+	//if ('development' == app.get('env')) {
+	//  app.use(errorHandler());
+	//}
 	
 	// expose the "messages" local variable when views are rendered
-	app.use(function(req, res, next){
+	//app.use(function(req, res, next){
 
-	  var msgs = req.session.messages || [];
+	//  var msgs = req.session.messages || [];
 
 	  // expose "messages" local variable
-	  res.locals.messages = msgs;
+	//  res.locals.messages = msgs;
 
 	  // expose "hasMessages"
-	  res.locals.hasMessages = !! msgs.length;
+	//  res.locals.hasMessages = !! msgs.length;
 
 	  /* This is equivalent:
 	   res.locals({
@@ -236,31 +231,29 @@ function bootApplication(app) {
 
 	  // empty or "flush" the messages so they
 	  // don't build up
-	  req.session.messages = [];
-	  next();
-	});
+	//  req.session.messages = [];
+	//  next();
+	//});
 	
 	//app.use(app.router)
 	
 	// Error Handling
-	app.use(function(err, req, res, next){
+	//app.use(function(err, req, res, next){
 	  // treat as 404
-	  if (~err.message.indexOf('not found')) return next()
+	//  if (~err.message.indexOf('not found')) return next()
 
 	  // log it
-	  console.error(err.stack)
+	//  console.error(err.stack)
 
 	  // error page
-	  res.status(500).render('500', { layout: false })
-	})
+	//  res.status(500).render('500', { layout: false })
+	//})
 
 	// assume 404 since no middleware responded
-	app.use(function(req, res, next){
-	  res.status(404).render('404', { layout: false, url: req.originalUrl })
-	})
-	
-	app.root_dir = __dirname
-	
+	//app.use(function(req, res, next){
+	//  res.status(404).render('404', { layout: false, url: req.originalUrl })
+	//})
+		
 	//app_set_env('SENDGRID_USER')
 	//app_set_env('SENDGRID_KEY')	
 	//app.sendgrid  = require('sendgrid')(app.SENDGRID_USER, app.SENDGRID_KEY);

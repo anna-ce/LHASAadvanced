@@ -26,9 +26,7 @@ var express 		= require('express'),
 	mapinfo			= require('./app/controllers/mapinfo');
 
 
-var app = module.exports = express();
-
-global.app 			= app;
+global.app 			= express();
 app.root 			= process.cwd();
 
 var mainEnv 		= app.root + '/config/environment'+'.js';
@@ -43,7 +41,7 @@ require('./settings').boot(app)
 var products_planetlabs	= require('./lib/products_planetlabs');
 
 // load controllers
-require('./lib/boot')(app, { verbose: !module.parent });
+// require('./lib/boot')(app, { verbose: !module.parent });
 	
 // make sure tmp subdirs exist
 for( var r in app.config.regions) {
@@ -161,18 +159,21 @@ function hawk_restrict(req, res, next) {
 		SetSessionCredential( req, res, err, credentials, artifacts, next )
 	})
 }
+
+//var router = express.Router();
+
 // Home page -> app
-app.get('/', 									home.index);
-app.get('/about', 								home.about);
+app.get('/', 								home.index);
+app.get('/about', 							home.about);
 app.get('/contact', 							home.contact);
 app.get('/privacy', 							home.privacy);
-app.get('/terms',	 							home.terms);
+app.get('/terms',	 						home.terms);
 app.get('/support', 							home.support);
 
-//app.get('/login', 								login.index);
-//app.get('/logout', 								login.logout);
+//app.get('/login', 							login.index);
+//app.get('/logout', 							login.logout);
 
-//app.get('/users', 								users.index);
+//app.get('/users', 							users.index);
 app.get('/users/:id',	 						users.show);
 app.post('/users/:id',	 						users.update);
 app.get('/users', 								users.list);
@@ -277,12 +278,10 @@ function setAuthHeaders(req, res, next) {
 
 // ===========================================================
 // port set based on NODE_ENV settings (production, development or test)
-debug("trying to start on port:"+ app.get('port'));
-console.log("App Root Dir", app.root_dir)
+logger.info("trying to start on port:"+ app.get('port'));
+
 s3.synchronize();
 
-if (!module.parent) {
-	app.listen(app.get('port'));
-	
+app.listen(app.get('port'),function(){
 	logger.info( "**** "+app.config.application+' started on port:'+app.get('port'));
-}
+});
