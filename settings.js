@@ -73,6 +73,9 @@ var express 		= require('express'),
 		// The port that this express app will listen on
 		debug("app_port:"+app_port)
 		
+		// load config
+		app.config 	= JSON.parse(fs.readFileSync("./config/config.yaml"));
+		
 		var port
 
 		if( app.settings.env === 'development') {
@@ -117,8 +120,6 @@ function app_set_env( env_var ) {
 // App settings and middleware
 function bootApplication(app) {
 
-	// load config
-	app.config 	= JSON.parse(fs.readFileSync("./config/config.yaml"));
 	
 	// define a custom res.message() method
 	// which stores messages in the session
