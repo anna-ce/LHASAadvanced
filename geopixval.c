@@ -42,10 +42,10 @@ int main(int argc, char *argv[]) {
 		exit(-1);
 	}
 
-	TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &xsize);
-	TIFFGetField(tif, TIFFTAG_IMAGELENGTH, &ysize);
-	TIFFGetField(tif, TIFFTAG_DATATYPE, &dtype);
-	TIFFGetField(tif, TIFFTAG_BITSPERSAMPLE, &bs);
+	TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, 		&xsize);
+	TIFFGetField(tif, TIFFTAG_IMAGELENGTH, 		&ysize);
+	TIFFGetField(tif, TIFFTAG_DATATYPE, 		&dtype);
+	TIFFGetField(tif, TIFFTAG_BITSPERSAMPLE, 	&bs);
  
 	if( verbose ) printf("Size %d %d type %d bps %d\n", xsize, ysize, dtype, bs);
 

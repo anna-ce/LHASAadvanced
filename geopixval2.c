@@ -128,7 +128,7 @@ int main(int argc, char *argv[]) {
 		//	printf("\n");
 		//}
 	} else {
-		printf("Invalid bs %d\n", bs)
+		printf("Invalid bs %d\n", bs);
 	}
 	
 	free(buf);
