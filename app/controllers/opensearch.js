@@ -176,7 +176,7 @@ module.exports = {
 		var lon				= parseFloat(req.query['lon'])
 		var limit			= req.query['limit'] || 100
 					
-		console.log("opensearch", req.query)
+		logger.info("opensearch", req.query)
 		
 		if( bbox && !ValidateBBox(bbox)) {
 			return res.send(400, "Invalid BBox")
@@ -206,7 +206,7 @@ module.exports = {
 		} else {
 			bbox = [lon-area, lat-area, lon+area, lat+area]
 		}
-		console.log("Opensearch Query bbox minlonlat maxlonlat", lon, lat, area, bbox, endTime.format("YYYY-MM-DD"))
+		//console.log("Opensearch Query bbox minlonlat maxlonlat", lon, lat, area, bbox, endTime.format("YYYY-MM-DD"))
 		QueryNodes(req, res, query, bbox, lat, lon, startTime, endTime,  startIndex, itemsPerPage, limit )
 	}
 }

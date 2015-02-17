@@ -23,12 +23,13 @@
 	<link rel="stylesheet" href="/css/classicmap.css" />
 
 	<!-- Mapbox 2.1.5 	-->
-	<link href='//api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
-	<script src='http://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js'></script>
+	<link href='//api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
+	<script src='http://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
 
 	<script src="/js/bootstrap-datepicker.js"></script>
 	<script src="http://d3js.org/topojson.v1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+	<script src="/js/moment.js"></script>
   </head>
 
   <body>
@@ -311,10 +312,11 @@
 	$('#startTime').datepicker( {format: "yyyy-mm-dd"});
 	$('#endTime').datepicker({format: "yyyy-mm-dd"});
 	
-	var stop 	= new Date();
-	var start 	= new Date(stop.getFullYear()-3, stop.getMonth(), stop.getDate(), 0,0,0,0)
-	$('#endTime').datepicker("setValue", stop);
-	$('#startTime').datepicker("setValue", start);
+	var stop 	= moment();
+	var start 	= stop.clone().subtract(60,'days')
+	
+	$('#endTime').datepicker("setValue", stop.toDate());
+	$('#startTime').datepicker("setValue", start.toDate());
 	
 	function ShowForm() {
 		$('#query_container').toggle();
