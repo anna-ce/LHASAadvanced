@@ -12,4 +12,5 @@ var express = require('express'),
 console.log("development...")
 app.set('tmp_dir', path.join(app.root,'tmp'))
 
-app_port= process.env.PORT || 7465;;
+app_port= process.env.PORT || 7465;
+app.set('port', app_port)

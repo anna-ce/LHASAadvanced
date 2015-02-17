@@ -76,15 +76,6 @@ var express 		= require('express'),
 		// load config
 		app.config 	= JSON.parse(fs.readFileSync("./config/config.yaml"));
 		
-		var port
-
-		if( app.settings.env === 'development') {
-			port 			= app_port;
-		} else {
-			port 			= app.config.PORT;		
-		}
-		app.set('port', port)
-		
 		bootApplication(app)
 		
 		var appId				= process.env.fbAppId

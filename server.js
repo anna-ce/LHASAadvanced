@@ -168,11 +168,11 @@ function hawk_restrict(req, res, next) {
 //var router = express.Router();
 
 // Home page -> app
-app.get('/', 								home.index);
-app.get('/about', 							home.about);
+app.get('/', 									home.index);
+app.get('/about', 								home.about);
 app.get('/contact', 							home.contact);
 app.get('/privacy', 							home.privacy);
-app.get('/terms',	 						home.terms);
+app.get('/terms',	 							home.terms);
 app.get('/support', 							home.support);
 
 //app.get('/login', 							login.index);

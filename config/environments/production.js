@@ -15,4 +15,6 @@ var express = require('express'),
 	
 //});
 
-app_port = 80;
+	app_port = process.env.PORT;
+	app.set('port', app_port)
+	
