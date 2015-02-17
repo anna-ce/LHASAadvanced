@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
 	float lat 	= atof(argv[2]);
 	float lng 	= atof(argv[3]);
 	
-	int xsize, ysize, dtype, bs;
+	int xsize=0, ysize=0, dtype=0, bs=0;
 
 	TIFF *tif 	= (TIFF *)0;  /* TIFF-level descriptor */
 
@@ -127,6 +127,8 @@ int main(int argc, char *argv[]) {
 		//	}
 		//	printf("\n");
 		//}
+	} else {
+		printf("Invalid bs %d\n", bs)
 	}
 	
 	free(buf);
