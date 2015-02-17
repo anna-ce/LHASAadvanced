@@ -9,8 +9,7 @@ var express = require('express'),
   	//app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 	//});
 
-console.log("development...")
-app.set('tmp_dir', path.join(app.root,'tmp'))
+app.set('tmp_dir', path.join(app.root,'../tmp'))
 
 app_port= process.env.PORT || 7465;
 app.set('port', app_port)

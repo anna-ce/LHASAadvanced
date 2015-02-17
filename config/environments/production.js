@@ -8,12 +8,10 @@ var express = require('express'),
 //  	app.enable('view cache');
 //  	app.enable('model cache');
 //  	app.enable('eval cache');
-//  	app.settings.quiet = true;
-	
-	console.log("production")
-	app.set('tmp_dir', '/tmp')
-	
+//  	app.settings.quiet = true;	
 //});
+
+	app.set('tmp_dir', '/app/tmp')
 
 	app_port = process.env.PORT;
 	app.set('port', app_port)
