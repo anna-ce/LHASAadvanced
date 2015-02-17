@@ -27,9 +27,9 @@ var express 		= require('express'),
 
 
 global.app 			= express();
-app.root 			= __dirname	//process.cwd();
+app.root 			= process.cwd();
 
-console.log("app.root", app.root)
+console.log("app.root", process.cwd(), __dirname)
 
 var mainEnv 		= app.root + '/config/environment'+'.js';
 var supportEnv 		= app.root + '/config/environments/' + app.settings.env+'.js';
@@ -43,8 +43,10 @@ console.log("tmp_dir:", app.get("tmp_dir"))
 // load settings
 require('./settings').boot(app)  
 
+var planetlabs_dir 		= path.join(app.get("tmp_dir"),"planet-labs");
+mkdirp.sync(planetlabs_dir)	
 var products_planetlabs	= require('./lib/products_planetlabs');
-
+	
 // load controllers
 // require('./lib/boot')(app, { verbose: !module.parent });
 	
