@@ -106,14 +106,14 @@ int main(int argc, char *argv[]) {
 		
 		if( verbose ) printf("val %d\n", ubuf[pos]);
 	
-		for( int r=0; r<ysize; r++) {
-			printf( "R: %d - ", r );
-			for( int c=0; c< ysize; c++) {
-				int pos = r*xsize + c;
-				printf("%02d ", ubuf[pos]);;
-			}
-			printf("\n");
-		}
+		//for( int r=0; r<ysize; r++) {
+		//	printf( "R: %d - ", r );
+		//	for( int c=0; c< ysize; c++) {
+		//		int pos = r*xsize + c;
+		//		printf("%02d ", ubuf[pos]);;
+		//	}
+		//	printf("\n");
+		//}
 	} else if(bs == 8 ) {
 		uint8* ubuf = (uint8*)buf;
 		

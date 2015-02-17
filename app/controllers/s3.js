@@ -30,38 +30,33 @@ function copyFromS3(bucket, key, cb ) {
 		Bucket: bucket, 
 		Key: key
 	};
-	app.s3.getObject( options, function(err, data) {
-		var tmp_dir = app.get("tmp_dir")
-		if( !err ) {
-			if( endsWith(key, "/") ) {
-				return cb(null)
-			}
-			
-			var fileName = path.join(tmp_dir, bucket, key)
-			var dir		 = path.dirname(fileName)
-			
-			//console.log("copyFromS3", bucket, key, dir, fileName)
-			
-			// make sure folder exists
-			mkdirp.sync(dir)
 
-			if( dir != fileName ) {
-				console.log("s3 copy to", fileName)
+	if( endsWith(key, "/") ) {
+		return cb(null)
+	}
 			
-				var out 		= fs.createWriteStream(fileName)	
-				var buff 		= new Buffer(data.Body, "binary")
-				var Readable 	= require('stream').Readable;
-				var rs 			= new Readable;
-				rs.push(buff)
-				rs.push(null)
-				rs.pipe(out)
-			}
-			
+	var tmp_dir 	= app.get("tmp_dir")
+	var fileName 	= path.join(tmp_dir, bucket, key)
+	var dir		 	= path.dirname(fileName)
+				
+	// make sure folder exists
+	if( !fs.existsSync(dir)) {
+		var newDir = mkdirp.sync(dir)
+		if( newDir == null ) {
+			console.log("Failed creating", dir)
 		} else {
-			logger.error("NOT Found it on S3", fname)
+			console.log("Created", dir, newDir)
 		}
-		cb(err)
-	})
+	}
+
+	if( dir != fileName ) {
+		console.log("  s3 copy to", fileName)
+	
+		var file = fs.createWriteStream(fileName);
+		app.s3.getObject(options).createReadStream().pipe(file);
+	}
+
+	cb(null)
 }
 
 function synchronizeFile( bucket, key, size, cb ) {

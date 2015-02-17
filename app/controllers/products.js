@@ -84,7 +84,7 @@ var util	= require('util'),
 		}
 		
 		res.header("Access-Control-Allow-Origin", "*")
-		res.sendfile(basename, {root: dirname})
+		res.sendFile(basename, {root: dirname})
 	}
 	
 	function regionId( region ) {
@@ -892,7 +892,7 @@ module.exports = {
 		}
 		
 		//console.log("Headers", req.headers)
-		console.log("Products", reg_id, ymd, id, fmt)
+		logger.info("Distribute Product", reg_id, ymd, id, fmt)
 		
 		var pathName	= tmp_dir+"/"+region.bucket+"/"+ymd
 		var file 		= path.join( pathName, id+"."+fmt )
@@ -990,24 +990,56 @@ module.exports = {
 			case 'topojson':
 				var acceptEncoding = req.headers['accept-encoding']
 				//console.log('topojson requested header:', req.headers)
+				
 				if( acceptEncoding.indexOf('gzip') < 0) {
 					console.log("does not accept gzip... we need to expand topojson...")
 				}
-				file += ".gz"
+
+				fmt 			+= ".gz"
+				var key 		= path.join( ymd, id+"."+fmt )	
+				var params 		= {Bucket: region.bucket, Key: key}
 				
-			case 'gz':
-				if( fs.existsSync(file)) {
-					sendFile(res, file)
-				} else {
-					// Check on S3
-					existsOnS3(region.bucket, ymd, path.basename(file), function(err) {
-						if(!err) {
-							sendFile( res, file )
-						} else {
-							res.send(404, "file not found")
-						}
-					})
+				var dir 		= path.join(app.get("tmp_dir"),region.bucket, ymd)
+				var fileName	= path.join(dir, id+"."+fmt)
+				
+				function sendFile( fileName ) {
+					var basename 	= 	path.basename(fileName)
+					var dirname 	= 	path.dirname(fileName)
+				
+					res.header("Access-Control-Allow-Origin", "*");
+					res.header("Content-Type", "application/json")
+					res.header("Content-Encoding", "gzip")
+					res.sendFile(basename, {root: dirname})
 				}
+				
+				if( !fs.existsSync(fileName)) {
+					mkdirp.sync(dir)
+				
+					var file = fs.createWriteStream(fileName);
+					file.on('close', function() {
+						sendFile( fileName);
+					})
+				    .on('error', function(err){
+				         logger.error('download S3 error: ' + filename);
+				         res.send(500);
+				    });
+					   
+					app.s3.getObject(params).createReadStream().pipe(file);
+				} else {
+					sendFile(fileName)
+				}
+
+				break;
+			case 'gz':
+				var key 	= path.join( ymd, id+"."+fmt )	
+				var params 	= {Bucket: region.bucket, Key: key}
+				app.s3.getSignedUrl('getObject', params, function (err, url) {
+					if( !err ) {
+						res.redirect(url)
+					} else {
+						res.send(404, "gz not found on the server"+key)
+					}					
+				});			
 				break
 			
 			case 'osm':
@@ -1115,22 +1147,12 @@ module.exports = {
 				break;
 				
 			case 'png':
-				if( fs.existsSync(file)) {
-					// this is to avoid setting the session cookie for simple images
-					delete req.session;
-					
-					sendFile( res, file )
-				} else {
-					//console.log("png file does not exist", file)
-					// Check on S3
-					existsOnS3(region.bucket, ymd, path.basename(file), function(err) {
-						if(!err) {
-							sendFile( res, file )
-						} else {
-							res.send(404, "file not found")
-						}
-					})
-				}
+				var key 	= path.join( ymd, id+"."+fmt )	
+				var params 	= {Bucket: region.bucket, Key: key}
+				
+				app.s3.getSignedUrl('getObject', params, function (err, url) {
+					res.redirect(url)
+				});				
 				break
 		}
 	},

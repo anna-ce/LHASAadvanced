@@ -35,9 +35,6 @@ var supportEnv 		= path.join(app.root, '/config/environments/' + app.settings.en
 require(mainEnv)
 require(supportEnv)
 
-console.log(app.settings.env)
-console.log("tmp_dir:", app.get("tmp_dir"))
-
 // load settings
 require('./settings').boot(app)  
 
@@ -285,8 +282,8 @@ function setAuthHeaders(req, res, next) {
 // port set based on NODE_ENV settings (production, development or test)
 logger.info("trying to start on port:"+ app.get('port'));
 
-s3.synchronize();
+//s3.synchronize();
 
 app.listen(app.get('port'),function(){
-	logger.info( "**** "+app.config.application+' started on port:'+app.get('port'));
+	logger.info( "*** "+app.config.application+' started on port:'+app.get('port')+" mode:"+app.settings.env);
 });
