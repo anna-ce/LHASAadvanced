@@ -29,12 +29,15 @@ var express 		= require('express'),
 global.app 			= express();
 app.root 			= process.cwd();
 
+console.log("app.root", app.root)
+
 var mainEnv 		= app.root + '/config/environment'+'.js';
 var supportEnv 		= app.root + '/config/environments/' + app.settings.env+'.js';
 
 require(mainEnv)
 require(supportEnv)
 
+console.log(app.settings.env)
 console.log("tmp_dir:", app.get("tmp_dir"))
 
 // load settings
