@@ -27,13 +27,7 @@ var express 		= require('express'),
 
 
 global.app 			= express();
-if( app.settings.env == 'production') {
-	app.root = "/"
-} else {
-	app.root 		= process.cwd();
-}
-
-console.log("app.root", process.cwd(), __dirname)
+app.root 			= process.cwd();
 
 var mainEnv 		= path.join(app.root, '/config/environment'+'.js');
 var supportEnv 		= path.join(app.root, '/config/environments/' + app.settings.env+'.js');
