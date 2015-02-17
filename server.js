@@ -35,6 +35,8 @@ var supportEnv 		= app.root + '/config/environments/' + app.settings.env+'.js';
 require(mainEnv)
 require(supportEnv)
 
+console.log("tmp_dir:", app.get("tmp_dir"))
+
 // load settings
 require('./settings').boot(app)  
 
