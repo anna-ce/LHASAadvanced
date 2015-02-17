@@ -46,7 +46,7 @@ function copyFromS3(bucket, key, cb ) {
 			mkdirp.sync(dir)
 
 			if( dir != fileName ) {
-				console.log("s3 copy", fileName)
+				console.log("s3 copy to", fileName)
 			
 				var out 		= fs.createWriteStream(fileName)	
 				var buff 		= new Buffer(data.Body, "binary")
