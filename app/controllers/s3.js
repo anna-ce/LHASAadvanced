@@ -165,6 +165,8 @@ module.exports = {
 	synchronize: function() {
 		sync_bucket('ojo-d3', "")
 		sync_bucket('ojo-d2', "")	
-		logger.info("/tmp synchronized with S3")	
+		
+		var tmp_dir = app.get("tmp_dir")
+		logger.info(tmp_dir, " synchronized with S3")	
 	}
 };
