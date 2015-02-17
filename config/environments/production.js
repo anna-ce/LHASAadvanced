@@ -10,6 +10,7 @@ var express = require('express'),
 //  	app.enable('eval cache');
 //  	app.settings.quiet = true;
 	
+	console.log("production")
 	app.set('tmp_dir', '/tmp')
 	
 //});
