@@ -27,7 +27,7 @@ var express 		= require('express'),
 
 
 global.app 			= express();
-app.root 			= process.cwd();
+app.root 			= __dirname	//process.cwd();
 
 console.log("app.root", app.root)
 
