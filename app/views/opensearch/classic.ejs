@@ -113,6 +113,7 @@
 					    <div class="form-group">
 					      <label for="q">Search:</label>
 							  <select id='q' class="selectpicker">
+								<option value='flood_forecast'>flood_forecast</option>
 								<option value='location_cast'>location_cast</option>
 								<option value='landslide_nowcast'>landslide_nowcast</option>
 								<option value='surface_water'> surface_water</option>
@@ -270,7 +271,7 @@
 <script>
 	L.mapbox.accessToken 		= "<%= mapbox_token %>"
 	var map = L.mapbox.map('map', '<%= region.map_id %>', { minZoom:2, maxZoom: <%= region.max_zoom %> } )
-	.setView([<%= region.target %>], 7)
+	.setView([<%= region.target %>], <%= region.min_zoom %>)
 	
 	var map_controls = L.control.layers({
 	    'Topo Map': L.mapbox.tileLayer('<%= region.map_id %>',{ attribution: 'MapBox'}).addTo(map)
@@ -719,60 +720,63 @@
 			// addThumbnailToMap(result,id) 
 
 			// find the download action
-			for( var a in result.action){
-				var action = result.action[a]
-				if( action['@type'] == 'ojo:download' ) {
-					var using = action.using
-					for( var u in using ) {
-						var uses 		= using[u]
-						var url			= uses.url
-						var mediaType 	= uses.mediaType
+			if( result) {
+				for( var a in result.action){
+					var action = result.action[a]
+					if( action['@type'] == 'ojo:download' ) {
+						var using = action.using
+						for( var u in using ) {
+							var uses 		= using[u]
+							var url			= uses.url
+							var mediaType 	= uses.mediaType
 							 
-						console.log(url, mediaType)
+							console.log("Using:", action['@type'], url, mediaType)
 							
-						if( url.indexOf(".png") > 0 ) {
-							// add image overlay
-							var bbox = result.geometry.coordinates[0]
-							var imageBounds = [bbox[0].reverse().map(parseFloat), bbox[2].reverse().map(parseFloat)]
+							if( url.indexOf(".png") > 0 ) {
+								// add image overlay
+								var bbox = result.geometry.coordinates[0]
+								var imageBounds = [bbox[0].reverse().map(parseFloat), bbox[2].reverse().map(parseFloat)]
 						
-							console.log("Add to map", JSON.stringify(imageBounds))
-							var options 	= {opacity: 0.8, attribution: result.properties.source["@value"]}
-							var newLayer 	= L.imageOverlay(url, imageBounds, options).addTo(map);
-							map_controls.addOverlay( newLayer, id );
-							break;
-						} else if( (url.indexOf(".topojson.gz")<0) && (url.indexOf(".topojson")>0)) {
-							console.log("loading topojson", url)
-							$.ajax({
-								type: 'GET',
-								url: url,
-								async: true
-							})
-							.success( function(data) {
-								if( data && data.objects ) {
-									console.log("Returned good data")
-					
-									var data 	= topojson.feature(data, data.objects['surface_water']);
-				
-									var newLayer =  L.geoJson(null, { style: { color: '#ff0000', weight: 1 }})
-									newLayer.addData(data);
-									newLayer.addTo(map);
-									map_controls.addOverlay( newLayer, id );
-								} else {
-									console.log("Returned bad data")
-								}
-							})
-							.fail(function(jqxhr, textStatus, error ) { 
-								var err = textStatus + ', ' + error;
-								alert( "Request Failed: " + err);
-							});
-							break
-						} else if( mediaType == 'image/tiff') {
-							addThumbnailToMap(result, id) 
-							break;
+								console.log("PNG Add to map", JSON.stringify(imageBounds))
+								var options 	= {opacity: 0.8, attribution: result.properties.source["@value"]}
+								var newLayer 	= L.imageOverlay(url, imageBounds, options).addTo(map);
+								map_controls.addOverlay( newLayer, id );
+								break;
+							} else if( (url.indexOf(".topojson.gz")<0) && (url.indexOf(".topojson")>0)) {
+								//console.log("loading topojson", url)
+								$.ajax({
+									type: 'GET',
+									url: url,
+									async: true
+								})
+								.success( function(data) {
+									if( data && data.objects ) {
+										
+										for (var key in data.objects) {
+											console.log("PGC Found key", key)
+											var geodata 	= topojson.feature(data, data.objects[key]);
+											var newLayer =  L.geoJson(null, { style: { color: '#ff0000', weight: 1 }})
+											newLayer.addData(geodata);
+											newLayer.addTo(map);
+											map_controls.addOverlay( newLayer, id );
+										}
+									} else {
+										console.log("Returned bad data")
+									}
+								})
+								.fail(function(jqxhr, textStatus, error ) { 
+									var err = textStatus + ', ' + error;
+									alert( "Request Failed: " + err);
+								});
+								break
+							} else if( mediaType == 'image/tiff') {
+								addThumbnailToMap(result, id) 
+								break;
+							}
 						}
+					} else {
+						//addThumbnailToMap(result,id) 
 					}
-				} else {
-					addThumbnailToMap(result,id) 
 				}
 			}
 		}

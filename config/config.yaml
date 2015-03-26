@@ -44,9 +44,9 @@
         },
         "d04": {
             "name":		      "Namibia",
-            "bbox":         [-74.94, 16.35, -64.98, 21.42 ],
-            "target":       [-17.06, 35.22],
-            "min_zoom":     7,
+            "bbox":         [18, -21, 26, -17 ],
+            "target":       [-18.12, 21.65],
+            "min_zoom":     6,
             "max_zoom":	    18,
             "map_id":       "cappelaere.map-q4hdwmh3",
             "bucket":       "ojo-d4",
@@ -78,8 +78,8 @@
 	},
 	
 	"nodes": [
-        	{
-        		"source": 		"dfo",
+          {
+            "source": 		"dfo",
         		"href": 		"/opensearch",
         		"checked":  	false
         	},
@@ -87,6 +87,12 @@
         		"source": 		"digiglobe",
         		"href": 		"/opensearch",
         		"checked":  	false
+        	},
+        	{
+        		"source": 		"ef5",
+        		"href": 		"/opensearch",
+        		"checked":  	true,
+            "selected":   true
         	},
         	{
         		"source": 		"eo1_ali",
@@ -103,36 +109,36 @@
             "href": 		"/opensearch",
             "checked":  	false
             },
-           {
+          {
           	"source": 		"modis",
           	"href": 		"/opensearch",
           	"checked":  	false
           },
           {
-          "source": 		"modis_lst",
-         	"href": 		"/opensearch",
-         	"checked":  	false
+            "source": 		"modis_lst",
+            "href": 		"/opensearch",
+            "checked":  	false
           },
           {
-          "source": 		"ojo",
-         	"href": 		"/opensearch",
-         	"checked":  	true
+            "source": 		"ojo",
+            "href": 		"/opensearch",
+            "checked":  	false
           },
           {
-         	"source": 		"planet_labs",
-         	"href": 		"/opensearch",
-         	"checked":  	false
+            "source": 		"planet_labs",
+            "href": 		"/opensearch",
+            "checked":  	false
           },
         	{
-        		"source": 		"radarsat_2",
-        		"href": 		"/opensearch",
-        		"checked":  	false
-        	},
-    			{
-    				"source": 		"trmm",
-    				"href": 		"/opensearch",
-    				"checked": 		false
-    			}
+              "source": 		"radarsat_2",
+              "href": 		"/opensearch",
+              "checked":  	false
+          },
+          {
+              "source": 		"trmm",
+              "href": 		"/opensearch",
+              "checked": 		false
+          }
 	]
 }
 

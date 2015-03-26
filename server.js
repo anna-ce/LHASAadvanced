@@ -25,6 +25,8 @@ var express 		= require('express'),
 	products		= require('./app/controllers/products'),
 	mapinfo			= require('./app/controllers/mapinfo');
 
+	var mapinfo_ef5			= require('./lib/mapinfo_ef5');
+	var	products_ef5		= require('./lib/products_ef5');
 
 global.app 			= express();
 app.root 			= process.cwd();
@@ -39,6 +41,8 @@ require(supportEnv)
 require('./settings').boot(app)  
 
 var planetlabs_dir 		= path.join(app.get("tmp_dir"),"planet-labs");
+console.log("making", planetlabs_dir)
+
 mkdirp.sync(planetlabs_dir)	
 var products_planetlabs	= require('./lib/products_planetlabs');
 	
@@ -188,9 +192,9 @@ app.get('/stats', 								stats.index);
 app.get('/s3/sync',								s3.sync);
 app.get('/s3/:bucket/:id',						s3.index);
 
-app.get('/test/image',							test.image);
-app.get('/test/:id', 							test.index);
-app.get('/test',								test.index);
+//app.get('/test/image',							test.image);
+//app.get('/test/:id', 							test.index);
+//app.get('/test',								test.index);
 
 app.get('/opensearch',							if_authorized, opensearch.index);
 app.get('/opensearch/classic',					if_authorized, opensearch.classic);
@@ -202,11 +206,11 @@ app.all('/persona/logout',						persona.logout);
 //app.get('/social/facebook',					social.facebook);
 //app.get('/social/twitter',					social.twitter);
 
-app.get('/products/planetlabs/:id',							products_planetlabs.index);
-app.get('/products/planetlabs/:id/thn',						products_planetlabs.thn);
-app.get('/products/planetlabs/:id/full',					products_planetlabs.full);
-app.get('/products/planetlabs/:id/map',						products_planetlabs.map);
-app.get('/products/planetlabs/:id/process',					products_planetlabs.process);
+app.get('/products/planetlabs/:id',								products_planetlabs.index);
+app.get('/products/planetlabs/:id/thn',							products_planetlabs.thn);
+app.get('/products/planetlabs/:id/full',						products_planetlabs.full);
+app.get('/products/planetlabs/:id/map',							products_planetlabs.map);
+app.get('/products/planetlabs/:id/process',						products_planetlabs.process);
 app.get('/products/planetlabs/:id/surface_water.topojson',		products_planetlabs.topojson);
 app.get('/products/planetlabs/:id/surface_water.topojson.gz',	products_planetlabs.topojsongz);
 
@@ -215,10 +219,6 @@ app.get('/products/:region/trmm',				products.trmm_list);
 
 //app.get('/products/opensearch',					hawk_restrict, products.opensearch);
 app.get('/products/opensearch',					hawk_restrict, opensearch.index);
-
-app.get('/products/:region/:ymd/:id.:fmt?',		products.distribute);
-app.get('/products/map/:region/:ymd/:id.:fmt?',	products.map);
-app.get('/products',							products.index);
 
 app.options('/products/opensearch',				function(req, res) {
 	console.log("OPTIONS on opensearch");
@@ -259,6 +259,20 @@ app.get('/mapinfo/landslide_nowcast',			mapinfo.landslide_nowcast);
 app.get('/mapinfo/landslide_nowcast/style',		mapinfo.landslide_nowcast_style);
 app.get('/mapinfo/landslide_nowcast/legend',	mapinfo.landslide_nowcast_legend);
 app.get('/mapinfo/landslide_nowcast/credits',	mapinfo.landslide_nowcast_credits);
+
+app.get('/mapinfo/flood_forecast',						mapinfo_ef5.flood_forecast);
+app.get('/mapinfo/flood_forecast/style',				mapinfo_ef5.flood_forecast_style);
+app.get('/mapinfo/flood_forecast/legend',				mapinfo_ef5.flood_forecast_legend);
+app.get('/mapinfo/flood_forecast/credits',				mapinfo_ef5.flood_forecast_credits);
+
+app.get('/products/flood_forecast/browse/:year/:doy',	products_ef5.browse);
+app.get('/products/flood_forecast/map/:year/:doy',		products_ef5.map);
+app.get('/products/flood_forecast/query/:year/:doy',	products_ef5.query);
+app.get('/products/flood_forecast/:year/:doy/:id',		products_ef5.product);
+
+app.get('/products/:region/:ymd/:id.:fmt?',		products.distribute);
+app.get('/products/map/:region/:ymd/:id.:fmt?',	products.map);
+app.get('/products',							products.index);
 
 //
 // returned to OPTIONS

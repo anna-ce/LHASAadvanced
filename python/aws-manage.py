@@ -101,5 +101,5 @@ if __name__ == '__main__':
 	
 	manage_buckets(conn, dl)
 	manage_local_dirs(dl, config.data_dir )
-	manage_local_dirs(dl, "/Users/patricecappelaere/Development/ojo/ojo-bot/tmp")
+	#manage_local_dirs(dl, "/Users/patricecappelaere/Development/ojo/ojo-bot/tmp")
 	
