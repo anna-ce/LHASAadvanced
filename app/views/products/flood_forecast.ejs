@@ -7,6 +7,8 @@
 	<meta name="twitter:creator" content="<%= social_envs.TWITTER_CREATOR %>">
 	<meta name="twitter:creator:id" content="<%= social_envs.TWITTER_CREATOR_ID %>">
 	<meta name="twitter:domain" content="<%= social_envs.TWITTER_DOMAIN %>">
+	<meta name="twitter:image:src" content="<%= image %>">
+	<meta name="twitter:description" content="<%= description %>">
 	
 	<!-- Open Graph Tags (accepted by Twitter as well -->
 	<meta property="fb:app_id" content="<%= social_envs.FACEBOOK_APP_ID %>" /> 
@@ -72,7 +74,7 @@
 	
 		<div class='container'>
 			<div class="fb-share-button" data-href="<%= url %>" data-type="button_count"></div>
-			<a href="https://twitter.com/share" class="twitter-share-button" data-via="geobliki" data-related="trmm" data-hashtags="precipitation">Tweet</a>
+			<a href="https://twitter.com/share" class="twitter-share-button" data-via="geobliki" data-related="crest" data-hashtags="flood_inundation">Tweet</a>
 		</div>
 		
 		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
