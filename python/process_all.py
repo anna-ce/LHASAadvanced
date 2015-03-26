@@ -145,7 +145,7 @@ if __name__ == '__main__':
 	#get_flood_nowcast()
 	get_landslide_nowcast()
 	#get_modis_floodmap()
-	restart_ojo_streamer()
+	#restart_ojo_streamer()
 	backup_ojo_streamer()
 	backup_ojo_wiki()
 	cleanup()

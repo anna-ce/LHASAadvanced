@@ -18,7 +18,8 @@ var fs 			 				= require('fs'),
 	query_trmm					= require("../../lib/query_trmm"),
 	query_landslide_nowcast		= require("../../lib/query_landslide_nowcast"),
 	query_planet_labs			= require("../../lib/query_planet_labs"),
-	query_locationcast			= require("../../lib/query_locationcast")
+	query_locationcast			= require("../../lib/query_locationcast"),
+	query_ef5					= require("../../lib/query_ef5")
 	;
 
 	productQueries = {
@@ -32,7 +33,8 @@ var fs 			 				= require('fs'),
 		"ojo": 					query_locationcast.QueryLocationCast,
 		"planet_labs": 			query_planet_labs.QueryPlanetLabs,
 		"radarsat_2": 			query_radarsat2.QueryRadarsat2,
-		"trmm": 				query_trmm.QueryTRMM
+		"trmm": 				query_trmm.QueryTRMM,
+		"ef5": 					query_ef5.QueryEF5
 	}
 	
 	
@@ -89,7 +91,7 @@ var fs 			 				= require('fs'),
 			if( _.contains(sources, asset)) {
 				var productQuery = productQueries[asset]
 				logger.info("Trying to query", asset, product, limit)
-				try {
+				//try {
 					productQuery(req, user, credentials, host, product, bbox, lat, lon, startTime, endTime, startIndex, itemsPerPage, limit, function(err, json) {
 						if(!err && json) {
 							var index = 0
@@ -106,10 +108,10 @@ var fs 			 				= require('fs'),
 							cb(null)
 						}					
 					})
-				} catch(e) {
-					logger.info("ProductQuery Exception", e)
-					cb(null)
-				}
+					//} catch(e) {
+				//	logger.info("ProductQuery Exception", e)
+				//	cb(null)
+				//}
 			} else {
 				debug(asset, " not selected")
 			}
@@ -141,7 +143,7 @@ var fs 			 				= require('fs'),
 module.exports = {
 	classic: function(req, res) {
 		var host 	= req.protocol+"://"+req.headers.host
-		var region 	= app.config.regions.d02
+		var region 	= app.config.regions.d04
 		var user	= req.session.user
 		
 		res.render( "opensearch/classic", {

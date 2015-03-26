@@ -19,6 +19,8 @@ var express 		= require('express'),
 	facebook		= require('./lib/facebook'),
 	GitHubApi 		= require("github"),
 	i18n			= require('./lib/i18n-abide'),
+	filesize 		= require('filesize'),
+	_				= require('underscore'),
 	
 	bodyParser 		= require('body-parser'),
 	errorHandler 	= require('errorhandler'),
@@ -77,6 +79,27 @@ var express 		= require('express'),
 		app.config 	= JSON.parse(fs.readFileSync("./config/config.yaml"));
 		
 		bootApplication(app)
+		
+		var social_envs = [
+			'FACEBOOK_APP_SECRET',
+			'FACEBOOK_APP_ID',
+			'FACEBOOK_PROFILE_ID',
+			'TWITTER_SITE',
+			'TWITTER_SITE_ID',
+			'TWITTER_CREATOR',
+			'TWITTER_CREATOR_ID',
+			'TWITTER_DOMAIN',
+			'MAPBOX_PUBLIC_TOKEN'
+		]
+		
+		app.social_envs = {}
+		
+		_.each(social_envs, function(e) {
+			var env_var = process.env[e]
+			assert(env_var, "Missing env:"+e)
+			app.social_envs[e] = env_var
+			console.log(e, env_var)
+		})
 		
 		var appId				= process.env.fbAppId
 		var appSecret			= process.env.fbSecret
@@ -199,6 +222,34 @@ function bootApplication(app) {
 		logger: console
 	}));
 
+	// localize GetFileSize
+	app.locals.GetFileSize = function(fileName, t) {
+		try {
+			var stats	= fs.statSync( fileName )
+			return filesize( stats.size, 
+								{round:2, suffixes: {
+											"B": t("filesize.B"), 
+											"kB": t("filesize.KB"), 
+											"MB": t("filesize.MB"), 
+											"GB": t("filesize.GB"), 
+											"TB": t("filesize.TB")
+										}
+								}
+							)
+		} catch( e ) {
+			return "NA"
+		}
+	}
+	
+	app.locals.filesize = function(size, req ) {
+		return filesize( size, {round:2, suffixes: {
+										"B": req.gettext("filesize.B"), 
+										"kB": req.gettext("filesize.KB"), 
+										"MB": req.gettext("filesize.MB"), 
+										"GB": req.gettext("filesize.GB"), 
+										"TB": req.gettext("filesize.TB")}})
+									}
+	
 	//if ('development' == app.get('env')) {
 	//  app.use(errorHandler());
 	//}

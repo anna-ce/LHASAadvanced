@@ -17,6 +17,7 @@
     },
     "query": {
       "query_title": "Query",
+      "area": "Area",
       "lon_lat": "Longitude, Latitude",
       "start_time": "Start Time",
       "end_time": "End Time",
@@ -67,7 +68,8 @@
         "dfo": "Dartmouth Flood Observatory - Colorado",
         "eo1": "NASA EO-1",
         "modis": "NASA MODIS",
-        "alos2": "JAXA ALOS-2"
+        "alos2": "JAXA ALOS-2",
+        "ef5": "University of Oklahoma"
     },
     "sensors": {
         "sar": "SAR",
@@ -75,7 +77,8 @@
         "modis": "MODIS",
         "l8": "OLI",
         "dfo": "MODIS/l8",
-        "alos2": "PALSAR-2"
+        "alos2": "PALSAR-2",
+        "ef5": "EF5 CREST Model"
     },
     "duration": {
         "hours": "%{hours} hours",
@@ -170,10 +173,28 @@
         },
         "legend": "Surface Water"
       },
+      
+      "flood_forecast": {
+        "title": "EF5 CREST Flood Forecast",
+        "credits": "University of Oklahoma",
+        "source": { 
+          "label": "Source",
+          "source": "University of Oklahoma"
+        },
+        "legend": {
+          "1m": "1m",
+          "2m": "2m",
+          "3m": "3m",
+          "5m": "5m",
+          "8m": "8m",
+          "13m": "13m",
+          "21m": "21m"
+        }
+      },
         
       "frost": {
         "title": "Frost Map Legend",
-        "credits": "NASA SErVIR/RCMRD",
+        "credits": "NASA SERVIR/RCMRD",
         "source": {
           "label": "Source",
           "source": "SERVIR/RCMRD"
@@ -188,5 +209,15 @@
           "no_frost": "No Frost"
         }
       }
+    },
+    
+    "snow_cover": {
+      "title": "Snow Cover",
+      "credits": "NASA MODIS",
+      "source": {
+        "label": "Source",
+        "source": "NASA MODIS"
+      },
+      "legend": "Snow Cover"
     }
 }
