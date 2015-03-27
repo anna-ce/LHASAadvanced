@@ -61,7 +61,8 @@ function loadDataUrl(url, cb) {
 	$.ajax({
 		type: 	'GET',
 		url: 	url,
-		async: 	true
+		async: 	true,
+		dataType: 'json'
 	})
 	.done( function(data) {
 		cb(null, data)

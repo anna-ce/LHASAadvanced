@@ -19,22 +19,23 @@ var fs 			 				= require('fs'),
 	query_landslide_nowcast		= require("../../lib/query_landslide_nowcast"),
 	query_planet_labs			= require("../../lib/query_planet_labs"),
 	query_locationcast			= require("../../lib/query_locationcast"),
-	query_ef5					= require("../../lib/query_ef5")
+	query_ef5					= require("../../lib/query_ef5"),
+	query_maxswe				= require("../../lib/query_maxswe")
 	;
 
 	productQueries = {
-		"dfo": 					query_dfo.QueryDFO,
-		"digiglobe":			query_digiglobe.QueryDigiglobe,
-		"eo1_ali": 				query_eo1.QueryEO1,
-		"landslide_model": 		query_landslide_nowcast.QueryLandslideNowcast,
-		"landsat_8": 			query_l8.QueryLandsat8,
-		"modis": 				query_modis.QueryModis,
-		"modis_lst":			query_modislst.QueryModisLST,
-		"ojo": 					query_locationcast.QueryLocationCast,
-		"planet_labs": 			query_planet_labs.QueryPlanetLabs,
-		"radarsat_2": 			query_radarsat2.QueryRadarsat2,
-		"trmm": 				query_trmm.QueryTRMM,
-		"ef5": 					query_ef5.QueryEF5
+		"dfo": 					[query_dfo.QueryDFO],
+		"digiglobe":			[query_digiglobe.QueryDigiglobe],
+		"eo1_ali": 				[query_eo1.QueryEO1],
+		"landslide_model": 		[query_landslide_nowcast.QueryLandslideNowcast],
+		"landsat_8": 			[query_l8.QueryLandsat8],
+		"modis": 				[query_modis.QueryModis],
+		"modis_lst":			[query_modislst.QueryModisLST],
+		"ojo": 					[query_locationcast.QueryLocationCast],
+		"planet_labs": 			[query_planet_labs.QueryPlanetLabs],
+		"radarsat_2": 			[query_radarsat2.QueryRadarsat2],
+		"trmm": 				[query_trmm.QueryTRMM],
+		"ef5": 					[query_ef5.QueryEF5, query_maxswe.QueryMaxSWE]
 	}
 	
 	
@@ -89,10 +90,11 @@ var fs 			 				= require('fs'),
 		async.each( sources, function(asset, cb) {
 
 			if( _.contains(sources, asset)) {
-				var productQuery = productQueries[asset]
-				logger.info("Trying to query", asset, product, limit)
-				//try {
-					productQuery(req, user, credentials, host, product, bbox, lat, lon, startTime, endTime, startIndex, itemsPerPage, limit, function(err, json) {
+				var queries = productQueries[asset]
+				logger.info('query source', asset)
+				
+				function queryProduct(q, callback) {
+					q(req, user, credentials, host, query, bbox, lat, lon, startTime, endTime, startIndex, itemsPerPage, limit, function(err, json) {
 						if(!err && json) {
 							var index = 0
 							for( var item in json.replies.items ) {
@@ -101,17 +103,15 @@ var fs 			 				= require('fs'),
 								index += 1
 							}
 							logger.info("Added", index, "items to replies")
-							cb(null)
-						} else {
-							errMsg = json
-							logger.info("error", json)
-							cb(null)
-						}					
-					})
-					//} catch(e) {
-				//	logger.info("ProductQuery Exception", e)
-				//	cb(null)
-				//}
+						}						
+						callback(null)
+					})	
+				}
+				
+				async.each( queries, queryProduct, function(err ) {
+					cb(null)
+				})
+				
 			} else {
 				debug(asset, " not selected")
 			}

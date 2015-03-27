@@ -107,8 +107,11 @@
         "flood_forecast": "Flood Forecast",
         "flood_nowcast": "Flood Nowcast",
         "flood_catalog": "Flood Catalog",
-        "frost": "Frost"
+        "frost": "Frost",
+        "snow_cover": "Snow Cover",
+        "snow_water_equivalent": "Snow Water Equivalent"
     },
+    
     "filesize": {
         "B": "B",
         "KB": "KB",
@@ -175,7 +178,7 @@
       },
       
       "flood_forecast": {
-        "title": "EF5 CREST Flood Forecast for Kavango Basin, Namibia",
+        "title": "EF5 CREST Flood Forecast, Kavango Basin",
         "credits": "University of Oklahoma",
         "source": { 
           "label": "Source",
@@ -208,16 +211,34 @@
           "minor_frost": "Minor Frost Pockets",
           "no_frost": "No Frost"
         }
-      }
-    },
-    
-    "snow_cover": {
-      "title": "Snow Cover",
-      "credits": "NASA MODIS",
-      "source": {
-        "label": "Source",
-        "source": "NASA MODIS"
       },
-      "legend": "Snow Cover"
+      "snow_water_equivalent": {
+        "title": "EF5 CREST Snow Water Equivalent",
+        "credits": "University of Oklahoma",
+        "source": { 
+          "label": "Source",
+          "source": "University of Oklahoma"
+        },
+        "legend": {
+          "10mm":   "10mm",
+          "20mm":   "20mm",
+          "30mm":   "30mm",
+          "50mm":   "50mm",
+          "80mm":   "80mm",
+          "130mm":  "130mm",
+          "210mm":  "210mm",
+          "340mm":  "340mm",
+          "550mm":  "550mm"
+        }
+      },
+      "snow_cover": {
+        "title": "Snow Cover",
+        "credits": "NASA MODIS",
+        "source": {
+          "label": "Source",
+          "source": "NASA MODIS"
+        },
+        "legend": "Snow Cover"
+      }
     }
 }
