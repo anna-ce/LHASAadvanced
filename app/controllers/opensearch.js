@@ -21,6 +21,7 @@ var fs 			 				= require('fs'),
 	query_locationcast			= require("../../lib/query_locationcast"),
 	query_ef5					= require("../../lib/query_ef5"),
 	query_maxswe				= require("../../lib/query_maxswe")
+	query_sm					= require("../../lib/query_sm")
 	;
 
 	productQueries = {
@@ -35,7 +36,7 @@ var fs 			 				= require('fs'),
 		"planet_labs": 			[query_planet_labs.QueryPlanetLabs],
 		"radarsat_2": 			[query_radarsat2.QueryRadarsat2],
 		"trmm": 				[query_trmm.QueryTRMM],
-		"ef5": 					[query_ef5.QueryEF5, query_maxswe.QueryMaxSWE]
+		"ef5": 					[query_ef5.QueryEF5, query_maxswe.QueryMaxSWE, query_sm.QuerySM]
 	}
 	
 	

@@ -53,6 +53,7 @@ en:
     eo1: NASA EO-1
     modis: NASA MODIS
     alos2: JAXA ALOS-2
+    ef5: UNiversity of Oklahoma
 
   sensors:
     sar: SAR
@@ -61,7 +62,8 @@ en:
     l8: OLI
     dfo: MODIS/l8
     alos2: PALSAR-2
-
+    ef5: EF5 CREST Model
+    
   duration:
     hours: "%{hours} hours"
     minutes: "%{minutes} minutes"
@@ -91,6 +93,8 @@ en:
     frost: Frost
     snow_cover: Snow Cover
     snow_water_equivalent: Snow Water Equivalent
+    stream_flow: Stream Flow
+    soil_moisture: Soil Moisture
     
   filesize:
     B: B
@@ -143,6 +147,21 @@ en:
         source: NASA
       legend: Surface Water
         
+    flood_forecast:
+      title: Flood Forecast
+      credits: University of Oklahoma
+      source: 
+        label: Source
+        source: University of Oklahoma EF5 CREST
+      legend:
+        1m: 1m
+        2m: 2m
+        3m: 3m
+        5m: 5m
+        8m: 8m
+        13m: 13m
+        21m: 21m
+        
     frost:
       title: Frost Map
       credits: NASA SERVIR/RCMRD
@@ -156,7 +175,7 @@ en:
         moderate_frost: Moderate frost
         minor_frost: Minor Frost Pockets
         no_frost: No Frost
-    
+        
     snow_cover:
       title: Snow Cover
       credits: NASA MODIS
@@ -180,5 +199,39 @@ en:
         130mm: 130mm
         210mm: 21mm
         340mm: 340mm
-        550mm: 340mm
-    
+        550mm: 550mm
+        
+    stream_flow:
+      title: Stream Flow
+      credits: University of Oklahoma
+      source: 
+        label: Source
+        source: University of Oklahoma EF5 CREST
+      legend:         
+        10cms: 10cms
+        20cms: 20cms
+        30cms: 30cms
+        50cms: 50cms
+        80cms: 80cms
+        130cms: 130cms
+        210cms: 21cms
+        340cms: 340cms
+        550cms: 550cms
+  
+    soil_moisture:
+      title: Soil Moisture
+      credits: University of Oklahoma
+      source: 
+        label: Source
+        source: University of Oklahoma EF5 CREST
+      legend:         
+        3pct: 3pct
+        5pct: 5pct
+        8pct: 8pct
+        13pct: 13pct
+        21pct: 21pct
+        34pct: 34pct
+        55pct: 55pct
+        89pct: 89pct
+        144pct: 144pct
+  

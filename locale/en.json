@@ -109,7 +109,9 @@
         "flood_catalog": "Flood Catalog",
         "frost": "Frost",
         "snow_cover": "Snow Cover",
-        "snow_water_equivalent": "Snow Water Equivalent"
+        "snow_water_equivalent": "Snow Water Equivalent",
+        "stream_flow": "Stream Flow",
+        "soil_moisture": "Soil Moisture"
     },
     
     "filesize": {
@@ -229,6 +231,44 @@
           "210mm":  "210mm",
           "340mm":  "340mm",
           "550mm":  "550mm"
+        }
+      },
+      "stream_flow": {
+        "title": "EF5 CREST Stream Flow",
+        "credits": "University of Oklahoma",
+        "source": { 
+          "label": "Source",
+          "source": "University of Oklahoma"
+        },
+        "legend": {
+          "10cms":   "10cms",
+          "20cms":   "20cms",
+          "30cms":   "30cms",
+          "50cms":   "50cms",
+          "80cms":   "80cms",
+          "130cms":  "130cms",
+          "210cms":  "210cms",
+          "340cms":  "340cms",
+          "550cms":  "550cms"
+        }
+      },
+      "soil_moisture": {
+        "title": "EF5 CREST Soil Moisture",
+        "credits": "University of Oklahoma",
+        "source": { 
+          "label": "Source",
+          "source": "University of Oklahoma"
+        },
+        "legend": {
+          "3pct": "3%",
+          "5pct": "5%",
+          "8pct": "8%",
+          "13pct": "13%",
+          "21pct": "21%",
+          "34pct": "34%",
+          "55pct": "55%",
+          "89pct": "89%",
+          "144pct": "144%"
         }
       },
       "snow_cover": {

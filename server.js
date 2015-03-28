@@ -25,11 +25,14 @@ var express 		= require('express'),
 	products		= require('./app/controllers/products'),
 	mapinfo			= require('./app/controllers/mapinfo');
 
-	var mapinfo_ef5			= require('./lib/mapinfo_ef5');
-	var	products_ef5		= require('./lib/products_ef5');
+	var mapinfo_ef5		= require('./lib/mapinfo_ef5');
+	var	products_ef5	= require('./lib/products_ef5');
 	
 	var mapinfo_maxswe		= require('./lib/mapinfo_maxswe');
 	var	products_maxswe		= require('./lib/products_maxswe');
+
+	var mapinfo_sm		= require('./lib/mapinfo_sm');
+	var	products_sm		= require('./lib/products_sm');
 
 global.app 			= express();
 app.root 			= process.cwd();
@@ -273,19 +276,28 @@ app.get('/products/flood_forecast/map/:year/:doy',		products_ef5.map);
 app.get('/products/flood_forecast/query/:year/:doy',	products_ef5.query);
 app.get('/products/flood_forecast/:year/:doy/:id',		products_ef5.product);
 
-app.get('/mapinfo/flood_forecast',						mapinfo_ef5.flood_forecast);
-app.get('/mapinfo/flood_forecast/style',				mapinfo_ef5.flood_forecast_style);
-app.get('/mapinfo/flood_forecast/legend',				mapinfo_ef5.flood_forecast_legend);
-app.get('/mapinfo/flood_forecast/credits',				mapinfo_ef5.flood_forecast_credits);
+app.get('/mapinfo/flood_forecast',				mapinfo_ef5.flood_forecast);
+app.get('/mapinfo/flood_forecast/style',		mapinfo_ef5.flood_forecast_style);
+app.get('/mapinfo/flood_forecast/legend',		mapinfo_ef5.flood_forecast_legend);
+app.get('/mapinfo/flood_forecast/credits',		mapinfo_ef5.flood_forecast_credits);
 
-app.get('/products/maxswe/browse/:year/:doy',		products_maxswe.browse);
-app.get('/products/maxswe/map/:year/:doy',			products_maxswe.map);
-app.get('/products/maxswe/query/:year/:doy',		products_maxswe.query);
+app.get('/products/maxswe/browse/:year/:doy',	products_maxswe.browse);
+app.get('/products/maxswe/map/:year/:doy',		products_maxswe.map);
+app.get('/products/maxswe/query/:year/:doy',	products_maxswe.query);
 
-app.get('/mapinfo/maxswe',							mapinfo_maxswe.maxswe);
-app.get('/mapinfo/maxswe/style',					mapinfo_maxswe.maxswe_style);
-app.get('/mapinfo/maxswe/legend',					mapinfo_maxswe.maxswe_legend);
-app.get('/mapinfo/maxswe/credits',					mapinfo_maxswe.maxswe_credits);
+app.get('/mapinfo/maxswe',						mapinfo_maxswe.maxswe);
+app.get('/mapinfo/maxswe/style',				mapinfo_maxswe.maxswe_style);
+app.get('/mapinfo/maxswe/legend',				mapinfo_maxswe.maxswe_legend);
+app.get('/mapinfo/maxswe/credits',				mapinfo_maxswe.maxswe_credits);
+
+app.get('/products/sm/browse/:year/:doy',		products_sm.browse);
+app.get('/products/sm/map/:year/:doy',			products_sm.map);
+app.get('/products/sm/query/:year/:doy',		products_sm.query);
+
+app.get('/mapinfo/sm',							mapinfo_sm.sm);
+app.get('/mapinfo/sm/style',					mapinfo_sm.sm_style);
+app.get('/mapinfo/sm/legend',					mapinfo_sm.sm_legend);
+app.get('/mapinfo/sm/credits',					mapinfo_sm.sm_credits);
 
 
 app.get('/products/:region/:ymd/:id.:fmt?',		products.distribute);

@@ -113,6 +113,7 @@
 					    <div class="form-group">
 					      <label for="q">Search:</label>
 							  <select id='q' class="selectpicker">
+								<option value='soil_moisture'>soil_moisture</option>
 								<option value='snow_water_equivalent'>snow_water_equivalent</option>
 								<option value='flood_forecast'>flood_forecast</option>
 								<option value='location_cast'>location_cast</option>
@@ -394,7 +395,7 @@
 			}
 			
 			if (el.properties.date) {
-				html += "<tr><td>name</td><td><b>" + el.properties.date["@value"]+ "</b></td></tr>"
+				html += "<tr><td>date</td><td><b>" + el.properties.date["@value"]+ "</b></td></tr>"
 			}
 				
 			html += "</table>"
