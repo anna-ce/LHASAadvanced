@@ -24,10 +24,7 @@ en:
     like: like
     task: task
     map: map
-  products:
-    search: search
-    surface_water: Flood Map
-    frost: Frost
+ 
   stream:
     displayName: Publisher Flood Surface Water Products
 
@@ -53,7 +50,9 @@ en:
     eo1: NASA EO-1
     modis: NASA MODIS
     alos2: JAXA ALOS-2
-    ef5: UNiversity of Oklahoma
+    ef5: University of Oklahoma
+    trmm: NASA GSFC TRMM
+    ls: ORNL Landscan
 
   sensors:
     sar: SAR
@@ -63,6 +62,8 @@ en:
     dfo: MODIS/l8
     alos2: PALSAR-2
     ef5: EF5 CREST Model
+    trmm: TRMM
+    ls: ORNL Landscan
     
   duration:
     hours: "%{hours} hours"
@@ -70,6 +71,7 @@ en:
     seconds: "%{seconds} seconds"
 
   formats:
+    geojson: geojson
     topojson: topojson
     topojsongz: topojson.gz
     osmbz2: osm.bz2
@@ -95,6 +97,9 @@ en:
     snow_water_equivalent: Snow Water Equivalent
     stream_flow: Stream Flow
     soil_moisture: Soil Moisture
+    rgb_composite: RGB Composite
+    active_fires: Active Fires
+    burn_scar: Burn Scar
     
   filesize:
     B: B
@@ -146,6 +151,14 @@ en:
         label: Source
         source: NASA
       legend: Surface Water
+
+    active_fires:
+      title: MODIS Active Fires
+      credits: NASA GSFC
+      source: 
+        label: Source
+        source: NASA
+      legend: Active Fires
         
     flood_forecast:
       title: Flood Forecast
@@ -197,9 +210,45 @@ en:
         50mm: 50mm
         80mm: 80mm
         130mm: 130mm
-        210mm: 21mm
+        210mm: 210mm
         340mm: 340mm
         550mm: 550mm
+
+    population_count:
+      title: Population Count
+      credits: Oakridge National Laboratory
+      source: 
+        label: Source
+        source: Oakridge National Laboratory
+      legend:         
+        1000:  1000
+        2000:  2000
+        3000:  3000
+        5000:  5000
+        8000:  8000
+        13000: 13000
+        21000: 21000
+        34000: 34000
+        55000: 55000
+
+    daily_precipitation:
+      title: Daily Precipitation
+      credits: NASA TRMM
+      source: 
+        label: Source
+        source: NASA GSFC TRMM
+      legend:         
+        1mm: 1mm
+        2mm: 2mm
+        3mm: 3mm
+        5mm: 5mm
+        8mm: 8mm
+        13mm: 13mm
+        21mm: 21mm
+        34mm: 34mm
+        55mm: 55mm
+        89mm: 89mm
+        144mm: 144mm
         
     stream_flow:
       title: Stream Flow
