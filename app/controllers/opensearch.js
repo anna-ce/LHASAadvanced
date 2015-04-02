@@ -22,21 +22,25 @@ var fs 			 				= require('fs'),
 	query_ef5					= require("../../lib/query_ef5"),
 	query_maxswe				= require("../../lib/query_maxswe")
 	query_sm					= require("../../lib/query_sm")
+	query_maxq					= require("../../lib/query_maxq")
+	query_pop					= require("../../lib/query_pop")
+	query_af					= require("../../lib/query_active_fires")
 	;
 
 	productQueries = {
 		"dfo": 					[query_dfo.QueryDFO],
 		"digiglobe":			[query_digiglobe.QueryDigiglobe],
+		"ef5": 					[query_ef5.Query, query_maxswe.Query, query_sm.Query, query_maxq.Query],
 		"eo1_ali": 				[query_eo1.QueryEO1],
 		"landslide_model": 		[query_landslide_nowcast.QueryLandslideNowcast],
 		"landsat_8": 			[query_l8.QueryLandsat8],
-		"modis": 				[query_modis.QueryModis],
+		"landscan": 			[query_pop.Query],
+		"modis": 				[query_modis.QueryModis, query_af.Query],
 		"modis_lst":			[query_modislst.QueryModisLST],
 		"ojo": 					[query_locationcast.QueryLocationCast],
 		"planet_labs": 			[query_planet_labs.QueryPlanetLabs],
 		"radarsat_2": 			[query_radarsat2.QueryRadarsat2],
-		"trmm": 				[query_trmm.QueryTRMM],
-		"ef5": 					[query_ef5.QueryEF5, query_maxswe.QueryMaxSWE, query_sm.QuerySM]
+		"trmm": 				[query_trmm.Query]
 	}
 	
 	
@@ -144,7 +148,7 @@ var fs 			 				= require('fs'),
 module.exports = {
 	classic: function(req, res) {
 		var host 	= req.protocol+"://"+req.headers.host
-		var region 	= app.config.regions.d04
+		var region 	= app.config.regions.d06
 		var user	= req.session.user
 		
 		res.render( "opensearch/classic", {

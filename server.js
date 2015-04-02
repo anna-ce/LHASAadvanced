@@ -28,11 +28,23 @@ var express 		= require('express'),
 	var mapinfo_ef5		= require('./lib/mapinfo_ef5');
 	var	products_ef5	= require('./lib/products_ef5');
 	
-	var mapinfo_maxswe		= require('./lib/mapinfo_maxswe');
-	var	products_maxswe		= require('./lib/products_maxswe');
+	var mapinfo_maxswe	= require('./lib/mapinfo_maxswe');
+	var	products_maxswe	= require('./lib/products_maxswe');
 
 	var mapinfo_sm		= require('./lib/mapinfo_sm');
 	var	products_sm		= require('./lib/products_sm');
+
+	var mapinfo_maxq	= require('./lib/mapinfo_maxq');
+	var	products_maxq	= require('./lib/products_maxq');
+
+	var mapinfo_trmm	= require('./lib/mapinfo_trmm');
+	var	products_trmm	= require('./lib/products_trmm');
+
+	var mapinfo_pop		= require('./lib/mapinfo_pop');
+	var	products_pop	= require('./lib/products_pop');
+
+	var mapinfo_af		= require('./lib/mapinfo_active_fires');
+	var	products_af		= require('./lib/products_active_fires');
 
 global.app 			= express();
 app.root 			= process.cwd();
@@ -274,7 +286,6 @@ app.get('/mapinfo/flood_forecast/credits',				mapinfo_ef5.flood_forecast_credits
 app.get('/products/flood_forecast/browse/:year/:doy',	products_ef5.browse);
 app.get('/products/flood_forecast/map/:year/:doy',		products_ef5.map);
 app.get('/products/flood_forecast/query/:year/:doy',	products_ef5.query);
-app.get('/products/flood_forecast/:year/:doy/:id',		products_ef5.product);
 
 app.get('/mapinfo/flood_forecast',				mapinfo_ef5.flood_forecast);
 app.get('/mapinfo/flood_forecast/style',		mapinfo_ef5.flood_forecast_style);
@@ -299,10 +310,45 @@ app.get('/mapinfo/sm/style',					mapinfo_sm.sm_style);
 app.get('/mapinfo/sm/legend',					mapinfo_sm.sm_legend);
 app.get('/mapinfo/sm/credits',					mapinfo_sm.sm_credits);
 
+app.get('/products/maxq/browse/:year/:doy',		products_maxq.browse);
+app.get('/products/maxq/map/:year/:doy',		products_maxq.map);
+app.get('/products/maxq/query/:year/:doy',		products_maxq.query);
 
-app.get('/products/:region/:ymd/:id.:fmt?',		products.distribute);
-app.get('/products/map/:region/:ymd/:id.:fmt?',	products.map);
-app.get('/products',							products.index);
+app.get('/mapinfo/maxq',						mapinfo_maxq.maxq);
+app.get('/mapinfo/maxq/style',					mapinfo_maxq.maxq_style);
+app.get('/mapinfo/maxq/legend',					mapinfo_maxq.maxq_legend);
+app.get('/mapinfo/maxq/credits',				mapinfo_maxq.maxq_credits);
+
+app.get('/products/trmm/browse/:year/:doy',		products_trmm.browse);
+app.get('/products/trmm/map/:year/:doy',		products_trmm.map);
+app.get('/products/trmm/query/:year/:doy',		products_trmm.query);
+
+app.get('/mapinfo/trmm',						mapinfo_trmm.trmm);
+app.get('/mapinfo/trmm/style',					mapinfo_trmm.trmm_style);
+app.get('/mapinfo/trmm/legend',					mapinfo_trmm.trmm_legend);
+app.get('/mapinfo/trmm/credits',				mapinfo_trmm.trmm_credits);
+
+app.get('/products/pop/browse/:year/:doy',		products_pop.browse);
+app.get('/products/pop/map/:year/:doy',			products_pop.map);
+app.get('/products/pop/query/:year/:doy',		products_pop.query);
+
+app.get('/mapinfo/pop',							mapinfo_pop.pop);
+app.get('/mapinfo/pop/style',					mapinfo_pop.pop_style);
+app.get('/mapinfo/pop/legend',					mapinfo_pop.pop_legend);
+app.get('/mapinfo/pop/credits',					mapinfo_pop.pop_credits);
+
+app.get('/products/modis_af/browse/:year/:doy',		products_af.browse);
+app.get('/products/modis_af/map/:year/:doy',		products_af.map);
+app.get('/products/modis_af/query/:year/:doy',		products_af.query);
+
+app.get('/mapinfo/modis_af',						mapinfo_af.modis_af);
+app.get('/mapinfo/modis_af/style',					mapinfo_af.modis_af_style);
+app.get('/mapinfo/modis_af/legend',					mapinfo_af.modis_af_legend);
+app.get('/mapinfo/modis_af/credits',				mapinfo_af.modis_af_credits);
+
+app.get('/products/:region/:ymd/:id.:fmt?',			products.distribute);
+app.get('/products/map/:region/:ymd/:id.:fmt?',		products.map);
+app.get('/products',								products.index);
 
 //
 // returned to OPTIONS

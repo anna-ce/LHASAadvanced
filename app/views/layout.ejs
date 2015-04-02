@@ -95,21 +95,21 @@
 			</div>
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav" id="menus">
-	 			  <li><a href="/">Home</a></li>
-	 			  <li><a href="/products">Products</a></li>
+	 			  <li><a href="/"><%= gettext('menu.home')%></a></li>
+	 			  <li><a href="/products"><%= gettext('menu.products')%></a></li>
   					
 				  <li class="dropdown">
-		          	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Applications <b class="caret"></b></a>
+		          	<a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= gettext('menu.opensearch')%> <b class="caret"></b></a>
 		            <ul class="dropdown-menu">
-						<li><a href="/apps/form">Register</a></li>
-						<li><a href="/apps/">List</a></li>
+						<li><a href="/opensearch/classic"><%= gettext('menu.query')%></a></li>
 					</ul>
 				  </li>
 
 				  <li class="dropdown">
-		          	<a href="#" class="dropdown-toggle" data-toggle="dropdown">OpenSearch <b class="caret"></b></a>
+		          	<a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= gettext('menu.applications')%> <b class="caret"></b></a>
 		            <ul class="dropdown-menu">
-						<li><a href="/opensearch/classic">Query</a></li>
+						<li><a href="/apps/form"><%= gettext('menu.register')%></a></li>
+						<li><a href="/apps/"><%= gettext('menu.list')%></a></li>
 					</ul>
 				  </li>
 				  
@@ -136,8 +136,8 @@
 		
 	    <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
 			<div class="list-group">
-				<a href="/about" class="list-group-item">About</a>
-				<a href="/contact" class="list-group-item">Contact</a>
+				<a href="/about" class="list-group-item"><%= gettext('layout.navbar.about')%></a>
+				<a href="/contact" class="list-group-item"><%= gettext('layout.navbar.contacts')%></a>
 			</div>
 	    </div>
 			   
@@ -147,10 +147,10 @@
 
 		
 		<div class='footer'>
-			<a href='mailto:dalia.b.kirschbaum@nasa.gov'>Problems/questions? Contact Me</a>&nbsp;-&nbsp;
-			<a href='/privacy'>Privacy Statement</a>
+			<a href='mailto:dalia.b.kirschbaum@nasa.gov'><%= gettext('footer.problems')%></a>&nbsp;-&nbsp;
+			<a href='/privacy'><%= gettext('footer.privacy')%></a>
 			<div class="pull-right">
-				WARNING: Experimental Only!
+				<%= gettext('footer.warning')%>
 				<img src='/img/nasalogo.png' width=64>
 			</div>
 		</div>
