@@ -279,7 +279,7 @@
 <script>
 	L.mapbox.accessToken 		= "<%= mapbox_token %>"
 	var map = L.mapbox.map('map', '<%= region.map_id %>', { minZoom:2, maxZoom: <%= region.max_zoom %> } )
-	.setView([<%= region.target %>], <%= region.min_zoom %>)
+	.setView([<%= region.target[1] %>, <%= region.target[0] %>], <%= region.min_zoom %>)
 	
 	var map_controls = L.control.layers({
 	    'Topo Map': L.mapbox.tileLayer('<%= region.map_id %>',{ attribution: 'MapBox'}).addTo(map)
