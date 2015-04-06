@@ -31,10 +31,10 @@ var express 		= require('express'),
 	var mapinfo_pop		= require('./lib/mapinfo_pop');
 	var	products_pop	= require('./lib/products_pop');
 	
-	var	query_sm		= require('./lib/query_sm');
-	var	query_maxswe	= require('./lib/query_maxswe');
-	var	query_ef5		= require('./lib/query_ef5');
-	var	query_maxq		= require('./lib/query_maxq');
+	var	query_sm		= require('./lib/query_sm').query;
+	var	query_maxswe	= require('./lib/query_maxswe').query;
+	var	query_ef5		= require('./lib/query_ef5').query;
+	var	query_maxq		= require('./lib/query_maxq').query;
 
 	var	query_modis_af	= require('./lib/query_modis_af').query;
 	var	query_trmm_24	= require('./lib/query_trmm_24').query;
