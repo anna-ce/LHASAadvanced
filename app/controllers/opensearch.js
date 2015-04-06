@@ -15,37 +15,38 @@ var fs 			 				= require('fs'),
 	query_dfo					= require("../../lib/query_dfo"),
 	query_digiglobe				= require("../../lib/query_digiglobe"),
 	query_modislst				= require("../../lib/query_modislst"),
-	//query_trmm					= require("../../lib/query_trmm"),
+
+	//query_trmm				= require("../../lib/query_trmm"),
 	
 	query_landslide_nowcast		= require("../../lib/query_landslide_nowcast"),
 	query_planet_labs			= require("../../lib/query_planet_labs"),
 	query_locationcast			= require("../../lib/query_locationcast"),
-	query_ef5					= require("../../lib/query_ef5"),
-	query_maxswe				= require("../../lib/query_maxswe")
-	query_sm					= require("../../lib/query_sm")
-	query_maxq					= require("../../lib/query_maxq")
-	query_pop					= require("../../lib/query_pop")
-	query_af					= require("../../lib/query_active_fires")
-	query_trmm_24				= require("../../lib/query_trmm_24")
+	query_pop					= require("../../lib/query_pop"),
+
+	query_af					= require("../../lib/query_modis_af").query
+	query_trmm_24				= require("../../lib/query_trmm_24").query
+	query_ef5					= require("../../lib/query_ef5").query,
+	query_maxswe				= require("../../lib/query_maxswe").query,
+	query_sm					= require("../../lib/query_sm").query,
+	query_maxq					= require("../../lib/query_maxq").query
 	;
 
 	productQueries = {
 		"dfo": 					[query_dfo.QueryDFO],
 		"digiglobe":			[query_digiglobe.QueryDigiglobe],
-		"ef5": 					[query_ef5.QueryAll, query_maxswe.QueryAll, query_sm.QueryAll, query_maxq.QueryAll],
+		"ef5": 					[query_ef5.QueryAll.bind(query_ef5), query_maxswe.QueryAll.bind(query_maxswe), query_sm.QueryAll.bind(query_sm), query_maxq.QueryAll.bind(query_maxq)],
 		"eo1_ali": 				[query_eo1.QueryEO1],
 		"landslide_model": 		[query_landslide_nowcast.QueryLandslideNowcast],
 		"landsat_8": 			[query_l8.QueryLandsat8],
-		"landscan": 			[query_pop.Query],
-		"modis": 				[query_modis.QueryModis, query_af.QueryAll],
+		"landscan": 			[query_pop.QueryAll],
+		"modis": 				[query_modis.QueryModis, query_af.QueryAll.bind(query_af)],
 		"modis_lst":			[query_modislst.QueryModisLST],
 		"ojo": 					[query_locationcast.QueryLocationCast],
 		"planet_labs": 			[query_planet_labs.QueryPlanetLabs],
 		"radarsat_2": 			[query_radarsat2.QueryRadarsat2],
-		"trmm": 				[query_trmm_24.QueryAll]
+		"trmm": 				[query_trmm_24.QueryAll.bind(query_trmm_24)]
 	}
-	
-	
+		
 	function ValidateBBox( bbox ) {
 		console.log("Validate bbox", bbox)
 		if( bbox[0] < -180 || bbox[0] > 180 ) 	return false

@@ -31,15 +31,16 @@ var express 		= require('express'),
 	var mapinfo_pop		= require('./lib/mapinfo_pop');
 	var	products_pop	= require('./lib/products_pop');
 	
-	var	query_af		= require('./lib/query_active_fires');
 	var	query_sm		= require('./lib/query_sm');
 	var	query_maxswe	= require('./lib/query_maxswe');
 	var	query_ef5		= require('./lib/query_ef5');
 	var	query_maxq		= require('./lib/query_maxq');
-	var	query_trmm_24	= require('./lib/query_trmm_24');
+
+	var	query_modis_af	= require('./lib/query_modis_af').query;
+	var	query_trmm_24	= require('./lib/query_trmm_24').query;
 
 	var s3_products = {
-		'modis_af': 	query_af,
+		'modis_af': 	query_modis_af,
 		'sm': 			query_sm,
 		"maxswe": 		query_maxswe,
 		"ef5": 			query_ef5,
@@ -237,7 +238,7 @@ app.get('/products/planetlabs/:id/surface_water.topojson.gz',	products_planetlab
 app.get('/products/:region/landslide_nowcast',	products.landslide_nowcast_list);
 app.get('/products/:region/trmm',				products.trmm_list);
 
-//app.get('/products/opensearch',					hawk_restrict, products.opensearch);
+//app.get('/products/opensearch',				hawk_restrict, products.opensearch);
 app.get('/products/opensearch',					hawk_restrict, opensearch.index);
 
 app.options('/products/opensearch',				function(req, res) {
@@ -254,11 +255,6 @@ app.get('/apps/edit/:id',						hawk_restrict, apps.edit);
 app.get('/apps/delete/:id',						hawk_restrict, apps.delete);
 app.put('/apps/:id',							hawk_restrict, apps.update);
 app.delete('/apps/:id',							hawk_restrict, apps.delete);
-
-//app.get('/mapinfo/trmm_24',					mapinfo.trmm_24);
-//app.get('/mapinfo/trmm_24/style',				mapinfo.trmm_24_style);
-//app.get('/mapinfo/trmm_24/legend',			mapinfo.trmm_24_legend);
-//app.get('/mapinfo/trmm_24/credits',			mapinfo.trmm_24_credits);
 
 app.get('/mapinfo/wrf_24',						mapinfo.wrf_24);
 app.get('/mapinfo/wrf_24/style',				mapinfo.wrf_24_style);
@@ -280,52 +276,23 @@ app.get('/mapinfo/landslide_nowcast/style',		mapinfo.landslide_nowcast_style);
 app.get('/mapinfo/landslide_nowcast/legend',	mapinfo.landslide_nowcast_legend);
 app.get('/mapinfo/landslide_nowcast/credits',	mapinfo.landslide_nowcast_credits);
 
-//app.get('/products/trmm/browse/:year/:doy',	products_trmm.browse);
-//app.get('/products/trmm/map/:year/:doy',		products_trmm.map);
-//app.get('/products/trmm/query/:year/:doy',	products_trmm.query);
-
-//app.get('/mapinfo/trmm',						mapinfo_trmm.trmm);
-//app.get('/mapinfo/trmm/style',				mapinfo_trmm.trmm_style);
-//app.get('/mapinfo/trmm/legend',				mapinfo_trmm.trmm_legend);
-//app.get('/mapinfo/trmm/credits',				mapinfo_trmm.trmm_credits);
-
-app.get('/products/pop/browse/:year/:doy',		products_pop.browse);
-app.get('/products/pop/map/:year/:doy',			products_pop.map);
-app.get('/products/pop/query/:year/:doy',		products_pop.query);
+app.get('/products/:subfolder/browse/pop/:year/:doy',		products_pop.browse);
+app.get('/products/:subfolder/map/pop/:year/:doy',			products_pop.map);
+app.get('/products/:subfolder/query/pop/:year/:doy',		products_pop.query);
 
 app.get('/mapinfo/pop',							mapinfo_pop.pop);
 app.get('/mapinfo/pop/style',					mapinfo_pop.pop_style);
 app.get('/mapinfo/pop/legend',					mapinfo_pop.pop_legend);
 app.get('/mapinfo/pop/credits',					mapinfo_pop.pop_credits);
 
+app.get('/products/:subfolder/browse/:regionKey/:year/:doy',	function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Browse(req, res); })
+app.get('/products/:subfolder/map/:regionKey/:year/:doy',		function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Map(req, res); })
+app.get('/products/:subfolder/query/:regionKey/:year/:doy',		function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].QueryProduct(req, res); })
 
-
-for( var k in s3_products ) {
-	var product_browse_url	= '/products/SUBFOLDER/browse/:year/:doy'.replace('SUBFOLDER', k)
-	var product_map_url		= '/products/SUBFOLDER/map/:year/:doy'.replace('SUBFOLDER', k)
-	var product_query_url	= '/products/SUBFOLDER/query/:year/:doy'.replace('SUBFOLDER', k)
-	var product_mapinfo		= '/mapinfo/SUBFOLDER'.replace('SUBFOLDER', k)
-	var product_style		= '/mapinfo/SUBFOLDER/style'.replace('SUBFOLDER', k)
-	var product_legend		= '/mapinfo/SUBFOLDER/legend'.replace('SUBFOLDER', k)
-	var product_credits		= '/mapinfo/SUBFOLDER/credits'.replace('SUBFOLDER', k)
-
-	app.get(product_browse_url,		s3_products[k].Browse);
-	app.get(product_map_url,		s3_products[k].Map);
-	app.get(product_query_url,		s3_products[k].QueryProduct);
-	app.get(product_mapinfo,		s3_products[k].MapInfo);
-	app.get(product_style,			s3_products[k].Style);
-	app.get(product_legend,			s3_products[k].Legend);
-	app.get(product_credits,		s3_products[k].Credits);
-	
-}
-//app.get('/products/modis_af/browse/:year/:doy',		query_af.Browse);
-//app.get('/products/modis_af/map/:year/:doy',		query_af.Map);
-//app.get('/products/modis_af/query/:year/:doy',		query_af.QueryProduct);
-//app.get('/mapinfo/modis_af',						query_af.MapInfo);
-//app.get('/mapinfo/modis_af/style',					query_af.Style);
-//app.get('/mapinfo/modis_af/legend',					query_af.Legend);
-//app.get('/mapinfo/modis_af/credits',				query_af.Credits);
-
+app.get('/mapinfo/:subfolder',				function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].MapInfo(req, res); })
+app.get('/mapinfo/:subfolder/style',		function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Style(req, res); })
+app.get('/mapinfo/:subfolder/legend',		function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Legend(req, res); })
+app.get('/mapinfo/:subfolder/credits',		function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Credits(req, res); })
 
 app.get('/products/:region/:ymd/:id.:fmt?',			products.distribute);
 app.get('/products/map/:region/:ymd/:id.:fmt?',		products.map);

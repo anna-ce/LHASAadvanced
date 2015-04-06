@@ -61,19 +61,19 @@
             "min_zoom":     7,
             "max_zoom":	    18,
             "map_id":       "cappelaere.map-q4hdwmh3",
-            "bucket":       "ojo-d4",
+            "bucket":       "ojo-d5",
             "ojotiler":     "http://ojo-tiler.herokuapp.com",
             "ojotiler-dev": "http://localhost:8888",
             "susmap":       "cappelaere.3uf4a15n"
         },
         "d06": {
             "name":		      "Pakistan",
-            "bbox":         [40, 60, 20, 80 ],
-            "target":       [30, 70],
+            "bbox":         [60, 20, 80, 40 ],
+            "target":       [70, 30],
             "min_zoom":     5,
             "max_zoom":	    18,
             "map_id":       "cappelaere.map-q4hdwmh3",
-            "bucket":       "ojo-d4",
+            "bucket":       "ojo-d6",
             "ojotiler":     "http://ojo-tiler.herokuapp.com",
             "ojotiler-dev": "http://localhost:8888",
             "susmap":       "cappelaere.3uf4a15n"

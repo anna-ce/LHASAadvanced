@@ -9,6 +9,7 @@ import numpy, sys, os, inspect, math
 from osgeo import osr, gdal
 from ftplib import FTP
 from datetime import date, datetime, timedelta
+from dateutil.parser import parse
 
 from pytrmm import TRMM3B42RTFile
 
@@ -34,6 +35,10 @@ class TRMM:
 		self.ymd 			= "%d%02d%02d" % (self.year, self.month, self.day)		
 		self.force			= force
 		self.verbose		= verbose
+
+		today				= parse(dt)
+		self.doy			= today.strftime('%j')
+
 
 		gis_file_00 		= "3B42RT.%04d%02d%02d00.7.03hr.tif"%(self.year, self.month, self.day)
 		gis_file_03 		= "3B42RT.%04d%02d%02d03.7.03hr.tif"%(self.year, self.month, self.day)
@@ -204,7 +209,7 @@ class TRMM:
 		cmd = str.format("potrace -i -z black -a 1.5 -t 3 -b geojson -o {0} {1} -x {2} -L {3} -B {4} ", fileName+".geojson", fileName+".bmp", pres, xorg, ymax ); 
 		self.execute(cmd)
 	
-		cmd = str.format("topojson -o {0} --simplify-proportion 0.75 -p precip={1} -- precip={2}", fileName+".topojson", water, fileName+".geojson" ); 
+		cmd = str.format("topojson -o {0} --simplify-proportion 0.75 -p daily_precipitation={1} -- daily_precipitation={2}", fileName+".topojson", water, fileName+".geojson" ); 
 		self.execute(cmd)
 	
 		# convert it back to json
@@ -212,8 +217,8 @@ class TRMM:
 		self.execute(cmd)
 	
 		# rename file
-		output_file = "precip_%d.geojson" % water
-		cmd = "mv %s %s" % (os.path.join(self.geojsonDir,"precip.json"), os.path.join(self.geojsonDir, output_file))
+		output_file = "daily_precipitation_%d.geojson" % water
+		cmd = "mv %s %s" % (os.path.join(self.geojsonDir,"daily_precipitation.json"), os.path.join(self.geojsonDir, output_file))
 		self.execute(cmd)
 		
 	def process_trmm_region_topojson(self, dx, subset_file, supersampled_file, supersampled_rgb_file, pixelsize, bbox, shp_file, geojson_file, topojson_file, topojson_gz_file):
@@ -265,13 +270,13 @@ class TRMM:
 		
 		src_ds = None	
 	
-	def process_trmm_region_to_s3( self, dx, thumbnail_file, topojson_gz_file, tif_file):
+	def process_trmm_region_to_s3( self, dx, thumbnail_file, topojson_gz_file, topojson_file, tif_file):
 		# copy mbtiles to S3
 		region 		= config.regions[dx]
 		bucketName 	= region['bucket']
-		folder		= self.ymd
+		folder		= "trmm_24/"+str(self.year)+"/"+str(self.doy)
 	 
-		cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + self.ymd + " --file " + tif_file
+		cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + folder + " --file " + tif_file
 		if verbose:
 			cmd += " --verbose"
 		#if force:
@@ -279,7 +284,7 @@ class TRMM:
 		
 		self.execute(cmd)
 	
-		cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + self.ymd + " --file " + topojson_gz_file
+		cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + folder + " --file " + topojson_gz_file
 		if verbose:
 			cmd += " --verbose"
 		#if force:
@@ -287,7 +292,14 @@ class TRMM:
 			
 		self.execute(cmd)
 
-		cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + self.ymd + " --file " + thumbnail_file
+		cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + folder + " --file " + thumbnail_file
+		if verbose:
+			cmd += " --verbose"
+		#if force:
+		cmd += " --force"
+		self.execute(cmd)
+		
+		cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + folder + " --file " + topojson_file
 		if verbose:
 			cmd += " --verbose"
 		#if force:
@@ -332,8 +344,6 @@ class TRMM:
 		if verbose:
 			print "process_trmm_region:", dx, pixelsize
 
-		subset_file 			= os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24_%s_%s.tif" % (dx,self.ymd))
-		thumbnail_file 			= os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24_%s_%s.thn.png" % (dx,self.ymd))
 		static_file 			= os.path.join(config.data_dir,"trmm", dx, "%s_static.tiff" % (dx))
 		rgb_subset_file			= os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24_%s_%s_rgb.tif" % (dx,self.ymd))
 		resampled_file 			= os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24_%s_%s_1km.tif" % (dx,self.ymd))
@@ -342,8 +352,11 @@ class TRMM:
 		supersampled_rgb_file 	= os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24_%s_%s_100m_rgb.tif" % (dx,self.ymd))
 		shp_file 				= os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24_%s_%s_1km.shp" % (dx,self.ymd))
 		geojson_file 			= os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24_%s_%s_1km.geojson" % (dx,self.ymd))
-		topojson_file			= os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24_%s_%s.topojson" % (dx,self.ymd))
-		topojson_gz_file		= os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24_%s_%s.topojson.gz" % (dx,self.ymd))
+		
+		subset_file 			= os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24.%s.tif" % (self.ymd))
+		thumbnail_file 			= os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24.%s_thn.jpg" % (self.ymd))
+		topojson_file			= os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24.%s.topojson" % (self.ymd))
+		topojson_gz_file		= os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24.%s.topojson.gz" % (self.ymd))
 
 		self.process_trmm_region_subset(self.output_file_180, bbox, subset_file, self.color_file, rgb_subset_file)
 	
@@ -359,7 +372,7 @@ class TRMM:
 			cmd = "node trmm_merge.js "+dx+ " " + self.ymd
 			self.execute(cmd)
 			
-		self.process_trmm_region_to_s3( dx, thumbnail_file, topojson_gz_file, subset_file)
+		self.process_trmm_region_to_s3( dx, thumbnail_file, topojson_gz_file, topojson_file, subset_file)
 		
 		self.process_trmm_region_cleanup(dx)
 		
@@ -387,7 +400,8 @@ class TRMM:
 		
 		if not os.path.exists(self.trmm_dir):
 		    os.makedirs(self.trmm_dir)
-#
+			
+# python trmm_process.py --region d02 -v
 # ======================================================================
 #
 if __name__ == '__main__':

@@ -239,17 +239,17 @@ en:
         label: Source
         source: NASA GSFC TRMM
       legend:         
-        10mm: 10mm
-        20mm: 20mm
-        30mm: 30mm
-        50mm: 50mm
-        80mm: 80mm
-        130mm: 130mm
-        210mm: 210mm
-        340mm: 340mm
-        550mm: 550mm
-        890mm: 890mm
-        1440mm: 1440mm
+        1mm: 1mm
+        2mm: 2mm
+        3mm: 3mm
+        5mm: 5mm
+        8mm: 8mm
+        13mm: 13mm
+        21mm: 21mm
+        34mm: 34mm
+        55mm: 55mm
+        89mm: 89mm
+        144mm: 144mm
         
     stream_flow:
       title: Stream Flow

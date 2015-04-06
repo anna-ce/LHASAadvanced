@@ -30,13 +30,13 @@ var files 	= []
 	
 for( var l in levels) {
 	var lev 		= levels[l]
-	var filename	= path.join(dir, "geojson", "precip_"+lev+".geojson")
+	var filename	= path.join(dir, "geojson", "daily_precipitation_"+lev+".geojson")
 	files.push(filename)
 }
 
 var merge_filename 		= path.join(dir, "geojson", "trmm_levels.geojson")
-var topojson_filename 	= path.join(dir, "trmm_24_" + region + "_" + ymd + ".topojson")
-var topojsongz_filename	= path.join(dir, "trmm_24_" + region + "_" + ymd + ".topojson.gz")
+var topojson_filename 	= path.join(dir, "trmm_24." +  ymd + ".topojson")
+var topojsongz_filename	= path.join(dir, "trmm_24." +  ymd + ".topojson.gz")
 
 // Process first file
 var json1 				= ReadFile( files.shift())
