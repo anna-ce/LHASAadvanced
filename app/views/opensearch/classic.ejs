@@ -732,65 +732,6 @@
 		if(topojson_url) loadData( topojson_url, id, mapinfos );
 	}
 	
-	function OldprocessDroppedResult(id, result) {
-		// find the download action
-		for( var a in result.action){
-			var action = result.action[a]
-			if( action['@type'] == 'ojo:download' ) {
-				var using = action.using
-				for( var u in using ) {
-					var uses 	= using[u]
-					var url		= uses.url
-					console.log(url)
-					if( url.indexOf(".png") > 0 ) {
-						// add image overlay
-						var bbox = result.properties.geometry.coordinates[0]
-						var imageBounds = [bbox[0].reverse().map(parseFloat), bbox[2].reverse().map(parseFloat)]
-					
-						console.log("Add to map", JSON.stringify(imageBounds))
-						var options 	= {opacity: 0.8, attribution: "Digiglobe"}
-						var newLayer 	= L.imageOverlay(url, imageBounds, options).addTo(map);
-						map_controls.addOverlay( newLayer, id );
-						break;
-					} else if( url.indexOf(".topojson")>0) {
-						console.log("loading topojson", url)
-						$.ajax({
-							type: 'GET',
-							url: url,
-							dataType: "json",
-							async: true
-						})
-						.success( function(data) {
-							if( data && data.objects ) {
-								console.log("Returned good data")
-			
-								for (var key in data.objects) {
-								
-									var geodata 	= topojson.feature(data, data.objects[key]);
-		
-									var newLayer =  L.geoJson(null, { style: { color: '#ff0000', weight: 1 }})
-									newLayer.addData(geodata);
-									newLayer.addTo(map);
-									map_controls.addOverlay( newLayer, id );
-								}
-							} else {
-								console.log("Returned odd data or GeoJSON")
-							}
-						})
-						.fail(function(jqxhr, textStatus, error ) { 
-							var err = textStatus + ', ' + error;
-							alert( "Request Failed: " + err);
-						});
-						break
-					} else if( mediaType == 'image/tiff') {
-						addThumbnailToMap(result, id) 
-						break;
-					}
-				}
-			} 
-		}
-	}
-	
 	function handleDrop(event) {
 		event.stopPropagation(); // Stops some browsers from redirecting.
 		event.preventDefault();
