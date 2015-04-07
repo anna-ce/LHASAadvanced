@@ -26,9 +26,10 @@ function hashCode(str) {
     return hash;
 }
 
-var styles 	= [];
-var legends = {};
-var credits = [];
+var styles 		= [];
+var legends 	= {};
+var credits 	= [];
+var products	= {};
 
 var hide_legends = 1;
 
@@ -38,15 +39,16 @@ function ToggleLegend() {
 		hide_legends = 0;
 		for( var i in legends ) {
 			if( legends[i].display ) {	// if layer is turned on
-				console.log("TG Show:"+legends[i].legend, i)
+				//console.log("TG Show:"+legends[i].legend, i)
 				$('#'+legends[i].legend).show();
-			} else {
-				console.log("TG Not Show:"+legends[i].legend)
-			}
+			} //else {
+			//	console.log("TG Not Show:"+legends[i].legend)
+			//}
 		}
 	} else {					// turn it off
 		hide_legends = 1
 		for( var i in legends ) {
+			//console.log("hide", legends[i].legend)
 			$('#'+legends[i].legend).hide();
 		}
 	}
@@ -82,6 +84,7 @@ function loadDataUrl(url, cb) {
 		dataType: 'json'
 	})
 	.done( function(data) {
+		//console.log("Got data from "+url)
 		cb(null, data)
 	})
 	.fail( function(qXHR, textStatus, errorThrown ) {
@@ -108,23 +111,28 @@ function loadMapObject( mapObject, cb ) {
 		//dataType: mapObject.mediaType
 	})
 	.done( function(data) {
-		switch(id) {
+		//console.log("success:"+id, name)
+		
+		switch(name) {
 			case "style":
 				var hc		= hashCode(url)
 				compileStyle(hc, data);
 				styles.push(url);			// to keep track of what has been loaded
-				cb(null, data);
 				break;
 			case "legend":
 				// add it to the legend div
-				$('#legends').append(data)
-				cb(null, data);
+				var product = mapObject.product
+				if( ! (product in legends) ) {
+					//console.log("Product not in legend", product)
+					$('#legends').append(data)
+                	legends[product] = {legend: product+"_legend", display: true}
+				}
 				break;
 			case "credits":
 				credits.push(url)			// to keep track of what has been loaded
-				cb(null, data);
 				break;
 		}
+		cb(null, data);
 	})
 	.fail( function(jqXHR, textStatus, errorThrown) {
 		console.log("Error:"+textStatus+" "+id);
@@ -271,7 +279,7 @@ function loadData( topojsonUrl, displayName, mapinfos ) {
 				geoJsonLayer.addTo(map)		
 			
 				// Add it to the Layer control widget
-				var layerName = key_name;
+				var layerName = displayName;
 				
 				// Remember the layer to legend mapping if we haveone
 				if( legendObject ) {
