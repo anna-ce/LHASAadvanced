@@ -220,6 +220,8 @@ app.get('/s3/:bucket/:id',						s3.index);
 //app.get('/test/:id', 							test.index);
 //app.get('/test',								test.index);
 
+app.options('/opensearch',						function(req, res) { setOptionsHeaders(req, res)})
+
 app.get('/opensearch',							if_authorized, opensearch.index);
 app.get('/opensearch/classic',					if_authorized, opensearch.classic);
 app.get('/opensearch/description',				opensearch.description);
@@ -242,12 +244,8 @@ app.get('/products/:region/landslide_nowcast',	products.landslide_nowcast_list);
 app.get('/products/:region/trmm',				products.trmm_list);
 
 //app.get('/products/opensearch',				hawk_restrict, products.opensearch);
-app.get('/products/opensearch',					hawk_restrict, opensearch.index);
-
-app.options('/products/opensearch',				function(req, res) {
-	console.log("OPTIONS on opensearch");
-	setOptionsHeaders(req, res)
-})
+//app.get('/products/opensearch',					hawk_restrict, opensearch.index);
+//app.options('/products/opensearch',				function(req, res) { setOptionsHeaders(req, res)})
 
 // Applications
 app.get('/apps',								hawk_restrict, apps.index);
