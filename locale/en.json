@@ -51,7 +51,8 @@
         "alos2": "JAXA ALOS-2",
         "ef5": "University of Oklahoma",
         "ls": "ORNL Landscan",
-        "trmm": "NASA GSFC TRMM"
+        "trmm": "NASA GSFC TRMM",
+        "dk": "NASA GSFC Dr Dalia Kirschbaum"
     },
     "sensors": {
         "sar": "SAR",
@@ -62,7 +63,8 @@
         "alos2": "PALSAR-2",
         "ef5": "EF5 CREST Model",
         "ls": "ORNL Landscan",
-        "trmm": "TRMM"
+        "trmm": "TRMM",
+        "dk": "N/A"
     },
     "duration": {
         "hours": "%{hours} hours",
@@ -73,6 +75,7 @@
         "geojson": "geojson",
         "topojson": "topojson",
         "topojsongz": "topojson.gz",
+        "shpgz": "shp.gz",
         "osmbz2": "osm.bz2",
         "geotiff": "geotiff",
         "png": "png",
@@ -248,6 +251,18 @@
                 "55mm": "55mm",
                 "89mm": "89mm",
                 "144mm": "144mm"
+            }
+        },
+        "landslide_nowcast": {
+            "title": "Landslide Nowcast",
+            "credits": "NASA GSFC",
+            "source": {
+                "label": "Source",
+                "source": "NASA GSFC"
+            },
+            "legend": {
+                "level_1": "yellow",
+                "level_2": "red"
             }
         },
         "population_count": {

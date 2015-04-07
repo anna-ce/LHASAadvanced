@@ -1,0 +1,335 @@
+Starting processing: Tue Apr  7 08:00:00 EDT 2015
+composite: Unknown field with tag 33550 (0x830e) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 33922 (0x8482) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+bounds: -92.68333 6.16683 -75.85007 19.08333 (spherical)
+pre-quantization: 1.87m (0.0000168°) 1.44m (0.0000129°)
+topology: 45 arcs, 6173 points
+post-quantization: 187m (0.00168°) 144m (0.00129°)
+simplification: effective minimum area 6.55e-10
+simplification: retained 4627 / 6169 points (75%)
+prune: retained 45 / 45 arcs (100%)
+bounds: -92.68333 6.16683 -75.85007 18.9142 (spherical)
+pre-quantization: 1.87m (0.0000168°) 1.42m (0.0000127°)
+topology: 29 arcs, 3693 points
+post-quantization: 187m (0.00168°) 142m (0.00127°)
+simplification: effective minimum area 6.30e-10
+simplification: retained 2763 / 3683 points (75%)
+prune: retained 29 / 29 arcs (100%)
+bounds: -92.68333 6.16683 -75.85007 18.85751 (spherical)
+pre-quantization: 1.87m (0.0000168°) 1.41m (0.0000127°)
+topology: 19 arcs, 2171 points
+post-quantization: 187m (0.00168°) 141m (0.00127°)
+simplification: effective minimum area 6.30e-10
+simplification: retained 1626 / 2167 points (75%)
+prune: retained 19 / 19 arcs (100%)
+bounds: -91.40306 6.16683 -75.85007 18.75738 (spherical)
+pre-quantization: 1.73m (0.0000156°) 1.40m (0.0000126°)
+topology: 12 arcs, 1028 points
+post-quantization: 173m (0.00156°) 140m (0.00126°)
+simplification: effective minimum area 5.86e-10
+simplification: retained 763 / 1017 points (75%)
+prune: retained 12 / 12 arcs (100%)
+bounds: -84.08933 6.16683 -75.85007 9.8499 (spherical)
+pre-quantization: 0.916m (0.00000824°) 0.410m (0.00000368°)
+topology: 3 arcs, 267 points
+post-quantization: 91.6m (0.000824°) 41.0m (0.000368°)
+simplification: effective minimum area 3.64e-10
+simplification: retained 201 / 267 points (75%)
+prune: retained 3 / 3 arcs (100%)
+bounds: -76.59227 6.16683 -75.85007 7.81691 (spherical)
+pre-quantization: 0.0825m (7.42e-7°) 0.183m (0.00000165°)
+topology: 2 arcs, 138 points
+post-quantization: 8.25m (0.0000742°) 18.3m (0.000165°)
+simplification: effective minimum area 4.77e-10
+simplification: retained 104 / 138 points (75%)
+prune: retained 2 / 2 arcs (100%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+trmm merging of  /Users/patricecappelaere/landslide/data/trmm/d02/20150406
+wrote /Users/patricecappelaere/landslide/data/trmm/d02/20150406/geojson/trmm_levels.geojson  with features: 110
+stdout: 
+stderr: bounds: -92.6833 6.1668 -75.8501 19.0833 (spherical)
+pre-quantization: 1.87m (0.0000168°) 1.44m (0.0000129°)
+topology: 110 arcs, 10084 points
+post-quantization: 187m (0.00168°) 144m (0.00129°)
+prune: retained 110 / 110 arcs (100%)
+
+['3B42RT.2015040621.7.1day.tif', '3B42RT.2015040621.7.1day.tfw']
+Trying to download 3B42RT.2015040621.7.1day.tif
+Trying to download 3B42RT.2015040621.7.1day.tfw
+reading /Users/patricecappelaere/landslide/data/trmm/3B42RT/20150406/3B42RT.2015040621.7.1day.tif
+pixelsize 0.00833333333333
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150406/levels/level_1.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150406/levels/level_2.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150406/levels/level_3.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150406/levels/level_5.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150406/levels/level_8.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150406/levels/level_13.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150406/levels/level_21.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150406/levels/level_34.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150406/levels/level_55.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150406/levels/level_89.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d02/20150406/levels/level_144.tif
+composite: Unknown field with tag 33550 (0x830e) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 33922 (0x8482) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+bounds: -74.94167 16.35036 -66.03927 21.425 (spherical)
+pre-quantization: 0.990m (0.00000890°) 0.564m (0.00000508°)
+topology: 12 arcs, 2572 points
+post-quantization: 99.0m (0.000890°) 56.4m (0.000508°)
+simplification: effective minimum area 4.58e-10
+simplification: retained 1930 / 2572 points (75%)
+prune: retained 12 / 12 arcs (100%)
+bounds: -74.94167 16.35036 -67.18358 21.425 (spherical)
+pre-quantization: 0.863m (0.00000776°) 0.564m (0.00000508°)
+topology: 9 arcs, 1537 points
+post-quantization: 86.3m (0.000776°) 56.4m (0.000508°)
+simplification: effective minimum area 4.66e-10
+simplification: retained 1153 / 1537 points (75%)
+prune: retained 9 / 9 arcs (100%)
+bounds: -74.94167 16.66979 -67.28773 21.425 (spherical)
+pre-quantization: 0.851m (0.00000765°) 0.529m (0.00000476°)
+topology: 7 arcs, 1079 points
+post-quantization: 85.1m (0.000765°) 52.9m (0.000476°)
+simplification: effective minimum area 4.22e-10
+simplification: retained 810 / 1079 points (75%)
+prune: retained 7 / 7 arcs (100%)
+bounds: -74.94167 16.86599 -67.64752 19.74967 (spherical)
+pre-quantization: 0.811m (0.00000729°) 0.321m (0.00000288°)
+topology: 6 arcs, 566 points
+post-quantization: 81.1m (0.000729°) 32.1m (0.000288°)
+simplification: effective minimum area 3.98e-10
+simplification: retained 425 / 566 points (75%)
+prune: retained 6 / 6 arcs (100%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+trmm merging of  /Users/patricecappelaere/landslide/data/trmm/d03/20150406
+wrote /Users/patricecappelaere/landslide/data/trmm/d03/20150406/geojson/trmm_levels.geojson  with features: 33
+stdout: 
+stderr: bounds: -74.9417 16.3504 -66.0393 21.425 (spherical)
+pre-quantization: 0.990m (0.00000890°) 0.564m (0.00000508°)
+topology: 34 arcs, 4318 points
+post-quantization: 99.0m (0.000890°) 56.4m (0.000508°)
+prune: retained 34 / 34 arcs (100%)
+
+['3B42RT.2015040621.7.1day.tif', '3B42RT.2015040621.7.1day.tfw']
+Trying to download 3B42RT.2015040621.7.1day.tif
+Trying to download 3B42RT.2015040621.7.1day.tfw
+pixelsize 0.00833333333333
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150406/levels/level_1.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150406/levels/level_2.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150406/levels/level_3.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150406/levels/level_5.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150406/levels/level_8.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150406/levels/level_13.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150406/levels/level_21.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150406/levels/level_34.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150406/levels/level_55.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150406/levels/level_89.tif
+Created /Users/patricecappelaere/landslide/data/trmm/d03/20150406/levels/level_144.tif
+0...10...20...30...40...50...60...70...80...90...100 - done.
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+simplification: effective minimum area 0.00
+simplification: retained 0 / 0 points (NaN%)
+prune: retained 0 / 0 arcs (NaN%)
+composite: Unknown field with tag 33550 (0x830e) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 33922 (0x8482) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+Done.
+0...10...20...30...40...50...60...70...80...90...100 - done.
+bounds: -73.25 18.1882 -72 18.8688 (spherical)
+pre-quantization: 0.139m (0.00000125°) 0.0757m (6.81e-7°)
+topology: 3 arcs, 123 points
+post-quantization: 13.9m (0.000125°) 7.57m (0.0000681°)
+simplification: effective minimum area 1.19e-8
+simplification: retained 62 / 123 points (50%)
+prune: retained 3 / 3 arcs (100%)
+composite: Unknown field with tag 33550 (0x830e) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 33922 (0x8482) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+Done.
+
+HEROKU_POSTGRESQL_COPPER_URL (DATABASE_URL)  ----backup--->  b083
+
+[0KPending... -[0KPending... \[0KPending...  |[0KCapturing... 0B /[0KCapturing... 1.14MB -[0KCapturing... done
+[0KStoring... start \[0KStoring... done
+
+
+HEROKU_POSTGRESQL_ORANGE_URL (DATABASE_URL)  ----backup--->  b083
+
+[0KPending... -[0KPending...  \[0KPending...  |[0KCapturing... start /[0KCapturing... start -[0KCapturing... start \[0KCapturing... 1.74MB |[0KCapturing... done
+[0KStoring... done
+
+** bucket: ojo-d2
+ojo-d2 20141216/trmm_24_d02_20141216.thn.png 120036 2015-01-06 22:59:58 ** delete **
+ojo-d2 20141216/trmm_24_d02_20141216.topojson.gz 37449 2015-01-06 22:59:58 ** delete **
+ojo-d2 20141217/trmm_24_d02_20141217.thn.png 123771 2015-01-06 22:54:35 ** delete **
+ojo-d2 20141217/trmm_24_d02_20141217.topojson.gz 43311 2015-01-06 22:54:34 ** delete **
+ojo-d2 20141218/trmm_24_d02_20141218.thn.png 128219 2015-01-06 22:49:07 ** delete **
+ojo-d2 20141218/trmm_24_d02_20141218.topojson.gz 48153 2015-01-06 22:49:06 ** delete **
+ojo-d2 20141219/trmm_24_d02_20141219.thn.png 121932 2015-01-06 22:43:37 ** delete **
+ojo-d2 20141219/trmm_24_d02_20141219.topojson.gz 41557 2015-01-06 22:43:36 ** delete **
+ojo-d2 20141220/trmm_24_d02_20141220.thn.png 111148 2015-01-06 22:38:12 ** delete **
+ojo-d2 20141220/trmm_24_d02_20141220.topojson.gz 28191 2015-01-06 22:38:11 ** delete **
+ojo-d2 20141221/trmm_24_d02_20141221.thn.png 120012 2015-01-06 22:32:52 ** delete **
+ojo-d2 20141221/trmm_24_d02_20141221.topojson.gz 43696 2015-01-06 22:32:52 ** delete **
+ojo-d2 20141222/trmm_24_d02_20141222.thn.png 114561 2015-01-06 22:27:26 ** delete **
+ojo-d2 20141222/trmm_24_d02_20141222.topojson.gz 30368 2015-01-06 22:27:25 ** delete **
+ojo-d2 20141223/trmm_24_d02_20141223.thn.png 110865 2015-01-06 22:22:05 ** delete **
+ojo-d2 20141223/trmm_24_d02_20141223.topojson.gz 32521 2015-01-06 22:22:04 ** delete **
+ojo-d2 20141224/trmm_24_d02_20141224.thn.png 118144 2015-01-06 22:16:44 ** delete **
+ojo-d2 20141224/trmm_24_d02_20141224.topojson.gz 40848 2015-01-06 22:16:43 ** delete **
+ojo-d2 20141225/trmm_24_d02_20141225.thn.png 123396 2015-01-06 22:11:15 ** delete **
+ojo-d2 20141225/trmm_24_d02_20141225.topojson.gz 51699 2015-01-06 22:11:15 ** delete **
+ojo-d2 20141226/trmm_24_d02_20141226.thn.png 112251 2015-01-06 22:05:50 ** delete **
+ojo-d2 20141226/trmm_24_d02_20141226.topojson.gz 38028 2015-01-06 22:05:49 ** delete **
+ojo-d2 20141227/trmm_24_d02_20141227.thn.png 115167 2015-01-06 22:00:30 ** delete **
+ojo-d2 20141227/trmm_24_d02_20141227.topojson.gz 39464 2015-01-06 22:00:30 ** delete **
+ojo-d2 20141228/trmm_24_d02_20141228.thn.png 113542 2015-01-06 21:55:10 ** delete **
+ojo-d2 20141228/trmm_24_d02_20141228.topojson.gz 37340 2015-01-06 21:55:09 ** delete **
+ojo-d2 20141229/trmm_24_d02_20141229.thn.png 107514 2015-01-06 21:49:52 ** delete **
+ojo-d2 20141229/trmm_24_d02_20141229.topojson.gz 25982 2015-01-06 21:49:51 ** delete **
+ojo-d2 20141230/trmm_24_d02_20141230.thn.png 112226 2015-01-06 21:44:38 ** delete **
+ojo-d2 20141230/trmm_24_d02_20141230.topojson.gz 32077 2015-01-06 21:44:38 ** delete **
+ojo-d2 20141231/trmm_24_d02_20141231.thn.png 112141 2015-01-06 21:39:19 ** delete **
+ojo-d2 20141231/trmm_24_d02_20141231.topojson.gz 36504 2015-01-06 21:39:18 ** delete **
+ojo-d2 20150101/trmm_24_d02_20150101.thn.png 103719 2015-01-06 21:34:00 ** delete **
+ojo-d2 20150101/trmm_24_d02_20150101.topojson.gz 33629 2015-01-06 21:33:59 ** delete **
+ojo-d2 20150102/trmm_24_d02_20150102.thn.png 108396 2015-01-06 21:28:43 ** delete **
+ojo-d2 20150102/trmm_24_d02_20150102.topojson.gz 30482 2015-01-06 21:28:43 ** delete **
+ojo-d2 20150103/trmm_24_d02_20150103.thn.png 102542 2015-01-06 21:23:29 ** delete **
+ojo-d2 20150103/trmm_24_d02_20150103.topojson.gz 18075 2015-01-06 21:23:29 ** delete **
+ojo-d2 20150104/trmm_24_d02_20150104.thn.png 102380 2015-01-06 21:18:18 ** delete **
+ojo-d2 20150104/trmm_24_d02_20150104.topojson.gz 18890 2015-01-06 21:18:18 ** delete **
+ojo-d2 20150105/landslide_nowcast_d02_20150105.thn.png 115965 2015-01-06 23:00:02 ** delete **
+ojo-d2 20150105/landslide_nowcast_d02_20150105.topojson.gz 3854 2015-01-06 23:00:02 ** delete **
+** bucket: ojo-d3
+ojo-d3 20141216/trmm_24_d03_20141216.thn.png 82423 2015-01-06 19:23:55 ** delete **
+ojo-d3 20141216/trmm_24_d03_20141216.topojson.gz 25128 2015-01-06 19:23:55 ** delete **
+ojo-d3 20141217/trmm_24_d03_20141217.thn.png 69563 2015-01-06 19:22:32 ** delete **
+ojo-d3 20141217/trmm_24_d03_20141217.topojson.gz 15074 2015-01-06 19:22:32 ** delete **
+ojo-d3 20141218/trmm_24_d03_20141218.thn.png 51199 2015-01-06 19:21:14 ** delete **
+ojo-d3 20141218/trmm_24_d03_20141218.topojson.gz 4751 2015-01-06 19:21:13 ** delete **
+ojo-d3 20141219/trmm_24_d03_20141219.thn.png 70853 2015-01-06 19:19:58 ** delete **
+ojo-d3 20141219/trmm_24_d03_20141219.topojson.gz 14777 2015-01-06 19:19:58 ** delete **
+ojo-d3 20141220/trmm_24_d03_20141220.thn.png 66350 2015-01-06 19:18:39 ** delete **
+ojo-d3 20141220/trmm_24_d03_20141220.topojson.gz 12159 2015-01-06 19:18:39 ** delete **
+ojo-d3 20141221/trmm_24_d03_20141221.thn.png 60005 2015-01-06 19:17:22 ** delete **
+ojo-d3 20141221/trmm_24_d03_20141221.topojson.gz 9637 2015-01-06 19:17:21 ** delete **
+ojo-d3 20141222/trmm_24_d03_20141222.thn.png 56225 2015-01-06 19:16:05 ** delete **
+ojo-d3 20141222/trmm_24_d03_20141222.topojson.gz 6041 2015-01-06 19:16:05 ** delete **
+ojo-d3 20141223/trmm_24_d03_20141223.thn.png 52400 2015-01-06 19:14:49 ** delete **
+ojo-d3 20141223/trmm_24_d03_20141223.topojson.gz 5412 2015-01-06 19:14:49 ** delete **
+ojo-d3 20141224/trmm_24_d03_20141224.thn.png 50315 2015-01-06 19:13:35 ** delete **
+ojo-d3 20141224/trmm_24_d03_20141224.topojson.gz 4600 2015-01-06 19:13:34 ** delete **
+ojo-d3 20141225/trmm_24_d03_20141225.thn.png 50288 2015-01-06 19:12:19 ** delete **
+ojo-d3 20141225/trmm_24_d03_20141225.topojson.gz 4096 2015-01-06 19:12:18 ** delete **
+ojo-d3 20141226/trmm_24_d03_20141226.thn.png 57060 2015-01-06 19:11:03 ** delete **
+ojo-d3 20141226/trmm_24_d03_20141226.topojson.gz 6558 2015-01-06 19:11:03 ** delete **
+ojo-d3 20141227/trmm_24_d03_20141227.thn.png 54992 2015-01-06 19:09:47 ** delete **
+ojo-d3 20141227/trmm_24_d03_20141227.topojson.gz 5852 2015-01-06 19:09:47 ** delete **
+ojo-d3 20141228/trmm_24_d03_20141228.thn.png 62375 2015-01-06 19:08:31 ** delete **
+ojo-d3 20141228/trmm_24_d03_20141228.topojson.gz 9785 2015-01-06 19:08:30 ** delete **
+ojo-d3 20141229/trmm_24_d03_20141229.thn.png 69004 2015-01-06 19:07:12 ** delete **
+ojo-d3 20141229/trmm_24_d03_20141229.topojson.gz 14791 2015-01-06 19:07:12 ** delete **
+ojo-d3 20141230/trmm_24_d03_20141230.thn.png 65623 2015-01-06 19:05:55 ** delete **
+ojo-d3 20141230/trmm_24_d03_20141230.topojson.gz 10770 2015-01-06 19:05:54 ** delete **
+ojo-d3 20141231/trmm_24_d03_20141231.thn.png 65811 2015-01-06 19:04:37 ** delete **
+ojo-d3 20141231/trmm_24_d03_20141231.topojson.gz 12432 2015-01-06 19:04:37 ** delete **
+ojo-d3 20150101/trmm_24_d03_20150101.thn.png 57512 2015-01-06 19:03:20 ** delete **
+ojo-d3 20150101/trmm_24_d03_20150101.topojson.gz 8535 2015-01-06 19:03:20 ** delete **
+ojo-d3 20150102/trmm_24_d03_20150102.thn.png 48757 2015-01-06 19:02:04 ** delete **
+ojo-d3 20150102/trmm_24_d03_20150102.topojson.gz 3227 2015-01-06 19:02:04 ** delete **
+ojo-d3 20150103/trmm_24_d03_20150103.thn.png 66583 2015-01-06 19:00:50 ** delete **
+ojo-d3 20150103/trmm_24_d03_20150103.topojson.gz 13776 2015-01-06 19:00:49 ** delete **
+ojo-d3 20150104/trmm_24_d03_20150104.thn.png 64009 2015-01-06 17:47:19 ** delete **
+ojo-d3 20150104/trmm_24_d03_20150104.topojson.gz 11371 2015-01-06 17:47:18 ** delete **
+ojo-d3 20150105/landslide_nowcast_d03_20150105.thn.png 54324 2015-01-06 19:23:57 ** delete **
+ojo-d3 20150105/landslide_nowcast_d03_20150105.topojson.gz 1327 2015-01-06 19:23:57 ** delete **
+/Users/patricecappelaere/landslide/data/ojo-d2
+/Users/patricecappelaere/landslide/data/ojo-d3
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+heroku pgbackups:capture --app ojo-streamer HEROKU_POSTGRESQL_COPPER_URL --expire
+cd /Users/patricecappelaere/Development/ojo/ojo-wiki
+heroku pgbackups:capture --app ojo-wiki HEROKU_POSTGRESQL_ORANGE_URL --expire
+process_all.sh Done: Tue Apr  7 08:06:49 EDT 2015
