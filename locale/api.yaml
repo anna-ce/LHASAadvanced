@@ -53,6 +53,7 @@ en:
     ef5: University of Oklahoma
     trmm: NASA GSFC TRMM
     ls: ORNL Landscan
+    dk: NASA GSFC Dalia Kirschbaum model
 
   sensors:
     sar: SAR
@@ -64,6 +65,7 @@ en:
     ef5: EF5 CREST Model
     trmm: TRMM
     ls: ORNL Landscan
+    dk: N/A
     
   duration:
     hours: "%{hours} hours"
@@ -74,6 +76,7 @@ en:
     geojson: geojson
     topojson: topojson
     topojsongz: topojson.gz
+    shpgz: shp.gz
     osmbz2: osm.bz2
     geotiff: geotiff
     png: png
@@ -267,6 +270,16 @@ en:
         210cms: 21cms
         340cms: 340cms
         550cms: 550cms
+  
+    landslide_nowcast:
+      title: Landslide Nowcast
+      credits: NASA GSFC
+      source: 
+        label: Source
+        source: NASA GSFC
+      legend:         
+        level_1: yellow
+        level_2: red
   
     soil_moisture:
       title: Soil Moisture

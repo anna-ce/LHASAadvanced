@@ -15,6 +15,12 @@ from datetime import date, timedelta
 from which import *
 from dateutil.parser import parse
 
+import json
+
+from browseimage import MakeBrowseImage 
+from s3 import CopyToS3
+from level import CreateLevel
+
 # Site configuration
 import config
 
@@ -66,11 +72,11 @@ def build_tif(dx, region, dir, date):
 		print "**ERR: file not found", limit_high
 		sys.exit(-1)
 
-	# get the 95th percentile antecedent rainfall limits
-	#limit_95 = os.path.join(config.data_dir,"ant_r", "%s_95ar.tif" % (dx))
-	#if not os.path.exists(limit_95):
-	#	print "**ERR: file not found", limit_95
-	#	sys.exit(-1)
+	# get the vhigh percentile rainfall limits
+	limit_vhigh = os.path.join(config.data_dir,"ant_r", "%s_95r.tif" % (dx))
+	if not os.path.exists(limit_vhigh):
+		print "**ERR: file not found", limit_vhigh
+		sys.exit(-1)
 
 	# Find the antecedent rainfall boolean 95th percentile accumulation file for the area
 	ant_rainfall_bool 	= os.path.join(config.data_dir,"ant_r", dx, ymd, "ant_r_%s_bool.tif" % (ymd))
@@ -184,6 +190,15 @@ def build_tif(dx, region, dir, date):
 		assert( smap_ncols == limit_high_ncols)
 		assert( smap_nrows == limit_high_nrows)
 
+		limit_vhigh_ds		= gdal.Open( limit_vhigh )
+		limit_vhigh_ncols 	= limit_vhigh_ds.RasterXSize
+		limit_vhigh_nrows 	= limit_vhigh_ds.RasterYSize
+		limit_vhigh_band 	= limit_vhigh_ds.GetRasterBand(1)
+		limit_vhigh_data 	= limit_vhigh_band.ReadAsArray(0, 0, limit_vhigh_ncols, limit_vhigh_nrows )
+
+		assert( smap_ncols == limit_vhigh_ncols)
+		assert( smap_nrows == limit_vhigh_nrows)
+
 		# Step 2
 		# low percentile current rainfall raster
 		rr_low = numpy.zeros(shape=(rainfall_nrows,rainfall_ncols))
@@ -196,6 +211,9 @@ def build_tif(dx, region, dir, date):
 		# high percentile current rainfall raster
 		rr_high = numpy.zeros(shape=(rainfall_nrows,rainfall_ncols))
 		rr_high[rainfall_data > limit_high_data] = 1
+
+		rr_high[rainfall_data > limit_vhigh_data] = 2
+
 		if verbose:
 			save_tiff(dx, rr_high, "rr_high", smap_ds)
 			
@@ -240,90 +258,176 @@ def build_tif(dx, region, dir, date):
 		limit_low_ds	= None
 		limit_high_ds	= None
 
-	# Now let's colorize it
-	if 1: #force or not os.path.exists(forecast_landslide_bin_rgb):
-		cmd = "gdaldem color-relief -alpha " +  forecast_landslide_bin + " " + color_file + " " + forecast_landslide_bin_rgb
-		if verbose:
-			print cmd
-		err = os.system(cmd)
-		if err != 0:
-			print('ERROR: slope file could not be generated:', err)
-			sys.exit(-1)
+	if 1:
+		# Now let's colorize it
+		if 1: #force or not os.path.exists(forecast_landslide_bin_rgb):
+			cmd = "gdaldem color-relief -alpha " +  forecast_landslide_bin + " " + color_file + " " + forecast_landslide_bin_rgb
+			if verbose:
+				print cmd
+			err = os.system(cmd)
+			if err != 0:
+				print('ERROR: slope file could not be generated:', err)
+				sys.exit(-1)
 	
+	if 0:
 
-	infile 	= forecast_landslide_bin_rgb
-	file 	= forecast_landslide_bin_rgb + ".pgm"
+		infile 	= forecast_landslide_bin_rgb
+		file 	= forecast_landslide_bin_rgb + ".pgm"
 
-	if force or not os.path.exists(file):
-		# subset it, convert red band (band 1) and output to .pgm using PNM driver
-		cmd = "gdal_translate  -q -scale 0 1 0 65535 " + infile + " -b 1 -of PNM -ot Byte "+file
-		execute( cmd )
-		execute("rm -f "+file+".aux.xml")
+		if force or not os.path.exists(file):
+			# subset it, convert red band (band 1) and output to .pgm using PNM driver
+			cmd = "gdal_translate  -q -scale 0 1 0 65535 " + infile + " -b 1 -of PNM -ot Byte "+file
+			execute( cmd )
+			execute("rm -f "+file+".aux.xml")
 
-	# -i  		invert before processing
-	# -t 2  	suppress speckles of up to this many pixels. 
-	# -a 1.5  	set the corner threshold parameter
-	# -z black  specify how to resolve ambiguities in path decomposition. Must be one of black, white, right, left, minority, majority, or random. Default is minority
-	# -x 		scaling factor
-	# -L		left margin
-	# -B		bottom margin
+		# -i  		invert before processing
+		# -t 2  	suppress speckles of up to this many pixels. 
+		# -a 1.5  	set the corner threshold parameter
+		# -z black  specify how to resolve ambiguities in path decomposition. Must be one of black, white, right, left, minority, majority, or random. Default is minority
+		# -x 		scaling factor
+		# -L		left margin
+		# -B		bottom margin
 
-	if force or not os.path.exists(file+".geojson"):
-		cmd = str.format("potrace -z black -a 1.5 -t 2 -i -b geojson -o {0} {1} -x {2} -L {3} -B {4} ", file+".geojson", file, pres, xorg, ymax ); 
-		execute(cmd)
+		if force or not os.path.exists(file+".geojson"):
+			cmd = str.format("potrace -z black -a 1.5 -t 2 -i -b geojson -o {0} {1} -x {2} -L {3} -B {4} ", file+".geojson", file, pres, xorg, ymax ); 
+			execute(cmd)
 
-	if force or not os.path.exists(file+".topojson.gz"):
-		cmd = str.format("topojson -o {0} --simplify-proportion 0.5 -p nowcast=1 -- landslide_nowcast={1}", file+".topojson", file+".geojson"); 
-		execute(cmd)
+		if force or not os.path.exists(file+".topojson.gz"):
+			cmd = str.format("topojson -o {0} --simplify-proportion 0.5 -p nowcast=1 -- landslide_nowcast={1}", file+".topojson", file+".geojson"); 
+			execute(cmd)
 	
-		cmd = "gzip %s" % (file+".topojson")
-		execute(cmd)
+			cmd = "gzip %s" % (file+".topojson")
+			execute(cmd)
 
-		cmd = "mv " + file+".topojson.gz" + " " + topojson_gz_file
-		execute(cmd)
+			cmd = "mv " + file+".topojson.gz" + " " + topojson_gz_file
+			execute(cmd)
 		
-	#create the thumbnail
-	tmp_file = thumbnail_file + ".tmp.tif"
-	if force or not os.path.exists(thumbnail_file):
-		cmd="gdalwarp -overwrite -q -multi -ts %d %d -r cubicspline -co COMPRESS=LZW %s %s" % (thn_width, thn_height, forecast_landslide_bin_rgb, tmp_file )
-		execute(cmd)
-		cmd = "composite %s %s %s" % ( tmp_file, static_file, thumbnail_file)
-		execute(cmd)
-		execute("rm "+tmp_file)
+		#create the thumbnail
+		tmp_file = thumbnail_file + ".tmp.tif"
+		if force or not os.path.exists(thumbnail_file):
+			cmd="gdalwarp -overwrite -q -multi -ts %d %d -r cubicspline -co COMPRESS=LZW %s %s" % (thn_width, thn_height, forecast_landslide_bin_rgb, tmp_file )
+			execute(cmd)
+			cmd = "composite %s %s %s" % ( tmp_file, static_file, thumbnail_file)
+			execute(cmd)
+			execute("rm "+tmp_file)
 			
-	cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + ymd + " --file " + topojson_gz_file
-	if verbose:
-		cmd += " --verbose"
-	if force:
-		cmd += " --force"
-	execute(cmd)
+		cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + ymd + " --file " + topojson_gz_file
+		if verbose:
+			cmd += " --verbose"
+		if force:
+			cmd += " --force"
+		execute(cmd)
 
-	cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + ymd + " --file " + thumbnail_file
-	if verbose:
-		cmd += " --verbose"
-	if force:
-		cmd += " --force"	
-	execute(cmd)
+		cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + ymd + " --file " + thumbnail_file
+		if verbose:
+			cmd += " --verbose"
+		if force:
+			cmd += " --force"	
+		execute(cmd)
 
-	cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + ymd + " --file " + forecast_landslide_bin
+		cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + ymd + " --file " + forecast_landslide_bin
+		if verbose:
+			cmd += " --verbose"
+		if force:
+			cmd += " --force"	
+		execute(cmd)
+	
+		if not verbose:
+			files = [	forecast_landslide_bin_rgb,
+						forecast_landslide_100m_bin,
+						forecast_landslide_100m_bin_rgb, 
+						file,file+".geojson", 
+						file+".geojson",
+						forecast_landslide_bin, 
+						forecast_landslide_bin_rgb   ]
+			execute("rm -f "+" ".join(files))
+	
+	
+def process(mydir, scene, s3_bucket, s3_folder, zoom):
+	fullName = os.path.join(mydir, scene+".tif")
+	if not os.path.exists(fullName):
+		print "File does not exist", fullName
+		sys.exit(-1)
+	
 	if verbose:
-		cmd += " --verbose"
-	if force:
-		cmd += " --force"	
+		print "Processing", fullName
+		
+	geojsonDir	= os.path.join(mydir,"geojson")
+	if not os.path.exists(geojsonDir):            
+		os.makedirs(geojsonDir)
+
+	levelsDir	= os.path.join(mydir,"levels")
+	if not os.path.exists(levelsDir):            
+		os.makedirs(levelsDir)
+
+	shpDir	= os.path.join(mydir,"shp")
+	if not os.path.exists(levelsDir):            
+		os.makedirs(levelsDir)
+
+	merge_filename 		= os.path.join(geojsonDir, "%s_levels.geojson" % scene)
+	topojson_filename 	= os.path.join(geojsonDir, "..", "%s_levels.topojson" % scene)
+	browse_filename 	= os.path.join(geojsonDir, "..", "%s_browse.tif" % scene)
+	subset_filename 	= os.path.join(geojsonDir, "..", "%s_small_browse.tif" % scene)
+	osm_bg_image		= os.path.join(geojsonDir, "..", "osm_bg.png")
+	sw_osm_image		= os.path.join(geojsonDir, "..", "%s_thn.jpg" % scene)
+	shapefile_gz		= os.path.join(mydir, "%s.shp.gz" % scene)
+
+	levels 				= [2,1]
+	
+	# From http://colorbrewer2.org/
+	#hexColors 			= ["#ffffe5", "#feb24c","#f03b20"]
+	hexColors 			= ["#feb24c","#f03b20"]
+	
+	ds 					= gdal.Open( fullName )
+	band				= ds.GetRasterBand(1)
+	data				= band.ReadAsArray(0, 0, ds.RasterXSize, ds.RasterYSize )
+	
+	if force or not os.path.exists(topojson_filename+".gz"):
+		for l in levels:
+			fileName 		= os.path.join(levelsDir, scene+"_level_%d.tif"%l)
+			CreateLevel(l, geojsonDir, fileName, ds, data, "landslide_nowcast", force,verbose)
+	
+		jsonDict = dict(type='FeatureCollection', features=[])
+	
+		for l in reversed(levels):
+			fileName 		= os.path.join(geojsonDir, "landslide_nowcast_level_%d.geojson"%l)
+			if os.path.exists(fileName):
+				print "merge", fileName
+				with open(fileName) as data_file:    
+					data = json.load(data_file)
+		
+				if 'features' in data:
+					for f in data['features']:
+						jsonDict['features'].append(f)
+	
+
+		with open(merge_filename, 'w') as outfile:
+		    json.dump(jsonDict, outfile)	
+
+		# Convert to topojson
+		cmd 	= "topojson -p -o "+ topojson_filename + " " + merge_filename
+		execute(cmd)
+
+		cmd 	= "gzip --keep "+ topojson_filename
+		execute(cmd)
+
+	# Convert to shapefile
+	cmd= "ogr2ogr -f 'ESRI Shapefile' %s %s" % ( shpDir, merge_filename)
 	execute(cmd)
 	
-	if not verbose:
-		files = [	forecast_landslide_bin_rgb,
-					forecast_landslide_100m_bin,
-					forecast_landslide_100m_bin_rgb, 
-					file,file+".geojson", 
-					file+".geojson",
-					forecast_landslide_bin, 
-					forecast_landslide_bin_rgb   ]
-		execute("rm -f "+" ".join(files))
+	cmd 	= "tar -cvzf %s %s" %(shapefile_gz, shpDir)
+	execute(cmd)
 	
+	if force or not os.path.exists(sw_osm_image):
+		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image,levels, hexColors, force, verbose, zoom)
+		
+	ds = None
 	
-def generate_map( dx, date ):
+	file_list = [ sw_osm_image, topojson_filename, topojson_filename+".gz", fullName, shapefile_gz ]
+	
+	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
+		
+def generate_map( dx, date, year, doy ):
 	# make sure it exists
 	region		= config.regions[dx]
 	
@@ -331,15 +435,22 @@ def generate_map( dx, date ):
 		print "Processing Forecast Landslide Map for Region:", dx, region['name']	
 	
 	# Destination Directory
-	dir			= os.path.join(config.data_dir, "landslide_nowcast", dx, ymd)
-	if not os.path.exists(dir):
-		os.makedirs(dir)
+	mydir			= os.path.join(config.data_dir, "landslide_nowcast", dx, ymd)
+	if not os.path.exists(mydir):
+		os.makedirs(mydir)
 
-	build_tif(dx, region, dir, date )
+	build_tif(dx, region, mydir, date )
+	
+	s3_folder	= os.path.join("landslide_nowcast", str(year), doy)
+	s3_bucket	= region['bucket']
+	
+	scene 				=  "landslide_nowcast_%s_%s" %(dx,ymd)
+	process(mydir, scene, s3_bucket, s3_folder, region['thn_zoom'])
+	
 
 # =======================================================================
 # Main
-#
+# python landslide_nowcast.py --region d03 --date 2015-04-07 -v
 if __name__ == '__main__':
 	
 	parser 		= argparse.ArgumentParser(description='Generate Forecast Landslide Estimates')
@@ -365,6 +476,7 @@ if __name__ == '__main__':
 	month		= today.month
 	day			= today.day
 	ymd			= "%d%02d%02d" % (year, month, day)
+	doy			= today.strftime('%j')
 
 	yesterday	= today - timedelta(days=1)
 	yyear		= yesterday.year
@@ -375,6 +487,6 @@ if __name__ == '__main__':
 	if verbose:
 		print "generating forecast for", today.strftime("%Y-%m-%d")
 		
-	generate_map(region, dt)
+	generate_map(region, dt, year, doy)
 	
 	print "Done."

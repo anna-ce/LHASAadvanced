@@ -29,6 +29,7 @@ var fs 			 				= require('fs'),
 	query_maxswe				= require("../../lib/query_maxswe").query,
 	query_sm					= require("../../lib/query_sm").query,
 	query_maxq					= require("../../lib/query_maxq").query
+	query_landslide_nowcast2		= require("../../lib/query_landslide_nowcast2").query
 	;
 
 	productQueries = {
@@ -36,7 +37,7 @@ var fs 			 				= require('fs'),
 		"digiglobe":			[query_digiglobe.QueryDigiglobe],
 		"ef5": 					[query_ef5.QueryAll.bind(query_ef5), query_maxswe.QueryAll.bind(query_maxswe), query_sm.QueryAll.bind(query_sm), query_maxq.QueryAll.bind(query_maxq)],
 		"eo1_ali": 				[query_eo1.QueryEO1],
-		"landslide_model": 		[query_landslide_nowcast.QueryLandslideNowcast],
+		"landslide_model": 		[query_landslide_nowcast2.QueryAll.bind(query_landslide_nowcast2)],
 		"landsat_8": 			[query_l8.QueryLandsat8],
 		"landscan": 			[query_pop.QueryAll],
 		"modis": 				[query_modis.QueryModis, query_af.QueryAll.bind(query_af)],

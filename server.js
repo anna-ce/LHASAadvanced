@@ -28,16 +28,17 @@ var express 		= require('express'),
 	//var mapinfo_trmm	= require('./lib/mapinfo_trmm');
 	//var	products_trmm	= require('./lib/products_trmm');
 
-	var mapinfo_pop		= require('./lib/mapinfo_pop');
-	var	products_pop	= require('./lib/products_pop');
+	var mapinfo_pop				= require('./lib/mapinfo_pop');
+	var	products_pop			= require('./lib/products_pop');
 	
-	var	query_sm		= require('./lib/query_sm').query;
-	var	query_maxswe	= require('./lib/query_maxswe').query;
-	var	query_ef5		= require('./lib/query_ef5').query;
-	var	query_maxq		= require('./lib/query_maxq').query;
+	var	query_sm				= require('./lib/query_sm').query;
+	var	query_maxswe			= require('./lib/query_maxswe').query;
+	var	query_ef5				= require('./lib/query_ef5').query;
+	var	query_maxq				= require('./lib/query_maxq').query;
 
-	var	query_modis_af	= require('./lib/query_modis_af').query;
-	var	query_trmm_24	= require('./lib/query_trmm_24').query;
+	var	query_modis_af			= require('./lib/query_modis_af').query;
+	var	query_trmm_24			= require('./lib/query_trmm_24').query;
+	var	query_landslide_nowcast	= require('./lib/query_landslide_nowcast2').query;
 
 	var s3_products = {
 		'modis_af': 	query_modis_af,
@@ -45,7 +46,8 @@ var express 		= require('express'),
 		"maxswe": 		query_maxswe,
 		"ef5": 			query_ef5,
 		"maxq": 		query_maxq,
-		"trmm_24": 		query_trmm_24
+		"trmm_24": 		query_trmm_24,
+		"landslide_nowcast": query_landslide_nowcast
 	}
 	
 	
@@ -191,6 +193,7 @@ function hawk_restrict(req, res, next) {
 
 // Home page -> app
 app.get('/', 									home.index);
+app.get('/home', 								home.index);
 app.get('/about', 								home.about);
 app.get('/contact', 							home.contact);
 app.get('/privacy', 							home.privacy);
@@ -271,10 +274,10 @@ app.get('/mapinfo/eo1/style',					mapinfo.eo1_style);
 app.get('/mapinfo/eo1/legend',					mapinfo.eo1_legend);
 app.get('/mapinfo/eo1/credits',					mapinfo.eo1_credits);
 
-app.get('/mapinfo/landslide_nowcast',			mapinfo.landslide_nowcast);
-app.get('/mapinfo/landslide_nowcast/style',		mapinfo.landslide_nowcast_style);
-app.get('/mapinfo/landslide_nowcast/legend',	mapinfo.landslide_nowcast_legend);
-app.get('/mapinfo/landslide_nowcast/credits',	mapinfo.landslide_nowcast_credits);
+//app.get('/mapinfo/landslide_nowcast',			mapinfo.landslide_nowcast);
+//app.get('/mapinfo/landslide_nowcast/style',		mapinfo.landslide_nowcast_style);
+//app.get('/mapinfo/landslide_nowcast/legend',	mapinfo.landslide_nowcast_legend);
+//app.get('/mapinfo/landslide_nowcast/credits',	mapinfo.landslide_nowcast_credits);
 
 app.get('/products/:subfolder/browse/pop/:year/:doy',		products_pop.browse);
 app.get('/products/:subfolder/map/pop/:year/:doy',			products_pop.map);

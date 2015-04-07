@@ -116,10 +116,16 @@ var express 		= require('express'),
 		app.facebook			= facebook.init(appId, appSecret)
 
 		app.facebook.GenerateSecret(function(err, secret) {
-			logger.info("Application Hawk Key:", err,secret)
-			app.hawk_secret = secret
-			app.hawk_id 	= appId
-		})		
+			//console.log("hawk key:", err,secret)
+			if( !err ) {
+				app.hawk_secret = secret
+				app.hawk_id 	= appId
+			} else {
+				logger.error("app.facebook.GenerateSecret", err)
+				app.hawk_secret = appSecret
+				app.hawk_id 	= appId				
+			}
+		})
 	}
 	
 // ===============================	

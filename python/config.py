@@ -66,6 +66,7 @@ regions		= {
 		'rows': 		1550,
 		'thn_width':	389,
 		'thn_height':	298,
+		'thn_zoom': 	5,
 		'bucket':		"ojo-d2",
 		'modis_tiles':  [
 			"100W020N",
@@ -98,6 +99,7 @@ regions		= {
 		'rows': 		609,
 		'thn_width':	400,
 		'thn_height':	204,
+		'thn_zoom': 	6,
 		'bucket':		"ojo-d3",
 		'modis_tiles':  [
 			"080W020N",

@@ -10,7 +10,7 @@
     "regions" : {
         "Global": {
             "bbox":         [-180, 60, 180, -60 ],
-            "target":       [20, -80],
+            "target":       [-80, 20],
             "min_zoom":     2,
             "max_zoom":     12,
             "map_id":       "cappelaere.map-mx5g2tn3",
@@ -21,7 +21,7 @@
         "d02": {
             "name":		      "Central America",
             "bbox":         [-92.68, 6.17, -75.85, 19.08 ],
-            "target":       [9.84, -84.14],
+            "target":       [-84.14, 9.84],
             "min_zoom":     7,
             "max_zoom":     18,
             "map_id":       "cappelaere.map-mx5g2tn3",
@@ -33,7 +33,7 @@
         "d03": {
             "name":		      "Hispaniola",
             "bbox":         [-74.94, 16.35, -64.98, 21.42 ],
-            "target":       [18.89, -69.96],
+            "target":       [-69.96, 18.89],
             "min_zoom":     7,
             "max_zoom":	    18,
             "map_id":       "cappelaere.map-q4hdwmh3",
@@ -45,7 +45,7 @@
         "d04": {
             "name":		      "Namibia",
             "bbox":         [18, -21, 26, -17 ],
-            "target":       [-18.12, 21.65],
+            "target":       [21.65,-18.12],
             "min_zoom":     6,
             "max_zoom":	    18,
             "map_id":       "cappelaere.map-q4hdwmh3",
@@ -57,7 +57,7 @@
         "d05": {
             "name":		      "Malawi",
             "bbox":         [-74.94, 16.35, -64.98, 21.42 ],
-            "target":       [-17.08, 35.22],
+            "target":       [-70.08, 20.22],
             "min_zoom":     7,
             "max_zoom":	    18,
             "map_id":       "cappelaere.map-q4hdwmh3",
