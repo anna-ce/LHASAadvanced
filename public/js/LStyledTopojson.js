@@ -281,7 +281,7 @@ function loadData( topojsonUrl, displayName, mapinfos ) {
 				// Add it to the Layer control widget
 				var layerName = displayName;
 				
-				// Remember the layer to legend mapping if we haveone
+				// Remember the layer to legend mapping if we have one
 				if( legendObject ) {
 					legends[layerName] = { legend: legendObject.id, display: true };
 				}
