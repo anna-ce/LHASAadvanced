@@ -34,12 +34,15 @@
         "flood_forecast": "Pronóstico de Inundaciones",
         "flood_catalog": "Catálogo de Inundaciones",
         "query_layer": "Capa de Consulta",
+        "location_nowcast": "Pronóstico de Inundaciones",
         "frost": "Helada",
         "snow_cover": "Cubierta de Nieve",
         "snow_water_equivalent": "Nieve Equivalente Agua",
         "stream_flow": "Flujo de corriente",
         "soil_moisture": "Humedad del Suelo",
-        "rgb_composite": "RGB composición"
+        "rgb_composite": "RGB composición",
+        "active_fires": "Los incendios activos",
+        "burn_scar": "Queme cicatriz"
     },
     "query": {
         "query_title": "Consulta",
@@ -699,7 +702,9 @@
         "modis": "NASA MODIS",
         "alos2": "JAXA ALOS-2",
         "ef5": "Universidad de Oklahoma",
-        "trmm": "NASA GSFC TRMM"
+        "trmm": "NASA GSFC TRMM",
+        "ls": "ORNL Landscan",
+        "dk": "NASA GSFC Dalia Kirschbaum modelo"
     },
     "sensors": {
         "sar": "SAR",
@@ -709,7 +714,9 @@
         "dfo": "MODIS/l8",
         "alos2": "PALSAR-2",
         "ef5": "EF5 CREST Modelo",
-        "trmm": "TRMM"
+        "trmm": "TRMM",
+        "ls": "ORNL Landscan",
+        "dk": "N/A"
     },
     "duration": {
         "hours": "%{hours} horas",
@@ -717,8 +724,11 @@
         "seconds": "%{seconds} segundos"
     },
     "formats": {
+        "geojson": "geojson",
+        "geojsongz": "geojson.gz",
         "topojson": "topojson",
         "topojsongz": "topojson.gz",
+        "shpgz": "shp.gz",
         "osmbz2": "osm.bz2",
         "geotiff": "geotiff",
         "png": "png",
@@ -783,6 +793,15 @@
             },
             "legend": "Agua Superficial"
         },
+        "active_fires": {
+            "title": "MODIS Queme cicatriz",
+            "credits": "NASA GSFC",
+            "source": {
+                "label": "Origen",
+                "source": "NASA"
+            },
+            "legend": "Queme cicatriz"
+        },
         "flood_forecast": {
             "title": "Pronóstico de Inundaciones",
             "credits": "Universidad de Oklahoma",
@@ -839,9 +858,17 @@
                 "50mm": "50mm",
                 "80mm": "80mm",
                 "130mm": "130mm",
-                "210mm": "21mm",
+                "210mm": "210mm",
                 "340mm": "340mm",
                 "550mm": "550mm"
+            }
+        },
+        "population_count": {
+            "title": "Recuento de la población",
+            "credits": "Oakridge National Laboratory",
+            "source": {
+                "label": "Origen",
+                "source": "Oakridge National Laboratory"
             }
         },
         "daily_precipitation": {
@@ -852,17 +879,17 @@
                 "source": "NASA GSFC TRMM"
             },
             "legend": {
-                "10mm": "10mm",
-                "20mm": "20mm",
-                "30mm": "30mm",
-                "50mm": "50mm",
-                "80mm": "80mm",
-                "130mm": "130mm",
-                "210mm": "210mm",
-                "340mm": "340mm",
-                "550mm": "550mm",
-                "890mm": "890mm",
-                "1440mm": "1440mm"
+                "1mm": "1mm",
+                "2mm": "2mm",
+                "3mm": "3mm",
+                "5mm": "5mm",
+                "8mm": "8mm",
+                "13mm": "13mm",
+                "21mm": "21mm",
+                "34mm": "34mm",
+                "55mm": "55mm",
+                "89mm": "89mm",
+                "144mm": "144mm"
             }
         },
         "stream_flow": {
@@ -882,6 +909,18 @@
                 "210cms": "210mcs",
                 "340cms": "340mcs",
                 "550cms": "550mcs"
+            }
+        },
+        "landslide_nowcast": {
+            "title": "Ahora Corrimiento de tierras",
+            "credits": "NASA GSFC",
+            "source": {
+                "label": "Origen",
+                "source": "NASA GSFC"
+            },
+            "legend": {
+                "level_1": "moderado",
+                "level_2": "Alto"
             }
         },
         "soil_moisture": {

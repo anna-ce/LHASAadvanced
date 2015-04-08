@@ -5,16 +5,17 @@
             "floods": " बाढी ",
             "earthquakes": "भुकम्प",
             "fires": "आगो",
-            "about": "बिषय",
+            "about": "बारेमा",
             "contacts": "सम्पर्क",
             "credits": "श्रेय ",
             "wiki": "विकी",
+            "qa": "प्रश्न/उत्तर ",
             "edit": "सम्पादन"
         },
         "user": {
             "signin": "आफ्नो इमेलबाट साइन इन गर्नुहोला",
             "logout": "निर्गमन",
-            "profile": "रूपरेखा हेर्नु",
+            "profile": "प्रोफाइल हेर्नु",
             "my_forecast": "मेरो पूर्वानुमान"
         }
     },
@@ -34,6 +35,8 @@
         "flood_catalog": " बाढीको सूचक ",
         "query_layer": "जिज्ञासा पत्र",
         "frost": "तुषारो",
+        "snow_cover": "हिउँले ढाकेको",
+        "snow_water_equivalent": "हिम पानी बराबरको",
         "soil_moisture": "माटो चिस्यान"
     },
     "query": {
@@ -41,7 +44,7 @@
         "lon_lat": "देशान्तर अक्षांश",
         "start_time": "सुरु समय",
         "end_time": "अन्त्य समय",
-        "sources": "स्रोत",
+        "sources": "स्रोतहरु",
         "submit": " बुझाउनु"
     },
     "footer": {
@@ -53,16 +56,17 @@
         "title": "विश्वव्यापी पहिरोको सूचक",
         "issues": "समस्या",
         "wiki": "विकी",
-        "more": "अरु",
+        "more": "अन्य",
         "filter": {
             "landslidespermonth": "पहिरो/महिना",
             "selected": "रोजेको मध्ये ",
-            "records": "रेकर्ड",
+            "records": "रेकर्डहरु",
             "reset": "सबै रिसेट",
             "export": "निकासी",
             "fatalitiespermonth": "विपती/महिना",
             "total_fatalities": "समस्त विपती",
-            "landlsidesfatalities": "पहिरो/विपती"
+            "landlsidesfatalities": "पहिरो/विपत्ती",
+            "limit": "सिमित "
         },
         "table": {
             "headers": {
@@ -70,7 +74,7 @@
                 "id": "आईडी",
                 "trigger": "ट्रिगर",
                 "fatalities": "विपती",
-                "storm_name": "आँधी को नाम ",
+                "storm_name": "आँधीको नाम ",
                 "landslide_size": "पहिरोको  परिमाण",
                 "landslide_type": "पहिरोको किसिम"
             }
@@ -272,7 +276,7 @@
         "title": "लाइसेन्स"
     },
     "hazards": {
-        "landslide": "भू-दृश्य",
+        "landslide": "पहिरो",
         "floods": "बाढ़ी",
         "fires": "आगो",
         "volcanoes": "ज्वालामुखी",
@@ -280,7 +284,7 @@
         "tsunami": "सुनामी"
     },
     "navtab": {
-        "home": "घर",
+        "home": "गृहपृष्‍ठ",
         "report": "प्रतिवेदन",
         "reports": "प्रतिवेदनहरु",
         "report_a_flood": "बाढीको प्रतिवेदन",
@@ -294,18 +298,20 @@
         "geoss_search": "जीयोशमा खोज",
         "login": "प्रवेश",
         "logout": "निर्गमन",
-        "profile": "रूपरेखा",
+        "profile": "प्रोफाइल",
         "regional_nodes": "छेत्रीय संस्था"
     },
     "profile": {
-        "label": "प्रयोगकर्ताको रूपरेखा",
+        "label": "प्रयोगकर्ताको प्रोफाइल",
         "user_info": "प्रयोगकर्ताको जानकारी",
         "name": "नाम",
         "email": "इमेल",
         "organization": "संगठन",
         "language": "भाषा",
         "reputation": "मर्यादा",
+        "member_since": "सदस्य अवधी",
         "social_rewards": "सामाजिक इनाम",
+        "reported": "सुचना दिइएको",
         "region": "क्षेत्र",
         "latitude": "अक्षांश",
         "longitude": "देशान्तर",
@@ -382,10 +388,12 @@
                 "description": "ढाँचाबद्ध मिति साल-महिना-दिन (YYYY-MM-DD)"
             },
             "time": {
-                "label": "समय"
+                "label": "समय",
+                "description": "समय ढाँचा अनुमानित नगरिएको"
             },
             "hazard_type": {
                 "label": "खतराको किसिम",
+                "description": "जीयोश खतराको किसिम",
                 "options": {
                     "landslide": {
                         "title": "पहिरो",
@@ -405,9 +413,27 @@
                         "title": "पहिरो",
                         "description": "पहिरो"
                     },
+                    "Mudslide": {
+                        "title": "माटोको भुस्खलन",
+                        "description": "माटोको भुस्खलन"
+                    },
+                    "Debris_Flow": {
+                        "title": "देब्रिजफ्लोव",
+                        "description": "देब्रिजफ्लोव"
+                    },
                     "Rock_Fall": {
                         "title": "चट्टान खस्नु",
                         "description": "चट्टान खस्नु"
+                    },
+                    "Earthflow": {
+                        "title": "अर्थफ्लो"
+                    },
+                    "Snow_Avalanche": {
+                        "title": " हिमपहिरो",
+                        "description": " हिमपहिरो"
+                    },
+                    "Lahar": {
+                        "title": "लहर"
                     },
                     "Complex": {
                         "title": "जटिल",
@@ -454,12 +480,39 @@
                 }
             },
             "location_accuracy": {
+                "label": "स्थान सटीकता",
+                "description": "पहिरोको स्थानको सटीकता",
                 "options": {
                     "Exact_Location": {
                         "title": "सही स्थान",
                         "description": "सही स्थान"
                     },
+                    "Known_within_1km": {
+                        "title": "१ किलोमीटर भित्र ज्ञात",
+                        "description": "१ किलोमीटर भित्र ज्ञात"
+                    },
+                    "Known_within_5km": {
+                        "title": "५ किलोमीटर भित्र ज्ञात",
+                        "description": "५ किलोमीटर भित्र ज्ञात"
+                    },
+                    "Known_within_10km": {
+                        "title": "१० किलोमीटर भित्र ज्ञात",
+                        "description": "१० किलोमीटर भित्र ज्ञात"
+                    },
+                    "Known_within_15km": {
+                        "title": "१५ किलोमीटर भित्र ज्ञात",
+                        "description": "१५ किलोमीटर भित्र ज्ञात"
+                    },
+                    "Known_within_25km": {
+                        "title": "२५ किलोमीटर भित्र ज्ञात",
+                        "description": "२५ किलोमीटर भित्र ज्ञात"
+                    },
+                    "Known_within_50km": {
+                        "title": "५० किलोमीटर भित्र ज्ञात",
+                        "description": "५० किलोमीटर भित्र ज्ञात"
+                    },
                     "Unknown": {
+                        "title": "अज्ञात",
                         "description": "अज्ञात"
                     }
                 }
@@ -537,6 +590,15 @@
         }
     },
     "results": "%[नतिजा] नतिजा",
+    "menu": {
+        "home": "गृह पृष्‍ठ",
+        "products": "उत्पादनहरु",
+        "opensearch": "खोज",
+        "applications": "प्रयोगहरु",
+        "register": "दर्ता गर्नु",
+        "list": "सुची",
+        "query": "जिज्ञासा"
+    },
     "tabs": {
         "general": "साधारण",
         "metadata": "मेतादाता  ",
@@ -549,36 +611,38 @@
         "process": "प्रक्रिया",
         "share": "बाड्ने",
         "like": "मनपराउनु ",
-        "task": "कार्य"
+        "task": "कार्य",
+        "map": "नक्सा"
     },
     "stream": {
         "displayName": "प्रकाशक बाढी सतह जल उत्पादन"
     },
     "properties": {
-        "properties": "गुण",
+        "properties": "गुणहरु",
         "description": "बर्णन ",
         "source": "स्रोत",
         "sensor": "सचेतक",
-        "date": "मिती",
+        "date": "मिति",
         "bbox": "बिबक्स",
         "size": "आकार",
         "centerlat": "सेन्टरल्यात",
         "centerlon": "सेन्टरलोन",
         "duration": "अवधी",
+        "resolution": "रिजोलुशन",
         "cloud": "बादलको आवरण",
         "copyright": "प्रतीलिपी अधीकार"
     },
     "sources": {
         "radarsat2": "सिएसअे  रादारस्यात २ ",
         "l8": "नासा ल्यान्डस्यात-८",
-        "dfo": "डार्टमाउथ बाढी अव्जर्भेटोरी - कोलोराडो",
+        "dfo": "डार्टमाउथ फ्लड अब्जर्भेटोरी - कोलोराडो",
         "eo1": "नासा ई ओ-१ ",
         "modis": "नासा मोदिस",
         "alos2": "जाक्सा ए एल ओ एस - २ "
     },
     "sensors": {
         "sar": "सार",
-        "ali": "ए एल आइ ",
+        "ali": "अलि ",
         "modis": "मोदिस",
         "l8": "ओ एल आइ ",
         "dfo": "मोदिस/आइ८"
@@ -613,7 +677,7 @@
             "source": {
                 "label": "स्रोत"
             },
-            "legend": "सतह पानी"
+            "legend": "पानीको सतह"
         },
         "dfo": {
             "title": " बाढीको नक्सा ",
@@ -625,7 +689,121 @@
         "l8": {
             "title": " बाढी नक्सा ",
             "source": {
+                "label": "स्रोत",
+                "source": "नासा"
+            },
+            "legend": "सतह पानी"
+        },
+        "eo1_ali": {
+            "title": " बाढीको नक्सा ",
+            "source": {
+                "label": "स्रोत",
+                "source": "नासा"
+            },
+            "legend": "सतह पानी"
+        },
+        "modis": {
+            "title": "बाढी नक्सा ",
+            "source": {
+                "label": "स्रोत",
+                "source": "नासा"
+            },
+            "legend": "सतह पानी"
+        },
+        "flood_forecast": {
+            "title": "बाढीको पूर्वानुमान",
+            "credits": "ओक्लाहोमा  विश्वविध्यालय",
+            "source": {
                 "label": "स्रोत"
+            },
+            "legend": {
+                "1m": "१ मीटर ",
+                "2m": "२ मीटर",
+                "3m": "३ मीटर ",
+                "5m": "५ मीटर ",
+                "8m": "८ मीटर ",
+                "13m": "१३ मीटर",
+                "21m": "२१ मीटर"
+            }
+        },
+        "frost": {
+            "title": "तुषारोको नक्सा ",
+            "source": {
+                "label": "स्रोत"
+            },
+            "legend": {
+                "no_data": "डाटा नभएको",
+                "very_severe_frost": "धेरै गम्भीर तुषारो",
+                "severe_frost": "गम्भीर तुषारो",
+                "moderate_frost": "मध्यम तुषारो",
+                "no_frost": "तुषारो नभएको"
+            }
+        },
+        "snow_cover": {
+            "title": "हिउँले ढाकेको",
+            "credits": "नासा मोदिस",
+            "source": {
+                "label": "स्रोत",
+                "source": "नासा मोदिस"
+            },
+            "legend": "हिउँले ढाकेको"
+        },
+        "snow_water_equivalent": {
+            "title": "हिम पानी बराबरको",
+            "credits": "ओक्लाहोमा  विश्वविध्यालय",
+            "source": {
+                "label": "स्रोत"
+            },
+            "legend": {
+                "10mm": "१० मिलिमिटर",
+                "20mm": "२० मिलिमिटर",
+                "30mm": "३० मिलिमिटर",
+                "50mm": "५० मिलिमिटर",
+                "80mm": "८० मिलिमिटर",
+                "130mm": "१३० मिलिमिटर",
+                "340mm": "३४० मिलिमिटर",
+                "550mm": "५५० मिलिमिटर"
+            }
+        },
+        "daily_precipitation": {
+            "title": "दैनिक वर्षा",
+            "source": {
+                "label": "स्रोत"
+            }
+        },
+        "stream_flow": {
+            "credits": "ओक्लाहोमा  विश्वविध्यालय",
+            "source": {
+                "label": "स्रोत"
+            },
+            "legend": {
+                "10cms": "१० सेन्टिमीटर",
+                "20cms": "२० सेन्टिमीटर",
+                "30cms": "३० सेन्टिमीटर",
+                "50cms": "५० सेन्टिमीटर",
+                "80cms": "८० सेन्टिमीटर",
+                "130cms": "१३० सेन्टिमीटर",
+                "210cms": "२१ सेन्टिमीटर",
+                "340cms": "३४० सेन्टिमीटर",
+                "550cms": "५५० सेन्टिमीटर"
+            }
+        },
+        "soil_moisture": {
+            "title": "माटो चिस्यान",
+            "credits": "ओक्लाहोमा  विश्वविध्यालय",
+            "source": {
+                "label": "स्रोत"
+            },
+            "legend": {
+                "3pct": "३",
+                "5pct": "५५",
+                "8pct": "८",
+                "13pct": "१३ प्रतिशत",
+                "21pct": "२१ प्रतिशत",
+                "34pct": "३४ प्रतिशत",
+                "55pct": "५५ प्रतिशत",
+                "89pct": "८९ प्रतिशत",
+                "144pct": "१४४ प्रतिशत"
             }
         }
     }

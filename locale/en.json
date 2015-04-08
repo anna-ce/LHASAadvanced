@@ -1,332 +1,4 @@
 {
-    "results": "%{results} results",
-    "menu": {
-        "home": "Home",
-        "products": "Products",
-        "opensearch": "OpenSearch",
-        "applications": "Applications",
-        "register": "Register",
-        "list": "List",
-        "query": "Query"
-    },
-    "tabs": {
-        "general": "General",
-        "metadata": "Metadata",
-        "actions": "Actions"
-    },
-    "actions": {
-        "actions": "actions",
-        "download": "download",
-        "browse": "browse",
-        "process": "process",
-        "share": "share",
-        "like": "like",
-        "task": "task",
-        "map": "map"
-    },
-    "stream": {
-        "displayName": "Publisher Flood Surface Water Products"
-    },
-    "properties": {
-        "properties": "properties",
-        "description": "description",
-        "source": "source",
-        "sensor": "sensor",
-        "date": "date",
-        "bbox": "bbox",
-        "size": "size",
-        "centerlat": "centerlat",
-        "centerlon": "centerlon",
-        "duration": "duration",
-        "resolution": "resolution",
-        "cloud": "cloud cover",
-        "copyright": "copyright"
-    },
-    "sources": {
-        "radarsat2": "CSA Radarsat2",
-        "l8": "NASA Landsat-8",
-        "dfo": "Dartmouth Flood Observatory - Colorado",
-        "eo1": "NASA EO-1",
-        "modis": "NASA MODIS",
-        "alos2": "JAXA ALOS-2",
-        "ef5": "University of Oklahoma",
-        "ls": "ORNL Landscan",
-        "trmm": "NASA GSFC TRMM",
-        "dk": "NASA GSFC Dr Dalia Kirschbaum"
-    },
-    "sensors": {
-        "sar": "SAR",
-        "ali": "ALI",
-        "modis": "MODIS",
-        "l8": "OLI",
-        "dfo": "MODIS/l8",
-        "alos2": "PALSAR-2",
-        "ef5": "EF5 CREST Model",
-        "ls": "ORNL Landscan",
-        "trmm": "TRMM",
-        "dk": "N/A"
-    },
-    "duration": {
-        "hours": "%{hours} hours",
-        "minutes": "%{minutes} minutes",
-        "seconds": "%{seconds} seconds"
-    },
-    "formats": {
-        "geojson": "geojson",
-        "geojsongz": "geojson.gz",
-        "topojson": "topojson",
-        "topojsongz": "topojson.gz",
-        "shpgz": "shp.gz",
-        "osmbz2": "osm.bz2",
-        "geotiff": "geotiff",
-        "png": "png",
-        "jpg": "jpg",
-        "date": "YYYY-MM-DD"
-    },
-    "products": {
-        "population_count": "Population Count",
-        "surface_water": "Flood Map",
-        "landslide_catalog": "Landslide Catalog",
-        "landslide_nowcast": "Landslide Forecast",
-        "location_nowcast": "Location Forecast",
-        "landslide_forecast": "Landslide Forecast",
-        "landslide_susceptibility": "Landslide Susceptibility",
-        "daily_precipitation": "Daily Precipitation",
-        "precipitation_nowcast": "Daily Precip Accumulation",
-        "precipitation_forecast": "Daily Precip Forecast",
-        "flood_forecast": "Flood Forecast",
-        "flood_nowcast": "Flood Nowcast",
-        "flood_catalog": "Flood Catalog",
-        "frost": "Frost",
-        "snow_cover": "Snow Cover",
-        "snow_water_equivalent": "Snow Water Equivalent",
-        "stream_flow": "Stream Flow",
-        "soil_moisture": "Soil Moisture",
-        "active_fires": "Active Fires",
-        "rgb_composite": "RGB Composite"
-    },
-    "filesize": {
-        "B": "B",
-        "KB": "KB",
-        "MB": "MB",
-        "GB": "GB",
-        "TB": "TB"
-    },
-    "mapinfo": {
-        "credits": "credits",
-        "style": "style",
-        "legend": "legend"
-    },
-    "legend": {
-        "radarsat2": {
-            "title": "Flood Map",
-            "credits": "NASA GSFC",
-            "source": {
-                "label": "Source",
-                "source": "CSA/MDA"
-            },
-            "legend": "Surface Water"
-        },
-        "dfo": {
-            "title": "Flood Map",
-            "credits": "Dartmouth Flood Observatory",
-            "source": {
-                "label": "Source",
-                "source": "DFO"
-            },
-            "legend": "Surface Water"
-        },
-        "l8": {
-            "title": "Flood Map",
-            "credits": "NASA GSFC",
-            "source": {
-                "label": "Source",
-                "source": "NASA"
-            },
-            "legend": "Surface Water"
-        },
-        "eo1_ali": {
-            "title": "Flood Map",
-            "credits": "NASA GSFC",
-            "source": {
-                "label": "Source",
-                "source": "NASA"
-            },
-            "legend": "Surface Water"
-        },
-        "modis": {
-            "title": "Flood Map",
-            "credits": "NASA GSFC",
-            "source": {
-                "label": "Source",
-                "source": "NASA"
-            },
-            "legend": "Surface Water"
-        },
-        "active_fires": {
-            "title": "MODIS Active Fires",
-            "credits": "NASA MODIS",
-            "source": {
-                "label": "Source",
-                "source": "NASA"
-            },
-            "legend": "Active Fires"
-        },
-        "flood_forecast": {
-            "title": "Flood Forecast",
-            "credits": "University of Oklahoma",
-            "source": {
-                "label": "Source",
-                "source": "University of Oklahoma EF5 CREST"
-            },
-            "legend": {
-                "1m": "1m",
-                "2m": "2m",
-                "3m": "3m",
-                "5m": "5m",
-                "8m": "8m",
-                "13m": "13m",
-                "21m": "21m"
-            }
-        },
-        "frost": {
-            "title": "Frost Map",
-            "credits": "NASA SERVIR/RCMRD",
-            "source": {
-                "label": "Source",
-                "source": "SERVIR/RCMRD"
-            },
-            "legend": {
-                "no_data": "No Data",
-                "very_severe_frost": "Very Severe Frost",
-                "severe_frost": "Severe Frost",
-                "moderate_frost": "Moderate frost",
-                "minor_frost": "Minor Frost Pockets",
-                "no_frost": "No Frost"
-            }
-        },
-        "snow_cover": {
-            "title": "Snow Cover",
-            "credits": "NASA MODIS",
-            "source": {
-                "label": "Source",
-                "source": "NASA MODIS"
-            },
-            "legend": "Snow Cover"
-        },
-        "snow_water_equivalent": {
-            "title": "Snow Water Equivalent",
-            "credits": "University of Oklahoma",
-            "source": {
-                "label": "Source",
-                "source": "University of Oklahoma EF5 CREST"
-            },
-            "legend": {
-                "10mm": "10mm",
-                "20mm": "20mm",
-                "30mm": "30mm",
-                "50mm": "50mm",
-                "80mm": "80mm",
-                "130mm": "130mm",
-                "210mm": "210mm",
-                "340mm": "340mm",
-                "550mm": "550mm"
-            }
-        },
-        "daily_precipitation": {
-            "title": "Daily Precipitation",
-            "credits": "NASA TRMM",
-            "source": {
-                "label": "Source",
-                "source": "NASA GSFC TRMM"
-            },
-            "legend": {
-                "1mm": "1mm",
-                "2mm": "2mm",
-                "3mm": "3mm",
-                "5mm": "5mm",
-                "8mm": "8mm",
-                "13mm": "13mm",
-                "21mm": "21mm",
-                "34mm": "34mm",
-                "55mm": "55mm",
-                "89mm": "89mm",
-                "144mm": "144mm"
-            }
-        },
-        "landslide_nowcast": {
-            "title": "Landslide Nowcast",
-            "credits": "NASA GSFC",
-            "source": {
-                "label": "Source",
-                "source": "NASA GSFC"
-            },
-            "legend": {
-                "level_1": "yellow",
-                "level_2": "red"
-            }
-        },
-        "population_count": {
-            "title": "Population Count",
-            "credits": "ORNL",
-            "source": {
-                "label": "Source",
-                "source": "ORNL"
-            },
-            "legend": {
-                "1000": "1000",
-                "2000": "2000",
-                "3000": "3000",
-                "5000": "5000",
-                "8000": "8000",
-                "13000": "13000",
-                "21000": "21000",
-                "34000": "34000",
-                "55000": "55000",
-                "89000": "89000",
-                "144000": "144000"
-            }
-        },
-        
-        "stream_flow": {
-            "title": "Stream Flow",
-            "credits": "University of Oklahoma",
-            "source": {
-                "label": "Source",
-                "source": "University of Oklahoma EF5 CREST"
-            },
-            "legend": {
-                "10cms": "10cms",
-                "20cms": "20cms",
-                "30cms": "30cms",
-                "50cms": "50cms",
-                "80cms": "80cms",
-                "130cms": "130cms",
-                "210cms": "21cms",
-                "340cms": "340cms",
-                "550cms": "550cms"
-            }
-        },
-        "soil_moisture": {
-            "title": "Soil Moisture",
-            "credits": "University of Oklahoma",
-            "source": {
-                "label": "Source",
-                "source": "University of Oklahoma EF5 CREST"
-            },
-            "legend": {
-                "3pct": "3pct",
-                "5pct": "5pct",
-                "8pct": "8pct",
-                "13pct": "13pct",
-                "21pct": "21pct",
-                "34pct": "34pct",
-                "55pct": "55pct",
-                "89pct": "89pct",
-                "144pct": "144pct"
-            }
-        }
-    },
     "layout": {
         "navbar": {
             "landslides": "Landslides",
@@ -473,5 +145,330 @@
     "license": {
         "title": "License",
         "contents": "# TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION\n\n1. Definitions.\n\n   \"License\" shall mean the terms and conditions for use, reproduction,\n   and distribution as defined by Sections 1 through 9 of this document.\n\n   \"Licensor\" shall mean the copyright owner or entity authorized by\n   the copyright owner that is granting the License.\n\n   \"Legal Entity\" shall mean the union of the acting entity and all\n   other entities that control, are controlled by, or are under common\n   control with that entity. For the purposes of this definition,\n   \"control\" means (i) the power, direct or indirect, to cause the\n   direction or management of such entity, whether by contract or\n   otherwise, or (ii) ownership of fifty percent (50%) or more of the\n   outstanding shares, or (iii) beneficial ownership of such entity.\n\n   \"You\" (or \"Your\") shall mean an individual or Legal Entity\n   exercising permissions granted by this License.\n\n   \"Source\" form shall mean the preferred form for making modifications,\n   including but not limited to software source code, documentation\n   source, and configuration files.\n\n   \"Object\" form shall mean any form resulting from mechanical\n   transformation or translation of a Source form, including but\n   not limited to compiled object code, generated documentation,\n   and conversions to other media types.\n\n   \"Work\" shall mean the work of authorship, whether in Source or\n   Object form, made available under the License, as indicated by a\n   copyright notice that is included in or attached to the work\n   (an example is provided in the Appendix below).\n\n   \"Derivative Works\" shall mean any work, whether in Source or Object\n   form, that is based on (or derived from) the Work and for which the\n   editorial revisions, annotations, elaborations, or other modifications\n   represent, as a whole, an original work of authorship. For the purposes\n   of this License, Derivative Works shall not include works that remain\n   separable from, or merely link (or bind by name) to the interfaces of,\n   the Work and Derivative Works thereof.\n\n   \"Contribution\" shall mean any work of authorship, including\n   the original version of the Work and any modifications or additions\n   to that Work or Derivative Works thereof, that is intentionally\n   submitted to Licensor for inclusion in the Work by the copyright owner\n   or by an individual or Legal Entity authorized to submit on behalf of\n   the copyright owner. For the purposes of this definition, \"submitted\"\n   means any form of electronic, verbal, or written communication sent\n   to the Licensor or its representatives, including but not limited to\n   communication on electronic mailing lists, source code control systems,\n   and issue tracking systems that are managed by, or on behalf of, the\n   Licensor for the purpose of discussing and improving the Work, but\n   excluding communication that is conspicuously marked or otherwise\n   designated in writing by the copyright owner as \"Not a Contribution.\"\n\n   \"Contributor\" shall mean Licensor and any individual or Legal Entity\n   on behalf of whom a Contribution has been received by Licensor and\n   subsequently incorporated within the Work.\n\n2. Grant of Copyright License. Subject to the terms and conditions of\n   this License, each Contributor hereby grants to You a perpetual,\n   worldwide, non-exclusive, no-charge, royalty-free, irrevocable\n   copyright license to reproduce, prepare Derivative Works of,\n   publicly display, publicly perform, sublicense, and distribute the\n   Work and such Derivative Works in Source or Object form.\n\n3. Grant of Patent License. Subject to the terms and conditions of\n   this License, each Contributor hereby grants to You a perpetual,\n   worldwide, non-exclusive, no-charge, royalty-free, irrevocable\n   (except as stated in this section) patent license to make, have made,\n   use, offer to sell, sell, import, and otherwise transfer the Work,\n   where such license applies only to those patent claims licensable\n   by such Contributor that are necessarily infringed by their\n   Contribution(s) alone or by combination of their Contribution(s)\n   with the Work to which such Contribution(s) was submitted. If You\n   institute patent litigation against any entity (including a\n   cross-claim or counterclaim in a lawsuit) alleging that the Work\n   or a Contribution incorporated within the Work constitutes direct\n   or contributory patent infringement, then any patent licenses\n   granted to You under this License for that Work shall terminate\n   as of the date such litigation is filed.\n\n4. Redistribution. You may reproduce and distribute copies of the\n   Work or Derivative Works thereof in any medium, with or without\n   modifications, and in Source or Object form, provided that You\n   meet the following conditions:\n\n   (a) You must give any other recipients of the Work or\n       Derivative Works a copy of this License; and\n\n   (b) You must cause any modified files to carry prominent notices\n       stating that You changed the files; and\n\n   (c) You must retain, in the Source form of any Derivative Works\n       that You distribute, all copyright, patent, trademark, and\n       attribution notices from the Source form of the Work,\n       excluding those notices that do not pertain to any part of\n       the Derivative Works; and\n\n   (d) If the Work includes a \"NOTICE\" text file as part of its\n       distribution, then any Derivative Works that You distribute must\n       include a readable copy of the attribution notices contained\n       within such NOTICE file, excluding those notices that do not\n       pertain to any part of the Derivative Works, in at least one\n       of the following places: within a NOTICE text file distributed\n       as part of the Derivative Works; within the Source form or\n       documentation, if provided along with the Derivative Works; or,\n       within a display generated by the Derivative Works, if and\n       wherever such third-party notices normally appear. The contents\n       of the NOTICE file are for informational purposes only and\n       do not modify the License. You may add Your own attribution\n       notices within Derivative Works that You distribute, alongside\n       or as an addendum to the NOTICE text from the Work, provided\n       that such additional attribution notices cannot be construed\n       as modifying the License.\n\n   You may add Your own copyright statement to Your modifications and\n   may provide additional or different license terms and conditions\n   for use, reproduction, or distribution of Your modifications, or\n   for any such Derivative Works as a whole, provided Your use,\n   reproduction, and distribution of the Work otherwise complies with\n   the conditions stated in this License.\n\n5. Submission of Contributions. Unless You explicitly state otherwise,\n   any Contribution intentionally submitted for inclusion in the Work\n   by You to the Licensor shall be under the terms and conditions of\n   this License, without any additional terms or conditions.\n   Notwithstanding the above, nothing herein shall supersede or modify\n   the terms of any separate license agreement you may have executed\n   with Licensor regarding such Contributions.\n\n6. Trademarks. This License does not grant permission to use the trade\n   names, trademarks, service marks, or product names of the Licensor,\n   except as required for reasonable and customary use in describing the\n   origin of the Work and reproducing the content of the NOTICE file.\n\n7. Disclaimer of Warranty. Unless required by applicable law or\n   agreed to in writing, Licensor provides the Work (and each\n   Contributor provides its Contributions) on an \"AS IS\" BASIS,\n   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or\n   implied, including, without limitation, any warranties or conditions\n   of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A\n   PARTICULAR PURPOSE. You are solely responsible for determining the\n   appropriateness of using or redistributing the Work and assume any\n   risks associated with Your exercise of permissions under this License.\n\n8. Limitation of Liability. In no event and under no legal theory,\n   whether in tort (including negligence), contract, or otherwise,\n   unless required by applicable law (such as deliberate and grossly\n   negligent acts) or agreed to in writing, shall any Contributor be\n   liable to You for damages, including any direct, indirect, special,\n   incidental, or consequential damages of any character arising as a\n   result of this License or out of the use or inability to use the\n   Work (including but not limited to damages for loss of goodwill,\n   work stoppage, computer failure or malfunction, or any and all\n   other commercial damages or losses), even if such Contributor\n   has been advised of the possibility of such damages.\n\n9. Accepting Warranty or Additional Liability. While redistributing\n   the Work or Derivative Works thereof, You may choose to offer,\n   and charge a fee for, acceptance of support, warranty, indemnity,\n   or other liability obligations and/or rights consistent with this\n   License. However, in accepting such obligations, You may act only\n   on Your own behalf and on Your sole responsibility, not on behalf\n   of any other Contributor, and only if You agree to indemnify,\n   defend, and hold each Contributor harmless for any liability\n   incurred by, or claims asserted against, such Contributor by reason\n   of your accepting any such warranty or additional liability.\n\nEND OF TERMS AND CONDITIONS\n\n# APPENDIX: How to apply the Apache License to your work.\n\n   To apply the Apache License to your work, attach the following\n   boilerplate notice, with the fields enclosed by brackets \"[]\"\n   replaced with your own identifying information. (Don't include\n   the brackets!)  The text should be enclosed in the appropriate\n   comment syntax for the file format. We also recommend that a\n   file or class name and description of purpose be included on the\n   same \"printed page\" as the copyright notice for easier\n   identification within third-party archives.\n\nCopyright 2014 NASA GSFC / Vightel Corporation\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n"
+    },
+    "results": "%{results} results",
+    "menu": {
+        "home": "Home",
+        "products": "Products",
+        "opensearch": "OpenSearch",
+        "applications": "Applications",
+        "register": "Register",
+        "list": "List",
+        "query": "Query"
+    },
+    "tabs": {
+        "general": "General",
+        "metadata": "Metadata",
+        "actions": "Actions"
+    },
+    "actions": {
+        "actions": "actions",
+        "download": "download",
+        "browse": "browse",
+        "process": "process",
+        "share": "share",
+        "like": "like",
+        "task": "task",
+        "map": "map"
+    },
+    "stream": {
+        "displayName": "Publisher Flood Surface Water Products"
+    },
+    "properties": {
+        "properties": "properties",
+        "description": "description",
+        "source": "source",
+        "sensor": "sensor",
+        "date": "date",
+        "bbox": "bbox",
+        "size": "size",
+        "centerlat": "centerlat",
+        "centerlon": "centerlon",
+        "duration": "duration",
+        "resolution": "resolution",
+        "cloud": "cloud cover",
+        "copyright": "copyright"
+    },
+    "sources": {
+        "radarsat2": "CSA Radarsat2",
+        "l8": "NASA Landsat-8",
+        "dfo": "Dartmouth Flood Observatory - Colorado",
+        "eo1": "NASA EO-1",
+        "modis": "NASA MODIS",
+        "alos2": "JAXA ALOS-2",
+        "ef5": "University of Oklahoma",
+        "trmm": "NASA GSFC TRMM",
+        "ls": "ORNL Landscan",
+        "dk": "NASA GSFC Dalia Kirschbaum model"
+    },
+    "sensors": {
+        "sar": "SAR",
+        "ali": "ALI",
+        "modis": "MODIS",
+        "l8": "OLI",
+        "dfo": "MODIS/l8",
+        "alos2": "PALSAR-2",
+        "ef5": "EF5 CREST Model",
+        "trmm": "TRMM",
+        "ls": "ORNL Landscan",
+        "dk": "N/A"
+    },
+    "duration": {
+        "hours": "%{hours} hours",
+        "minutes": "%{minutes} minutes",
+        "seconds": "%{seconds} seconds"
+    },
+    "formats": {
+        "geojson": "geojson",
+        "geojsongz": "geojson.gz",
+        "topojson": "topojson",
+        "topojsongz": "topojson.gz",
+        "shpgz": "shp.gz",
+        "osmbz2": "osm.bz2",
+        "geotiff": "geotiff",
+        "png": "png",
+        "jpg": "jpg",
+        "date": "YYYY-MM-DD"
+    },
+    "products": {
+        "surface_water": "Flood Map",
+        "landslide_catalog": "Landslide Catalog",
+        "landslide_nowcast": "Landslide Forecast",
+        "landslide_forecast": "Landslide Forecast",
+        "landslide_susceptibility": "Landslide Susceptibility",
+        "location_nowcast": "Location Forecast",
+        "daily_precipitation": "Last 24hr Precip",
+        "precipitation_nowcast": "Daily Precip Accumulation",
+        "precipitation_forecast": "Daily Precip Forecast",
+        "flood_forecast": "Flood Forecast",
+        "flood_nowcast": "Flood Nowcast",
+        "flood_catalog": "Flood Catalog",
+        "frost": "Frost",
+        "snow_cover": "Snow Cover",
+        "snow_water_equivalent": "Snow Water Equivalent",
+        "stream_flow": "Stream Flow",
+        "soil_moisture": "Soil Moisture",
+        "rgb_composite": "RGB Composite",
+        "active_fires": "Active Fires",
+        "burn_scar": "Burn Scar"
+    },
+    "filesize": {
+        "B": "B",
+        "KB": "KB",
+        "MB": "MB",
+        "GB": "GB",
+        "TB": "TB"
+    },
+    "mapinfo": {
+        "credits": "credits",
+        "style": "style",
+        "legend": "legend"
+    },
+    "legend": {
+        "radarsat2": {
+            "title": "Flood Map",
+            "credits": "NASA GSFC",
+            "source": {
+                "label": "Source",
+                "source": "CSA/MDA"
+            },
+            "legend": "Surface Water"
+        },
+        "dfo": {
+            "title": "Flood Map",
+            "credits": "Dartmouth Flood Observatory",
+            "source": {
+                "label": "Source",
+                "source": "DFO"
+            },
+            "legend": "Surface Water"
+        },
+        "l8": {
+            "title": "Flood Map",
+            "credits": "NASA GSFC",
+            "source": {
+                "label": "Source",
+                "source": "NASA"
+            },
+            "legend": "Surface Water"
+        },
+        "eo1_ali": {
+            "title": "Flood Map",
+            "credits": "NASA GSFC",
+            "source": {
+                "label": "Source",
+                "source": "NASA"
+            },
+            "legend": "Surface Water"
+        },
+        "modis": {
+            "title": "Flood Map",
+            "credits": "NASA GSFC",
+            "source": {
+                "label": "Source",
+                "source": "NASA"
+            },
+            "legend": "Surface Water"
+        },
+        "active_fires": {
+            "title": "MODIS Active Fires",
+            "credits": "NASA GSFC",
+            "source": {
+                "label": "Source",
+                "source": "NASA"
+            },
+            "legend": "Active Fires"
+        },
+        "flood_forecast": {
+            "title": "Flood Forecast",
+            "credits": "University of Oklahoma",
+            "source": {
+                "label": "Source",
+                "source": "University of Oklahoma EF5 CREST"
+            },
+            "legend": {
+                "1m": "1m",
+                "2m": "2m",
+                "3m": "3m",
+                "5m": "5m",
+                "8m": "8m",
+                "13m": "13m",
+                "21m": "21m"
+            }
+        },
+        "frost": {
+            "title": "Frost Map",
+            "credits": "NASA SERVIR/RCMRD",
+            "source": {
+                "label": "Source",
+                "source": "SERVIR/RCMRD"
+            },
+            "legend": {
+                "no_data": "No Data",
+                "very_severe_frost": "Very Severe Frost",
+                "severe_frost": "Severe Frost",
+                "moderate_frost": "Moderate frost",
+                "minor_frost": "Minor Frost Pockets",
+                "no_frost": "No Frost"
+            }
+        },
+        "snow_cover": {
+            "title": "Snow Cover",
+            "credits": "NASA MODIS",
+            "source": {
+                "label": "Source",
+                "source": "NASA MODIS"
+            },
+            "legend": "Snow Cover"
+        },
+        "snow_water_equivalent": {
+            "title": "Snow Water Equivalent",
+            "credits": "University of Oklahoma",
+            "source": {
+                "label": "Source",
+                "source": "University of Oklahoma EF5 CREST"
+            },
+            "legend": {
+                "10mm": "10mm",
+                "20mm": "20mm",
+                "30mm": "30mm",
+                "50mm": "50mm",
+                "80mm": "80mm",
+                "130mm": "130mm",
+                "210mm": "210mm",
+                "340mm": "340mm",
+                "550mm": "550mm"
+            }
+        },
+        "population_count": {
+            "title": "Population Count",
+            "credits": "Oakridge National Laboratory",
+            "source": {
+                "label": "Source",
+                "source": "Oakridge National Laboratory"
+            },
+            "legend": {
+                "1000": 1000,
+                "2000": 2000,
+                "3000": 3000,
+                "5000": 5000,
+                "8000": 8000,
+                "13000": 13000,
+                "21000": 21000,
+                "34000": 34000,
+                "55000": 55000
+            }
+        },
+        "daily_precipitation": {
+            "title": "Daily Precipitation",
+            "credits": "NASA TRMM",
+            "source": {
+                "label": "Source",
+                "source": "NASA GSFC TRMM"
+            },
+            "legend": {
+                "1mm": "1mm",
+                "2mm": "2mm",
+                "3mm": "3mm",
+                "5mm": "5mm",
+                "8mm": "8mm",
+                "13mm": "13mm",
+                "21mm": "21mm",
+                "34mm": "34mm",
+                "55mm": "55mm",
+                "89mm": "89mm",
+                "144mm": "144mm"
+            }
+        },
+        "stream_flow": {
+            "title": "Stream Flow",
+            "credits": "University of Oklahoma",
+            "source": {
+                "label": "Source",
+                "source": "University of Oklahoma EF5 CREST"
+            },
+            "legend": {
+                "10cms": "10cms",
+                "20cms": "20cms",
+                "30cms": "30cms",
+                "50cms": "50cms",
+                "80cms": "80cms",
+                "130cms": "130cms",
+                "210cms": "21cms",
+                "340cms": "340cms",
+                "550cms": "550cms"
+            }
+        },
+        "landslide_nowcast": {
+            "title": "Landslide Nowcast",
+            "credits": "NASA GSFC",
+            "source": {
+                "label": "Source",
+                "source": "NASA GSFC"
+            },
+            "legend": {
+                "level_1": "yellow",
+                "level_2": "red"
+            }
+        },
+        "soil_moisture": {
+            "title": "Soil Moisture",
+            "credits": "University of Oklahoma",
+            "source": {
+                "label": "Source",
+                "source": "University of Oklahoma EF5 CREST"
+            },
+            "legend": {
+                "3pct": "3pct",
+                "5pct": "5pct",
+                "8pct": "8pct",
+                "13pct": "13pct",
+                "21pct": "21pct",
+                "34pct": "34pct",
+                "55pct": "55pct",
+                "89pct": "89pct",
+                "144pct": "144pct"
+            }
+        }
     }
 }
