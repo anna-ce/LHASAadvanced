@@ -74,6 +74,7 @@ en:
 
   formats:
     geojson: geojson
+    geojsongz: geojson.gz
     topojson: topojson
     topojsongz: topojson.gz
     shpgz: shp.gz
