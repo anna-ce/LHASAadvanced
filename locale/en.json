@@ -198,6 +198,7 @@
         "alos2": "JAXA ALOS-2",
         "ef5": "University of Oklahoma",
         "trmm": "NASA GSFC TRMM",
+        "gpm": "NASA GSFC GPM",
         "ls": "ORNL Landscan",
         "dk": "NASA GSFC Dalia Kirschbaum model"
     },
@@ -210,6 +211,7 @@
         "alos2": "PALSAR-2",
         "ef5": "EF5 CREST Model",
         "trmm": "TRMM",
+        "gpm": "GPM",
         "ls": "ORNL Landscan",
         "dk": "N/A"
     },
@@ -237,7 +239,7 @@
         "landslide_forecast": "Landslide Forecast",
         "landslide_susceptibility": "Landslide Susceptibility",
         "location_nowcast": "Location Forecast",
-        "daily_precipitation": "Last 24hr Precip",
+        "daily_precipitation": "Daily Precip",
         "precipitation_nowcast": "Daily Precip Accumulation",
         "precipitation_forecast": "Daily Precip Forecast",
         "flood_forecast": "Flood Forecast",
@@ -250,7 +252,8 @@
         "soil_moisture": "Soil Moisture",
         "rgb_composite": "RGB Composite",
         "active_fires": "Active Fires",
-        "burn_scar": "Burn Scar"
+        "burn_scar": "Burn Scar",
+        "population_count": "Population Count"
     },
     "filesize": {
         "B": "B",

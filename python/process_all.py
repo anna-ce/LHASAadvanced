@@ -62,6 +62,13 @@ def get_daily_precipitation(dt):
 
 	cmd = "./trmm_process.py --region d03 --date %s" % dt
 	execute(cmd)
+	
+def get_daily_gpm(dt):
+	cmd = "./gpm_process.py --region d02 --date %s" % dt
+	execute(cmd)
+
+	cmd = "./gpm_process.py --region d03 --date %s" % dt
+	execute(cmd)
 
 def get_daily_forecast():
 	cmd = "./wrfqpe.py "
@@ -109,6 +116,7 @@ def backup_ojo_wiki():
 def cleanup():
 	cmd = "python aws-manage.py"
 	execute(cmd)
+	
 #
 # ======================================================================
 #
@@ -144,6 +152,9 @@ if __name__ == '__main__':
 	#get_daily_forecast()
 	#get_flood_nowcast()
 	get_landslide_nowcast()
+	
+	get_daily_gpm(ydt)
+	
 	#get_modis_floodmap()
 	#restart_ojo_streamer()
 	backup_ojo_streamer()
