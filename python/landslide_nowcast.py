@@ -364,8 +364,8 @@ def process(mydir, scene, s3_bucket, s3_folder, zoom):
 	if not os.path.exists(levelsDir):            
 		os.makedirs(levelsDir)
 
-	merge_filename 		= os.path.join(geojsonDir, "%s_levels.geojson" % scene)
-	topojson_filename 	= os.path.join(geojsonDir, "..", "%s_levels.topojson" % scene)
+	merge_filename 		= os.path.join(geojsonDir, "%s.geojson" % scene)
+	topojson_filename 	= os.path.join(geojsonDir, "..", "%s.topojson" % scene)
 	browse_filename 	= os.path.join(geojsonDir, "..", "%s_browse.tif" % scene)
 	subset_filename 	= os.path.join(geojsonDir, "..", "%s_small_browse.tif" % scene)
 	osm_bg_image		= os.path.join(geojsonDir, "..", "osm_bg.png")
@@ -444,7 +444,7 @@ def generate_map( dx, date, year, doy ):
 	s3_folder	= os.path.join("landslide_nowcast", str(year), doy)
 	s3_bucket	= region['bucket']
 	
-	scene 				=  "landslide_nowcast_%s_%s" %(dx,ymd)
+	scene 				=  "landslide_nowcast.%s" %(ymd)
 	process(mydir, scene, s3_bucket, s3_folder, region['thn_zoom'])
 	
 
