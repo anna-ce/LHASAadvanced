@@ -25,6 +25,7 @@ var fs 			 				= require('fs'),
 
 	query_af					= require("../../lib/query_modis_af").query
 	query_trmm_24				= require("../../lib/query_trmm_24").query
+	query_gpm_24				= require("../../lib/query_gpm_24").query
 	query_ef5					= require("../../lib/query_ef5").query,
 	query_maxswe				= require("../../lib/query_maxswe").query,
 	query_sm					= require("../../lib/query_sm").query,
@@ -45,7 +46,8 @@ var fs 			 				= require('fs'),
 		"ojo": 					[query_locationcast.QueryLocationCast],
 		"planet_labs": 			[query_planet_labs.QueryPlanetLabs],
 		"radarsat_2": 			[query_radarsat2.QueryRadarsat2],
-		"trmm": 				[query_trmm_24.QueryAll.bind(query_trmm_24)]
+		"trmm": 				[query_trmm_24.QueryAll.bind(query_trmm_24)],
+		"gpm": 					[query_gpm_24.QueryAll.bind(query_gpm_24)]
 	}
 		
 	function ValidateBBox( bbox ) {

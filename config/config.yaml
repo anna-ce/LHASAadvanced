@@ -155,6 +155,11 @@
               "source": 		"trmm",
               "href": 		"/opensearch",
               "checked": 		false
+          },
+          {
+              "source": 		"gpm",
+              "href": 		"/opensearch",
+              "checked": 		false
           }
 	]
 }

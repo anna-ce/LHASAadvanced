@@ -38,6 +38,7 @@ var express 		= require('express'),
 
 	var	query_modis_af			= require('./lib/query_modis_af').query;
 	var	query_trmm_24			= require('./lib/query_trmm_24').query;
+	var	query_gpm_24			= require('./lib/query_gpm_24').query;
 	var	query_landslide_nowcast	= require('./lib/query_landslide_nowcast2').query;
 
 	var s3_products = {
@@ -47,6 +48,7 @@ var express 		= require('express'),
 		"ef5": 			query_ef5,
 		"maxq": 		query_maxq,
 		"trmm_24": 		query_trmm_24,
+		"gpm_24": 		query_gpm_24,
 		"landslide_nowcast": query_landslide_nowcast
 	}
 	

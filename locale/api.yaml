@@ -52,6 +52,7 @@ en:
     alos2: JAXA ALOS-2
     ef5: University of Oklahoma
     trmm: NASA GSFC TRMM
+    gpm: NASA GSFC GPM
     ls: ORNL Landscan
     dk: NASA GSFC Dalia Kirschbaum model
 
@@ -64,6 +65,7 @@ en:
     alos2: PALSAR-2
     ef5: EF5 CREST Model
     trmm: TRMM
+    gpm: GPM
     ls: ORNL Landscan
     dk: N/A
     
@@ -85,26 +87,27 @@ en:
     date: "YYYY-MM-DD"
 
   products:
-    surface_water: Flood Map
+    active_fires: Active Fires
+    burn_scar: Burn Scar
+    daily_precipitation: Last 24hr Precip
+    flood_forecast: Flood Forecast
+    flood_nowcast: Flood Nowcast
+    flood_catalog: Flood Catalog
+    frost: Frost
     landslide_catalog: Landslide Catalog
     landslide_nowcast: Landslide Forecast
     landslide_forecast: Landslide Forecast
     landslide_susceptibility: Landslide Susceptibility
     location_nowcast: Location Forecast
-    daily_precipitation: Last 24hr Precip
+    population_count: Population Count
     precipitation_nowcast: Daily Precip Accumulation
     precipitation_forecast: Daily Precip Forecast
-    flood_forecast: Flood Forecast
-    flood_nowcast: Flood Nowcast
-    flood_catalog: Flood Catalog
-    frost: Frost
+    rgb_composite: RGB Composite
     snow_cover: Snow Cover
     snow_water_equivalent: Snow Water Equivalent
     stream_flow: Stream Flow
     soil_moisture: Soil Moisture
-    rgb_composite: RGB Composite
-    active_fires: Active Fires
-    burn_scar: Burn Scar
+    surface_water: Flood Map
     
   filesize:
     B: B
