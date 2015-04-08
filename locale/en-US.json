@@ -34,12 +34,15 @@
         "flood_forecast": "Flood Forecast",
         "flood_catalog": "Flood Catalog",
         "query_layer": "Query Layer",
+        "location_nowcast": "Location Forecast",
         "frost": "Frost",
         "snow_cover": "Snow Cover",
         "snow_water_equivalent": "Snow Water Equivalent",
         "stream_flow": "Stream Flow",
         "soil_moisture": "Soil Moisture",
-        "rgb_composite": "RGB Composite"
+        "rgb_composite": "RGB Composite",
+        "active_fires": "Active Fires",
+        "burn_scar": "Burn Scar"
     },
     "query": {
         "query_title": "Query",
@@ -699,7 +702,9 @@
         "modis": "NASA MODIS",
         "alos2": "JAXA ALOS-2",
         "ef5": "University of Oklahoma",
-        "trmm": "NASA GSFC TRMM"
+        "trmm": "NASA GSFC TRMM",
+        "ls": "ORNL Landscan",
+        "dk": "NASA GSFC Dalia Kirschbaum model"
     },
     "sensors": {
         "sar": "SAR",
@@ -709,7 +714,9 @@
         "dfo": "MODIS/l8",
         "alos2": "PALSAR-2",
         "ef5": "EF5 CREST Model",
-        "trmm": "TRMM"
+        "trmm": "TRMM",
+        "ls": "ORNL Landscan",
+        "dk": "N/A"
     },
     "duration": {
         "hours": "%{hours} hours",
@@ -717,8 +724,11 @@
         "seconds": "%{seconds} seconds"
     },
     "formats": {
+        "geojson": "geojson",
+        "geojsongz": "geojson.gz",
         "topojson": "topojson",
         "topojsongz": "topojson.gz",
+        "shpgz": "shp.gz",
         "osmbz2": "osm.bz2",
         "geotiff": "geotiff",
         "png": "png",
@@ -783,6 +793,15 @@
             },
             "legend": "Surface Water"
         },
+        "active_fires": {
+            "title": "MODIS Active Fires",
+            "credits": "NASA GSFC",
+            "source": {
+                "label": "Source",
+                "source": "NASA"
+            },
+            "legend": "Active Fires"
+        },
         "flood_forecast": {
             "title": "Flood Forecast",
             "credits": "University of Oklahoma",
@@ -839,9 +858,17 @@
                 "50mm": "50mm",
                 "80mm": "80mm",
                 "130mm": "130mm",
-                "210mm": "21mm",
+                "210mm": "210mm",
                 "340mm": "340mm",
                 "550mm": "550mm"
+            }
+        },
+        "population_count": {
+            "title": "Population Count",
+            "credits": "Oakridge National Laboratory",
+            "source": {
+                "label": "Source",
+                "source": "Oakridge National Laboratory"
             }
         },
         "daily_precipitation": {
@@ -852,17 +879,17 @@
                 "source": "NASA GSFC TRMM"
             },
             "legend": {
-                "10mm": "10mm",
-                "20mm": "20mm",
-                "30mm": "30mm",
-                "50mm": "50mm",
-                "80mm": "80mm",
-                "130mm": "130mm",
-                "210mm": "210mm",
-                "340mm": "340mm",
-                "550mm": "550mm",
-                "890mm": "890mm",
-                "1440mm": "1440mm"
+                "1mm": "1mm",
+                "2mm": "2mm",
+                "3mm": "3mm",
+                "5mm": "5mm",
+                "8mm": "8mm",
+                "13mm": "13mm",
+                "21mm": "21mm",
+                "34mm": "34mm",
+                "55mm": "55mm",
+                "89mm": "89mm",
+                "144mm": "144mm"
             }
         },
         "stream_flow": {
@@ -882,6 +909,18 @@
                 "210cms": "21cms",
                 "340cms": "340cms",
                 "550cms": "550cms"
+            }
+        },
+        "landslide_nowcast": {
+            "title": "Landslide Nowcast",
+            "credits": "NASA GSFC",
+            "source": {
+                "label": "Source",
+                "source": "NASA GSFC"
+            },
+            "legend": {
+                "level_1": "yellow",
+                "level_2": "red"
             }
         },
         "soil_moisture": {
