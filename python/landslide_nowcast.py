@@ -100,21 +100,21 @@ def build_tif(dx, region, dir, date):
 		print "**ERR: file not found", susmap
 		sys.exit(-1)
 
-	forecast_landslide_bin 				= os.path.join(config.data_dir, "landslide_nowcast", dx, ymd, "landslide_nowcast_%s_%s.tif" %(dx,ymd))
-	forecast_landslide_bin_rgb 			= os.path.join(config.data_dir, "landslide_nowcast", dx, ymd, "landslide_nowcast_%s_%s_rgb.tif" %(dx,ymd))
+	forecast_landslide_bin 				= os.path.join(config.data_dir, "landslide_nowcast", dx, ymd, "landslide_nowcast.%s.tif" %(ymd))
+	forecast_landslide_bin_rgb 			= os.path.join(config.data_dir, "landslide_nowcast", dx, ymd, "landslide_nowcast.%s_rgb.tif" %(ymd))
 
-	forecast_landslide_100m_bin 		= os.path.join(config.data_dir, "landslide_nowcast", dx, ymd, "landslide_nowcast_%s_%s_100m.tif" %(dx,ymd))
-	forecast_landslide_100m_bin_rgb 	= os.path.join(config.data_dir, "landslide_nowcast", dx, ymd, "landslide_nowcast_%s_%s_100m_rgb.tif" %(dx,ymd))
+	forecast_landslide_100m_bin 		= os.path.join(config.data_dir, "landslide_nowcast", dx, ymd, "landslide_nowcast.%s_100m.tif" %(ymd))
+	forecast_landslide_100m_bin_rgb 	= os.path.join(config.data_dir, "landslide_nowcast", dx, ymd, "landslide_nowcast.%s_100m_rgb.tif" %(ymd))
 		
 	
 	color_file							= "./cluts/landslide_colors.txt"
 	
-	shp_file 							= os.path.join(config.data_dir,"landslide_nowcast", dx, ymd, "landslide_nowcast_%s_%s.shp" % (dx,ymd))
-	geojson_file 						= os.path.join(config.data_dir,"landslide_nowcast", dx, ymd, "landslide_nowcast_%s_%s.geojson" % (dx,ymd))
+	shp_file 							= os.path.join(config.data_dir,"landslide_nowcast", dx, ymd, "landslide_nowcast.%s.shp" % (ymd))
+	geojson_file 						= os.path.join(config.data_dir,"landslide_nowcast", dx, ymd, "landslide_nowcast.%s.geojson" % (ymd))
 	
-	topojson_file						= os.path.join(config.data_dir,"landslide_nowcast", dx, ymd, "landslide_nowcast_%s_%s.topojson" % (dx,ymd))
-	topojson_gz_file					= os.path.join(config.data_dir,"landslide_nowcast", dx, ymd, "landslide_nowcast_%s_%s.topojson.gz" % (dx,ymd))
-	thumbnail_file 						= os.path.join(config.data_dir,"landslide_nowcast", dx, ymd, "landslide_nowcast_%s_%s.thn.png" % (dx,ymd))
+	topojson_file						= os.path.join(config.data_dir,"landslide_nowcast", dx, ymd, "landslide_nowcast.%s.topojson" % (ymd))
+	topojson_gz_file					= os.path.join(config.data_dir,"landslide_nowcast", dx, ymd, "landslide_nowcast.%s.topojson.gz" % (ymd))
+	thumbnail_file 						= os.path.join(config.data_dir,"landslide_nowcast", dx, ymd, "landslide_nowcast.%s.thn.png" % (ymd))
 	static_file 						= os.path.join(config.data_dir,"landslide_nowcast", dx, "%s_static.tiff" % (dx))
 
 	if force or not os.path.exists(forecast_landslide_bin):
@@ -412,11 +412,13 @@ def process(mydir, scene, s3_bucket, s3_folder, zoom):
 		execute(cmd)
 
 	# Convert to shapefile
-	cmd= "ogr2ogr -f 'ESRI Shapefile' %s %s" % ( shpDir, merge_filename)
-	execute(cmd)
+	if force or not os.path.exists(shpDir):
+		cmd= "ogr2ogr -f 'ESRI Shapefile' %s %s" % ( shpDir, merge_filename)
+		execute(cmd)
 	
-	cmd 	= "tar -cvzf %s %s" %(shapefile_gz, shpDir)
-	execute(cmd)
+	if force or not os.path.exists(shapefile_gz):
+		cmd 	= "cd %s; tar -cvzf %s shp" %(mydir, shapefile_gz)
+		execute(cmd)
 	
 	if force or not os.path.exists(sw_osm_image):
 		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image,levels, hexColors, force, verbose, zoom)
