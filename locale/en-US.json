@@ -34,15 +34,17 @@
         "flood_forecast": "Flood Forecast",
         "flood_catalog": "Flood Catalog",
         "query_layer": "Query Layer",
-        "location_nowcast": "Location Forecast",
+        "active_fires": "Active Fires",
+        "burn_scar": "Burn Scar",
         "frost": "Frost",
+        "location_nowcast": "Location Forecast",
+        "population_count": "Population Count",
+        "rgb_composite": "RGB Composite",
         "snow_cover": "Snow Cover",
         "snow_water_equivalent": "Snow Water Equivalent",
         "stream_flow": "Stream Flow",
         "soil_moisture": "Soil Moisture",
-        "rgb_composite": "RGB Composite",
-        "active_fires": "Active Fires",
-        "burn_scar": "Burn Scar"
+        "quakes": "Earthquakes"
     },
     "query": {
         "query_title": "Query",
@@ -703,8 +705,10 @@
         "alos2": "JAXA ALOS-2",
         "ef5": "University of Oklahoma",
         "trmm": "NASA GSFC TRMM",
+        "gpm": "NASA GSFC GPM",
         "ls": "ORNL Landscan",
-        "dk": "NASA GSFC Dalia Kirschbaum model"
+        "dk": "NASA GSFC Dalia Kirschbaum model",
+        "usgs": "USGS"
     },
     "sensors": {
         "sar": "SAR",
@@ -715,8 +719,10 @@
         "alos2": "PALSAR-2",
         "ef5": "EF5 CREST Model",
         "trmm": "TRMM",
+        "gpm": "GPM",
         "ls": "ORNL Landscan",
-        "dk": "N/A"
+        "dk": "N/A",
+        "usgs": "USGS"
     },
     "duration": {
         "hours": "%{hours} hours",
@@ -801,6 +807,15 @@
                 "source": "NASA"
             },
             "legend": "Active Fires"
+        },
+        "quakes": {
+            "title": "USGS Earthquakes",
+            "credits": "USGS",
+            "source": {
+                "label": "Source",
+                "source": "USGS"
+            },
+            "legend": "7d Quakes"
         },
         "flood_forecast": {
             "title": "Flood Forecast",
