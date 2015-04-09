@@ -34,15 +34,17 @@
         "flood_forecast": "Pronóstico de Inundaciones",
         "flood_catalog": "Catálogo de Inundaciones",
         "query_layer": "Capa de Consulta",
-        "location_nowcast": "Pronóstico de Inundaciones",
+        "active_fires": "Los incendios activos",
+        "burn_scar": "Queme cicatriz",
         "frost": "Helada",
+        "location_nowcast": "Pronóstico de Inundaciones",
+        "population_count": "Population Count",
+        "rgb_composite": "RGB composición",
         "snow_cover": "Cubierta de Nieve",
         "snow_water_equivalent": "Nieve Equivalente Agua",
         "stream_flow": "Flujo de corriente",
         "soil_moisture": "Humedad del Suelo",
-        "rgb_composite": "RGB composición",
-        "active_fires": "Los incendios activos",
-        "burn_scar": "Queme cicatriz"
+        "quakes": "Terremotos"
     },
     "query": {
         "query_title": "Consulta",
@@ -703,8 +705,10 @@
         "alos2": "JAXA ALOS-2",
         "ef5": "Universidad de Oklahoma",
         "trmm": "NASA GSFC TRMM",
+        "gpm": "NASA GSFC GPM",
         "ls": "ORNL Landscan",
-        "dk": "NASA GSFC Dalia Kirschbaum modelo"
+        "dk": "NASA GSFC Dalia Kirschbaum modelo",
+        "usgs": "USGS"
     },
     "sensors": {
         "sar": "SAR",
@@ -715,8 +719,10 @@
         "alos2": "PALSAR-2",
         "ef5": "EF5 CREST Modelo",
         "trmm": "TRMM",
+        "gpm": "GPM",
         "ls": "ORNL Landscan",
-        "dk": "N/A"
+        "dk": "N/A",
+        "usgs": "USGS"
     },
     "duration": {
         "hours": "%{hours} horas",
@@ -801,6 +807,15 @@
                 "source": "NASA"
             },
             "legend": "Queme cicatriz"
+        },
+        "quakes": {
+            "title": "USGS Terremotos",
+            "credits": "USGS",
+            "source": {
+                "label": "Origen",
+                "source": "USGS"
+            },
+            "legend": "7d Quakes"
         },
         "flood_forecast": {
             "title": "Pronóstico de Inundaciones",
