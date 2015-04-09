@@ -55,6 +55,7 @@ en:
     gpm: NASA GSFC GPM
     ls: ORNL Landscan
     dk: NASA GSFC Dalia Kirschbaum model
+    usgs: USGS
 
   sensors:
     sar: SAR
@@ -68,6 +69,7 @@ en:
     gpm: GPM
     ls: ORNL Landscan
     dk: N/A
+    usgs: USGS
     
   duration:
     hours: "%{hours} hours"
@@ -108,6 +110,7 @@ en:
     stream_flow: Stream Flow
     soil_moisture: Soil Moisture
     surface_water: Flood Map
+    quakes: Earthquakes
     
   filesize:
     B: B
@@ -167,6 +170,14 @@ en:
         label: Source
         source: NASA
       legend: Active Fires
+
+    quakes:
+      title: USGS Earthquakes
+      credits: USGS
+      source: 
+        label: Source
+        source: USGS
+      legend: 7d Quakes
         
     flood_forecast:
       title: Flood Forecast

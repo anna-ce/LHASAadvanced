@@ -160,6 +160,11 @@
               "source": 		"gpm",
               "href": 		"/opensearch",
               "checked": 		false
+          },
+          {
+              "source": 		"usgs",
+              "href": 		"/opensearch",
+              "checked": 		false
           }
 	]
 }

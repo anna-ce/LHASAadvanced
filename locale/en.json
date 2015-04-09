@@ -200,6 +200,7 @@
         "trmm": "NASA GSFC TRMM",
         "gpm": "NASA GSFC GPM",
         "ls": "ORNL Landscan",
+        "usgs": "USGS",
         "dk": "NASA GSFC Dalia Kirschbaum model"
     },
     "sensors": {
@@ -213,6 +214,7 @@
         "trmm": "TRMM",
         "gpm": "GPM",
         "ls": "ORNL Landscan",
+        "usgs": "USGS",
         "dk": "N/A"
     },
     "duration": {
@@ -253,7 +255,8 @@
         "rgb_composite": "RGB Composite",
         "active_fires": "Active Fires",
         "burn_scar": "Burn Scar",
-        "population_count": "Population Count"
+        "population_count": "Population Count",
+        "quakes": "Earthquakes"
     },
     "filesize": {
         "B": "B",
@@ -321,6 +324,15 @@
                 "source": "NASA"
             },
             "legend": "Active Fires"
+        },
+        "quakes": {
+            "title": "USGS Earthquakes",
+            "credits": "USGS",
+            "source": {
+                "label": "Source",
+                "source": "USGS"
+            },
+            "legend": "7d Quakes"
         },
         "flood_forecast": {
             "title": "Flood Forecast",
