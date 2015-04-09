@@ -135,11 +135,17 @@ var fs 			 				= require('fs'),
 					'errMsg': errMsg
 				}
 			} else {
+				function compareDates(a,b) {
+					return new Date(b.properties.date['@value']) - new Date(a.properties.date['@value']);
+				}
+				
+				items.sort(compareDates)
+				
 				var json = {
 					"@context": host+"/vocab",
 					"@language": req.lang,
 					"@id": "urn:ojo:opensearch:"+req.originalUrl.split("?")[1],
-					"displayName": "Publisher Landslide/Flood Surface Water Products",
+					"displayName": "NASA GSFC Product Publisher",
 					"@type":"as:Collection",
 					"url": originalUrl,
 					"mediaType": "application/activity+json",
