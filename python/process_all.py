@@ -64,10 +64,10 @@ def get_daily_precipitation(dt):
 	execute(cmd)
 	
 def get_daily_gpm(dt):
-	cmd = "./gpm_process.py --region d02 --date %s" % dt
+	cmd = "python ./gpm_process.py --region d02 --date %s" % dt
 	execute(cmd)
 
-	cmd = "./gpm_process.py --region d03 --date %s" % dt
+	cmd = "python ./gpm_process.py --region d03 --date %s" % dt
 	execute(cmd)
 
 def get_daily_forecast():

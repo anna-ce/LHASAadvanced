@@ -65,21 +65,26 @@ def get_daily_gpm_files(trmm_gis_files, mydir, year, month):
 
 	ftp.close()
 			
-def process(gpm_dir, gis_file_day, region, s3_bucket, s3_folder, ymd ):
+def process(gpm_dir, gis_file_day, regionName, region, s3_bucket, s3_folder, ymd ):
 	# subset the file for that region
 	bbox		= region['bbox']
 	gis_file	= os.path.join(gpm_dir, gis_file_day)
-	subset_file	= os.path.join(gpm_dir, "gpm_24.%s.tif" % ymd)
+	
+	region_dir	= os.path.join(gpm_dir,regionName)
+	if not os.path.exists(region_dir):            
+		os.makedirs(region_dir)
+	
+	subset_file	= os.path.join(region_dir, "gpm_24.%s.tif" % ymd)
 	
 	if force or not os.path.exists(subset_file):
 		cmd = "gdalwarp -overwrite -q -te %f %f %f %f %s %s" % (bbox[0], bbox[1], bbox[2], bbox[3], gis_file, subset_file)
 		execute(cmd)
 
-	geojsonDir	= os.path.join(gpm_dir,"geojson")
+	geojsonDir	= os.path.join(region_dir,"geojson")
 	if not os.path.exists(geojsonDir):            
 		os.makedirs(geojsonDir)
 
-	levelsDir	= os.path.join(gpm_dir,"levels")
+	levelsDir	= os.path.join(region_dir,"levels")
 	if not os.path.exists(levelsDir):            
 		os.makedirs(levelsDir)
 
@@ -131,11 +136,12 @@ def process(gpm_dir, gis_file_day, region, s3_bucket, s3_folder, ymd ):
 		cmd 	= "gzip --keep "+ topojson_filename
 		execute(cmd)
 		
+	# problem is that we need to scale it or adjust the levels for coloring (easier)
+	adjusted_levels 				= [1440, 890, 550, 340, 210, 130, 80, 50, 30, 20, 10]
+	zoom = region['thn_zoom']
+	
 	if force or not os.path.exists(sw_osm_image):
-		# problem is that we need to scale it or adjust the levels for coloring (easier)
-		adjusted_levels 				= [1440, 890, 550, 340, 210, 130, 80, 50, 30, 20, 10]
-		
-		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, adjusted_levels, hexColors, force, verbose)
+		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, adjusted_levels, hexColors, force, verbose, zoom)
 		
 	ds = None
 	
@@ -195,4 +201,4 @@ if __name__ == '__main__':
 	if force or not os.path.exists(os.path.join(gpm_dir,gis_file_day)):
 		get_daily_gpm_files([gis_file_day, gis_file_day_tfw], gpm_dir, year, month)
 	
-	process(gpm_dir, gis_file_day, region, s3_bucket, s3_folder, ymd)
+	process(gpm_dir, gis_file_day, regionName, region, s3_bucket, s3_folder, ymd)
