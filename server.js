@@ -40,16 +40,18 @@ var express 		= require('express'),
 	var	query_trmm_24			= require('./lib/query_trmm_24').query;
 	var	query_gpm_24			= require('./lib/query_gpm_24').query;
 	var	query_landslide_nowcast	= require('./lib/query_landslide_nowcast2').query;
+	var	query_quakes			= require('./lib/query_quakes').query;
 
 	var s3_products = {
-		'modis_af': 	query_modis_af,
-		'sm': 			query_sm,
-		"maxswe": 		query_maxswe,
-		"ef5": 			query_ef5,
-		"maxq": 		query_maxq,
-		"trmm_24": 		query_trmm_24,
-		"gpm_24": 		query_gpm_24,
-		"landslide_nowcast": query_landslide_nowcast
+		"ef5": 					query_ef5,
+		"gpm_24": 				query_gpm_24,
+		"landslide_nowcast": 	query_landslide_nowcast,
+		"maxq": 				query_maxq,
+		"maxswe": 				query_maxswe,
+		'modis_af': 			query_modis_af,
+		'sm': 					query_sm,
+		"trmm_24": 				query_trmm_24,
+		"quakes": 				query_quakes
 	}
 	
 	

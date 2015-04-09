@@ -30,7 +30,8 @@ var fs 			 				= require('fs'),
 	query_maxswe				= require("../../lib/query_maxswe").query,
 	query_sm					= require("../../lib/query_sm").query,
 	query_maxq					= require("../../lib/query_maxq").query
-	query_landslide_nowcast2		= require("../../lib/query_landslide_nowcast2").query
+	query_landslide_nowcast2	= require("../../lib/query_landslide_nowcast2").query
+	query_quakes				= require("../../lib/query_quakes").query
 	;
 
 	productQueries = {
@@ -45,6 +46,7 @@ var fs 			 				= require('fs'),
 		"modis_lst":			[query_modislst.QueryModisLST],
 		"ojo": 					[query_locationcast.QueryLocationCast],
 		"planet_labs": 			[query_planet_labs.QueryPlanetLabs],
+		"usgs": 				[query_quakes.QueryAll.bind(query_quakes)],
 		"radarsat_2": 			[query_radarsat2.QueryRadarsat2],
 		"trmm": 				[query_trmm_24.QueryAll.bind(query_trmm_24)],
 		"gpm": 					[query_gpm_24.QueryAll.bind(query_gpm_24)]

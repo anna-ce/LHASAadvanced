@@ -56,32 +56,17 @@ def execute(cmd):
 		print "process_all execute err", err
 		emailErrorFile()
 	
-def get_daily_precipitation(dt):
-	cmd = "./trmm_process.py --region d02 --date %s" % dt
-	execute(cmd)
-
-	cmd = "./trmm_process.py --region d03 --date %s" % dt
-	execute(cmd)
-	
-def get_daily_gpm(dt):
-	cmd = "python ./gpm_process.py --region d02 --date %s" % dt
-	execute(cmd)
-
-	cmd = "python ./gpm_process.py --region d03 --date %s" % dt
-	execute(cmd)
-
 def get_daily_forecast():
 	cmd = "./wrfqpe.py "
 	execute(cmd)
 
-def get_landslide_nowcast():
-	cmd = "./landslide_nowcast.py --region d02 "
-		
+def process_script( str ):
+	cmd = "python ./%s --region d02 --date %s" % (str, dt)
 	execute(cmd)
 
-	cmd = "./landslide_nowcast.py --region d03 "
+	cmd = "python ./%s --region d03 --date %s" % (str, dt)
 	execute(cmd)
-
+	
 def get_flood_nowcast():
 	cmd = "./gfms_processing.py"
 	execute(cmd)
@@ -152,8 +137,12 @@ if __name__ == '__main__':
 	#get_daily_forecast()
 	#get_flood_nowcast()
 	get_landslide_nowcast()
-	
-	get_daily_gpm(ydt)
+		
+	process_script('trmm_process.py.py')
+	process_script('landslide_nowcast.py')
+	process_script('gpm_process.py')
+	process_script('active-fires.py')
+	process_script('quake.py')
 	
 	#get_modis_floodmap()
 	#restart_ojo_streamer()
