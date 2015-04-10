@@ -111,6 +111,8 @@ en:
     soil_moisture: Soil Moisture
     surface_water: Flood Map
     quakes: Earthquakes
+    drought: Drought
+    vhi: Vegetation Health Index
     
   filesize:
     B: B
@@ -193,6 +195,23 @@ en:
         8m: 8m
         13m: 13m
         21m: 21m
+
+    vhi:
+      title: Vegetation Health Index
+      credits: NOAA Star
+      source: 
+        label: Source
+        source: NOAA Star
+      legend:
+        6: 6
+        12: 12
+        24: 24
+        36: 36
+        48: 48
+        60: 60
+        72: 72
+        84: 84
+        100: 100
         
     frost:
       title: Frost Map

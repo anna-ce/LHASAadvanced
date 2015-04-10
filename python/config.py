@@ -113,6 +113,14 @@ regions		= {
 		'tiles-zoom':    "6-14",
 		'modis-win': 	"Win04"		# MCD45 Window (MODIS Burned Areas)
 	},
+	'd04': {
+		'name':			"Namibia",
+		'bbox': 		[18, -21, 26, -17 ],
+		'centerlat':	-18,
+		'centerlon':	21,
+		'bucket':		"ojo-d4",
+		'thn_zoom': 	6
+	}
 }
 
 # Landslide database csv

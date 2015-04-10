@@ -165,6 +165,11 @@
               "source": 		"usgs",
               "href": 		"/opensearch",
               "checked": 		false
+          },
+          {
+              "source": 		"noaa",
+              "href": 		"/opensearch",
+              "checked": 		false
           }
 	]
 }
