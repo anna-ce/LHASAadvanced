@@ -32,6 +32,7 @@ var fs 			 				= require('fs'),
 	query_maxq					= require("../../lib/query_maxq").query
 	query_landslide_nowcast2	= require("../../lib/query_landslide_nowcast2").query
 	query_quakes				= require("../../lib/query_quakes").query
+	query_vhi					= require("../../lib/query_vhi").query
 	;
 
 	productQueries = {
@@ -49,7 +50,8 @@ var fs 			 				= require('fs'),
 		"usgs": 				[query_quakes.QueryAll.bind(query_quakes)],
 		"radarsat_2": 			[query_radarsat2.QueryRadarsat2],
 		"trmm": 				[query_trmm_24.QueryAll.bind(query_trmm_24)],
-		"gpm": 					[query_gpm_24.QueryAll.bind(query_gpm_24)]
+		"gpm": 					[query_gpm_24.QueryAll.bind(query_gpm_24)],
+		"noaa": 				[query_vhi.QueryAll.bind(query_vhi)]
 	}
 		
 	function ValidateBBox( bbox ) {

@@ -41,6 +41,7 @@ var express 		= require('express'),
 	var	query_gpm_24			= require('./lib/query_gpm_24').query;
 	var	query_landslide_nowcast	= require('./lib/query_landslide_nowcast2').query;
 	var	query_quakes			= require('./lib/query_quakes').query;
+	var	query_vhi				= require('./lib/query_vhi').query;
 
 	var s3_products = {
 		"ef5": 					query_ef5,
@@ -51,7 +52,8 @@ var express 		= require('express'),
 		'modis_af': 			query_modis_af,
 		'sm': 					query_sm,
 		"trmm_24": 				query_trmm_24,
-		"quakes": 				query_quakes
+		"quakes": 				query_quakes,
+		"vhi":  				query_vhi
 	}
 	
 	

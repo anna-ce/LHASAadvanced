@@ -73,7 +73,7 @@ def CreateLevel(l, geojsonDir, fileName, src_ds, data, attr, _force, _verbose):
 		# -L		left margin
 		# -B		bottom margin
 
-		cmd = str.format("potrace -i -z black -a 1.5 -t 3 -b geojson -o {0} {1} -x {2} -L {3} -B {4} ", fileName+".geojson", fileName+".pgm", pres, xorg, ymax ); 
+		cmd = str.format("potrace -z black -a 1.5 -t 3 -b geojson -o {0} {1} -x {2} -L {3} -B {4} ", fileName+".geojson", fileName+".pgm", pres, xorg, ymax ); 
 		execute(cmd)
 
 		#cmd = str.format("node set_geojson_property.js --file {0} --prop frost={1}", fileName+".geojson", frost)

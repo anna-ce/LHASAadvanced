@@ -201,7 +201,8 @@
         "gpm": "NASA GSFC GPM",
         "ls": "ORNL Landscan",
         "dk": "NASA GSFC Dalia Kirschbaum model",
-        "usgs": "USGS"
+        "usgs": "USGS",
+        "noaa": "NOAA"
     },
     "sensors": {
         "sar": "SAR",
@@ -215,7 +216,8 @@
         "gpm": "GPM",
         "ls": "ORNL Landscan",
         "dk": "N/A",
-        "usgs": "USGS"
+        "usgs": "USGS",
+        "avhrr": "AVHRR"
     },
     "duration": {
         "hours": "%{hours} hours",
@@ -256,7 +258,9 @@
         "stream_flow": "Stream Flow",
         "soil_moisture": "Soil Moisture",
         "surface_water": "Flood Map",
-        "quakes": "Earthquakes"
+        "quakes": "Earthquakes",
+        "drought": "drought",
+        "vhi": "Vegetation Health Index"
     },
     "filesize": {
         "B": "B",
@@ -483,6 +487,25 @@
                 "55pct": "55pct",
                 "89pct": "89pct",
                 "144pct": "144pct"
+            }
+        },
+        "vhi": {
+            "title": "Vegetation Health Index",
+            "credits": "NOAA Star",
+            "source": {
+                "label": "Source",
+                "source": "NOAA Star"
+            },
+            "legend": {
+                "6": "6",
+                "12": "12",
+                "24": "24",
+                "36": "36",
+                "48": "48",
+                "60": "60",
+                "72": "72",
+                "84": "84",
+                "100": "100"
             }
         }
     }
