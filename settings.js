@@ -101,14 +101,10 @@ var express 		= require('express'),
 			console.log(e, env_var)
 		})
 		
-		var appId				= process.env.fbAppId
-		var appSecret			= process.env.fbSecret
+		var appId				= process.env.FACEBOOK_APP_ID
+		var appSecret			= process.env.FACEBOOK_APP_SECRET
 		var mapboxToken			= process.env.MAPBOX_PUBLIC_TOKEN
-		
-		assert(appId)
-		assert(appSecret)
-		assert(mapboxToken)
-		
+				
 		app.config.fbAppId		= appId
 		app.config.fbSecret		= appSecret
 		app.config.mapboxToken	= mapboxToken
@@ -220,7 +216,7 @@ function bootApplication(app) {
 	//});
 	
 	app.use(i18n.abide({
-		supported_languages: ['en', 'es', 'fr', 'pt'],
+		supported_languages: ['en', 'es', 'fr', 'pt', 'sw','ne'],
 		//supported_languages: ['en', 'fr', 'es', 'pt', 'de'],
 		default_lang: 'en',
 		translation_directory: 'locale',

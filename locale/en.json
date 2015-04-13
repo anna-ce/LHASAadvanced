@@ -187,7 +187,8 @@
         "duration": "duration",
         "resolution": "resolution",
         "cloud": "cloud cover",
-        "copyright": "copyright"
+        "copyright": "copyright",
+        "url": "url"
     },
     "sources": {
         "radarsat2": "CSA Radarsat2",
@@ -259,7 +260,7 @@
         "soil_moisture": "Soil Moisture",
         "surface_water": "Flood Map",
         "quakes": "Earthquakes",
-        "drought": "drought",
+        "drought": "Drought",
         "vhi": "Vegetation Health Index"
     },
     "filesize": {
@@ -466,8 +467,8 @@
                 "source": "NASA GSFC"
             },
             "legend": {
-                "level_1": "yellow",
-                "level_2": "red"
+                "level_1": "moderate",
+                "level_2": "high"
             }
         },
         "soil_moisture": {

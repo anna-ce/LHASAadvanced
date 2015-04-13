@@ -263,6 +263,10 @@ app.get('/apps/delete/:id',						hawk_restrict, apps.delete);
 app.put('/apps/:id',							hawk_restrict, apps.update);
 app.delete('/apps/:id',							hawk_restrict, apps.delete);
 
+
+
+
+
 app.get('/mapinfo/wrf_24',						mapinfo.wrf_24);
 app.get('/mapinfo/wrf_24/style',				mapinfo.wrf_24_style);
 app.get('/mapinfo/wrf_24/legend',				mapinfo.wrf_24_legend);
