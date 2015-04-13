@@ -298,3 +298,5 @@ if __name__ == '__main__':
 	if force or not os.path.exists(os.path.join(gisdir,gis_file)):
 		get_files([gis_file], gisdir)
 		process(mydir, gis_file, r, region, s3_bucket, s3_folder, ymd)
+	else:
+		print "VHI for week %s already done!" % week

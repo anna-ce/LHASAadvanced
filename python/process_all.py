@@ -143,6 +143,7 @@ if __name__ == '__main__':
 	process_script('gpm_process.py')
 	process_script('active-fires.py')
 	process_script('quake.py')
+	process_vhi('vhi.py')
 	
 	#get_modis_floodmap()
 	#restart_ojo_streamer()

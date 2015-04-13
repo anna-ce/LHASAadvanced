@@ -978,3 +978,31 @@ Traceback (most recent call last):
     get_daily_precipitation(ydt)
 NameError: name 'get_daily_precipitation' is not defined
 process_all.sh Done: Fri Apr 10 08:00:00 EDT 2015
+Starting processing: Sat Apr 11 08:00:00 EDT 2015
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+Traceback (most recent call last):
+  File "/Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py", line 136, in <module>
+    get_daily_precipitation(ydt)
+NameError: name 'get_daily_precipitation' is not defined
+process_all.sh Done: Sat Apr 11 08:00:00 EDT 2015
+Starting processing: Sun Apr 12 08:00:00 EDT 2015
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+Traceback (most recent call last):
+  File "/Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py", line 136, in <module>
+    get_daily_precipitation(ydt)
+NameError: name 'get_daily_precipitation' is not defined
+process_all.sh Done: Sun Apr 12 08:00:00 EDT 2015
+Starting processing: Sun Apr 12 21:24:06 EDT 2015
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+Traceback (most recent call last):
+  File "/Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py", line 136, in <module>
+    get_daily_precipitation(ydt)
+NameError: name 'get_daily_precipitation' is not defined
+process_all.sh Done: Sun Apr 12 21:24:06 EDT 2015
+Starting processing: Mon Apr 13 08:00:00 EDT 2015
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+Traceback (most recent call last):
+  File "/Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py", line 136, in <module>
+    get_daily_precipitation(ydt)
+NameError: name 'get_daily_precipitation' is not defined
+process_all.sh Done: Mon Apr 13 08:00:00 EDT 2015

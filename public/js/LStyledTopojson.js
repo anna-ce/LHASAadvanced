@@ -265,8 +265,11 @@ function loadData( topojsonUrl, displayName, mapinfos ) {
 					onEachFeature: function(feature, layer) {
 						var html = "<br/><table>"
 						for( var i in feature.properties ) {
-							html += "<tr><td>"+i+":&nbsp; </td><td>"+feature.properties[i]+"</td></tr>"
-							//console.log(i,feature.properties[i] )
+							var prop = feature.properties[i]
+							if( prop && (typeof prop == 'string') && prop.indexOf("http:")>=0) {
+								prop = "<a href='"+prop+"'>link</a>"
+							}
+							html += "<tr><td>"+i+":&nbsp; </td><td>"+ prop +"</td></tr>"
 						}
 						html += "</table"
 						layer.bindPopup( html)

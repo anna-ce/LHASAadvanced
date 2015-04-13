@@ -42,6 +42,7 @@ en:
     resolution: resolution
     cloud: cloud cover
     copyright: copyright
+    url: url
 
   sources:
     radarsat2: CSA Radarsat2
