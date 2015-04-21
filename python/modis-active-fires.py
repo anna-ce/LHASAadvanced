@@ -165,7 +165,7 @@ if __name__ == '__main__':
 	
 	ymd 		= "%d%02d%02d" % (year, month, day)		
 
-	mydir		= os.path.join(config.data_dir,"modis_af", str(year),doy, regionName)
+	mydir		= os.path.join(config.MODIS_ACTIVE_FIRES_DIR, str(year),doy, regionName)
 	if not os.path.exists(mydir):            
 		os.makedirs(mydir)
 
