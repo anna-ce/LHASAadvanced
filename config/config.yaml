@@ -90,6 +90,12 @@
 	},
 	
 	"nodes": [
+    			{
+    				"source": 		"chirps",
+    				"href": 		"/opensearch",
+    				"checked": 		false,
+    				"selected":   false
+    			},
           {
             "source": 		"dfo",
         		"href": 		"/opensearch",
@@ -111,6 +117,11 @@
         		"href": 		"/opensearch",
         		"checked":  	false
         	},
+          {
+              "source": 		"gpm",
+              "href": 		"/opensearch",
+              "checked": 		false
+          },
           {
             "source": 		"landsat_8",
             "href": 		"/opensearch",
@@ -137,6 +148,11 @@
             "checked":  	false
           },
           {
+              "source": 		"noaa",
+              "href": 		"/opensearch",
+              "checked": 		false
+          },
+          {
             "source": 		"ojo",
             "href": 		"/opensearch",
             "checked":  	false
@@ -157,20 +173,16 @@
               "checked": 		false
           },
           {
-              "source": 		"gpm",
-              "href": 		"/opensearch",
-              "checked": 		false
-          },
-          {
               "source": 		"usgs",
               "href": 		"/opensearch",
               "checked": 		false
           },
-          {
-              "source": 		"noaa",
-              "href": 		"/opensearch",
-              "checked": 		false
-          }
+    			{
+    				"source": 		"viirs",
+    				"href": 		"/opensearch",
+    				"checked": 		false,
+    				"selected":   false
+    			}
 	]
 }
 

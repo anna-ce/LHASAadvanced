@@ -24,15 +24,20 @@ var fs 			 				= require('fs'),
 	query_pop					= require("../../lib/query_pop"),
 
 	query_af					= require("../../lib/query_modis_af").query
+	query_ba					= require("../../lib/query_ba").query
 	query_trmm_24				= require("../../lib/query_trmm_24").query
 	query_gpm_24				= require("../../lib/query_gpm_24").query
 	query_ef5					= require("../../lib/query_ef5").query,
 	query_maxswe				= require("../../lib/query_maxswe").query,
 	query_sm					= require("../../lib/query_sm").query,
-	query_maxq					= require("../../lib/query_maxq").query
-	query_landslide_nowcast2	= require("../../lib/query_landslide_nowcast2").query
-	query_quakes				= require("../../lib/query_quakes").query
-	query_vhi					= require("../../lib/query_vhi").query
+	query_maxq					= require("../../lib/query_maxq").query,
+	query_landslide_nowcast2	= require("../../lib/query_landslide_nowcast2").query,
+	query_quakes				= require("../../lib/query_quakes").query,
+	query_vhi					= require("../../lib/query_vhi").query,
+	query_vchloa				= require("../../lib/query_vchloa").query,
+	query_chirps_30				= require("../../lib/query_chirps_30").query,
+	query_chirps_10				= require("../../lib/query_chirps_10").query,
+	query_chirps_5				= require("../../lib/query_chirps_5").query
 	;
 
 	productQueries = {
@@ -43,7 +48,7 @@ var fs 			 				= require('fs'),
 		"landslide_model": 		[query_landslide_nowcast2.QueryAll.bind(query_landslide_nowcast2)],
 		"landsat_8": 			[query_l8.QueryLandsat8],
 		"landscan": 			[query_pop.QueryAll],
-		"modis": 				[query_modis.QueryModis, query_af.QueryAll.bind(query_af)],
+		"modis": 				[query_modis.QueryModis, query_af.QueryAll.bind(query_af), query_ba.QueryAll.bind(query_ba)],
 		"modis_lst":			[query_modislst.QueryModisLST],
 		"ojo": 					[query_locationcast.QueryLocationCast],
 		"planet_labs": 			[query_planet_labs.QueryPlanetLabs],
@@ -51,7 +56,9 @@ var fs 			 				= require('fs'),
 		"radarsat_2": 			[query_radarsat2.QueryRadarsat2],
 		"trmm": 				[query_trmm_24.QueryAll.bind(query_trmm_24)],
 		"gpm": 					[query_gpm_24.QueryAll.bind(query_gpm_24)],
-		"noaa": 				[query_vhi.QueryAll.bind(query_vhi)]
+		"noaa": 				[query_vhi.QueryAll.bind(query_vhi)],
+		"viirs": 				[query_vchloa.QueryAll.bind(query_vchloa)],
+		"chirps": 				[query_chirps_30.QueryAll.bind(query_chirps_30), query_chirps_10.QueryAll.bind(query_chirps_10),query_chirps_5.QueryAll.bind(query_chirps_5)]
 	}
 		
 	function ValidateBBox( bbox ) {

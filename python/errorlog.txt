@@ -1006,3 +1006,66 @@ Traceback (most recent call last):
     get_daily_precipitation(ydt)
 NameError: name 'get_daily_precipitation' is not defined
 process_all.sh Done: Mon Apr 13 08:00:00 EDT 2015
+Starting processing: Tue Apr 14 08:00:00 EDT 2015
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+Traceback (most recent call last):
+  File "/Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py", line 136, in <module>
+    get_daily_precipitation(ydt)
+NameError: name 'get_daily_precipitation' is not defined
+process_all.sh Done: Tue Apr 14 08:00:00 EDT 2015
+Starting processing: Wed Apr 15 08:00:00 EDT 2015
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+Traceback (most recent call last):
+  File "/Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py", line 136, in <module>
+    get_daily_precipitation(ydt)
+NameError: name 'get_daily_precipitation' is not defined
+process_all.sh Done: Wed Apr 15 08:00:00 EDT 2015
+Starting processing: Thu Apr 16 08:00:00 EDT 2015
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+Traceback (most recent call last):
+  File "/Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py", line 136, in <module>
+    get_daily_precipitation(ydt)
+NameError: name 'get_daily_precipitation' is not defined
+process_all.sh Done: Thu Apr 16 08:00:00 EDT 2015
+Starting processing: Fri Apr 17 08:00:00 EDT 2015
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+Traceback (most recent call last):
+  File "/Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py", line 136, in <module>
+    get_daily_precipitation(ydt)
+NameError: name 'get_daily_precipitation' is not defined
+process_all.sh Done: Fri Apr 17 08:00:00 EDT 2015
+Starting processing: Sat Apr 18 08:00:00 EDT 2015
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+Traceback (most recent call last):
+  File "/Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py", line 136, in <module>
+    get_daily_precipitation(ydt)
+NameError: name 'get_daily_precipitation' is not defined
+process_all.sh Done: Sat Apr 18 08:00:00 EDT 2015
+Starting processing: Sun Apr 19 08:00:00 EDT 2015
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+Traceback (most recent call last):
+  File "/Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py", line 136, in <module>
+    get_daily_precipitation(ydt)
+NameError: name 'get_daily_precipitation' is not defined
+process_all.sh Done: Sun Apr 19 08:00:00 EDT 2015
+Starting processing: Sun Apr 19 08:44:45 EDT 2015
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+Traceback (most recent call last):
+  File "/Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py", line 136, in <module>
+    get_daily_precipitation(ydt)
+NameError: name 'get_daily_precipitation' is not defined
+process_all.sh Done: Sun Apr 19 08:44:45 EDT 2015
+Starting processing: Mon Apr 20 08:00:00 EDT 2015
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+Traceback (most recent call last):
+  File "/Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py", line 136, in <module>
+    get_daily_precipitation(ydt)
+NameError: name 'get_daily_precipitation' is not defined
+process_all.sh Done: Mon Apr 20 08:00:00 EDT 2015
+Starting processing: Tue Apr 21 08:00:00 EDT 2015
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+Traceback (most recent call last):
+  File "/Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py", line 136, in <module>
+    get_daily_precipitation(ydt)
+NameError: name 'get_daily_precipitation' is not defined
+process_all.sh Done: Tue Apr 21 08:00:00 EDT 2015

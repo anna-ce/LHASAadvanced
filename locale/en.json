@@ -154,7 +154,8 @@
         "applications": "Applications",
         "register": "Register",
         "list": "List",
-        "query": "Query"
+        "query": "Query",
+        "search": "Search"
     },
     "tabs": {
         "general": "General",
@@ -203,7 +204,9 @@
         "ls": "ORNL Landscan",
         "dk": "NASA GSFC Dalia Kirschbaum model",
         "usgs": "USGS",
-        "noaa": "NOAA"
+        "noaa": "NOAA",
+        "gsfc": "NASA GSFC",
+        "chirps": "CHIRPS"
     },
     "sensors": {
         "sar": "SAR",
@@ -218,7 +221,8 @@
         "ls": "ORNL Landscan",
         "dk": "N/A",
         "usgs": "USGS",
-        "avhrr": "AVHRR"
+        "avhrr": "AVHRR",
+        "viirs": "VIIRS"
     },
     "duration": {
         "hours": "%{hours} hours",
@@ -240,7 +244,10 @@
     "products": {
         "active_fires": "Active Fires",
         "burn_scar": "Burn Scar",
-        "daily_precipitation": "Last 24hr Precip",
+        "precip_1": "1-Day Precipitation",
+        "precip_5": "5-Day Precipitation",
+        "precip_10": "10-Day Precipitation",
+        "precip_30": "30-Day Precipitation",
         "flood_forecast": "Flood Forecast",
         "flood_nowcast": "Flood Nowcast",
         "flood_catalog": "Flood Catalog",
@@ -261,7 +268,9 @@
         "surface_water": "Flood Map",
         "quakes": "Earthquakes",
         "drought": "Drought",
-        "vhi": "Vegetation Health Index"
+        "vhi": "Vegetation Health Index",
+        "algal_bloom": "Algal Bloom",
+        "burned_areas": "Burned Areas"
     },
     "filesize": {
         "B": "B",
@@ -321,6 +330,15 @@
             },
             "legend": "Surface Water"
         },
+        "burned_areas": {
+            "title": "MODIS Burned Areas",
+            "credits": "NASA GSFC",
+            "source": {
+                "label": "Source",
+                "source": "NASA"
+            },
+            "legend": "Burned Areas"
+        },
         "active_fires": {
             "title": "MODIS Active Fires",
             "credits": "NASA GSFC",
@@ -354,6 +372,25 @@
                 "8m": "8m",
                 "13m": "13m",
                 "21m": "21m"
+            }
+        },
+        "vhi": {
+            "title": "Vegetation Health Index",
+            "credits": "NOAA Star",
+            "source": {
+                "label": "Source",
+                "source": "NOAA Star"
+            },
+            "legend": {
+                "6": 6,
+                "12": 12,
+                "24": 24,
+                "36": 36,
+                "48": 48,
+                "60": 60,
+                "72": 72,
+                "84": 84,
+                "100": 100
             }
         },
         "frost": {
@@ -408,15 +445,15 @@
                 "source": "Oakridge National Laboratory"
             },
             "legend": {
-                "1000": 1000,
-                "2000": 2000,
-                "3000": 3000,
-                "5000": 5000,
-                "8000": 8000,
-                "13000": 13000,
-                "21000": 21000,
-                "34000": 34000,
-                "55000": 55000
+                "100": 100,
+                "200": 200,
+                "300": 300,
+                "500": 500,
+                "800": 800,
+                "1300": 1300,
+                "2100": 2100,
+                "3400": 3400,
+                "5500": 5500
             }
         },
         "daily_precipitation": {
@@ -467,8 +504,8 @@
                 "source": "NASA GSFC"
             },
             "legend": {
-                "level_1": "moderate",
-                "level_2": "high"
+                "level_1": "yellow",
+                "level_2": "red"
             }
         },
         "soil_moisture": {
@@ -490,23 +527,90 @@
                 "144pct": "144pct"
             }
         },
-        "vhi": {
-            "title": "Vegetation Health Index",
-            "credits": "NOAA Star",
+        "viirs_chla": {
+            "title": "VIIRS Chlorophyll-A",
+            "credits": "NASA GSFC",
             "source": {
                 "label": "Source",
-                "source": "NOAA Star"
+                "source": "NASA GSFC"
             },
             "legend": {
-                "6": "6",
-                "12": "12",
-                "24": "24",
-                "36": "36",
-                "48": "48",
-                "60": "60",
-                "72": "72",
-                "84": "84",
-                "100": "100"
+                "1": "3mm",
+                "3": "3mm",
+                "5": "5mm",
+                "10": "8mm",
+                "15": "13mm",
+                "20": "21mm",
+                "30": "34mm",
+                "50": "55mm",
+                "100": "89mm",
+                "300": "144mm"
+            }
+        },
+        "chirps_prelim_monthly": {
+            "title": "CHIRPS 2.0 Prelim Monthly",
+            "credits": "UC Santa Barbara",
+            "source": {
+                "label": "Source",
+                "source": "UCSB"
+            },
+            "legend": {
+                "0": "0mm",
+                "10": "10mm",
+                "25": "25mm",
+                "50": "50mm",
+                "100": "100mm",
+                "150": "150mm",
+                "200": "200mm",
+                "250": "250mm",
+                "300": "300mm",
+                "400": "400mm",
+                "500": "500mm",
+                "600": "600mm"
+            }
+        },
+        "chirps_prelim_dekad": {
+            "title": "CHIRPS 2.0 Prelim Dekad",
+            "credits": "UC Santa Barbara",
+            "source": {
+                "label": "Source",
+                "source": "UCSB"
+            },
+            "legend": {
+                "0": "0mm",
+                "1": "1mm",
+                "10": "10mm",
+                "25": "25mm",
+                "50": "50mm",
+                "75": "75mm",
+                "100": "100mm",
+                "150": "150mm",
+                "200": "200mm",
+                "250": "250mm",
+                "300": "300mm",
+                "350": "350mm"
+            }
+        },
+        "chirps_prelim_pentad": {
+            "title": "CHIRPS 2.0 Prelim Pentad",
+            "credits": "UC Santa Barbara",
+            "source": {
+                "label": "Source",
+                "source": "UCSB"
+            },
+            "legend": {
+                "0": "0mm",
+                "1": "1mm",
+                "5": "5mm",
+                "10": "10mm",
+                "15": "15mm",
+                "20": "20mm",
+                "25": "25mm",
+                "30": "30mm",
+                "35": "35mm",
+                "40": "40mm",
+                "50": "50mm",
+                "60": "60mm"
             }
         }
     }
