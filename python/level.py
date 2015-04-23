@@ -12,8 +12,12 @@ def execute( cmd ):
 	os.system(cmd)
 			
 def CreateLevel(l, geojsonDir, fileName, src_ds, data, attr, _force, _verbose):
+	global force, verbose
 	force 				= _force
 	verbose				= _verbose
+	
+	if verbose:
+		print "CreateLevel", l, _force, _verbose
 	
 	projection  		= src_ds.GetProjection()
 	geotransform		= src_ds.GetGeoTransform()
@@ -26,7 +30,7 @@ def CreateLevel(l, geojsonDir, fileName, src_ds, data, attr, _force, _verbose):
 	ymax				= yorg - geotransform[1]* src_ds.RasterYSize
 
 
-	if os.path.exists(fileName):
+	if not force and os.path.exists(fileName):
 		return
 		
 	driver 				= gdal.GetDriverByName( "GTiff" )
@@ -37,13 +41,13 @@ def CreateLevel(l, geojsonDir, fileName, src_ds, data, attr, _force, _verbose):
 	o_band		 		= dst_ds_dataset.GetRasterBand(1)
 	o_data				= o_band.ReadAsArray(0, 0, dst_ds_dataset.RasterXSize, dst_ds_dataset.RasterYSize )
 	
-	count 			= (data >= l).sum()	
+	count 				= (data >= l).sum()	
 
 	o_data[data>=l] 	= 255
-	o_data[data<l]	= 0
+	o_data[data<l]		= 0
 
 	if verbose:
-		print "Level", l, " count:", count
+		print "*** Level", l, " count:", count
 
 	if count > 0 :
 
@@ -73,7 +77,7 @@ def CreateLevel(l, geojsonDir, fileName, src_ds, data, attr, _force, _verbose):
 		# -L		left margin
 		# -B		bottom margin
 
-		cmd = str.format("potrace -z black -a 1.5 -t 3 -b geojson -o {0} {1} -x {2} -L {3} -B {4} ", fileName+".geojson", fileName+".pgm", pres, xorg, ymax ); 
+		cmd = str.format("potrace -i -z black -a 1.5 -t 3 -b geojson -o {0} {1} -x {2} -L {3} -B {4} ", fileName+".geojson", fileName+".pgm", pres, xorg, ymax ); 
 		execute(cmd)
 
 		#cmd = str.format("node set_geojson_property.js --file {0} --prop frost={1}", fileName+".geojson", frost)
