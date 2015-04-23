@@ -32,15 +32,20 @@ def execute( cmd ):
 
 def get_file(year, mydir, filename):
 	#url = "http://oceandata.sci.gsfc.nasa.gov/VIIRS/Mapped/Daily/4km/CHL/%s/%s"%(year, filename)
-	url = "http://oceandata.sci.gsfc.nasa.gov/cgi/getfile/%s" % (filename)
-	if verbose:
-		print "get_file", url
+	try:
+		url = "http://oceandata.sci.gsfc.nasa.gov/cgi/getfile/%s" % (filename)
+		if verbose:
+			print "get_file", url
 		
-	response = urllib2.urlopen(url)
-	outf = open(os.path.join(mydir, filename), "w")
-	outf.write( response.read()  )
-	outf.close()
-	
+		response 	= urllib2.urlopen(url)
+		outf 		= open(os.path.join(mydir, filename), "w")
+		outf.write( response.read()  )
+		outf.close()
+		
+	except Exception as e:
+		print "Could not retrieve file at url:", url
+		sys.exit(0)
+		
 def process_viirs_chla_file( mydir, regionName, viirs_filename, s3_bucket, s3_folder):
 	print "Processing", viirs_filename+":chlor_a"
 	region		= config.regions[regionName]
@@ -140,7 +145,7 @@ def process_viirs_chla_file( mydir, regionName, viirs_filename, s3_bucket, s3_fo
 		execute(cmd)
 		
 		
-	if force or not  .path.exists(sw_osm_image):
+	if force or not os.path.exists(sw_osm_image):
 		zoom 	= region['thn_zoom']
 		scale 	= 100	
 		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, levels, hexColors, force, verbose, zoom, scale)
@@ -198,7 +203,7 @@ if __name__ == '__main__':
 		get_file(str(year), mydir, filename)
 
 	if not os.path.exists(tif_viirs_filename):          
-		cmd = "gdal_translate netcdf:%s:chlor_a %s" % (netcdf_viirs_filename, tif_viirs_filename)
+		cmd = "gdal_translate -q netcdf:%s:chlor_a %s" % (netcdf_viirs_filename, tif_viirs_filename)
 		execute(cmd)
 		
 	s3_folder	= os.path.join("viirs_chla", str(year), doy)

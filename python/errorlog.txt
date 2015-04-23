@@ -1069,3 +1069,310 @@ Traceback (most recent call last):
     get_daily_precipitation(ydt)
 NameError: name 'get_daily_precipitation' is not defined
 process_all.sh Done: Tue Apr 21 08:00:00 EDT 2015
+Starting processing: Wed Apr 22 08:00:00 EDT 2015
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+Traceback (most recent call last):
+  File "/Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py", line 136, in <module>
+    get_daily_precipitation(ydt)
+NameError: name 'get_daily_precipitation' is not defined
+process_all.sh Done: Wed Apr 22 08:00:00 EDT 2015
+Starting processing: Wed Apr 22 09:55:13 EDT 2015
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+Traceback (most recent call last):
+  File "/Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py", line 136, in <module>
+    get_daily_precipitation(ydt)
+NameError: name 'get_daily_precipitation' is not defined
+process_all.sh Done: Wed Apr 22 09:55:13 EDT 2015
+Starting processing: Thu Apr 23 08:00:02 EDT 2015
+['3B42RT.2015042321.7.1day.tif', '3B42RT.2015042321.7.1day.tfw']
+Trying to download 3B42RT.2015042321.7.1day.tif
+TRMM FTP Error <class 'ftplib.error_perm'> 550 3B42RT.2015042321.7.1day.tif: No such file or directory
+['3B42RT.2015042321.7.1day.tif', '3B42RT.2015042321.7.1day.tfw']
+Trying to download 3B42RT.2015042321.7.1day.tif
+TRMM FTP Error <class 'ftplib.error_perm'> 550 3B42RT.2015042321.7.1day.tif: No such file or directory
+0...10...20...30...40...50...60...70...80...90...100 - done.
+bounds: -92.6833 6.1667 -75.85 19.0833 (spherical)
+pre-quantization: 1.87m (0.0000168°) 1.44m (0.0000129°)
+topology: 9 arcs, 529 points
+post-quantization: 187m (0.00168°) 144m (0.00129°)
+simplification: effective minimum area 9.82e-10
+simplification: retained 260 / 519 points (50%)
+prune: retained 9 / 9 arcs (100%)
+bounds: -92.6833 6.1667 -75.85 19.0833 (spherical)
+pre-quantization: 1.87m (0.0000168°) 1.44m (0.0000129°)
+topology: 9 arcs, 260 points
+post-quantization: 187m (0.00168°) 144m (0.00129°)
+prune: retained 9 / 9 arcs (100%)
+Warning 6: Normalized/laundered field name: 'landslide_nowcast' to 'landslide_'
+a shp
+a shp/OGRGeoJSON.dbf
+a shp/OGRGeoJSON.prj
+a shp/OGRGeoJSON.shp
+a shp/OGRGeoJSON.shx
+Copying color table from /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150423/geojson/../landslide_nowcast.20150423_browse.tif to new file.
+Creating output file that is 333P x 256L.
+Processing input file /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150423/geojson/../landslide_nowcast.20150423_browse.tif.
+Using band 2 of source image as alpha.
+Using band 2 of destination image as alpha.
+0...10...20...30...40...50...60...70...80...90...100 - done.
+composite: Unknown field with tag 33550 (0x830e) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 33922 (0x8482) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 34735 (0x87af) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 34736 (0x87b0) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 34737 (0x87b1) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+merge /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150423/geojson/landslide_nowcast_level_1.geojson
+Created Browse Image: /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150423/geojson/../landslide_nowcast.20150423_browse.tif
+wms url: http://api.tiles.mapbox.com/v3/cappelaere.map-1d8e1acq/-84.2666666667,12.625,5/333x256.png32
+created: /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150423/geojson/../osm_bg.png
+gdalwarp  -of GTiff  -te -91.5615885417 7.0852941428 -76.9717447917 18.04736747  -t_srs EPSG:4326   -overwrite  -co COMPRESS=DEFLATE -setci   -ts 333 256  /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150423/geojson/../landslide_nowcast.20150423_browse.tif /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150423/geojson/../landslide_nowcast.20150423_small_browse.tif
+composite -gravity center -blend 60 /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150423/geojson/../landslide_nowcast.20150423_small_browse.tif /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150423/geojson/../osm_bg.png /Users/patricecappelaere/landslide/data/landslide_nowcast/d02/20150423/geojson/../landslide_nowcast.20150423_thn.jpg
+Done.
+0...10...20...30...40...50...60...70...80...90...100 - done.
+bounds: -74.9417 16.35 -64.975 21.425 (spherical)
+pre-quantization: 1.11m (0.00000997°) 0.564m (0.00000508°)
+topology: 16 arcs, 976 points
+post-quantization: 111m (0.000997°) 56.4m (0.000508°)
+simplification: effective minimum area 1.31e-9
+simplification: retained 488 / 975 points (50%)
+prune: retained 16 / 16 arcs (100%)
+bounds: -74.9417 16.35 -64.976 21.425 (spherical)
+pre-quantization: 1.11m (0.00000997°) 0.564m (0.00000508°)
+topology: 16 arcs, 488 points
+post-quantization: 111m (0.000997°) 56.4m (0.000508°)
+prune: retained 16 / 16 arcs (100%)
+Warning 6: Normalized/laundered field name: 'landslide_nowcast' to 'landslide_'
+a shp
+a shp/OGRGeoJSON.dbf
+a shp/OGRGeoJSON.prj
+a shp/OGRGeoJSON.shp
+a shp/OGRGeoJSON.shx
+Copying color table from /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150423/geojson/../landslide_nowcast.20150423_browse.tif to new file.
+Creating output file that is 502P x 256L.
+Processing input file /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150423/geojson/../landslide_nowcast.20150423_browse.tif.
+Using band 2 of source image as alpha.
+Using band 2 of destination image as alpha.
+0...10...20...30...40...50...60...70...80...90...100 - done.
+composite: Unknown field with tag 33550 (0x830e) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 33922 (0x8482) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 34735 (0x87af) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 34736 (0x87b0) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 34737 (0x87b1) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+merge /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150423/geojson/landslide_nowcast_level_1.geojson
+Created Browse Image: /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150423/geojson/../landslide_nowcast.20150423_browse.tif
+wms url: http://api.tiles.mapbox.com/v3/cappelaere.map-1d8e1acq/-69.9583333333,18.8875,6/502x256.png32
+created: /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150423/geojson/../osm_bg.png
+gdalwarp  -of GTiff  -te -75.4734700521 16.2061568618 -64.4431966146 21.5265955827  -t_srs EPSG:4326   -overwrite  -co COMPRESS=DEFLATE -setci   -ts 502 256  /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150423/geojson/../landslide_nowcast.20150423_browse.tif /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150423/geojson/../landslide_nowcast.20150423_small_browse.tif
+composite -gravity center -blend 60 /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150423/geojson/../landslide_nowcast.20150423_small_browse.tif /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150423/geojson/../osm_bg.png /Users/patricecappelaere/landslide/data/landslide_nowcast/d03/20150423/geojson/../landslide_nowcast.20150423_thn.jpg
+Done.
+3B-HHR-L.MS.MRG.3IMERG.20150423-S233000-E235959.1410.V03E.1day.tif
+filepath NRTPUB/imerg/gis/04
+Trying to download 3B-HHR-L.MS.MRG.3IMERG.20150423-S233000-E235959.1410.V03E.1day.tif
+TRMM FTP Error <class 'ftplib.error_perm'> 550 3B-HHR-L.MS.MRG.3IMERG.20150423-S233000-E235959.1410.V03E.1day.tif: No such file or directory
+3B-HHR-L.MS.MRG.3IMERG.20150423-S233000-E235959.1410.V03E.1day.tif
+filepath NRTPUB/imerg/gis/04
+Trying to download 3B-HHR-L.MS.MRG.3IMERG.20150423-S233000-E235959.1410.V03E.1day.tif
+TRMM FTP Error <class 'ftplib.error_perm'> 550 3B-HHR-L.MS.MRG.3IMERG.20150423-S233000-E235959.1410.V03E.1day.tif: No such file or directory
+Traceback (most recent call last):
+  File "./modis-active-fires.py", line 150, in <module>
+    apg_input.add_argument("-r", "--region", 	help="Region")
+  File "/usr/local/Cellar/python/2.7.8/Frameworks/Python.framework/Versions/2.7/lib/python2.7/argparse.py", line 1301, in add_argument
+    return self._add_action(action)
+  File "/usr/local/Cellar/python/2.7.8/Frameworks/Python.framework/Versions/2.7/lib/python2.7/argparse.py", line 1502, in _add_action
+    action = super(_ArgumentGroup, self)._add_action(action)
+  File "/usr/local/Cellar/python/2.7.8/Frameworks/Python.framework/Versions/2.7/lib/python2.7/argparse.py", line 1315, in _add_action
+    self._check_conflict(action)
+  File "/usr/local/Cellar/python/2.7.8/Frameworks/Python.framework/Versions/2.7/lib/python2.7/argparse.py", line 1453, in _check_conflict
+    conflict_handler(action, confl_optionals)
+  File "/usr/local/Cellar/python/2.7.8/Frameworks/Python.framework/Versions/2.7/lib/python2.7/argparse.py", line 1460, in _handle_conflict_error
+    raise ArgumentError(action, message % conflict_string)
+argparse.ArgumentError: argument -r/--region: conflicting option string(s): -r, --region
+Traceback (most recent call last):
+  File "./modis-active-fires.py", line 150, in <module>
+    apg_input.add_argument("-r", "--region", 	help="Region")
+  File "/usr/local/Cellar/python/2.7.8/Frameworks/Python.framework/Versions/2.7/lib/python2.7/argparse.py", line 1301, in add_argument
+    return self._add_action(action)
+  File "/usr/local/Cellar/python/2.7.8/Frameworks/Python.framework/Versions/2.7/lib/python2.7/argparse.py", line 1502, in _add_action
+    action = super(_ArgumentGroup, self)._add_action(action)
+  File "/usr/local/Cellar/python/2.7.8/Frameworks/Python.framework/Versions/2.7/lib/python2.7/argparse.py", line 1315, in _add_action
+    self._check_conflict(action)
+  File "/usr/local/Cellar/python/2.7.8/Frameworks/Python.framework/Versions/2.7/lib/python2.7/argparse.py", line 1453, in _check_conflict
+    conflict_handler(action, confl_optionals)
+  File "/usr/local/Cellar/python/2.7.8/Frameworks/Python.framework/Versions/2.7/lib/python2.7/argparse.py", line 1460, in _handle_conflict_error
+    raise ArgumentError(action, message % conflict_string)
+argparse.ArgumentError: argument -r/--region: conflicting option string(s): -r, --region
+Checking ba1.geog.umd.edu for latest file...
+cwd to Collection51/TIFF/Win04/2015
+latest is:  MCD45monthly.A2015032.Win04.051.burndate.tif
+already downloaded and processed...
+Checking ba1.geog.umd.edu for latest file...
+cwd to Collection51/TIFF/Win04/2015
+latest is:  MCD45monthly.A2015032.Win04.051.burndate.tif
+already downloaded and processed...
+found 16
+wms url: http://api.tiles.mapbox.com/v3/cappelaere.map-1d8e1acq/-84.26666665,12.625,5/400x250.png32
+created: /Users/patricecappelaere/landslide/data/quakes/2015/113/d02/osm_bg_image.tif
+found 77
+wms url: http://api.tiles.mapbox.com/v3/cappelaere.map-1d8e1acq/-69.95833335,18.8875,6/400x250.png32
+created: /Users/patricecappelaere/landslide/data/quakes/2015/113/d03/osm_bg_image.tif
+bounds: -92.6833 12.5819 -85.7653 18.1257 (spherical)
+pre-quantization: 0.769m (0.00000692°) 0.617m (0.00000554°)
+topology: 3 arcs, 107 points
+post-quantization: 76.9m (0.000692°) 61.7m (0.000554°)
+simplification: effective minimum area 1.61e-9
+simplification: retained 54 / 107 points (50%)
+prune: retained 3 / 3 arcs (100%)
+bounds: -92.6833 7.2244 -76.8749 19.0833 (spherical)
+pre-quantization: 1.76m (0.0000158°) 1.32m (0.0000119°)
+topology: 43 arcs, 2011 points
+post-quantization: 176m (0.00158°) 132m (0.00119°)
+simplification: effective minimum area 3.59e-9
+simplification: retained 1006 / 2010 points (50%)
+prune: retained 43 / 43 arcs (100%)
+bounds: -92.6833 6.2066 -75.85 19.0833 (spherical)
+pre-quantization: 1.87m (0.0000168°) 1.43m (0.0000129°)
+topology: 195 arcs, 11267 points
+post-quantization: 187m (0.00168°) 143m (0.00129°)
+simplification: effective minimum area 3.55e-9
+simplification: retained 5613 / 11224 points (50%)
+prune: retained 195 / 195 arcs (100%)
+bounds: -92.6833 6.2066 -75.8499 19.0833 (spherical)
+pre-quantization: 1.87m (0.0000168°) 1.43m (0.0000129°)
+topology: 401 arcs, 31361 points
+post-quantization: 187m (0.00168°) 143m (0.00129°)
+simplification: effective minimum area 3.27e-9
+simplification: retained 15627 / 31252 points (50%)
+prune: retained 401 / 401 arcs (100%)
+bounds: -92.6833 6.2066 -75.85 19.0833 (spherical)
+pre-quantization: 1.87m (0.0000168°) 1.43m (0.0000129°)
+topology: 499 arcs, 45259 points
+post-quantization: 187m (0.00168°) 143m (0.00129°)
+simplification: effective minimum area 3.18e-9
+simplification: retained 22517 / 45033 points (50%)
+prune: retained 499 / 499 arcs (100%)
+bounds: -92.6833 6.2066 -75.85 19.0833 (spherical)
+pre-quantization: 1.87m (0.0000168°) 1.43m (0.0000129°)
+topology: 605 arcs, 37493 points
+post-quantization: 187m (0.00168°) 143m (0.00129°)
+simplification: effective minimum area 2.29e-9
+simplification: retained 18500 / 37000 points (50%)
+prune: retained 605 / 605 arcs (100%)
+bounds: -92.6833 6.2613 -75.8984 19.0833 (spherical)
+pre-quantization: 1.87m (0.0000168°) 1.43m (0.0000128°)
+topology: 552 arcs, 20648 points
+post-quantization: 187m (0.00168°) 143m (0.00128°)
+simplification: effective minimum area 1.28e-9
+simplification: retained 9947 / 19943 points (50%)
+prune: retained 552 / 552 arcs (100%)
+bounds: -92.5913 6.2126 -75.8535 18.5547 (spherical)
+pre-quantization: 1.86m (0.0000167°) 1.37m (0.0000123°)
+topology: 116 arcs, 3124 points
+post-quantization: 186m (0.00167°) 137m (0.00123°)
+simplification: effective minimum area 6.13e-10
+simplification: retained 1457 / 2948 points (49%)
+prune: retained 116 / 116 arcs (100%)
+bounds: -92.5837 6.7533 -76.0659 18.2671 (spherical)
+pre-quantization: 1.84m (0.0000165°) 1.28m (0.0000115°)
+topology: 69 arcs, 1797 points
+post-quantization: 184m (0.00165°) 128m (0.00115°)
+simplification: effective minimum area 5.67e-10
+simplification: retained 827 / 1691 points (49%)
+prune: retained 69 / 69 arcs (100%)
+bounds: -92.6833 6.2066 -75.8499 19.0833 (spherical)
+pre-quantization: 1.87m (0.0000168°) 1.43m (0.0000129°)
+topology: 10097 arcs, 75450 points
+post-quantization: 187m (0.00168°) 143m (0.00129°)
+prune: retained 10097 / 10097 arcs (100%)
+Copying color table from /Users/patricecappelaere/landslide/data/whi/2015/113/d02/geojson/../vhi.20150423_browse.tif to new file.
+Creating output file that is 334P x 255L.
+Processing input file /Users/patricecappelaere/landslide/data/whi/2015/113/d02/geojson/../vhi.20150423_browse.tif.
+Using band 2 of source image as alpha.
+Using band 2 of destination image as alpha.
+0...10...20...30...40...50...60...70...80...90...100 - done.
+composite: Unknown field with tag 33550 (0x830e) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 33922 (0x8482) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 34735 (0x87af) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 34736 (0x87b0) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+composite: Unknown field with tag 34737 (0x87b1) encountered. `TIFFReadDirectory' @ warning/tiff.c/TIFFWarnings/850.
+Trying to download VHP.G04.C07.NP.P2015016.VH.VHI.tif
+level 0
+level 1
+level 2
+level 3
+level 4
+level 5
+level 6
+level 7
+level 8
+level 9
+merge /Users/patricecappelaere/landslide/data/whi/2015/113/d02/geojson/vhi_level_0.geojson
+merge /Users/patricecappelaere/landslide/data/whi/2015/113/d02/geojson/vhi_level_6.geojson
+merge /Users/patricecappelaere/landslide/data/whi/2015/113/d02/geojson/vhi_level_12.geojson
+merge /Users/patricecappelaere/landslide/data/whi/2015/113/d02/geojson/vhi_level_24.geojson
+merge /Users/patricecappelaere/landslide/data/whi/2015/113/d02/geojson/vhi_level_36.geojson
+merge /Users/patricecappelaere/landslide/data/whi/2015/113/d02/geojson/vhi_level_48.geojson
+merge /Users/patricecappelaere/landslide/data/whi/2015/113/d02/geojson/vhi_level_60.geojson
+merge /Users/patricecappelaere/landslide/data/whi/2015/113/d02/geojson/vhi_level_72.geojson
+merge /Users/patricecappelaere/landslide/data/whi/2015/113/d02/geojson/vhi_level_84.geojson
+Created Browse Image: /Users/patricecappelaere/landslide/data/whi/2015/113/d02/geojson/../vhi.20150423_browse.tif
+wms url: http://api.tiles.mapbox.com/v3/cappelaere.map-1d8e1acq/-84.2666665,12.6449428141,5/334x255.png32
+created: /Users/patricecappelaere/landslide/data/whi/2015/113/d02/geojson/../osm_bg.png
+gdalwarp  -of GTiff  -te -91.6055336875 7.14918110782 -76.9277993125 18.025015039  -t_srs EPSG:4326   -overwrite  -co COMPRESS=DEFLATE -setci   -ts 334 255  /Users/patricecappelaere/landslide/data/whi/2015/113/d02/geojson/../vhi.20150423_browse.tif /Users/patricecappelaere/landslide/data/whi/2015/113/d02/geojson/../vhi.20150423_small_browse.tif
+composite -gravity center -blend 60 /Users/patricecappelaere/landslide/data/whi/2015/113/d02/geojson/../vhi.20150423_small_browse.tif /Users/patricecappelaere/landslide/data/whi/2015/113/d02/geojson/../osm_bg.png /Users/patricecappelaere/landslide/data/whi/2015/113/d02/geojson/../vhi.20150423_thn.jpg
+VHI for week 016 already done!
+  File "./viirs_CHLA.py", line 143
+    if force or not  .path.exists(sw_osm_image):
+                     ^
+SyntaxError: invalid syntax
+  File "./viirs_CHLA.py", line 143
+    if force or not  .path.exists(sw_osm_image):
+                     ^
+SyntaxError: invalid syntax
+
+HEROKU_POSTGRESQL_COPPER_URL (DATABASE_URL)  ----backup--->  b088
+
+[0KPending... -[0KPending... \[0KPending...  |[0KCapturing... start /[0KCapturing... 0B -[0KCapturing... 0B \[0KCapturing... 0B |[0KCapturing... 0B /[0KCapturing... 0B -[0KCapturing... 4.4MB \[0KCapturing... done
+[0KStoring... done
+
+
+HEROKU_POSTGRESQL_ORANGE_URL (DATABASE_URL)  ----backup--->  b088
+
+[0KPending... -[0KCapturing... start \[0KCapturing... start |[0KCapturing... 1.5MB /[0KCapturing... done
+[0KStoring... done
+
+** bucket: ojo-d2
+ojo-d2 20150121/trmm_24_d02_20150121.thn.png 116947 2015-01-22 13:25:49 ** delete **
+ojo-d2 20150121/trmm_24_d02_20150121.topojson.gz 46320 2015-01-22 13:25:48 ** delete **
+ojo-d2 20150122/landslide_nowcast_d02_20150122.thn.png 115370 2015-01-22 13:25:53 ** delete **
+ojo-d2 20150122/landslide_nowcast_d02_20150122.topojson.gz 5021 2015-01-22 13:25:52 ** delete **
+** bucket: ojo-d3
+ojo-d3 20150121/trmm_24_d03_20150121.thn.png 51457 2015-01-22 13:27:09 ** delete **
+ojo-d3 20150121/trmm_24_d03_20150121.topojson.gz 5115 2015-01-22 13:27:09 ** delete **
+ojo-d3 20150122/landslide_nowcast_d03_20150122.thn.png 54534 2015-01-22 13:27:11 ** delete **
+ojo-d3 20150122/landslide_nowcast_d03_20150122.topojson.gz 474 2015-01-22 13:27:11 ** delete **
+/Users/patricecappelaere/landslide/data/ojo-d2
+/Users/patricecappelaere/landslide/data/ojo-d3
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+process_all execute err 254
+sending error email to  pat@cappelaere.com
+process_all execute err 254
+sending error email to  pat@cappelaere.com
+process_all execute err 254
+sending error email to  pat@cappelaere.com
+process_all execute err 254
+sending error email to  pat@cappelaere.com
+process_all execute err 1
+sending error email to  pat@cappelaere.com
+process_all execute err 1
+sending error email to  pat@cappelaere.com
+process_all execute err 255
+sending error email to  pat@cappelaere.com
+process_all execute err 255
+sending error email to  pat@cappelaere.com
+process_all execute err 1
+sending error email to  pat@cappelaere.com
+process_all execute err 1
+sending error email to  pat@cappelaere.com
+heroku pgbackups:capture --app ojo-streamer HEROKU_POSTGRESQL_COPPER_URL --expire
+cd /Users/patricecappelaere/Development/ojo/ojo-wiki
+heroku pgbackups:capture --app ojo-wiki HEROKU_POSTGRESQL_ORANGE_URL --expire
+process_all.sh Done: Thu Apr 23 08:01:00 EDT 2015

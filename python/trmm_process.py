@@ -39,7 +39,6 @@ class TRMM:
 		today				= parse(dt)
 		self.doy			= today.strftime('%j')
 
-
 		gis_file_00 		= "3B42RT.%04d%02d%02d00.7.03hr.tif"%(self.year, self.month, self.day)
 		gis_file_03 		= "3B42RT.%04d%02d%02d03.7.03hr.tif"%(self.year, self.month, self.day)
 		gis_file_06 		= "3B42RT.%04d%02d%02d06.7.03hr.tif"%(self.year, self.month, self.day)
@@ -106,9 +105,11 @@ class TRMM:
 				print "Exception", e
 				sys.exit(-1)
 
-		print self.trmm_gis_files
+		#print self.trmm_gis_files
 		for f in self.trmm_gis_files:
-			print "Trying to download", f
+			if verbose:
+				print "Trying to download", f
+				
 			local_filename = os.path.join(self.trmm_3B42RT_dir, f)
 			if not os.path.exists(local_filename):
 				if verbose:
@@ -132,7 +133,7 @@ class TRMM:
 		if force or not os.path.exists(self.output_file_180):
 			
 			fname 	= os.path.join(self.trmm_3B42RT_dir, self.trmm_gis_files[0])
-			print "reading", fname
+			#print "reading", fname
 
 			ds 		= gdal.Open(fname)
 			driver 	= gdal.GetDriverByName("GTiff")
@@ -401,7 +402,7 @@ class TRMM:
 		if not os.path.exists(self.trmm_dir):
 		    os.makedirs(self.trmm_dir)
 			
-# python trmm_process.py --region d02 -v
+# python trmm_process.py --region d02 --date 2015-04-23 -v
 # ======================================================================
 #
 if __name__ == '__main__':

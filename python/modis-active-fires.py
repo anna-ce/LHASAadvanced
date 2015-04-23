@@ -80,12 +80,13 @@ def csv_to_geojson(csv_filename, geojson_filename, bbox):
 		index += 1
 			
 	geojson = {"type": "FeatureCollection", "features": features}
-	print "features found:", len(features)
+	#print "features found:", len(features)
 	
 	with io.open(geojson_filename, 'w', encoding='utf-8') as f:
 		f.write(unicode(json.dumps(geojson, ensure_ascii=False)))
 		
-	print "Done:", geojson_filename
+	if verbose:
+		print "Done:", geojson_filename
 	
 def process_url( mydir, url, ymd, bbox, zoom, s3_bucket, s3_folder ):
 
@@ -120,17 +121,16 @@ def process_url( mydir, url, ymd, bbox, zoom, s3_bucket, s3_folder ):
 	mapbox_image(centerlat, centerlon, zoom, rasterXSize, rasterYSize, osm_bg_image)
 	
 	ullon, ullat, lrlon, lrlat = browseimage.bbox(centerlat, centerlon, zoom, rasterXSize, rasterYSize)
-	print ullon, lrlat, lrlon, ullat
+	#print ullon, lrlat, lrlon, ullat
 	
 	url = "https://firms.modaps.eosdis.nasa.gov/wms/?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=fires24&width=400&height=250&BBOX="
 	url += str(ullon) + ","+ str(lrlat) + "," + str(lrlon) + "," + str(ullat)
 	
-	if 1 or force or not os.path.exists(tif_filename):
+	if force or not os.path.exists(tif_filename):
 		urllib.urlretrieve(url, tif_filename)
-		print "retrieved ", tif_filename
+		#print "retrieved ", tif_filename
 	
 	# superimpose the suface water over map background
-	#if force or not os.path.isfile(sw_osm_image):	
 	if force or not os.path.isfile(thn_image):	
 		cmd = str.format("composite -gravity center {0} {1} {2}", tif_filename, osm_bg_image, thn_image)
 		execute(cmd)
@@ -147,6 +147,7 @@ if __name__ == '__main__':
 	apg_input.add_argument("-f", "--force", 	action='store_true', help="forces new product to be generated")
 	apg_input.add_argument("-v", "--verbose", 	action='store_true', help="Verbose Flag")
 	apg_input.add_argument("-r", "--region", 	help="Region")
+	apg_input.add_argument("-d", "--date", 		help="date")
 	
 	options 	= parser.parse_args()
 	force		= options.force

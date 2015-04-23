@@ -39,7 +39,9 @@ def execute( cmd ):
 	os.system(cmd)
 	
 def get_latest_mcd45_file(mydir, regionName, year):
-	print("Checking "+ ftp_site + " for latest file...")
+	if verbose:
+		print("Checking "+ ftp_site + " for latest file...")
+		
 	ftp = FTP(ftp_site)
 	
 	ftp.login(user, password)               				# user anonymous, passwd anonymous@
@@ -55,21 +57,21 @@ def get_latest_mcd45_file(mydir, regionName, year):
 	if regionName == 'd06':
 		path		= "Collection51/TIFF/Win18/%s"%(year)		# 
 		
-	print("cwd to "+path)
+	#print("cwd to "+path)
 	ftp.cwd(path)
 	filenames 	= []
 	ftp.retrlines('NLST', filenames.append )
 	download 	= filenames[len(filenames)-1]	# last one in list
 	download  	= download[:len(download)-3]	# remove .gz
 	
-	print "latest is: ", download	
+	#print "latest is: ", download	
 	
 	local_filename = os.path.join(mydir, download)
 	if os.path.exists(local_filename):
 		print "already downloaded and processed..."
 		ftp.close()
 		if not force:
-			sys.exit(-1)
+			sys.exit(0)
 		else:
 			return local_filename
 	else:
@@ -86,7 +88,7 @@ def get_latest_mcd45_file(mydir, regionName, year):
 			if verbose:
 				print cmd
 			err = os.system(cmd)
-			print "gunzip err", err
+			#print "gunzip err", err
 			if err != 0:
 				raise Exception("gunzip error")
 			ftp.close()
@@ -95,7 +97,7 @@ def get_latest_mcd45_file(mydir, regionName, year):
 			print "Error", sys.exc_info()[0]
 			os.remove(local_filename+".gz")
 			ftp.close()
-			sys.exit(1)
+			sys.exit(-1)
 			
 def process_mcd45_file(mydir, dx, file_name, s3_bucket, s3_folder):
 	if verbose:
@@ -192,9 +194,10 @@ if __name__ == '__main__':
 	
 	parser 		= argparse.ArgumentParser(description='MODIS Processing')
 	apg_input 	= parser.add_argument_group('Input')
-	apg_input.add_argument("-f", "--force", action='store_true', help="forces new product to be generated")
-	apg_input.add_argument("-v", "--verbose", action='store_true', help="Verbose Flag")
+	apg_input.add_argument("-f", "--force", 	action='store_true', help="forces new product to be generated")
+	apg_input.add_argument("-v", "--verbose", 	action='store_true', help="Verbose Flag")
 	apg_input.add_argument("-r", "--region", 	help="Region")
+	apg_input.add_argument("-d", "--date", 		help="date")
 	
 	options 	= parser.parse_args()
 	force		= options.force
