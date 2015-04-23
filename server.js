@@ -331,7 +331,7 @@ function setOptionsHeaders(req, res) {
     res.header("Allow", "POST,GET,PUT");	
     //res.header("Content-Length", "0");	
     //res.header("Content-Type", "text/html; charset=utf-8");	
-	res.send(200)
+	res.sendStatus(200)
 }
 
 function setAuthHeaders(req, res, next) {

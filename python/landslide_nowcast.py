@@ -258,7 +258,7 @@ def build_tif(dx, region, dir, date):
 		limit_low_ds	= None
 		limit_high_ds	= None
 
-	if 1:
+	if 0:
 		# Now let's colorize it
 		if 1: #force or not os.path.exists(forecast_landslide_bin_rgb):
 			cmd = "gdaldem color-relief -alpha " +  forecast_landslide_bin + " " + color_file + " " + forecast_landslide_bin_rgb
@@ -344,6 +344,8 @@ def build_tif(dx, region, dir, date):
 	
 	
 def process(mydir, scene, s3_bucket, s3_folder, zoom):
+	global verbose, force
+	
 	fullName = os.path.join(mydir, scene+".tif")
 	if not os.path.exists(fullName):
 		print "File does not exist", fullName
@@ -361,15 +363,18 @@ def process(mydir, scene, s3_bucket, s3_folder, zoom):
 		os.makedirs(levelsDir)
 
 	shpDir	= os.path.join(mydir,"shp")
+	cmd = "rm " + shpDir
+	execute(cmd)
+	
 	if not os.path.exists(levelsDir):            
 		os.makedirs(levelsDir)
 
 	merge_filename 		= os.path.join(geojsonDir, "%s.geojson" % scene)
-	topojson_filename 	= os.path.join(geojsonDir, "..", "%s.topojson" % scene)
-	browse_filename 	= os.path.join(geojsonDir, "..", "%s_browse.tif" % scene)
-	subset_filename 	= os.path.join(geojsonDir, "..", "%s_small_browse.tif" % scene)
-	osm_bg_image		= os.path.join(geojsonDir, "..", "osm_bg.png")
-	sw_osm_image		= os.path.join(geojsonDir, "..", "%s_thn.jpg" % scene)
+	topojson_filename 	= os.path.join(mydir, "%s.topojson" % scene)
+	browse_filename 	= os.path.join(mydir, "%s_browse.tif" % scene)
+	subset_filename 	= os.path.join(mydir, "%s_small_browse.tif" % scene)
+	osm_bg_image		= os.path.join(mydir, "osm_bg.png")
+	sw_osm_image		= os.path.join(mydir, "%s_thn.jpg" % scene)
 	shapefile_gz		= os.path.join(mydir, "%s.shp.gz" % scene)
 
 	levels 				= [2,1]
@@ -411,7 +416,7 @@ def process(mydir, scene, s3_bucket, s3_folder, zoom):
 		cmd 	= "gzip --keep "+ topojson_filename
 		execute(cmd)
 
-	# Convert to shapefile
+	# Convert to shapefile		
 	if force or not os.path.exists(shpDir):
 		cmd= "ogr2ogr -f 'ESRI Shapefile' %s %s" % ( shpDir, merge_filename)
 		execute(cmd)
@@ -428,6 +433,21 @@ def process(mydir, scene, s3_bucket, s3_folder, zoom):
 	file_list = [ sw_osm_image, topojson_filename, topojson_filename+".gz", fullName, shapefile_gz ]
 	
 	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
+		
+	if not verbose:
+		verbose = 1
+
+		cmd = "rm %s %s %s %s" %(osm_bg_image, subset_filename, subset_filename+".aux.xml", browse_filename )
+		execute(cmd)
+
+		cmd = "rm -rf "+shpDir
+		execute(cmd)
+		cmd = "rm -rf "+levelsDir
+		execute(cmd)
+		cmd = "rm -rf "+geojsonDir
+		execute(cmd)
+		
+		
 		
 def generate_map( dx, date, year, doy ):
 	# make sure it exists
@@ -449,7 +469,7 @@ def generate_map( dx, date, year, doy ):
 	scene 				=  "landslide_nowcast.%s" %(ymd)
 	process(mydir, scene, s3_bucket, s3_folder, region['thn_zoom'])
 	
-
+	
 # =======================================================================
 # Main
 # python landslide_nowcast.py --region d03 --date 2015-04-07 -v
