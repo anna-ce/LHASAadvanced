@@ -60,7 +60,7 @@ def get_daily_forecast():
 	cmd = "./wrfqpe.py "
 	execute(cmd)
 
-def process_script( str ):
+def process_script( str, dt ):
 	cmd = "python ./%s --region d02 --date %s" % (str, dt)
 	execute(cmd)
 
@@ -122,33 +122,34 @@ if __name__ == '__main__':
 	
 	apg_input.add_argument("-f", "--force", action='store_true', help="Forces new products to be re-generated")
 	apg_input.add_argument("-v", "--verbose", action='store_true', help="Verbose Flag")
+	apg_input.add_argument("-d", "--date", 		help="date")
 	
 	options 	= parser.parse_args()
 	force		= options.force or force
 	verbose		= options.verbose or verbose
+	d			= options.date
 
 	today		= date.today()
-	dt			= today.strftime("%Y-%m-%d")
+	dt			= d or today.strftime("%Y-%m-%d")
 	
 	yesterday	= today - timedelta(1)
 	ydt			= yesterday.strftime("%Y-%m-%d")
-	
-	get_daily_precipitation(ydt)
+		
+	process_script('trmm_process.py', ydt)
 	#get_daily_forecast()
 	#get_flood_nowcast()
-	get_landslide_nowcast()
+	#get_landslide_nowcast()
 		
-	process_script('trmm_process.py.py')
-	process_script('landslide_nowcast.py')
-	process_script('gpm_process.py')
-	process_script('modis-active-fires.py')
-	process_script('modis_burnedareas.py')
-	process_script('quake.py')
-	process_vhi('vhi.py')
-	process_vhi('viirs_CHLA.py')
-	process_vhi('chirps_prelim.py --period monthly')
-	process_vhi('chirps_prelim.py --period dekad')
-	process_vhi('chirps_prelim.py --period pentad')
+	process_script('landslide_nowcast.py', dt)
+	process_script('gpm_process.py', ydt)
+	process_script('modis-active-fires.py', ydt)
+	process_script('modis-burnedareas.py', ydt)
+	process_script('quake.py', ydt)
+	process_script('vhi.py', ydt)
+	process_script('viirs_CHLA.py', ydt)
+	process_script('chirps_prelim.py --period monthly', ydt)
+	process_script('chirps_prelim.py --period dekad', ydt)
+	process_script('chirps_prelim.py --period pentad', ydt)
 	
 	#get_modis_floodmap()
 	#restart_ojo_streamer()

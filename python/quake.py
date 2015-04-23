@@ -137,9 +137,10 @@ def process_url( mydir, url, ymd, bbox, zoom, s3_bucket, s3_folder ):
 if __name__ == '__main__':
 	parser 		= argparse.ArgumentParser(description='USGS Quake Processing')
 	apg_input 	= parser.add_argument_group('Input')
-	apg_input.add_argument("-f", "--force", action='store_true', help="forces new product to be generated")
-	apg_input.add_argument("-v", "--verbose", action='store_true', help="Verbose Flag")
+	apg_input.add_argument("-f", "--force", 	action='store_true', help="forces new product to be generated")
+	apg_input.add_argument("-v", "--verbose", 	action='store_true', help="Verbose Flag")
 	apg_input.add_argument("-r", "--region", 	help="Region")
+	apg_input.add_argument("-d", "--date", 		help="date")
 
 	options 	= parser.parse_args()
 	force		= options.force

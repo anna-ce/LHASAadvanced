@@ -196,6 +196,8 @@ function bootApplication(app) {
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: true }));
 	app.use(favicon(__dirname + '/public/favicon.png'));	
+	
+	app.use(bodyParser.text());
 		
 	//app.use(express.csrf());
 	//app.use(function(req, res, next) {
@@ -203,17 +205,6 @@ function bootApplication(app) {
 		//console.log('csrf:', res.locals.token);
 	//	next()
 		//});
-
-	//app.use(function(req, res, next) {
-	//  req.raw_post = '';
-	//  req.setEncoding('utf8');
-
-	//  req.on('data', function(chunk) { 
-	//    req.raw_post += chunk;
-	//  });
-
-	//  next();
-	//});
 	
 	app.use(i18n.abide({
 		supported_languages: ['en', 'es', 'fr', 'pt', 'sw','ne'],
