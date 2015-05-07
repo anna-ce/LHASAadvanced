@@ -1,4 +1,6 @@
 var fs 			 				= require('fs'),
+	path						= require('path'),
+	glob						= require('glob'),
 	util						= require('util'),
 	async						= require('async'),
 	moment						= require('moment'),
@@ -18,49 +20,41 @@ var fs 			 				= require('fs'),
 
 	//query_trmm				= require("../../lib/query_trmm"),
 	
-	query_landslide_nowcast		= require("../../lib/query_landslide_nowcast"),
 	query_planet_labs			= require("../../lib/query_planet_labs"),
 	query_locationcast			= require("../../lib/query_locationcast"),
 	query_pop					= require("../../lib/query_pop"),
 
-	query_af					= require("../../lib/query_modis_af").query
-	query_ba					= require("../../lib/query_ba").query
-	query_trmm_24				= require("../../lib/query_trmm_24").query
-	query_gpm_24				= require("../../lib/query_gpm_24").query
-	query_ef5					= require("../../lib/query_ef5").query,
-	query_maxswe				= require("../../lib/query_maxswe").query,
-	query_sm					= require("../../lib/query_sm").query,
-	query_maxq					= require("../../lib/query_maxq").query,
-	query_landslide_nowcast2	= require("../../lib/query_landslide_nowcast2").query,
-	query_quakes				= require("../../lib/query_quakes").query,
-	query_vhi					= require("../../lib/query_vhi").query,
-	query_vchloa				= require("../../lib/query_vchloa").query,
-	query_chirps_30				= require("../../lib/query_chirps_30").query,
-	query_chirps_10				= require("../../lib/query_chirps_10").query,
-	query_chirps_5				= require("../../lib/query_chirps_5").query
-	;
-
 	productQueries = {
 		"dfo": 					[query_dfo.QueryDFO],
 		"digiglobe":			[query_digiglobe.QueryDigiglobe],
-		"ef5": 					[query_ef5.QueryAll.bind(query_ef5), query_maxswe.QueryAll.bind(query_maxswe), query_sm.QueryAll.bind(query_sm), query_maxq.QueryAll.bind(query_maxq)],
 		"eo1_ali": 				[query_eo1.QueryEO1],
-		"landslide_model": 		[query_landslide_nowcast2.QueryAll.bind(query_landslide_nowcast2)],
 		"landsat_8": 			[query_l8.QueryLandsat8],
 		"landscan": 			[query_pop.QueryAll],
-		"modis": 				[query_modis.QueryModis, query_af.QueryAll.bind(query_af), query_ba.QueryAll.bind(query_ba)],
-		"modis_lst":			[query_modislst.QueryModisLST],
-		"ojo": 					[query_locationcast.QueryLocationCast],
-		"planet_labs": 			[query_planet_labs.QueryPlanetLabs],
-		"usgs": 				[query_quakes.QueryAll.bind(query_quakes)],
-		"radarsat_2": 			[query_radarsat2.QueryRadarsat2],
-		"trmm": 				[query_trmm_24.QueryAll.bind(query_trmm_24)],
-		"gpm": 					[query_gpm_24.QueryAll.bind(query_gpm_24)],
-		"noaa": 				[query_vhi.QueryAll.bind(query_vhi)],
-		"viirs": 				[query_vchloa.QueryAll.bind(query_vchloa)],
-		"chirps": 				[query_chirps_30.QueryAll.bind(query_chirps_30), query_chirps_10.QueryAll.bind(query_chirps_10),query_chirps_5.QueryAll.bind(query_chirps_5)]
+		"ojo": 					[query_locationcast.QueryAll],
+		"radarsat_2": 			[query_radarsat2.QueryRadarsat2]
 	}
-		
+	
+	// Add Product Queries from s3queries directory
+	var s3dir = path.join(process.cwd(),"lib","s3queries","*.js")	
+	glob(s3dir, function(err, files){
+		try {
+			for( f in files ) {
+				var fname 	= files[f]
+				if( fname.indexOf("query_s3.js") < 0 )  {
+					var rq 		= require(fname).query
+					var source	= rq.source
+					if( productQueries[source] == undefined ) {
+						productQueries[source]=[]
+					}
+					var queryAll = rq.QueryAll
+					productQueries[source].push( queryAll.bind(rq))
+				}
+			}
+		} catch(e) {
+			console.log("exception loading", fname, e)
+		}
+	})
+	
 	function ValidateBBox( bbox ) {
 		console.log("Validate bbox", bbox)
 		if( bbox[0] < -180 || bbox[0] > 180 ) 	return false

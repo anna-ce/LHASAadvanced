@@ -76,7 +76,19 @@
             "bucket":       "ojo-d6",
             "ojotiler":     "http://ojo-tiler.herokuapp.com",
             "ojotiler-dev": "http://localhost:8888",
-            "susmap":       "cappelaere.3uf4a15n"
+            "susmap":       "cappelaere.ddfjq0k9"
+        },
+        "d07": {
+            "name":		      "Himalaya",
+            "bbox":         [60.5, 6.7917, 97.383224, 38.375],
+            "target":       [78.9415631, 22.6333603],
+            "min_zoom":     5,
+            "max_zoom":	    18,
+            "map_id":       "cappelaere.map-q4hdwmh3",
+            "bucket":       "ojo-d7",
+            "ojotiler":     "http://ojo-tiler.herokuapp.com",
+            "ojotiler-dev": "http://localhost:8888",
+            "susmap":       "cappelaere.ddfjq0k9"
         }
     },
 	

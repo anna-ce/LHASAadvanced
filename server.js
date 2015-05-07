@@ -11,7 +11,7 @@ var express 		= require('express'),
 	mkdirp			= require('mkdirp'),
 	crypto			= require('crypto'),
 	Hawk			= require('hawk'),
-	
+	glob			= require('glob'),
 	home			= require('./app/controllers/home'),
 	s3				= require('./app/controllers/s3'),
 	test			= require('./app/controllers/test'),
@@ -31,41 +31,26 @@ var express 		= require('express'),
 	var mapinfo_pop				= require('./lib/mapinfo_pop');
 	var	products_pop			= require('./lib/products_pop');
 	
-	var	query_sm				= require('./lib/query_sm').query;
-	var	query_maxswe			= require('./lib/query_maxswe').query;
-	var	query_ef5				= require('./lib/query_ef5').query;
-	var	query_maxq				= require('./lib/query_maxq').query;
-
-	var	query_modis_af			= require('./lib/query_modis_af').query;
-	var	query_ba				= require('./lib/query_ba').query;
-	var	query_trmm_24			= require('./lib/query_trmm_24').query;
-	var	query_gpm_24			= require('./lib/query_gpm_24').query;
-	var	query_landslide_nowcast	= require('./lib/query_landslide_nowcast2').query;
-	var	query_quakes			= require('./lib/query_quakes').query;
-	var	query_vhi				= require('./lib/query_vhi').query;
-	var	query_vchloa			= require('./lib/query_vchloa').query;
-
-	var	query_chirps_30			= require('./lib/query_chirps_30').query;
-	var	query_chirps_10			= require('./lib/query_chirps_10').query;
-	var	query_chirps_5			= require('./lib/query_chirps_5').query;
-
-	var s3_products = {
-		"ef5": 						query_ef5,
-		"gpm_24": 					query_gpm_24,
-		"landslide_nowcast": 		query_landslide_nowcast,
-		"maxq": 					query_maxq,
-		"maxswe": 					query_maxswe,
-		'modis_af': 				query_modis_af,
-		'burned_areas': 			query_ba,
-		'sm': 						query_sm,
-		"trmm_24": 					query_trmm_24,
-		"quakes": 					query_quakes,
-		"vhi":  					query_vhi,
-		"viirs_chla":  	    		query_vchloa,
-		"chirps_prelim_pentad":		query_chirps_5,
-		"chirps_prelim_dekad":  	query_chirps_10,
-		"chirps_prelim_monthly":  	query_chirps_30
-	}
+	var s3_products = {}
+	
+	//
+	// Add all s3 queries from 
+	//
+	var s3dir = path.join(process.cwd(),"lib","s3queries","*.js")	
+	glob(s3dir, function(err, files){
+		try {
+			for( f in files ) {
+				var fname 	= files[f]
+				if( fname.indexOf("query_s3.js") < 0 )  {
+					var rq 			= require(fname).query
+					var subfolder	= rq.options.subfolder
+					s3_products[subfolder] = rq
+				}
+			}
+		} catch(e) {
+			logger.error("Error reading ", fname, e)
+		}
+	})
 	
 global.app 			= express();
 app.root 			= process.cwd();
