@@ -3,7 +3,8 @@
 # Created on 9/27/2012 Pat Cappelaere - Vightel Corporation
 #
 #
-# Processes the susceptibility map from Thomas Stanly
+# Processes the susceptibility map from Thomas Stanley
+# It generates the RGB map and bool map
 #
 
 import sys, os, inspect
@@ -34,6 +35,7 @@ def generate_map( dx ):
 	input_file				= os.path.join(config.data_dir, basedir, "susmap_"+ dx + ".tif")
 	input_file_bool			= os.path.join(config.data_dir, basedir, "susmap_"+ dx + "_bool.tif")
 	input_file_warped		= os.path.join(config.data_dir, basedir, "susmap_"+ dx + "_warped.tif")
+	rgb_warped_file			= os.path.join(config.data_dir, basedir, "susmap_"+ dx + "_warped_rgb.tif")
 	rgb_output_file			= os.path.join(config.data_dir, basedir, "susmap_"+ dx + "_rgb.tif")
 	output_file_shp			= os.path.join(config.data_dir, basedir, "susmap_"+ dx + ".shp")
 	output_file_geojson		= os.path.join(config.data_dir, basedir, "susmap_"+ dx + ".geojson")
@@ -59,8 +61,8 @@ def generate_map( dx ):
 	#	execute(cmd)
 	
 	# colorize interpolated raster
-	#if force or not os.path.exists(rgb_output_file):		
-	#	cmd = "gdaldem color-relief -alpha -of GTiff "+input_file_warped+" " + color_file + " " + rgb_output_file
+	#if force or not os.path.exists(rgb_warped_file):		
+	#	cmd = "gdaldem color-relief -alpha -of GTiff "+input_file_warped+" " + color_file + " " + rgb_warped_file
 	#	execute(cmd)
 
 	# generate mbtiles

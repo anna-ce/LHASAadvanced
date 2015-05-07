@@ -309,7 +309,7 @@ def build_tif(dx, region, dir, date):
 			execute(cmd)
 			cmd = "composite %s %s %s" % ( tmp_file, static_file, thumbnail_file)
 			execute(cmd)
-			execute("rm "+tmp_file)
+			execute("rm -f "+tmp_file)
 			
 		cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + ymd + " --file " + topojson_gz_file
 		if verbose:
@@ -363,7 +363,7 @@ def process(mydir, scene, s3_bucket, s3_folder, zoom):
 		os.makedirs(levelsDir)
 
 	shpDir	= os.path.join(mydir,"shp")
-	cmd = "rm " + shpDir
+	cmd = "rm -rf " + shpDir
 	execute(cmd)
 	
 	if not os.path.exists(levelsDir):            
@@ -437,7 +437,7 @@ def process(mydir, scene, s3_bucket, s3_folder, zoom):
 	if not verbose:
 		verbose = 1
 
-		cmd = "rm %s %s %s %s" %(osm_bg_image, subset_filename, subset_filename+".aux.xml", browse_filename )
+		cmd = "rm -f %s %s %s %s" %(osm_bg_image, subset_filename, subset_filename+".aux.xml", browse_filename )
 		execute(cmd)
 
 		cmd = "rm -rf "+shpDir

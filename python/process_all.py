@@ -141,7 +141,7 @@ if __name__ == '__main__':
 	#get_landslide_nowcast()
 		
 	process_script('landslide_nowcast.py', dt)
-	process_script('gpm_process.py', ydt)
+	#process_script('gpm_process.py', ydt)
 	process_script('modis-active-fires.py', ydt)
 	process_script('modis-burnedareas.py', ydt)
 	process_script('quake.py', ydt)
