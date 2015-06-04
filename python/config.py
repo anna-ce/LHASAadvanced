@@ -157,6 +157,11 @@ regions		= {
 		'bbox': 		[60.5, 6.7917, 97.383224, 38.375],
 		'centerlat':	22.6333603,
 		'centerlon':	78.9415631,
+		'pixelsize':	0.008333333333330,
+		'columns': 		4426,
+		'rows': 		3802,
+		'thn_width':	443,
+		'thn_height':	380,
 		'bucket':		"ojo-d7",
 		'thn_zoom': 	5,
 		'tiles-zoom':    "6-14"

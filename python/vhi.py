@@ -2,7 +2,8 @@
 # STAR - Global Vegetation Health Product
 #
 #
-# Processes TRMM Data for a specific region
+# Processes VHI Data for a specific region
+# Notes: Data only comes once a week.  FTP is more likely to fail
 #
 
 import os, inspect, sys, math, urllib
@@ -57,10 +58,10 @@ def get_files( gis_files, mydir):
 				ftp.retrbinary("RETR " + f, file.write)
 				file.close()
 			except Exception as e:
-				print "FTP Error", sys.exc_info()[0], e					
+				print "Weekly File not available:", sys.exc_info()[0], e					
 				os.remove(local_filename)
 				ftp.close();
-				sys.exit(-2)
+				sys.exit(0)
 
 	ftp.close()
 

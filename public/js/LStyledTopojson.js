@@ -121,11 +121,11 @@ function loadMapObject( mapObject, cb ) {
 				break;
 			case "legend":
 				// add it to the legend div
-				var product = mapObject.product
-				if( ! (product in legends) ) {
-					//console.log("Product not in legend", product)
+				var product = mapObject.id
+				if( ! ( product in legends) ) {
+					console.log("Product not in legend", product)
 					$('#legends').append(data)
-                	legends[product] = {legend: product+"_legend", display: true}
+					legends[product] = {legend: product+"_legend", display: true}
 				}
 				break;
 			case "credits":
@@ -287,6 +287,7 @@ function loadData( topojsonUrl, displayName, mapinfos ) {
 				// Remember the layer to legend mapping if we have one
 				if( legendObject ) {
 					legends[layerName] = { legend: legendObject.id, display: true };
+					console.log("adding legend mapping as", layerName)
 				}
 				
 				map_controls.addOverlay(geoJsonLayer, layerName)	
