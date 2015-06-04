@@ -58,6 +58,7 @@ class TRMM:
 		self.trmm_3B42RT_dir	=  os.path.join(config.data_dir,"trmm","3B42RT", self.ymd)
 		self.trmm_d02_dir		=  os.path.join(config.data_dir,"trmm","d02", self.ymd)
 		self.trmm_d03_dir		=  os.path.join(config.data_dir,"trmm","d03", self.ymd)
+		self.trmm_d07_dir		=  os.path.join(config.data_dir,"trmm","d07", self.ymd)
 		self.trmm_dir			=  os.path.join(config.data_dir,"trmm", self.ymd)
 
 		# Set file vars
@@ -225,7 +226,7 @@ class TRMM:
 	def process_trmm_region_topojson(self, dx, subset_file, supersampled_file, supersampled_rgb_file, pixelsize, bbox, shp_file, geojson_file, topojson_file, topojson_gz_file):
 		# we need to resample even higher to improve resolution
 		if force or not os.path.exists(supersampled_file):
-			cmd = "gdalwarp -overwrite -q -tr %f %f -te %f %f %f %f -r cubicspline -co COMPRESS=LZW %s %s"%(pixelsize/10, pixelsize/10, bbox[0], bbox[1], bbox[2], bbox[3], subset_file, supersampled_file)
+			cmd = "gdalwarp -overwrite -q -tr %f %f -te %f %f %f %f -r cubicspline -co COMPRESS=LZW %s %s"%(pixelsize/2, pixelsize/2, bbox[0], bbox[1], bbox[2], bbox[3], subset_file, supersampled_file)
 			self.execute(cmd)
 
 		if force or (verbose and not os.path.exists(supersampled_rgb_file)):
@@ -329,6 +330,8 @@ class TRMM:
 		
 			if verbose:
 				print "Removed files"
+		else:
+			print "cannot delete... in verbose"
 	
 	# ===========================
 	# Subset 24hr Rainfall Accumulation and resample for specific region
@@ -364,6 +367,8 @@ class TRMM:
 		if force or not os.path.exists(resampled_file):
 			self.process_trmm_region_subset(self.output_file_180, bbox, subset_file, self.color_file, rgb_subset_file)
 			self.process_trmm_region_upsample(pixelsize, bbox, self.output_file_180, resampled_file, resampled_rgb_file)
+		
+		if force or not os.path.exists(thumbnail_file):
 			self.process_trmm_region_thumbnail( rgb_subset_file, thn_width, thn_height, static_file,  thumbnail_file)
 		
 		if force or not os.path.exists(topojson_gz_file):
@@ -398,6 +403,9 @@ class TRMM:
 
 		if not os.path.exists(self.trmm_d03_dir):
 		    os.makedirs(self.trmm_d03_dir)
+
+		if not os.path.exists(self.trmm_d07_dir):
+		    os.makedirs(self.trmm_d07_dir)
 		
 		if not os.path.exists(self.trmm_dir):
 		    os.makedirs(self.trmm_dir)

@@ -66,6 +66,9 @@ def process_script( str, dt ):
 
 	cmd = "python ./%s --region d03 --date %s" % (str, dt)
 	execute(cmd)
+
+	#cmd = "python ./%s --region d07 --date %s" % (str, dt)
+	#execute(cmd)
 	
 def get_flood_nowcast():
 	cmd = "./gfms_processing.py"
@@ -135,25 +138,26 @@ if __name__ == '__main__':
 	yesterday	= today - timedelta(1)
 	ydt			= yesterday.strftime("%Y-%m-%d")
 		
-	process_script('trmm_process.py', ydt)
-	#get_daily_forecast()
-	#get_flood_nowcast()
-	#get_landslide_nowcast()
+	if 1:
+		process_script('trmm_process.py', ydt)
+		#get_daily_forecast()
+		#get_flood_nowcast()
 		
-	process_script('landslide_nowcast.py', dt)
-	#process_script('gpm_process.py', ydt)
-	process_script('modis-active-fires.py', ydt)
-	process_script('modis-burnedareas.py', ydt)
-	process_script('quake.py', ydt)
-	process_script('vhi.py', ydt)
-	process_script('viirs_CHLA.py', ydt)
-	process_script('chirps_prelim.py --period monthly', ydt)
-	process_script('chirps_prelim.py --period dekad', ydt)
-	process_script('chirps_prelim.py --period pentad', ydt)
+		process_script('landslide_nowcast.py', dt)
+		#process_script('gpm_process.py', ydt)
+		process_script('modis-active-fires.py', ydt)
+		process_script('modis-burnedareas.py', ydt)
+		process_script('quake.py', ydt)
+		process_script('viirs_CHLA.py', ydt)
+		process_script('chirps_prelim.py --period monthly', ydt)
+		process_script('chirps_prelim.py --period dekad', ydt)
+		process_script('chirps_prelim.py --period pentad', ydt)
+		process_script('vhi.py', ydt)
 	
-	#get_modis_floodmap()
-	#restart_ojo_streamer()
-	backup_ojo_streamer()
-	backup_ojo_wiki()
+		#get_modis_floodmap()
+		
+		backup_ojo_streamer()
+		backup_ojo_wiki()
+
 	cleanup()
 	

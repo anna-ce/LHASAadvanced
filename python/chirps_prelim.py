@@ -43,8 +43,11 @@ def get_file(gis_file, mydir, year):
 	except Exception as e:
 		print "FTP login Error", sys.exc_info()[0], e
 		print "Exception", e
+		sys.exit(-1)
 
-	print "Trying to download", gis_file
+	if verbose:
+		print "Trying to download", gis_file
+		
 	local_filename = os.path.join(mydir, gis_file)
 	if not os.path.exists(local_filename):
 		if verbose:
@@ -54,7 +57,7 @@ def get_file(gis_file, mydir, year):
 			ftp.retrbinary("RETR " + gis_file, file.write)
 			file.close()
 		except Exception as e:
-			print "FTP Error", sys.exc_info()[0], e					
+			print "FTP Error", sys.exc_info()[0], e, local_filename				
 			os.remove(local_filename)
 			
 			local_filename += ".gz"
@@ -63,12 +66,9 @@ def get_file(gis_file, mydir, year):
 				ftp.retrbinary("RETR " + gis_file, file.write)
 				file.close()
 			except Exception as e:
-				print "FTP Error", sys.exc_info()[0], e					
+				print "CHIRPS FTP Error", sys.exc_info()[0], e, local_filename
 				os.remove(local_filename)
-				sys.exit(-1)
-			
-			ftp.close();
-			sys.exit(-2)
+				sys.exit(0)
 
 	ftp.close()
 			
