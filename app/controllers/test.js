@@ -22,8 +22,36 @@ function sleep(milliseconds) {
   }
 }
 
+
+
 module.exports = {
+	gpm: function(req, res) {
+		res.render("test/gpm.ejs", { layout: false })	
+	},
+
+	gpm2: function(req, res) {
+		res.render("test/gpm2.ejs", { layout: false })	
+	},
 	
+	gpm3: function(req, res) {
+		res.render("test/gpm3.ejs", { layout: false })	
+	},
+	topojson: function(req,res) {
+		var id 			= req.params['id'];
+		var dirname		= path.join(app.root,"public")
+		var fileName	= path.join(dirname, id+".topojson.gz")
+		
+		function sendFile( fileName ) {
+			var basename 	= 	path.basename(fileName)
+			var dirname 	= 	path.dirname(fileName)
+
+			res.header("Access-Control-Allow-Origin", "*");
+			res.header("Content-Type", "application/json")
+			res.header("Content-Encoding", "gzip")
+			res.sendFile(basename, {root: dirname})
+		}
+		sendFile(fileName)
+	},
 	index2: function(req, res) {       
 		var id 	= req.params['id'];
 		var ip 	= getClientAddress(req)

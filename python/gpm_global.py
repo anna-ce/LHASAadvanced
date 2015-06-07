@@ -29,10 +29,8 @@ def execute( cmd ):
 		print cmd
 	os.system(cmd)
 
-def CreateLevel(l, geojsonDir, fileName, src_ds, data, attr, _force, _verbose):
+def CreateLevel(l, geojsonDir, fileName, src_ds, data, attr):
 	global force, verbose
-	force 				= _force
-	verbose				= _verbose
 	
 	if verbose:
 		print "CreateLevel", l, _force, _verbose
@@ -117,6 +115,8 @@ def CreateLevel(l, geojsonDir, fileName, src_ds, data, attr, _force, _verbose):
 		
 		
 def get_daily_gpm_files(trmm_gis_files, mydir, year, month):
+	global force, verbose
+	
 	filepath = gis_path+ "%02d" % ( month)
 	print "filepath", filepath
 	
@@ -153,6 +153,7 @@ def get_daily_gpm_files(trmm_gis_files, mydir, year, month):
 	ftp.close()
 			
 def process(gpm_dir, gis_file_day, ymd ):
+	global force, verbose
 
 	regionName = 'global'
 	
@@ -176,7 +177,7 @@ def process(gpm_dir, gis_file_day, ymd ):
 	supersampled_file	= os.path.join(region_dir, "gpm_24.%s.tif" % ymd)
 
 	if force or not os.path.exists(supersampled_file):
-		cmd 				= "gdalwarp -overwrite -q -tr %f %f -te %f %f %f %f -r cubicspline -co COMPRESS=LZW %s %s"%(pixelsize/2, pixelsize/2, bbox[0], bbox[1], bbox[2], bbox[3], origFileName, supersampled_file)
+		cmd 				= "gdalwarp -overwrite -q -tr %f %f -te %f %f %f %f -r cubicspline -co COMPRESS=LZW %s %s"%(pixelsize/5, pixelsize/5, bbox[0], bbox[1], bbox[2], bbox[3], origFileName, supersampled_file)
 		execute(cmd)
 	
 	geojsonDir	= os.path.join(region_dir,"geojson")
@@ -196,11 +197,15 @@ def process(gpm_dir, gis_file_day, ymd ):
 
 	geojson_filename 	= os.path.join(geojsonDir, "..", "gpm_24.%s.json" % ymd)
 
-	#levels 				= [144, 89, 55, 34, 21, 13, 8, 5, 3, 2, 1]
-	levels 				= [288, 178, 110, 68, 42, 26, 16, 10, 6, 4, 2]
+	#levels 			= [2584, 1597, 987, 610, 377, 233, 144, 89, 55, 34, 21, 13, 8, 5, 3, 2, 1]
+	levels 				= [377, 233, 144, 89, 55, 34, 21, 13, 8, 5, 3, 2]
 	
 	# From http://colorbrewer2.org/
-	hexColors 			= [ "#f7fcf0","#e0f3db","#ccebc5","#a8ddb5","#7bccc4","#4eb3d3","#2b8cbe","#0868ac","#084081","#810F7C","#4D004A" ]
+	#hexColors 			= [ "#f7fcf0","#e0f3db","#ccebc5","#a8ddb5","#7bccc4","#4eb3d3","#2b8cbe","#0868ac","#084081","#810F7C","#4D004A" ]
+	
+	# from http://tristen.ca/hcl-picker/#/hlc/12/1/241824/55FEFF
+	# Light to dark
+	hexColors 			= [ "#56F6FC","#58DEEE","#5BC6DE","#5EAFCC","#5E99B8","#5D84A3","#596F8D","#535B77","#4A4861","#3F374B","#322737","#241824"]
 	
 	ds 					= gdal.Open( supersampled_file )
 	band				= ds.GetRasterBand(1)
@@ -211,12 +216,12 @@ def process(gpm_dir, gis_file_day, ymd ):
 	if force or not os.path.exists(topojson_filename+".gz"):
 		for l in levels:
 			fileName 		= os.path.join(levelsDir, ymd+"_level_%d.tif"%l)
-			CreateLevel(l, geojsonDir, fileName, ds, data, "daily_precipitation", force, verbose)
+			CreateLevel(l, geojsonDir, fileName, ds, data, "precip")
 	
 		jsonDict = dict(type='FeatureCollection', features=[])
 	
 		for l in reversed(levels):
-			fileName 		= os.path.join(geojsonDir, "daily_precipitation_level_%d.geojson"%l)
+			fileName 		= os.path.join(geojsonDir, "precip_level_%d.geojson"%l)
 			if os.path.exists(fileName):
 				print "merge", fileName
 				with open(fileName) as data_file:    
@@ -231,29 +236,11 @@ def process(gpm_dir, gis_file_day, ymd ):
 		    json.dump(jsonDict, outfile)	
 
 		# Convert to topojson
-		cmd 	= "topojson -p -o "+ topojson_filename + " " + merge_filename
+		cmd 	= "topojson -p precip -o "+ topojson_filename + " " + merge_filename
 		execute(cmd)
 
 		cmd 	= "gzip --keep "+ topojson_filename
 		execute(cmd)
-		
-	if force or not os.path.exists(geojson_filename):	
-		jsonDict = dict(type='FeatureCollection', features=[])
-	
-		for l in reversed(levels):
-			fileName 		= os.path.join(levelsDir,  ymd+"_level_%d.tif.geojson"%l)
-			if os.path.exists(fileName):
-				print "merge", fileName
-				with open(fileName) as data_file:    
-					data = json.load(data_file)
-		
-				if 'features' in data:
-					for f in data['features']:
-						jsonDict['features'].append(f)
-	
-
-		with open(geojson_filename, 'w') as outfile:
-		    json.dump(jsonDict, outfile)	
 	
 		cmd 	= "gzip --keep "+ geojson_filename
 		execute(cmd)
@@ -274,7 +261,7 @@ def process(gpm_dir, gis_file_day, ymd ):
 # ===============================
 # Main
 #
-# python gpm_24.py --region d03 --date 2015-04-07 -v -f
+# python gpm_global.py --date 2015-04-07 -v -f
 
 if __name__ == '__main__':
 

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+	<!-- Leaflet -->
+   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+   <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+   
+    <!-- Mapbox GL -->
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.7.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.7.0/mapbox-gl.css' rel='stylesheet' />
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>	
+
+    <script src='/js/geojson-vt-dev.js'></script>
+	<script src="/js/leaflet-mapbox-gl.js"></script>
+	
+    <!--
+	<script src='/js/viz.js'></script>
+	-->
+	
+	
+	
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+		
+<div id='map'></div>
+		
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiY2FwcGVsYWVyZSIsImEiOiJxSjM5MEt3In0.9PYNJ8PzRclvtEh1jkqBuA';
+
+var canvas = L.tileLayer.canvas();
+
+var map = L.map('map', { layers: [canvas] }).setView([40, -74.50], 3);
+
+//var map = new mapboxgl.Map({
+//  container: 'map', // container id
+//  style: 'https://www.mapbox.com/mapbox-gl-styles/styles/outdoors-v7.json', //stylesheet location
+//  center: [40, -74.50], // starting position
+//  zoom: 3 // starting zoom
+//});
+
+var gl = L.mapboxGL({
+  accessToken: mapboxgl.accessToken,
+  style: 'https://www.mapbox.com/mapbox-gl-styles/styles/outdoors-v7.json', //stylesheet location
+}).addTo(map);
+
+//var hash = L.hash(map);
+
+var url = "/gpm2.json";
+var tileindex;
+
+$.ajax({
+	dataType: "json",
+	url: url,
+	success: function( data ) {
+		console.log("Loading data")
+		
+		var options = {
+			debug: 			1,
+			maxZoom: 		14,  	// max zoom to preserve detail on
+			tolerance: 		3,		// simplification tolerance (higher means simpler)
+			indexMaxZoom: 	8		// max zoom in the initial tile index
+		}
+		
+        tileIndex = geojsonvt(data, options);
+
+		canvas.drawTile = function(canvas, tilePoint, zoom) {
+		    var ctx 		= canvas.getContext('2d');
+			//console.log("drawTile", zoom, tilePoint)
+			//ctx.fillStyle 	= 'rgb(255,0,0)';
+
+		    var tile = tileIndex.getTile(zoom, tilePoint.x, tilePoint.y);
+		    if( tile ) {
+				var features = tile.features;
+				console.log("found features", features.length)			
+			    for (var i = 0; i < features.length; i++) {
+					var feature = features[i], typeChanged = type !== feature.type, type = feature.type;
+					ctx.beginPath();
+				
+					for (var j = 0; j < feature.geometry.length; j++) {
+						var ring = feature.geometry[j];
+						for (var k = 0; k < ring.length; k++) {
+							var p = ring[k];
+							console.log("p", p)
+							if (k) ctx.lineTo(p[0] / 16.0, p[1] / 16.0);
+							else ctx.moveTo(p[0] / 16.0, p[1] / 16.0);
+						}
+					}
+					if (type === 3) ctx.fill('evenodd');
+					ctx.stroke();
+				}
+			}
+		}
+		
+		//gl.render()
+	},
+	error: function(jqXHR, textStatus, errorThrown) {
+	  	console.log(textStatus, errorThrown);
+	}
+})
+	
+</script>
+
+</body>
+</html>
+
