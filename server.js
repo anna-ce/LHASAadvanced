@@ -311,6 +311,7 @@ app.get("/test/gpm",								test.gpm);
 app.get("/test/gpm2",								test.gpm2);
 app.get("/test/gpm3",								test.gpm3);
 app.get("/test/topojson/:id",						test.topojson);
+app.get("/test/precip/:id",							test.precip);
 
 //
 // returned to OPTIONS

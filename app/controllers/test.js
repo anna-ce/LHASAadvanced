@@ -5,6 +5,7 @@ var eyes		= require('eyes');
 var async		= require('async');
 var request		= require('request');
 var debug		= require('debug')('tests');
+var	geopix		= require('geopix');
 
 function getClientAddress(request){ 
     with(request)
@@ -22,7 +23,16 @@ function sleep(milliseconds) {
   }
 }
 
-
+function getGeopixValue(fileName, lat, lng) {
+	console.log("getGeopixValue", fileName, lat, lng)
+	//try {
+		var tif				= geopix.GEOTIFFFile(fileName)
+		return tif.LatLng(lat, lng)
+		//} catch(e) {
+		//logger.error("getGeopixValue Exception", e)
+		//return(-1)
+	//}
+}
 
 module.exports = {
 	gpm: function(req, res) {
@@ -51,6 +61,36 @@ module.exports = {
 			res.sendFile(basename, {root: dirname})
 		}
 		sendFile(fileName)
+	},
+	precip: function(req,res) {
+		var id			= req.params['id'];
+		var lat 		= parseFloat(req.query['lat']);
+		var lng			= parseFloat(req.query['lng']);
+		var dirname		= path.join(app.root,"public")
+		var fileName	= path.join(dirname, id+".tif")
+		var json 	= {
+				'id': 	id,
+				'lat': 	lat,
+				'lng': 	lng,
+				'precip': "??"
+		}
+
+		try {
+			
+			console.log(fileName, lat, lng)
+			if( fs.existsSync(fileName)) {
+				var result 	= getGeopixValue(fileName, lat, lng)
+				json.precip = result / 10
+				
+				console.log(json)
+			} else {
+				logger.error("File does not exist", fileName)
+			}
+			
+			res.send(json)
+		} catch(e) {
+			console.log("error", e)
+		}
 	},
 	index2: function(req, res) {       
 		var id 	= req.params['id'];
