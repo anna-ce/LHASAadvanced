@@ -67,8 +67,8 @@ def process_script( str, dt ):
 	cmd = "python ./%s --region d03 --date %s" % (str, dt)
 	execute(cmd)
 
-	#cmd = "python ./%s --region d07 --date %s" % (str, dt)
-	#execute(cmd)
+	cmd = "python ./%s --region d08 --date %s" % (str, dt)
+	execute(cmd)
 	
 def get_flood_nowcast():
 	cmd = "./gfms_processing.py"
@@ -148,11 +148,11 @@ if __name__ == '__main__':
 		process_script('modis-active-fires.py', ydt)
 		process_script('modis-burnedareas.py', ydt)
 		process_script('quake.py', ydt)
-		process_script('viirs_CHLA.py', ydt)
-		process_script('chirps_prelim.py --period monthly', ydt)
-		process_script('chirps_prelim.py --period dekad', ydt)
-		process_script('chirps_prelim.py --period pentad', ydt)
-		process_script('vhi.py', ydt)
+		#process_script('viirs_CHLA.py', ydt)
+		#process_script('chirps_prelim.py --period monthly', ydt)
+		#process_script('chirps_prelim.py --period dekad', ydt)
+		#process_script('chirps_prelim.py --period pentad', ydt)
+		#process_script('vhi.py', ydt)
 	
 		#get_modis_floodmap()
 		

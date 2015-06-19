@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+<head>
+	<title>Regions</title>
+	<meta charset="utf-8">
+
+	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>	
+	
+	<!-- Mapbox -->
+	<script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js'></script>
+	<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css' rel='stylesheet' />
+
+	<!-- MapboxGL	
+	<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.7.0/mapbox-gl.js'></script>
+	<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.7.0/mapbox-gl.css' rel='stylesheet' />
+	-->
+		
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+	<style>
+		body { margin:0; padding:0; }
+	    #map { top:10; bottom:10; left:10, width:100%; }
+		
+	</style>
+</head>
+
+<body>
+	<h2>Select:</h2>
+	<div class='container'>
+		<form method='POST' action="Javascript:GoGetIt();" >
+			<input type='hidden' name='prod' value='<%= prod %>' />
+			<div class="form-group">
+			
+			<table>
+				<tr><td><b>Product:</b></td><td><%= product.label %></td></tr>
+				<tr><td><b>Source:</b></td><td><%= product.source %></td></tr>
+				<div class='form-group'>
+				<tr><td><b>Region:</b></td><td>
+					<select class="form-control" id='region'>
+						<% for( var r in product.regions ) { %>
+							  <option value="<%= product.regions[r] %>"><%= product.regions[r] %></option>
+						<%}%>
+					</select>
+				</td></tr>
+			</div>
+			<div class='form-group'>
+				<tr><td><b>timespan:</b></td><td>
+					<select class="form-control" id='timespan'>
+						<% for( var r in product.timespan ) { %>
+							  <option value="<%= product.timespan[r] %>"><%= product.timespan[r] %></option>
+						<%}%>
+					</select>
+				</td></tr>
+			</div>
+			</table></br>
+			<button type="submit" class="btn btn-default">Submit</button>
+		</div>
+		</form>
+  </div>
+  <br/>
+  
+  <div id="map" style="width:850px;height:700px;"></div>
+  <br/>
+  
+  
+  <script>
+function GoGetIt() {
+	console.log("GoGetIt")
+	var url = "/v2/<%=prod%>/"
+	var timespan = $('#timespan').val()
+	var region = $('#region').val()
+	
+	url += timespan +"/"+region
+	console.log(url)
+	window.location.href=url
+}
+
+	L.mapbox.accessToken = 'pk.eyJ1IjoiY2FwcGVsYWVyZSIsImEiOiJxSjM5MEt3In0.9PYNJ8PzRclvtEh1jkqBuA';
+  
+  	var geojson = <%- JSON.stringify(geojson) %>
+	
+	var map = L.mapbox.map('map', 'mapbox.streets')
+    .setView([0, 0], 2);
+	
+    var popup = new L.Popup({ autoPan: false });
+	
+    var geojsonLayer = L.geoJson(geojson,  {
+        style: getStyle,
+        onEachFeature: onEachFeature
+    }).addTo(map);
+	
+	function getStyle(feature) {
+	      return {
+	          weight: 2,
+	          opacity: 0.4,
+	          color: 'red',
+	      };
+	  }
+	function onEachFeature(feature, layer) {
+	       layer.on({
+	           mousemove: mousemove,
+	           mouseout: mouseout,
+	           click: zoomToFeature
+	       });
+	}
+    var closeTooltip;
+	
+	function mousemove(e) {
+	      var layer = e.target;
+		  console.log(JSON.stringify(layer.feature))
+	      popup.setLatLng(e.latlng);
+	      popup.setContent('<div><b>Region:</b>' + layer.feature.properties.bucket + '</div>'
+		  	+ layer.feature.properties.name
+		  );
+	      if (!popup._map) popup.openOn(map);
+	      window.clearTimeout(closeTooltip);
+
+	      // highlight feature
+	      layer.setStyle({
+	          weight: 3
+	      });
+
+	      if (!L.Browser.ie && !L.Browser.opera) {
+	          layer.bringToFront();
+	      }
+	  }
+
+	function mouseout(e) {
+	      geojsonLayer.resetStyle(e.target);
+	      closeTooltip = window.setTimeout(function() {
+	          map.closePopup();
+	      }, 100);
+	}
+
+	function zoomToFeature(e) {
+	      map.fitBounds(e.target.getBounds());
+	}
+	
+	
+  </script>
+  
+</body>
+</html>

@@ -54,7 +54,7 @@ def get_latest_mcd45_file(mydir, regionName, year):
 		path		= "Collection51/TIFF/Win12/%s"%(year)		# 
 	if regionName == 'd05':
 		path		= "Collection51/TIFF/Win12/%s"%(year)		# 
-	if regionName == 'd06':
+	if regionName == 'd08':
 		path		= "Collection51/TIFF/Win18/%s"%(year)		# 
 		
 	#print("cwd to "+path)

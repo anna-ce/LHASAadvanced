@@ -6,6 +6,7 @@ var async		= require('async');
 var request		= require('request');
 var debug		= require('debug')('tests');
 var	geopix		= require('geopix');
+var zlib 		= require('zlib');
 
 function getClientAddress(request){ 
     with(request)
@@ -51,16 +52,19 @@ module.exports = {
 		var dirname		= path.join(app.root,"public")
 		var fileName	= path.join(dirname, id+".topojson.gz")
 		
-		function sendFile( fileName ) {
-			var basename 	= 	path.basename(fileName)
-			var dirname 	= 	path.dirname(fileName)
-
-			res.header("Access-Control-Allow-Origin", "*");
-			res.header("Content-Type", "application/json")
-			res.header("Content-Encoding", "gzip")
-			res.sendFile(basename, {root: dirname})
-		}
-		sendFile(fileName)
+		var gzip 		= zlib.createGzip();
+		var inp 		= fs.createReadStream(fileName);
+		var tj			= ''
+		inp.pipe(gzip)
+			.on('data', function(chunk) { tj += chunk })
+			.on('end', function() {
+				console.log(tj)
+				// convert to geojson
+				// clip it to bbox
+				// convert it back to topojson
+				// compress it
+				//send it
+			})
 	},
 	precip: function(req,res) {
 		var id			= req.params['id'];

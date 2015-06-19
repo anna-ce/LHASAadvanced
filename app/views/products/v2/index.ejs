@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+	<title>OJO Products</title>
+	<link rel="icon" href="/favicon.png" type="image/png">
+	
+  <!-- Bootstrap -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.3.5/bootstrap-select.min.css">
+  <link rel="stylesheet" href="/css/persona-buttons.css"  />	
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>	
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+	<script src="https://login.persona.org/include.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.3.5/bootstrap-select.min.js"></script>
+
+	
+</head>
+
+<body>
+	<div class="container">
+  <h2>Earth Sciences Applications Products</h2>
+  <div id="wordle">
+  </div>
+  </div>
+</body>
+
+<script src="/js/d3.js"></script>
+<script src="/js/d3.layout.cloud.js"></script>
+<script>
+  var config = <%- JSON.stringify(products,null,'\t') %>
+  var products = []
+  for( var k in config.products ) {
+    products.push( config.products[k].label)
+  }
+  
+  var fill  = d3.scale.category20();
+  
+  d3.layout.cloud().size([600, 600])
+      .words(
+        products.map(function(d) {
+          return {text: d, size: 20 + Math.random() * 20};
+        }))
+      .padding(1)
+      .rotate(function() { return ~~(Math.random() * 2) * 90; })
+      .font("Impact")
+      .fontSize(function(d) { return d.size; })
+      .on("end", draw)
+      .start();
+  function draw(words) {
+    d3.select("body").append("svg")
+        .attr("width", 1200)
+        .attr("height", 1200)
+      .append("g")
+        .attr("transform", "translate(350,350)")
+      .selectAll("text")
+        .data(words)
+      .enter().append("text")
+        .style("font-size", function(d) { return d.size + "px"; })
+        .style("font-family", "Impact")
+        .style("fill", function(d, i) { return fill(i); })
+        .attr("text-anchor", "middle")
+        .attr("transform", function(d) {
+          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+        })
+        .text(function(d) { return d.text; })
+        .on('click', function(d, i) {
+          console.log("clicked", d, i)
+          for( var k in config.products ) {
+            if( d.text === config.products[k].label) {
+              var url = config.products[k].url
+              if( url ) {
+                window.location.href = url;
+              }
+            }
+          }
+        })
+  }
+</script>

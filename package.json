@@ -45,6 +45,7 @@
     "sprintf-js": "1.0.2",
     "tar": "~0.1.19",
     "tokml": "0.2.4",
+    "turf": "2.0.2",
     "topojson": "1.6.11",
     "underscore": "1.5.2",
     "unirest": "0.3.4",

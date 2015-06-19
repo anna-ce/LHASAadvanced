@@ -78,17 +78,17 @@
             "ojotiler-dev": "http://localhost:8888",
             "susmap":       "cappelaere.ddfjq0k9"
         },
-        "d07": {
-            "name":		      "Himalaya",
-            "bbox":         [60.5, 6.7917, 97.383224, 38.375],
-            "target":       [78.9415631, 22.6333603],
+        "d08": {
+            "name":		    "Nepal",
+            "bbox":         [72.9998988,  25.9916923, 97.3832321,  38.4750256],
+            "target":       [85.1915655, 32.2333589],
             "min_zoom":     5,
             "max_zoom":	    18,
             "map_id":       "cappelaere.map-q4hdwmh3",
-            "bucket":       "ojo-d7",
+            "bucket":       "ojo-d8",
             "ojotiler":     "http://ojo-tiler.herokuapp.com",
             "ojotiler-dev": "http://localhost:8888",
-            "susmap":       "cappelaere.ddfjq0k9"
+            "susmap":       "cappelaere.5enw2e0e"
         }
     },
 	

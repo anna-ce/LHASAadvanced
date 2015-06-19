@@ -1,0 +1,123 @@
+{
+	"regions": {
+			"d02": {
+				"name":		     "Central America",
+				"bbox":         [-92.68, 6.17, -75.85, 19.08 ],
+				"map_id":       "cappelaere.map-mx5g2tn3",
+				"bucket":       "ojo-d2",
+				"target":       [-84.14, 9.84],
+				"min_zoom":     7,
+				"max_zoom":     18
+			},
+			"d03": {
+				"name":		      "Hispaniola",
+				"bbox":         [-74.94, 16.35, -64.98, 21.42 ],
+				"target":       [-69.96, 18.89],
+				"min_zoom":     7,
+				"max_zoom":	    18,
+				"map_id":       "cappelaere.map-mx5g2tn3",
+				"bucket":       "ojo-d3"
+			},
+			"d04": {
+				"name":		     "Namibia",
+				"bbox":         [18, -21, 26, -17 ],
+				"target":       [21.65,-18.12],
+				"min_zoom":     6,
+				"max_zoom":	    18,
+				"map_id":       "cappelaere.map-q4hdwmh3",
+				"bucket":       "ojo-d4"
+			},
+			"d05": {
+				"name":		    "Malawi",
+				"bbox":         [-74.94, 16.35, -64.98, 21.42 ],
+				"target":       [-70.08, 20.22],
+				"min_zoom":     7,
+				"max_zoom":	    18,
+				"map_id":       "cappelaere.map-q4hdwmh3",
+				"bucket":       "ojo-d5"
+			},
+			"d06": {
+				"name":		    "Pakistan",
+				"bbox":         [60, 20, 80, 40 ],
+				"target":       [70, 30],
+				"min_zoom":     5,
+				"max_zoom":	    18,
+				"map_id":       "cappelaere.map-q4hdwmh3",
+				"bucket":       "ojo-d6"
+			},
+			"d07": {
+				"name":		    "Himalaya",
+				"bbox":         [60.5, 6.7917, 97.383224, 38.375],
+				"target":       [78.9415631, 22.6333603],
+				"min_zoom":     5,
+				"max_zoom":	    18,
+				"map_id":       "cappelaere.map-q4hdwmh3",
+				"bucket":       "ojo-d7"
+			},
+			"global": {
+				"name":			"Global",
+				"bbox":         [-175, 60, 175, -60 ],
+				"target":       [-80, 20],
+				"map_id":       "cappelaere.map-mx5g2tn3",
+				"bucket":       "ojo-global",
+				"min_zoom":     2,
+				"max_zoom":     4
+			}
+	},
+	"products": {
+		"precip": {
+			"label": "Rainfall Precipitation",
+			"source": "GPM IMERG",
+			"url": "/v2/precip",
+			"regions": [
+				"d02", "d03"
+			],
+			"timespan": [ "3hr","1d","3d","10d","30d"]
+		},
+		"anom": {
+			"label": "Rainfall Anomalies"
+		},
+		"precipfcst": {
+			"label": "Rain Forecast"
+		},
+		"lsfcst": {
+			"label": "Landslide Forecast",
+			"source": "DK Model",
+			"url": "/v2/lsfcst",
+			"regions": [
+				"d02", "d03"
+			]
+		},
+		"lscat": {
+			"label": "Landslide Catalog",
+			"url": "/v2/lscat",
+			"regions": [
+				"d02", "d03"
+			]
+		},
+		"flood_forecast": {
+			"label": "Flood Forecast"
+		},
+		"snow_cover": {
+			"label": "Snow Cover"
+		},
+		"frost": {
+			"label": "Frost"
+		},
+		"fires": {
+			"label": "Wild Fires"
+		},
+		"quakes": {
+			"label": "Earth Quakes"
+		},
+		"sm": {
+			"label": "Soil Moisture"
+		},
+		"vgi": {
+			"label": "Vegetation Stress"
+		},
+		"ndvi": {
+			"label": "Vegetation Health"
+		}
+	}
+}

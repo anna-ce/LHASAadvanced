@@ -23,6 +23,7 @@ var express 		= require('express'),
 	User			= require('./models/user'),
 	apps			= require('./app/controllers/apps'),
 	products		= require('./app/controllers/products'),
+	products_v2		= require('./app/controllers/products_v2'),
 	mapinfo			= require('./app/controllers/mapinfo');
 	
 	//var mapinfo_trmm	= require('./lib/mapinfo_trmm');
@@ -312,6 +313,11 @@ app.get("/test/gpm2",								test.gpm2);
 app.get("/test/gpm3",								test.gpm3);
 app.get("/test/topojson/:id",						test.topojson);
 app.get("/test/precip/:id",							test.precip);
+
+app.get('/v2/products',								products_v2.index);
+app.get('/v2/:prod',								products_v2.regions);
+app.get('/v2/:prod/:span/:reg',						products_v2.whichProduct);
+app.get('/v2/:prod/:span/:reg/:id.:fmt?',			products_v2.getProduct);
 
 //
 // returned to OPTIONS

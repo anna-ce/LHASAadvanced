@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+<head>
+	<title>Regions</title>
+	<meta charset="utf-8">
+
+	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+	<link rel="icon" href="/favicon.png" type="image/png">
+	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>	
+	<script src="http://d3js.org/topojson.v1.min.js"></script>
+	
+	<!-- Mapbox -->
+	<script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js'></script>
+	<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css' rel='stylesheet' />
+
+	<!-- MapboxGL	
+	<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.7.0/mapbox-gl.js'></script>
+	<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.7.0/mapbox-gl.css' rel='stylesheet' />
+	-->
+		
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+	<style>
+		body { margin:0; padding:0; }
+	    #map { top:10; bottom:10; left:10, width:100%; }
+		
+	</style>
+</head>
+
+<body>
+	<div class='container'>
+		<table>
+			<tr><td><b>Product:</b></td><td><%= product.label %></td></tr>
+			<tr><td><b>Source:</b></td><td><%= product.source %></td></tr>
+			<tr><td><b>Span:</b></td><td> <%= span %> </td></tr>
+			<tr><td><b>Region:</b></td><td>	<%= region.name %>	</td></tr>
+		</table></br>
+  </div>
+  <br/>
+  
+  <div id="map" style="width:850px;height:700px;"></div>
+  <br/>
+  
+  
+  <script>
+
+	L.mapbox.accessToken = 'pk.eyJ1IjoiY2FwcGVsYWVyZSIsImEiOiJxSjM5MEt3In0.9PYNJ8PzRclvtEh1jkqBuA';
+  	
+	var map = L.mapbox.map('map', 'mapbox.streets')
+    .setView([<%= region.target[1]%>, <%=region.target[0]%>], <%= region.min_zoom %>);
+	
+    var popup = new L.Popup({ autoPan: false });
+	
+	var hexColors 	= [ "#56F6FC","#58DEEE","#5BC6DE","#5EAFCC","#5E99B8","#5D84A3","#596F8D","#535B77","#4A4861","#3F374B","#322737","#241824"]
+	
+	var url = "/v2/<%=prod%>/<%=span%>/<%=region.id%>/<%=id%>.topojson"
+    $.ajax({
+    	dataType: "json",
+    	url: url,
+    	success: function( data ) {
+    		console.log("Loading data") 
+			var geojson;
+			if( data.objects ) {       
+				for (var key in data.objects) {
+					geojson = topojson.feature(data, data.objects[key]);
+				}
+			} else {
+				geojson = data
+			}
+			
+	    	var geojsonLayer = L.geoJson(geojson,  {
+	        	style: getStyle
+				//onEachFeature: onEachFeature
+			}).addTo(map);
+		}
+	})
+	
+	function getStyle(feature) {
+		var color;
+		var precip = feature.properties.precip
+        switch( precip ) {
+        case 2:
+          color = hexColors[0];
+          break;
+        case 3:
+          color = hexColors[1];
+          break;
+        case 5:
+          color = hexColors[2];
+          break;
+        case 8:
+          color = hexColors[3];
+          break;
+        case 13:
+          color = hexColors[4];
+          break;
+        case 21:
+          color = hexColors[5];
+          break;
+        case 34:
+          color = hexColors[6];
+          break;
+        case 55:
+          color = hexColors[7];
+          break;
+        case 89:
+          color = hexColors[8];
+          break;
+        case 144:
+          color = hexColors[9];
+          break;
+        case 233:
+          color = hexColors[10];
+          break;
+        case 377:
+          color = hexColors[11];
+          break;
+        }
+	      return {
+	          weight: 1,
+	          opacity: 0.4,
+	          color: color,
+	      };
+	  }
+	function onEachFeature(feature, layer) {
+	       layer.on({
+	           mousemove: mousemove,
+	           mouseout: mouseout,
+	           click: zoomToFeature
+	       });
+	}
+    var closeTooltip;
+	
+	function mousemove(e) {
+	      var layer = e.target;
+		  console.log(JSON.stringify(layer.feature))
+	      popup.setLatLng(e.latlng);
+	      popup.setContent('<div><b>Region:</b>' + layer.feature.properties.bucket + '</div>'
+		  	+ layer.feature.properties.name
+		  );
+	      if (!popup._map) popup.openOn(map);
+	      window.clearTimeout(closeTooltip);
+
+	      // highlight feature
+	      layer.setStyle({
+	          weight: 3
+	      });
+
+	      if (!L.Browser.ie && !L.Browser.opera) {
+	          layer.bringToFront();
+	      }
+	  }
+
+	function mouseout(e) {
+	      geojsonLayer.resetStyle(e.target);
+	      closeTooltip = window.setTimeout(function() {
+	          map.closePopup();
+	      }, 100);
+	}
+
+	function zoomToFeature(e) {
+	      map.fitBounds(e.target.getBounds());
+	}
+	
+	
+  </script>
+  
+</body>
+</html>

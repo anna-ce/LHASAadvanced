@@ -153,7 +153,7 @@ regions		= {
 		'thn_zoom': 	6
 	},
 	'd07': {
-		'name':			"Himalaya",
+		'name':			"India",
 		'bbox': 		[60.5, 6.7917, 97.383224, 38.375],
 		'centerlat':	22.6333603,
 		'centerlon':	78.9415631,
@@ -163,6 +163,20 @@ regions		= {
 		'thn_width':	443,
 		'thn_height':	380,
 		'bucket':		"ojo-d7",
+		'thn_zoom': 	5,
+		'tiles-zoom':    "6-14"
+	},
+	'd08': {
+		'name':			"Nepal",
+		'bbox': 		[72.9998988,  25.9916923, 97.3832321,  38.4750256],
+		'centerlat':	32.2333589,
+		'centerlon':	85.1915655,  
+		'pixelsize':	0.008333333333330,
+		'columns': 		2926,
+		'rows': 		1498,
+		'thn_width':	583,
+		'thn_height':	300,
+		'bucket':		"ojo-d8",
 		'thn_zoom': 	5,
 		'tiles-zoom':    "6-14"
 	}
