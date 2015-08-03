@@ -31,10 +31,7 @@ def execute( cmd ):
 
 def CreateLevel(l, geojsonDir, fileName, src_ds, data, attr):
 	global force, verbose
-	
-	if verbose:
-		print "CreateLevel", l, _force, _verbose
-	
+		
 	projection  		= src_ds.GetProjection()
 	geotransform		= src_ds.GetGeoTransform()
 	#band				= src_ds.GetRasterBand(1)
@@ -241,6 +238,24 @@ def process(gpm_dir, gis_file_day, ymd ):
 
 		cmd 	= "gzip --keep "+ topojson_filename
 		execute(cmd)
+		
+	if force or not os.path.exists(geojson_filename):	
+		jsonDict = dict(type='FeatureCollection', features=[])
+	
+		for l in reversed(levels):
+			fileName 		= os.path.join(levelsDir,  ymd+"_level_%d.tif.geojson"%l)
+			if os.path.exists(fileName):
+				print "merge", fileName
+				with open(fileName) as data_file:    
+					data = json.load(data_file)
+		
+				if 'features' in data:
+					for f in data['features']:
+						jsonDict['features'].append(f)
+	
+
+		with open(geojson_filename, 'w') as outfile:
+		    json.dump(jsonDict, outfile)	
 	
 		cmd 	= "gzip --keep "+ geojson_filename
 		execute(cmd)

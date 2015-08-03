@@ -96,6 +96,7 @@ module.exports = {
 			console.log("error", e)
 		}
 	},
+
 	index2: function(req, res) {       
 		var id 	= req.params['id'];
 		var ip 	= getClientAddress(req)

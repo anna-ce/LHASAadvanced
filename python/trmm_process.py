@@ -60,6 +60,7 @@ class TRMM:
 		self.trmm_d03_dir		=  os.path.join(config.data_dir,"trmm","d03", self.ymd)
 		self.trmm_d07_dir		=  os.path.join(config.data_dir,"trmm","d07", self.ymd)
 		self.trmm_d08_dir		=  os.path.join(config.data_dir,"trmm","d08", self.ymd)
+
 		self.trmm_dir			=  os.path.join(config.data_dir,"trmm", self.ymd)
 
 		# Set file vars
