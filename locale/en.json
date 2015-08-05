@@ -245,10 +245,9 @@
     "products": {
         "active_fires": "Active Fires",
         "burn_scar": "Burn Scar",
-        "precip_1": "1-Day Precipitation",
-        "precip_5": "5-Day Precipitation",
-        "precip_10": "10-Day Precipitation",
-        "precip_30": "30-Day Precipitation",
+        "precip_1d": "1-Day Precipitation",
+        "precip_3d": "3-Day Precipitation",
+        "precip_7d": "7-Day Precipitation",
         "flood_forecast": "Flood Forecast",
         "flood_nowcast": "Flood Nowcast",
         "flood_catalog": "Flood Catalog",
@@ -457,13 +456,18 @@
                 "5500": 5500
             }
         },
-        "daily_precipitation": {
+        "precipitation": {
             "title": "Daily Precipitation",
             "credits": "NASA TRMM",
             "source": {
                 "label": "Source",
                 "source": "NASA GSFC TRMM"
             },
+			
+			"gpm_1d": "1-d Rainfall Accumulation",
+			"gpm_3d": "3-d Rainfall Accumulation",
+			"gpm_7d": "7-d Rainfall Accumulation",
+			
             "legend": {
                 "1mm": "1mm",
                 "2mm": "2mm",
@@ -475,7 +479,9 @@
                 "34mm": "34mm",
                 "55mm": "55mm",
                 "89mm": "89mm",
-                "144mm": "144mm"
+                "144mm": "144mm",
+                "233mm": "233mm",
+                "377mm": "377mm"
             }
         },
         "stream_flow": {

@@ -21,8 +21,8 @@ from s3 import CopyToS3
 verbose 	= 0
 force 		= 0
 ftp_site 	= "jsimpson.pps.eosdis.nasa.gov"
-path	 	= "pub/merged/3B42RT/"
-gis_path 	= "NRTPUB/imerg/gis/"
+#gis_path 	= "pub/merged/3B42RT/"
+gis_path 	= "data/imerg/gis/"
 
 def execute( cmd ):
 	if verbose:
@@ -148,8 +148,29 @@ def get_daily_gpm_files(trmm_gis_files, mydir, year, month):
 				sys.exit(-2)
 
 	ftp.close()
+	
+def save_tif(fname, data, ds, type, colors):
+	if verbose:
+		print "saving", fname
+		
+	format 		= "GTiff"
+	driver 		= gdal.GetDriverByName( format )
+	dst_ds	 	= driver.Create( fname, ds.RasterXSize, ds.RasterYSize, 1, type, [ 'COMPRESS=DEFLATE' ] )
+	band 		= dst_ds.GetRasterBand(1)
+	
+	band.WriteArray( data )
+	
+	dst_ds.SetGeoTransform( ds.GetGeoTransform() )
+	dst_ds.SetProjection( ds.GetProjection() )
+	
+	ct = gdal.ColorTable()
+	ct.SetColorEntry( 0, (0, 0, 0, 0) )
+	ct.SetColorEntry( 1, (255, 0, 0, 255) )
+	band.SetRasterColorTable(ct)
+	
+	dst_ds = None
 			
-def process(gpm_dir, gis_file_day, ymd ):
+def process(gpm_dir, name, gis_file_day, ymd ):
 	global force, verbose
 
 	regionName = 'global'
@@ -171,28 +192,29 @@ def process(gpm_dir, gis_file_day, ymd ):
 	bbox				= [xorg, ymax, xmax, yorg]
 	print origFileName, bbox
 	
-	supersampled_file	= os.path.join(region_dir, "gpm_24.%s.tif" % ymd)
+	supersampled_file	= os.path.join(region_dir, "%s.%s_x2.tif" % (name, ymd))
 
 	if force or not os.path.exists(supersampled_file):
-		cmd 				= "gdalwarp -overwrite -q -tr %f %f -te %f %f %f %f -r cubicspline -co COMPRESS=LZW %s %s"%(pixelsize/5, pixelsize/5, bbox[0], bbox[1], bbox[2], bbox[3], origFileName, supersampled_file)
+		cmd 				= "gdalwarp -overwrite -q -tr %f %f -te %f %f %f %f -r cubicspline -co COMPRESS=LZW %s %s"%(pixelsize/2, pixelsize/2, bbox[0], bbox[1], bbox[2], bbox[3], origFileName, supersampled_file)
 		execute(cmd)
 	
-	geojsonDir	= os.path.join(region_dir,"geojson")
+	geojsonDir	= os.path.join(region_dir,"geojson_%s" % (name))
 	if not os.path.exists(geojsonDir):            
 		os.makedirs(geojsonDir)
 
-	levelsDir	= os.path.join(region_dir,"levels")
+	levelsDir	= os.path.join(region_dir,"levels_%s" % (name))
 	if not os.path.exists(levelsDir):            
 		os.makedirs(levelsDir)
 
-	merge_filename 		= os.path.join(geojsonDir, "gpm_24.%s.geojson" % ymd)
-	topojson_filename 	= os.path.join(geojsonDir, "..", "gpm_24.%s.topojson" % ymd)
-	browse_filename 	= os.path.join(geojsonDir, "..", "gpm_24.%s_browse.tif" % ymd)
-	subset_filename 	= os.path.join(geojsonDir, "..", "gpm_24.%s_small_browse.tif" % ymd)
+	merge_filename 		= os.path.join(geojsonDir, "%s.%s.geojson" % (name, ymd))
+	topojson_filename 	= os.path.join(geojsonDir, "..", "%s.%s.topojson" % (name,ymd))
+	browse_filename 	= os.path.join(geojsonDir, "..", "%s.%s_browse.tif" % (name,ymd))
+	subset_filename 	= os.path.join(geojsonDir, "..", "%s.%s_small_browse.tif" % (name, ymd))
 	osm_bg_image		= os.path.join(geojsonDir, "..", "osm_bg.png")
-	sw_osm_image		= os.path.join(geojsonDir, "..", "gpm_24.%s_thn.jpg" % ymd)
+	sw_osm_image		= os.path.join(geojsonDir, "..", "%s.%s_thn.jpg" % (name, ymd))
+	tif_image			= os.path.join(geojsonDir, "..", "%s.%s.tif" % (name, ymd))
 
-	geojson_filename 	= os.path.join(geojsonDir, "..", "gpm_24.%s.json" % ymd)
+	geojson_filename 	= os.path.join(geojsonDir, "..", "%s.%s.json" % (name,ymd))
 
 	#levels 			= [2584, 1597, 987, 610, 377, 233, 144, 89, 55, 34, 21, 13, 8, 5, 3, 2, 1]
 	levels 				= [377, 233, 144, 89, 55, 34, 21, 13, 8, 5, 3, 2]
@@ -200,6 +222,8 @@ def process(gpm_dir, gis_file_day, ymd ):
 	# From http://colorbrewer2.org/
 	#hexColors 			= [ "#f7fcf0","#e0f3db","#ccebc5","#a8ddb5","#7bccc4","#4eb3d3","#2b8cbe","#0868ac","#084081","#810F7C","#4D004A" ]
 	
+	# http://hclwizard.org/hcl-color-scheme/
+	# http://vis4.net/blog/posts/avoid-equidistant-hsv-colors/
 	# from http://tristen.ca/hcl-picker/#/hlc/12/1/241824/55FEFF
 	# Light to dark
 	hexColors 			= [ "#56F6FC","#58DEEE","#5BC6DE","#5EAFCC","#5E99B8","#5D84A3","#596F8D","#535B77","#4A4861","#3F374B","#322737","#241824"]
@@ -208,12 +232,12 @@ def process(gpm_dir, gis_file_day, ymd ):
 	band				= ds.GetRasterBand(1)
 	data				= band.ReadAsArray(0, 0, ds.RasterXSize, ds.RasterYSize )
 
-	data /= 10			# back to mm
+	sdata 				= data/10			# back to mm
 	
 	if force or not os.path.exists(topojson_filename+".gz"):
 		for l in levels:
 			fileName 		= os.path.join(levelsDir, ymd+"_level_%d.tif"%l)
-			CreateLevel(l, geojsonDir, fileName, ds, data, "precip")
+			CreateLevel(l, geojsonDir, fileName, ds, sdata, "precip")
 	
 		jsonDict = dict(type='FeatureCollection', features=[])
 	
@@ -222,10 +246,10 @@ def process(gpm_dir, gis_file_day, ymd ):
 			if os.path.exists(fileName):
 				print "merge", fileName
 				with open(fileName) as data_file:    
-					data = json.load(data_file)
+					jdata = json.load(data_file)
 		
-				if 'features' in data:
-					for f in data['features']:
+				if 'features' in jdata:
+					for f in jdata['features']:
 						jsonDict['features'].append(f)
 	
 
@@ -247,10 +271,10 @@ def process(gpm_dir, gis_file_day, ymd ):
 			if os.path.exists(fileName):
 				print "merge", fileName
 				with open(fileName) as data_file:    
-					data = json.load(data_file)
+					jdata = json.load(data_file)
 		
-				if 'features' in data:
-					for f in data['features']:
+				if 'features' in jdata:
+					for f in jdata['features']:
 						jsonDict['features'].append(f)
 	
 
@@ -262,16 +286,21 @@ def process(gpm_dir, gis_file_day, ymd ):
 	
 	# problem is that we need to scale it or adjust the levels for coloring (easier)
 	#adjusted_levels 				= [1440, 890, 550, 340, 210, 130, 80, 50, 30, 20, 10]
-	#zoom = region['thn_zoom']
+	adjusted_levels 				= [3770, 2330, 1440, 890, 550, 340, 210, 130, 80, 50, 30, 20]
 	
-	#if force or not os.path.exists(sw_osm_image):
-	#	MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, adjusted_levels, hexColors, force, verbose, zoom)
+	#zoom = region['thn_zoom']
+	zoom = 0
+	if force or not os.path.exists(sw_osm_image):
+		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, adjusted_levels, hexColors, force, verbose, zoom)
+	
+	if force or not os.path.exists(tif_image):
+		cmd 				= "gdalwarp -overwrite -q -co COMPRESS=LZW %s %s"%( origFileName, tif_image)
+		execute(cmd)
 		
 	ds = None
 	
-	#file_list = [ sw_osm_image, topojson_filename, topojson_filename+".gz", subset_file ]
-	
-	#CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
+	file_list = [ sw_osm_image, topojson_filename+".gz", tif_image ]
+	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 	
 # ===============================
 # Main
@@ -306,18 +335,26 @@ if __name__ == '__main__':
 	doy			= today.strftime('%j')
 	ymd 		= "%d%02d%02d" % (year, month, day)		
 
-	gpm_dir	= os.path.join(config.data_dir, "gpm_24", str(year),doy)
+	gpm_dir	= os.path.join(config.data_dir, "gpm", str(year),doy)
 	if not os.path.exists(gpm_dir):
 	    os.makedirs(gpm_dir)
 		
-	#s3_folder	= os.path.join("gpm_24", str(year), doy)
-	#s3_bucket	= region['bucket']
+	s3_folder	= os.path.join("gpm", str(year), doy)
+	s3_bucket	= 'ojo-global'
 	
 	gis_file_day		= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.1day.tif"%(year, month, day)
 	gis_file_day_tfw 	= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.1day.tfw"%(year, month, day)
+
+	gis_file_3day		= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.3day.tif"%(year, month, day)
+	gis_file_3day_tfw 	= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.3day.tfw"%(year, month, day)
+
+	gis_file_7day		= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.7day.tif"%(year, month, day)
+	gis_file_7day_tfw 	= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.7day.tfw"%(year, month, day)
 	
 	print gis_file_day
 	if force or not os.path.exists(os.path.join(gpm_dir,gis_file_day)):
-		get_daily_gpm_files([gis_file_day, gis_file_day_tfw], gpm_dir, year, month)
+		get_daily_gpm_files([gis_file_day, gis_file_day_tfw, gis_file_3day, gis_file_3day_tfw, gis_file_7day_tfw, gis_file_7day_tfw], gpm_dir, year, month)
 	
-	process(gpm_dir, gis_file_day, ymd)
+	process(gpm_dir, "gpm_1d", gis_file_day, ymd)
+	process(gpm_dir, "gpm_3d", gis_file_day, ymd)
+	process(gpm_dir, "gpm_7d", gis_file_day, ymd)

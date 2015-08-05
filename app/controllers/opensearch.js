@@ -22,9 +22,9 @@ var fs 			 				= require('fs'),
 	
 	query_planet_labs			= require("../../lib/query_planet_labs"),
 	query_locationcast			= require("../../lib/query_locationcast"),
-	query_pop					= require("../../lib/query_pop"),
+	query_pop					= require("../../lib/query_pop");
 
-	productQueries = {
+var productQueries = {
 		"dfo": 					[query_dfo.QueryDFO],
 		"digiglobe":			[query_digiglobe.QueryDigiglobe],
 		"eo1_ali": 				[query_eo1.QueryEO1],
@@ -165,7 +165,7 @@ var fs 			 				= require('fs'),
 module.exports = {
 	classic: function(req, res) {
 		var host 	= req.protocol+"://"+req.headers.host
-		var region 	= app.config.regions.d06
+		var region 	= app.config.regions.Global
 		var user	= req.session.user
 		
 		res.render( "opensearch/classic", {

@@ -128,10 +128,9 @@
 								<option value='flood_nowcast'><%= gettext('products.flood_nowcast')%></option>
 								<option value='landslide_nowcast'><%= gettext('products.landslide_nowcast')%></option>
 								<option value='location_cast'><%= gettext('products.location_nowcast')%></option>
-								<option value='precip_1'><%= gettext('products.precip_1')%></option>
-								<option value='precip_5'><%= gettext('products.precip_5')%></option>
-								<option value='precip_10'><%= gettext('products.precip_10')%></option>
-								<option value='precip_30'><%= gettext('products.precip_30')%></option>
+								<option value='precip_1d'><%= gettext('products.precip_1d')%></option>
+								<option value='precip_3d'><%= gettext('products.precip_3d')%></option>
+								<option value='precip_7d'><%= gettext('products.precip_7d')%></option>
 								<option value='population_count'><%= gettext('products.population_count')%></option>
 								<option value='rgb_composite' checked=true><%= gettext('products.rgb_composite')%></option>
 								<option value='snow_water_equivalent'><%= gettext('products.snow_water_equivalent')%></option>
@@ -293,8 +292,18 @@
 	var map = L.mapbox.map('map', '<%= region.map_id %>', { minZoom:2, maxZoom: <%= region.max_zoom %> } )
 	.setView([<%= region.target[1] %>, <%= region.target[0] %>], <%= region.min_zoom %>)
 	
+	var grayscale = L.mapbox.tileLayer('cappelaere.hg330434'),
+	streets       = L.mapbox.tileLayer('cappelaere.map-1d8e1acq'),
+	outdoor       = L.mapbox.tileLayer('cappelaere.mdlkf4f8'),
+	emerald       = L.mapbox.tileLayer('cappelaere.mdpjemkk'),
+	light         = L.mapbox.tileLayer('cappelaere.mdlk2ljn');
+		
 	var map_controls = L.control.layers({
-	    'Topo Map': L.mapbox.tileLayer('<%= region.map_id %>',{ attribution: 'MapBox'}).addTo(map)
+		"Light": light.addTo(map)
+		,'Emerald': emerald
+		,"Outdoor": outdoor
+		,"Simple": grayscale
+		,"Topo": streets
 	}, {}).addTo(map);
 	
 	

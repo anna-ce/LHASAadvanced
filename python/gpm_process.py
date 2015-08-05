@@ -14,7 +14,7 @@ from ftplib import FTP
 
 import config
 
-from browseimage import MakeBrowseImage 
+#from browseimage import MakeBrowseImage 
 from s3 import CopyToS3
 from level import CreateLevel
 
@@ -23,6 +23,9 @@ force 		= 0
 ftp_site 	= "jsimpson.pps.eosdis.nasa.gov"
 path	 	= "pub/merged/3B42RT/"
 gis_path 	= "NRTPUB/imerg/gis/"
+
+def MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, adjusted_levels, hexColors, force, verbose, zoom):
+	
 
 def execute( cmd ):
 	if verbose:

@@ -3,7 +3,8 @@
 </style>
 
 <div class='container'>
-	<h3><%= region.name %> </h3>
+	<h2><%= region.name %></h2>
+	
 	<h3><%= id.split('.')[0] %> </h3>
 	<div class='row'>
 		 <div id='map' style="width:868px;height:695px;" ondrop="handleDrop(event);" ondragover="allowDrop(event);"></div>
@@ -62,7 +63,7 @@
     var region                  = <%- JSON.stringify(region) %>    
     
 	var map = L.mapbox.map('map', '<%= region.map_id %>', { minZoom:2, maxZoom: <%= region.max_zoom %> })
-    .setView([<%= region.target %>], <%= region.min_zoom %>);
+    .setView([<%= latitude %>, <%= longitude %>], <%= region.min_zoom %>);
 		  
     var base_layer_options 			= {}
     var topo_map 					= "Topo Map"

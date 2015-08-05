@@ -123,35 +123,50 @@ var url         = "/test/topojson/gpm_24.20150604";
       
     <script src="http://www.sumbera.com/gist/js/vt/geojson-vt-dev.js"></script>
     <script src="http://www.sumbera.com/gist/js/leaflet/canvas/L.CanvasTiles.js"></script>
-	  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>	
     <script src="http://d3js.org/topojson.v1.min.js"></script>
-
+	<script src="/js/moment.js"></script>
 
     <script>
-        var url         = "/test/topojson/gpm_24.20150604";
-	      var hexColors 	= [ "#56F6FC","#58DEEE","#5BC6DE","#5EAFCC","#5E99B8","#5D84A3","#596F8D","#535B77","#4A4861","#3F374B","#322737","#241824"]
-	      var levels 			= [377, 233, 144, 89, 55, 34, 21, 13, 8, 5, 3, 2]
+		
+		var date 		= moment("2015-08-01")
+		var year 		= date.years()
+		var month		= date.month() + 1
+		if( month < 10 ) month = "0"+ month
+		var day			= date.date()
+		if (day < 10 ) day = "0"+day
+				
+		var jday		= date.dayOfYear()
+		if( jday < 10) {
+			jday = "00"+jday
+		} else if( jday < 100 ) {
+			jday = "0"+jday
+		}
+		
+		var url         = "http://localhost:7465/products/s3/Global/gpm/" + year + "/" + jday + "/gpm_1d." + year + month + day +".topojson.gz";
+		console.log("Getting url", url)
+		var hexColors 	= [ "#56F6FC","#58DEEE","#5BC6DE","#5EAFCC","#5E99B8","#5D84A3","#596F8D","#535B77","#4A4861","#3F374B","#322737","#241824"]
+		var levels		= [ 377, 233, 144, 89, 55, 34, 21, 13, 8, 5, 3, 2 ]
     
-        var accessToken = 'pk.eyJ1IjoiY2FwcGVsYWVyZSIsImEiOiJxSjM5MEt3In0.9PYNJ8PzRclvtEh1jkqBuA';
-        var map         = L.map('map', {minZoom:3, maxZoom:12}).setView([17.00, -90], 4);
+        var accessToken = '<%=token%>';
+        var map         = L.map('map', {minZoom:3, maxZoom:12}).setView([<%=latitude%>, <%=longitude%>], 3);
                   
         L.tileLayer('https://{s}.tiles.mapbox.com/v4/cappelaere.map-1d8e1acq/{z}/{x}/{y}.png?access_token=' + accessToken, {
-                attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
-            }).addTo(map);
+			attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
+		}).addTo(map);
         
         L.control.scale().addTo(map);
 
-           
 
         var tileOptions = {
-            maxZoom:      14,         // max zoom to preserve detail on
-            tolerance:    5,          // simplification tolerance (higher means simpler)
-            extent:       4096,       // tile extent (both width and height)
-            buffer:         64,       // tile buffer on each side
-            debug:          0,        // logging level (0 to disable, 1 or 2)
+            maxZoom:		14,			// max zoom to preserve detail on
+            tolerance:		5,			// simplification tolerance (higher means simpler)
+            extent:			4096,       // tile extent (both width and height)
+            buffer:         64,     	// tile buffer on each side
+            debug:          0,        	// logging level (0 to disable, 1 or 2)
 
-            indexMaxZoom:   0,        // max zoom in the initial tile index
-            indexMaxPoints: 100000,   // max number of points per tile in the index
+            indexMaxZoom:   0,        	// max zoom in the initial tile index
+            indexMaxPoints: 100000,   	// max number of points per tile in the index
         };
         
         function hexToRgb(hex) {
@@ -306,7 +321,8 @@ var url         = "/test/topojson/gpm_24.20150604";
           var lng	    = parseFloat(latlng.lng.toFixed(2))
           //console.log("Clicked",lat,lng)
           
-          var precipurl  = "/test/precip/gpm_24.20150604?lat="+lat+"&lng="+lng;
+          //  var precipurl  = "/test/precip/gpm_24.20150604?lat="+lat+"&lng="+lng;
+          var precipurl  = "/test/precip/gpm_1d."+ year+month+day + "?lat="+lat+"&lng="+lng;
           $.ajax({
           	dataType: "json",
           	url: precipurl,

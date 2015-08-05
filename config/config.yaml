@@ -9,8 +9,9 @@
     "send_email": 		0,
     "regions" : {
         "Global": {
+			"name": 		"Global",
             "bbox":         [-180, 60, 180, -60 ],
-            "target":       [-80, 20],
+            "target":       [0, 0],
             "min_zoom":     2,
             "max_zoom":     12,
             "map_id":       "cappelaere.map-mx5g2tn3",

@@ -7,11 +7,16 @@ var request		= require('request');
 var debug		= require('debug')('tests');
 var	geopix		= require('geopix');
 var zlib 		= require('zlib');
+var moment		= require('moment');
 
 function getClientAddress(request){ 
+	//console.log("connection.remoteAddress", connection.remoteAddress)
+	//console.log(request.headers)
+	console.log(request.connection.remoteAddress)
+	
     with(request)
         return (headers['x-forwarded-for'] || '').split(',')[0] 
-            || connection.remoteAddress
+            || request.connection.remoteAddress
 }
 
 // horrible to work around throttling of github
@@ -41,7 +46,21 @@ module.exports = {
 	},
 
 	gpm2: function(req, res) {
-		res.render("test/gpm2.ejs", { layout: false })	
+		var id 	= req.params['id'];
+		var ip 	= getClientAddress(req)
+		var url = 'http://freegeoip.net/json/' + ip
+		request.get( url, function (error, response, body) {
+			if(!error && response.statusCode == 200 ) {
+				var data = JSON.parse(body)
+				console.log(data)
+				res.render("test/gpm2.ejs", { 
+					layout: false,
+					token: process.env.MAPBOX_PUBLIC_TOKEN,
+					latitude: data.latitude,
+					longitude: data.longitude
+				 })	
+			}
+		})
 	},
 	
 	gpm3: function(req, res) {
@@ -70,30 +89,72 @@ module.exports = {
 		var id			= req.params['id'];
 		var lat 		= parseFloat(req.query['lat']);
 		var lng			= parseFloat(req.query['lng']);
-		var dirname		= path.join(app.root,"public")
-		var fileName	= path.join(dirname, id+".tif")
+		
+		console.log("precip", id)
+		
+		var tmp_dir 	= app.get("tmp_dir")
+				
+		var dt			= id.replace("gpm_1d.", "")
+		var date 		= moment(dt, "YYYYMMDD")
+		var year		= date.years().toString()
+		var month		= date.month() + 1
+		if( month < 10 ) {
+			month = "0"+ month
+		} else {
+			month = month.toString()
+		}
+		var day			= date.date().toString()
+		if (day < 10 ) day = "0"+day
+				
+		var jday		= date.dayOfYear()
+		if( jday < 10) {
+			jday = "00"+jday
+		} else if( jday < 100 ) {
+			jday = "0"+jday
+		} else {
+			jday = jday.toString()
+		}
+		
+		console.log(year, month, day, jday)
+		var fileName	= path.join(tmp_dir, "ojo-global", "gpm", year, jday, id+".tif")
+		
 		var json 	= {
-				'id': 	id,
-				'lat': 	lat,
-				'lng': 	lng,
-				'precip': "??"
+			'id': 		id,
+			'lat': 		lat,
+			'lng': 		lng,
+			'precip': 	"??"
 		}
 
-		try {
+		console.log(fileName, lat, lng)
+		if( !fs.existsSync(fileName)) {
+			var options = {
+				Bucket: "ojo-global", 
+				Key:  "gpm/"+year+"/"+jday+"/"+id+".tif"
+			};
+			app.s3.headObject(options, function(err, data) {
+				if (err) {
+					console.log("headObject", otpions, "error", err, err.stack); // an error occurred
+					return res.sendStatus(500)
+				} else {
+					console.log("Object seems to be there...creating", fileName)
+					var file = fs.createWriteStream(fileName);
+					app.s3.getObject(options)
+					.createReadStream()
+					.pipe(file)
 			
-			console.log(fileName, lat, lng)
-			if( fs.existsSync(fileName)) {
-				var result 	= getGeopixValue(fileName, lat, lng)
-				json.precip = result / 10
+					file.on('close', function() {
+						console.log("got file from S3", fileName)
+						var result 	= getGeopixValue(fileName, lat, lng)
+						json.precip = result / 10
+						res.send(json)
+					});
+				}    
+			});
+		} else {
+			var result 	= getGeopixValue(fileName, lat, lng)
+			json.precip = result / 10
 				
-				console.log(json)
-			} else {
-				logger.error("File does not exist", fileName)
-			}
-			
 			res.send(json)
-		} catch(e) {
-			console.log("error", e)
 		}
 	},
 
