@@ -52,7 +52,7 @@ module.exports = {
 		request.get( url, function (error, response, body) {
 			if(!error && response.statusCode == 200 ) {
 				var data = JSON.parse(body)
-				console.log(data)
+				//console.log(data)
 				res.render("test/gpm2.ejs", { 
 					layout: false,
 					token: process.env.MAPBOX_PUBLIC_TOKEN,
