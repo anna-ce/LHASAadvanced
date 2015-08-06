@@ -253,14 +253,24 @@ function loadData( topojsonUrl, displayName, mapinfos ) {
 					pointToLayer: function (feature, latlng) {
 						var styleOptions = styleData['true'];
 						//console.log("styleOptions", JSON.stringify(styleOptions))
-						
-						return L.circleMarker(latlng, 
-							{
+						if(styleOptions.icon) {
+							feature.properties.latitude 	= latlng.lat
+							feature.properties.longitude 	= latlng.lng
+							
+							var icon = L.icon({
+								iconUrl: styleOptions.icon,
+								iconSize: styleOptions.iconSize,
+								iconAnchor: styleOptions.iconAnchor
+							})
+							return L.marker(latlng, {icon: icon})
+						} else {
+							return L.circleMarker(latlng, {
 								radius: feature.properties[styleOptions.property]*styleOptions.scale,
 								fillOpacity: styleOptions.fillOpacity,
 								weight: styleOptions.weight,
 								color: styleOptions.color
 							});
+						}
 								
 					},
 					onEachFeature: function(feature, layer) {

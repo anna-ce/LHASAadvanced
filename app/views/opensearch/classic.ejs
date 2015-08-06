@@ -181,6 +181,7 @@
 				<div class='col-xs-6'></div>
 				<div class='col-xs-6'>
 				 	<div id='map' style="width:840px;height:610px;" ondrop="handleDrop(event);" ondragover="allowDrop(event);" ></div>
+					<div id=mouseloc></div><br/>
 				</div>
 			</div>
 			<br/>
@@ -652,6 +653,13 @@
 		console.log("query bbox", lat, lng, delta, minlat, minlon, maxlat, maxlon)
 		newqueryLayer.setLatLngs(latlon_poly)
   	})
+ 
+  	map.on('mousemove', function(e) {
+		var latlng 	= e.latlng;
+		var lat 	= parseFloat(latlng.lat.toFixed(2));
+		var lng		= parseFloat(latlng.lng.toFixed(2));
+		$('#mouseloc').html("lat:"+lat+", lng:"+lng);
+	})
  
 	function FBPost( url ) {
 		console.log("FBPost:"+url);

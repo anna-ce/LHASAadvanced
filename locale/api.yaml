@@ -128,6 +128,9 @@ en:
     vhi: Vegetation Health Index
     algal_bloom: Algal Bloom
     burned_areas: Burned Areas
+    precip_1d: 1-d Accumulated Rainfall
+    precip_3d: 3-d Accumulated Rainfall
+    precip_7d: 7-d Accumulated Rainfall
 
   filesize:
     B: B
