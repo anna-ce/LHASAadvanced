@@ -45,7 +45,7 @@
 	<script type='text/javascript'>
 		var styles, legends, credits;
 		
-		var map = L.mapbox.map('map', 'cappelaere.map-mx5g2tn3',{ minZoom: 4, maxZoom: 18 })
+		var map = L.mapbox.map('map', 'cappelaere.map-mx5g2tn3',{ minZoom: 1, maxZoom: 18 })
 		.setView([<%= region.target[1] %>, <%= region.target[0] %>], <%= zoom %>);
 
 		var region = <%- JSON.stringify(region) %>

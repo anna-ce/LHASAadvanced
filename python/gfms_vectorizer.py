@@ -269,10 +269,14 @@ class GFMS:
 		
 		merge_filename 			= os.path.join(geojsonDir, "%s_levels.geojson" % ymd)
 		browse_filename 		= os.path.join(geojsonDir, "..", "%s_browse.tif" % ymd)
+		browse_aux_filename 	= os.path.join(geojsonDir, "..", "%s_small_browse.tif.aux.xml" % ymd)
 		subset_filename 		= os.path.join(geojsonDir, "..", "%s_small_browse.tif" % ymd)
 		osm_bg_image			= os.path.join(geojsonDir, "..", "osm_bg.png")
-		
 		sw_osm_image			= os.path.join(geojsonDir, "..", "%s.%s%02d_thn.jpg" % (name,ym,day))
+
+		x		= -127.25
+		y		= 50
+		res		= 0.125
 
 		if self.force or not os.path.exists(output_fullname):
 			rows 	= 800 
@@ -290,9 +294,6 @@ class GFMS:
 			
 			#print "stats:", data.size, data.min(), data.mean(), data.max(), data.std()
 			
-			x		= -127.25
-			y		= 50
-			res		= 0.125
 		
 			# Create gtif
 			driver = gdal.GetDriverByName("GTiff")
@@ -312,10 +313,12 @@ class GFMS:
 			band.WriteArray(data)
 			dst_ds = None
 		
+		# Supersample it
 		if self.force or not os.path.exists(super_fullname):			
 			cmd = "gdalwarp -overwrite -q -tr %f %f -r cubicspline %s %s" % (res/10,res/10,output_fullname,super_fullname)
 			self.execute(cmd)
 		
+		# Create RGB
 		if self.verbose and (self.force or not os.path.exists(output_rgb_fullname)):		
 			cmd = "gdaldem color-relief -q -alpha "+ output_fullname + " " + color_file + " " + output_rgb_fullname
 			self.execute(cmd)
@@ -341,7 +344,7 @@ class GFMS:
 		band			= ds.GetRasterBand(1)
 		data			= band.ReadAsArray(0, 0, ds.RasterXSize, ds.RasterYSize )
 	
-		if force or not os.path.exists(topojson_fullname+".gz"):
+		if self.force or not os.path.exists(topojson_fullname+".gz"):
 			for l in levels:
 				fileName 		= os.path.join(levelsDir, ymd+"_level_%d.tif"%l)
 				CreateLevel(l, geojsonDir, fileName, ds, data, "flood", force, verbose)
@@ -367,15 +370,24 @@ class GFMS:
 			cmd 	= "topojson -p -o "+ topojson_fullname + " " + merge_filename
 			self.execute(cmd)
 
-			cmd 	= "gzip --keep "+ topojson_fullname
+			if verbose:
+				cmd 	= "gzip --keep "+ topojson_fullname
+			else:
+				cmd 	= "gzip "+ topojson_fullname
+				
 			self.execute(cmd)
 
-		if force or not os.path.exists(sw_osm_image):
-			MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, levels, hexColors, force, verbose, zoom=1)
+		if self.force or not os.path.exists(sw_osm_image):
+			MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, levels, hexColors, force, verbose, zoom=2)
 			
 		file_list = [ sw_osm_image, topojson_fullname_gz ]
 		CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 
+		if not self.verbose:
+			cmd = "rm -rf %s %s %s %s %s %s %s %s %s %s" % ( browse_filename, input_fullname, output_fullname, subset_filename, super_fullname, output_rgb_fullname, osm_bg_image, browse_aux_filename, levelsDir, geojsonDir )
+			print cmd
+			self.execute(cmd)
+			
 # ======================================================================
 # Make sure directories exist
 #
