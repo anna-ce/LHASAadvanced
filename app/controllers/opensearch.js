@@ -48,6 +48,7 @@ var productQueries = {
 					}
 					var queryAll = rq.QueryAll
 					productQueries[source].push( queryAll.bind(rq))
+					//console.log("Added", source)
 				}
 			}
 		} catch(e) {
@@ -107,7 +108,7 @@ var productQueries = {
 
 			if( _.contains(sources, asset)) {
 				var queries = productQueries[asset]
-				logger.info('query source', asset)
+				logger.info('query source', asset, queries)
 				
 				function queryProduct(q, callback) {
 					q(req, user, credentials, host, query, bbox, lat, lon, startTime, endTime, startIndex, itemsPerPage, limit, function(err, json) {

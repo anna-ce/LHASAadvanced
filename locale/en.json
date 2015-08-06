@@ -207,7 +207,8 @@
         "noaa": "NOAA",
         "gsfc": "NASA GSFC",
         "umd": "University of Maryland Geographic Department",
-        "chirps": "CHIRPS"
+        "chirps": "CHIRPS",
+		"gfms": "UMD Global Flood Monitoring System"
     },
     "sensors": {
         "sar": "SAR",
@@ -223,7 +224,8 @@
         "dk": "N/A",
         "usgs": "USGS",
         "avhrr": "AVHRR",
-        "viirs": "VIIRS"
+        "viirs": "VIIRS",
+		"gfms": "NASA TMPA"
     },
     "duration": {
         "hours": "%{hours} hours",
@@ -618,6 +620,23 @@
                 "40": "40mm",
                 "50": "50mm",
                 "60": "60mm"
+            }
+        },
+        "flood_nowcast": {
+            "title": "Flood Nowcast",
+            "credits": "University of Maryland",
+            "source": {
+                "label": "Source",
+                "source": "UMD"
+            },
+			"flood_14km": "Flood Nowcast 1/8 deg",
+            "legend": {
+                "5mm": "5mm",
+                "10mm": "10mm",
+                "20mm": "20mm",
+                "50mm": "50mm",
+                "100mm": "100mm",
+                "200mm": "200mm"
             }
         }
     }

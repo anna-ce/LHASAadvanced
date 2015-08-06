@@ -30,6 +30,8 @@
   </head>
   
   <body>
+	 <h2><%= description %></h2>
+	 <br/>
 	<div class='container'>
 		<div class='row'>
 	   	 	<div id="map"></div>
@@ -44,7 +46,7 @@
 		var styles, legends, credits;
 		
 		var map = L.mapbox.map('map', 'cappelaere.map-mx5g2tn3',{ minZoom: 4, maxZoom: 18 })
-		.setView([<%= region.target[1] %>, <%= region.target[0] %>], 6);
+		.setView([<%= region.target[1] %>, <%= region.target[0] %>], <%= zoom %>);
 
 		var region = <%- JSON.stringify(region) %>
 		var map_controls;

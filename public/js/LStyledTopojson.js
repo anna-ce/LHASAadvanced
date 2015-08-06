@@ -77,6 +77,7 @@ function compileStyle( id, style ) {
 //
 // Load topojson from url
 function loadDataUrl(url, cb) {
+	console.log("Loading Data URL",url)
 	$.ajax({
 		type: 	'GET',
 		url: 	url,
@@ -88,7 +89,7 @@ function loadDataUrl(url, cb) {
 		cb(null, data)
 	})
 	.fail( function(qXHR, textStatus, errorThrown ) {
-		console.log("Error getting "+url)
+		console.log("Error getting "+url, textStatus)
 		cb(-1)
 	})
 }
@@ -183,7 +184,7 @@ function loadData( topojsonUrl, displayName, mapinfos ) {
 	var legendObject, styleObject, creditObject;
 	var styleId;
 	
-	//console.log("load data json:"+topojsonUrl);
+	console.log("loadData",topojsonUrl,displayName);
 	
 	if( mapinfos ) {
 		for( var el in mapinfos) {

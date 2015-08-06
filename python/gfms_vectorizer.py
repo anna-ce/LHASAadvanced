@@ -18,6 +18,7 @@ from dateutil.parser import parse
 from osgeo import osr, gdal
 from ftplib import FTP
 from datetime import date, timedelta
+from s3 import CopyToS3
 
 from browseimage import MakeBrowseImage 
 from level import CreateLevel
@@ -235,41 +236,45 @@ class GFMS:
 		self.process_highres_d03(dt)
 			
 	def process_lowres(self):
+		name					= "flood_14km"
+		
 		input_fname 			= "Flood_byStor_%s%02d00.bin" % (ym, day)
 		input_fullname			= os.path.join(self.inpath, "gfms", ymd, input_fname)
-		output_fname 			= "Flood_byStor_%s%02d00.tif" % (ym, day)
+		
+		output_fname 			= "%s.%s%02d.tif" % (name, ym, day)
 		output_fullname			= os.path.join(self.inpath, "gfms", ymd, output_fname)
 		
-		super_fname 			= "SuperFlood_byStor_%s%02d00.tif" % (ym, day)
+		super_fname 			= "%s.%s%02d.x2.tif" % (name, ym, day)
 		super_fullname			= os.path.join(self.inpath, "gfms", ymd, super_fname)
 
-		geojson_fname 			= "Flood_%s%02d00.geojson" % (ym, day)
+		geojson_fname 			= "%s.%s%02d.geojson" % (name, ym, day)
 		geojson_fullname		= os.path.join(self.inpath, "gfms", ymd, geojson_fname)
 
-		topojson_fname 			= "Flood_%s%02d00.topojson" % (ym, day)
+		topojson_fname 			= "%s.%s%02d.topojson" % (name, ym, day)
 		topojson_fullname		= os.path.join(self.inpath, "gfms", ymd, topojson_fname)
-		topojson_fullname_gz	= topojson_fname + ".gz"
+		topojson_fullname_gz	= topojson_fullname + ".gz"
 		
-		output_rgb_fname		= "Flood_byStor_%s%02d00_rgb.tif" % (ym, day)
+		output_rgb_fname		= "%s.%s%02d_rgb.tif" % (name, ym, day)
 		output_rgb_fullname		= os.path.join(self.inpath, "gfms", ymd, output_rgb_fname)
 		color_file 				= os.path.join("cluts", "gfms_colors.txt")
 		
 		flood_dir				= os.path.join(self.inpath, "gfms", ymd)
 		geojsonDir	= os.path.join(flood_dir,"geojson")
-		if not os.path.exists(geojsonDir):            
+		if not os.path.exists(geojsonDir):
 			os.makedirs(geojsonDir)
 
 		levelsDir	= os.path.join(flood_dir,"levels")
-		if not os.path.exists(levelsDir):            
+		if not os.path.exists(levelsDir):
 			os.makedirs(levelsDir)
 		
 		merge_filename 			= os.path.join(geojsonDir, "%s_levels.geojson" % ymd)
 		browse_filename 		= os.path.join(geojsonDir, "..", "%s_browse.tif" % ymd)
 		subset_filename 		= os.path.join(geojsonDir, "..", "%s_small_browse.tif" % ymd)
 		osm_bg_image			= os.path.join(geojsonDir, "..", "osm_bg.png")
-		sw_osm_image			= os.path.join(geojsonDir, "..", "%s_thn.jpg" % ymd)
+		
+		sw_osm_image			= os.path.join(geojsonDir, "..", "%s.%s%02d_thn.jpg" % (name,ym,day))
 
-		if self.force or not os.path.exists(output_fullname):		
+		if self.force or not os.path.exists(output_fullname):
 			rows 	= 800 
 			cols	= 2458
 			size	= rows*cols
@@ -368,6 +373,8 @@ class GFMS:
 		if force or not os.path.exists(sw_osm_image):
 			MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, levels, hexColors, force, verbose, zoom=1)
 			
+		file_list = [ sw_osm_image, topojson_fullname_gz ]
+		CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 
 # ======================================================================
 # Make sure directories exist
@@ -409,6 +416,9 @@ if __name__ == '__main__':
 	ym	 		= "%d%02d" % (year, month)
 	ymd 		= "%d%02d%02d" % (year, month, day)
 
+	s3_folder	= os.path.join("gfms", str(year), doy)
+	s3_bucket	= 'ojo-global'
+	
 	# Destination Directory
 	dir			= config.data_dir
 	checkdirs();

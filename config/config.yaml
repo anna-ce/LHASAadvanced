@@ -109,93 +109,99 @@
     				"checked": 		false,
     				"selected":   false
     			},
-          {
-            "source": 		"dfo",
-        		"href": 		"/opensearch",
-        		"checked":  	false
-        	},
-        	{
-        		"source": 		"digiglobe",
-        		"href": 		"/opensearch",
-        		"checked":  	false
-        	},
-        	{
-        		"source": 		"ef5",
-        		"href": 		"/opensearch",
-        		"checked":  	true,
-            "selected":   false
-        	},
-        	{
-        		"source": 		"eo1_ali",
-        		"href": 		"/opensearch",
-        		"checked":  	false
-        	},
-          {
-              "source": 		"gpm",
-              "href": 		"/opensearch",
-              "checked": 		false
-          },
-          {
-            "source": 		"landsat_8",
-            "href": 		"/opensearch",
-            "checked":  	false
-          },
-          {
-            "source": 		"landscan",
-            "href": 		"/opensearch",
-            "checked":  	false
-          },
-          {
-            "source": 		"landslide_model",
-            "href": 		"/opensearch",
-            "checked":  	false
-            },
-          {
-          	"source": 		"modis",
-          	"href": 		"/opensearch",
-          	"checked":  	true
-          },
-          {
-            "source": 		"modis_lst",
-            "href": 		"/opensearch",
-            "checked":  	false
-          },
-          {
-              "source": 		"noaa",
-              "href": 		"/opensearch",
-              "checked": 		false
-          },
-          {
-            "source": 		"ojo",
-            "href": 		"/opensearch",
-            "checked":  	false
-          },
-          {
-            "source": 		"planet_labs",
-            "href": 		"/opensearch",
-            "checked":  	false
-          },
-        	{
-              "source": 		"radarsat_2",
-              "href": 		"/opensearch",
-              "checked":  	false
-          },
-          {
-              "source": 		"trmm",
-              "href": 		"/opensearch",
-              "checked": 		false
-          },
-          {
-              "source": 		"usgs",
-              "href": 		"/opensearch",
-              "checked": 		false
-          },
-    			{
-    				"source": 		"viirs",
-    				"href": 		"/opensearch",
-    				"checked": 		false,
-    				"selected":   false
-    			}
-	]
+				{
+					"source": 		"dfo",
+					"href": 		"/opensearch",
+					"checked":  	false
+				},
+	        	{
+	        		"source": 		"digiglobe",
+	        		"href": 		"/opensearch",
+	        		"checked":  	false
+	        	},
+	        	{
+	        		"source": 		"ef5",
+	        		"href": 		"/opensearch",
+	        		"checked":  	false,
+					"selected":   false
+	        	},
+	        	{
+	        		"source": 		"eo1_ali",
+	        		"href": 		"/opensearch",
+	        		"checked":  	false
+	        	},
+				{
+					"source": 		"gpm",
+					"href": 		"/opensearch",
+					"checked": 		false
+				},
+	          {
+	            "source": 		"landsat_8",
+	            "href": 		"/opensearch",
+	            "checked":  	false
+	          },
+	          {
+	            "source": 		"landscan",
+	            "href": 		"/opensearch",
+	            "checked":  	false
+	          },
+	          {
+	            "source": 		"landslide_model",
+	            "href": 		"/opensearch",
+	            "checked":  	false
+	            },
+	          {
+	          	"source": 		"modis",
+	          	"href": 		"/opensearch",
+	          	"checked":  	false
+	          },
+	          {
+	            "source": 		"modis_lst",
+	            "href": 		"/opensearch",
+	            "checked":  	false
+	          },
+	          {
+	              "source": 		"noaa",
+	              "href": 		"/opensearch",
+	              "checked": 		false
+	          },
+	          {
+	            "source": 		"ojo",
+	            "href": 		"/opensearch",
+	            "checked":  	false
+	          },
+	          {
+	            "source": 		"planet_labs",
+	            "href": 		"/opensearch",
+	            "checked":  	false
+	          },
+	        	{
+	              "source": 		"radarsat_2",
+	              "href": 		"/opensearch",
+	              "checked":  	false
+	          },
+	          {
+	              "source": 		"trmm",
+	              "href": 		"/opensearch",
+	              "checked": 		false
+	          },
+	          {
+	              "source": 		"usgs",
+	              "href": 		"/opensearch",
+	              "checked": 		false
+	          },
+			{
+				"source": 		"viirs",
+				"href": 		"/opensearch",
+				"checked": 		false,
+				"selected":   false
+			},
+			{
+				"source": 		"gfms",
+				"href": 		"/opensearch",
+				"checked": 		true,
+				"selected":   false
+			}
+		]
 }
 
