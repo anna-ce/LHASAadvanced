@@ -208,7 +208,7 @@
         "gsfc": "NASA GSFC",
         "umd": "University of Maryland Geographic Department",
         "chirps": "CHIRPS",
-		"gfms": "UMD Global Flood Monitoring System"
+        "gfms": "UMD Global Flood Monitoring System"
     },
     "sensors": {
         "sar": "SAR",
@@ -225,7 +225,7 @@
         "usgs": "USGS",
         "avhrr": "AVHRR",
         "viirs": "VIIRS",
-		"gfms": "NASA TMPA"
+        "gfms": "NASA TMPA"
     },
     "duration": {
         "hours": "%{hours} hours",
@@ -247,9 +247,10 @@
     "products": {
         "active_fires": "Active Fires",
         "burn_scar": "Burn Scar",
-        "precip_1d": "1-Day Precipitation",
-        "precip_3d": "3-Day Precipitation",
-        "precip_7d": "7-Day Precipitation",
+        "precip_1": "1-Day Precipitation",
+        "precip_5": "5-Day Precipitation",
+        "precip_10": "10-Day Precipitation",
+        "precip_30": "30-Day Precipitation",
         "flood_forecast": "Flood Forecast",
         "flood_nowcast": "Flood Nowcast",
         "flood_catalog": "Flood Catalog",
@@ -459,17 +460,15 @@
             }
         },
         "precipitation": {
-            "title": "Daily Precipitation",
-            "credits": "NASA TRMM",
+            "title": "Precipitation",
+            "credits": "NASA GPM/TRMM",
             "source": {
                 "label": "Source",
-                "source": "NASA GSFC TRMM"
+                "source": "NASA GSFC GPM/TRMM"
             },
-			
-			"gpm_1d": "1-d Rainfall Accumulation",
-			"gpm_3d": "3-d Rainfall Accumulation",
-			"gpm_7d": "7-d Rainfall Accumulation",
-			
+            "gpm_1d": "1-d Rainfall Accumulation",
+            "gpm_3d": "3-d Rainfall Accumulation",
+            "gpm_7d": "7-d Rainfall Accumulation",
             "legend": {
                 "1mm": "1mm",
                 "2mm": "2mm",
@@ -513,8 +512,8 @@
                 "source": "NASA GSFC"
             },
             "legend": {
-                "level_1": "moderate hazard",
-                "level_2": "high hazard"
+                "level_1": "yellow",
+                "level_2": "red"
             }
         },
         "soil_moisture": {
@@ -629,7 +628,7 @@
                 "label": "Source",
                 "source": "UMD"
             },
-			"flood_14km": "Flood Nowcast 1/8 deg",
+            "flood_14km": "Flood Nowcast 1/8 deg",
             "legend": {
                 "5mm": "5mm",
                 "10mm": "10mm",

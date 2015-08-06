@@ -46,7 +46,7 @@
 		var styles, legends, credits;
 		
 		var map = L.mapbox.map('map', 'cappelaere.map-mx5g2tn3',{ minZoom: 1, maxZoom: 18 })
-		.setView([<%= region.target[1] %>, <%= region.target[0] %>], <%= zoom %>);
+		.setView([<%= latitude %>, <%= longitude %>], <%= zoom %>);
 
 		var region = <%- JSON.stringify(region) %>
 		var map_controls;
@@ -67,7 +67,7 @@
 			    'Terrain Map': L.mapbox.tileLayer('cappelaere.map-1d8e1acq').addTo(map),
 			    'Streets Map': L.mapbox.tileLayer('cappelaere.hg330434')
 			}, {
-				'Outline': 				L.polyline(line_points, polyline_options).addTo(map)
+				//'Outline': 				L.polyline(line_points, polyline_options).addTo(map)
 			}).addTo(map);
 		} else {
 			map_controls = L.control.layers({

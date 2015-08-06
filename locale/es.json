@@ -44,7 +44,7 @@
         "location_nowcast": "Pronóstico de Inundaciones",
         "population_count": "Population Count",
         "rgb_composite": "RGB composición",
-        "snow_cover": "Cubierta de Nieve",
+        "snow_cover": "Cubierta de nieve",
         "snow_water_equivalent": "Nieve Equivalente Agua",
         "stream_flow": "Flujo de corriente",
         "soil_moisture": "Humedad del Suelo",
@@ -665,7 +665,7 @@
     "results": "%{results} resultados",
     "menu": {
         "home": "Página de inicio",
-        "products": "Categoría de producto",
+        "products": "Producto",
         "opensearch": "OpenSearch",
         "applications": "Aplicaciones",
         "register": "Registrarse",
@@ -689,7 +689,7 @@
         "map": "Mapa"
     },
     "stream": {
-        "displayName": "Editor de productos de inundación"
+        "displayName": "Editor Productos Superficie del agua de inundación"
     },
     "properties": {
         "properties": "propiedades",
@@ -723,7 +723,8 @@
         "noaa": "NOAA",
         "gsfc": "NASA GSFC",
         "umd": "Universidad de Maryland Departamento Geográfico",
-        "chirps": "CHIRPS"
+        "chirps": "CHIRPS",
+        "gfms": "UMD Global Flood Monitoring System"
     },
     "sensors": {
         "sar": "SAR",
@@ -739,7 +740,8 @@
         "dk": "N/A",
         "usgs": "USGS",
         "avhrr": "AVHRR",
-        "viirs": "VIIRS"
+        "viirs": "VIIRS",
+        "gfms": "NASA TMPA"
     },
     "duration": {
         "hours": "%{hours} horas",
@@ -817,7 +819,7 @@
             "legend": "Agua Superficial"
         },
         "burned_areas": {
-            "title": "MODIS Zona Quemada",
+            "title": "MODIS Zona quemada",
             "credits": "NASA GSFC",
             "source": {
                 "label": "Origen",
@@ -920,13 +922,16 @@
                 "source": "Oakridge National Laboratory"
             }
         },
-        "daily_precipitation": {
-            "title": "Precipitación diaria",
-            "credits": "NASA TRMM",
+        "precipitation": {
+            "title": "Precipitación",
+            "credits": "NASA GPM/TRMM",
             "source": {
                 "label": "Origen",
-                "source": "NASA GSFC TRMM"
+                "source": "NASA GSFC GPM/TRMM"
             },
+            "gpm_1d": "Toda la Información",
+            "gpm_3d": "3 Día de lluvia acumulada",
+            "gpm_7d": "7 Día de lluvia acumulada",
             "legend": {
                 "1mm": "1mm",
                 "2mm": "2mm",
@@ -938,7 +943,9 @@
                 "34mm": "34mm",
                 "55mm": "55mm",
                 "89mm": "89mm",
-                "144mm": "144mm"
+                "144mm": "144mm",
+                "233mm": "233mm",
+                "377mm": "377mm"
             }
         },
         "stream_flow": {
@@ -1075,6 +1082,23 @@
                 "40": "40mm",
                 "50": "50mm",
                 "60": "60mm"
+            }
+        },
+        "flood_nowcast": {
+            "title": "Inundación Ahora",
+            "credits": "Universidad de Maryland",
+            "source": {
+                "label": "Origen",
+                "source": "UMD"
+            },
+            "flood_14km": "Inundación Ahora 1/8 deg",
+            "legend": {
+                "5mm": "5mm",
+                "10mm": "10mm",
+                "20mm": "20mm",
+                "50mm": "50mm",
+                "100mm": "100mm",
+                "200mm": "200mm"
             }
         }
     }
