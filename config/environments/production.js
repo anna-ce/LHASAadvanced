@@ -13,6 +13,11 @@ var express = require('express'),
 
 	app.set('tmp_dir', '/app/tmp')
 
+	// make sure that the /app/tmp directory exists
+	mkdirp('/app/tmp', function(err) { 
+		console.log("Creating /app/tmp error:", error)
+	});
+
 	app_port = process.env.PORT;
 	app.set('port', app_port)
 	
