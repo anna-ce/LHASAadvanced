@@ -259,7 +259,7 @@
         "landslide_nowcast": "Landslide Forecast",
         "landslide_forecast": "Landslide Forecast",
         "landslide_susceptibility": "Landslide Susceptibility",
-        "location_nowcast": "Location Forecast",
+        "location_nowcast": "Location Nowcast",
         "population_count": "Population Count",
         "precipitation_nowcast": "Daily Precip Accumulation",
         "precipitation_forecast": "Daily Precip Forecast",
