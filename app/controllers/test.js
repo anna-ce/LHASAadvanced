@@ -126,36 +126,43 @@ module.exports = {
 		}
 
 		console.log(fileName, lat, lng)
-		if( !fs.existsSync(fileName)) {
-			var options = {
-				Bucket: "ojo-global", 
-				Key:  "gpm/"+year+"/"+jday+"/"+id+".tif"
-			};
-			app.s3.headObject(options, function(err, data) {
-				if (err) {
-					console.log("headObject", otpions, "error", err, err.stack); // an error occurred
-					return res.sendStatus(500)
-				} else {
-					console.log("Object seems to be there...creating", fileName)
-					var file = fs.createWriteStream(fileName);
-					app.s3.getObject(options)
-					.createReadStream()
-					.pipe(file)
+		try {
+			if( !fs.existsSync(fileName)) {
+				var options = {
+					Bucket: "ojo-global", 
+					Key:  "gpm/"+year+"/"+jday+"/"+id+".tif"
+				};
+				app.s3.headObject(options, function(err, data) {
+					if (err) {
+						console.log("headObject", otpions, "error", err, err.stack); // an error occurred
+						return res.sendStatus(500)
+					} else {
+						console.log("Object seems to be there...creating", fileName)
+						var file = fs.createWriteStream(fileName);
+						app.s3.getObject(options)
+						.createReadStream()
+						.pipe(file)
 			
-					file.on('close', function() {
-						console.log("got file from S3", fileName)
-						var result 	= getGeopixValue(fileName, lat, lng)
-						json.precip = result / 10
-						res.send(json)
-					});
-				}    
-			});
-		} else {
-			var result 	= getGeopixValue(fileName, lat, lng)
-			json.precip = result / 10
+						file.on('close', function() {
+							console.log("got file from S3", fileName)
+							var result 	= getGeopixValue(fileName, lat, lng)
+							json.precip = result / 10
+							res.send(json)
+						});
+					}    
+				});
+			} else {
+				console.log("File exists... getting geopix...")
+				var result 	= getGeopixValue(fileName, lat, lng)
+				json.precip = result / 10
 				
-			res.send(json)
+				res.send(json)
+			}
+		} catch(e) {
+			console.log("Error", er)
+			res.send(json)			
 		}
+		
 	},
 
 	index2: function(req, res) {       
