@@ -148,6 +148,7 @@ if __name__ == '__main__':
 		process_script('modis-active-fires.py', ydt)
 		process_script('modis-burnedareas.py', ydt)
 		process_script('quake.py', ydt)
+		process_script('gfms_vectorizer.py', ydt)
 
 		#process_script('viirs_CHLA.py', ydt)
 		#process_script('chirps_prelim.py --period monthly', ydt)

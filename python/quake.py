@@ -84,6 +84,21 @@ def process_url( mydir, url, ymd, bbox, zoom, s3_bucket, s3_folder ):
 		if inbbox(bbox, lat, lon):
 			qtime = int(f['properties']['time'])/1000
 			f['properties']['date'] = time.ctime(qtime)
+			
+			newprops = {
+				'type': f['properties']['type'],
+				'title': f['properties']['title'],
+				'place': f['properties']['place'],
+				'mag': f['properties']['mag'],
+				'rms': f['properties']['rms'],
+				'status': f['properties']['status'],
+				'date': f['properties']['date'],
+				'detail': f['properties']['detail'],
+				'url': f['properties']['url']
+			}
+			
+			f['properties'] = newprops
+			
 			results['features'].append(f)
 			
 	print "found", len(results['features'])
@@ -130,6 +145,10 @@ def process_url( mydir, url, ymd, bbox, zoom, s3_bucket, s3_folder ):
 		
 	file_list = [ geojson_filename, geojsongz_filename, thn_image ]
 	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
+	
+	if not verbose:
+		cmd = "rm -rf %s %s" % (tif_filename, osm_bg_image)
+		execute(cmd)
 	
 #
 # ======================================================================

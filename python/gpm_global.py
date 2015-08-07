@@ -97,7 +97,7 @@ def CreateLevel(l, geojsonDir, fileName, src_ds, data, attr):
 		#execute(cmd)
 	
 		#cmd = str.format("topojson -o {0} --simplify-proportion 0.5 -p {3}={1} -- {3}={2}", fileName+".topojson", l, fileName+".geojson", attr ); 
-		cmd = str.format("topojson -o {0} --no-stitch-poles -p {3}={1} -- {3}={2}", fileName+".topojson", l, fileName+".geojson", attr ); 
+		cmd = str.format("topojson -q -o {0} --no-stitch-poles -p {3}={1} -- {3}={2}", fileName+".topojson", l, fileName+".geojson", attr ); 
 		execute(cmd)
 	
 		# convert it back to json
@@ -115,7 +115,6 @@ def get_daily_gpm_files(trmm_gis_files, mydir, year, month):
 	global force, verbose
 	
 	filepath = gis_path+ "%02d" % ( month)
-	print "filepath", filepath
 	
 	if verbose:
 		print("Checking "+ftp_site+"/" + filepath + " for latest file...")
@@ -132,7 +131,8 @@ def get_daily_gpm_files(trmm_gis_files, mydir, year, month):
 		sys.exit(-1)
 
 	for f in trmm_gis_files:
-		print "Trying to download", f
+		if verbose:
+			print "Trying to download", f
 		local_filename = os.path.join(mydir, f)
 		if not os.path.exists(local_filename):
 			if verbose:
@@ -190,7 +190,6 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 	ymax				= yorg - geotransform[1]* ds.RasterYSize
 	
 	bbox				= [xorg, ymax, xmax, yorg]
-	print origFileName, bbox
 	
 	supersampled_file	= os.path.join(region_dir, "%s.%s_x2.tif" % (name, ymd))
 
@@ -216,12 +215,8 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 
 	geojson_filename 	= os.path.join(geojsonDir, "..", "%s.%s.json" % (name,ymd))
 
-	#levels 			= [2584, 1597, 987, 610, 377, 233, 144, 89, 55, 34, 21, 13, 8, 5, 3, 2, 1]
 	levels 				= [377, 233, 144, 89, 55, 34, 21, 13, 8, 5, 3, 2]
-	
-	# From http://colorbrewer2.org/
-	#hexColors 			= [ "#f7fcf0","#e0f3db","#ccebc5","#a8ddb5","#7bccc4","#4eb3d3","#2b8cbe","#0868ac","#084081","#810F7C","#4D004A" ]
-	
+		
 	# http://hclwizard.org/hcl-color-scheme/
 	# http://vis4.net/blog/posts/avoid-equidistant-hsv-colors/
 	# from http://tristen.ca/hcl-picker/#/hlc/12/1/241824/55FEFF
@@ -244,7 +239,6 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 		for l in reversed(levels):
 			fileName 		= os.path.join(geojsonDir, "precip_level_%d.geojson"%l)
 			if os.path.exists(fileName):
-				print "merge", fileName
 				with open(fileName) as data_file:    
 					jdata = json.load(data_file)
 		
@@ -285,10 +279,8 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 		execute(cmd)
 	
 	# problem is that we need to scale it or adjust the levels for coloring (easier)
-	#adjusted_levels 				= [1440, 890, 550, 340, 210, 130, 80, 50, 30, 20, 10]
 	adjusted_levels 				= [3770, 2330, 1440, 890, 550, 340, 210, 130, 80, 50, 30, 20]
 	
-	#zoom = region['thn_zoom']
 	zoom = 0
 	if force or not os.path.exists(sw_osm_image):
 		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, adjusted_levels, hexColors, force, verbose, zoom)
@@ -302,6 +294,10 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 	file_list = [ sw_osm_image, topojson_filename+".gz", tif_image ]
 	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 	
+	if not verbose: # Cleanup
+		cmd = "rm -rf %s %s %s %s %s %s %s" % (origFileName, merge_filename, browse_filename, subset_filename, osm_bg_image, geojsonDir, levelsDir)
+		execute(cmd)
+
 # ===============================
 # Main
 #
