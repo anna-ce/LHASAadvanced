@@ -25,9 +25,15 @@ def CreateLevel(l, geojsonDir, fileName, src_ds, data, attr, _force, _verbose):
 		
 	xorg				= geotransform[0]
 	yorg  				= geotransform[3]
-	pres				= geotransform[1]
+	xres				= geotransform[1]
+	yres				= -geotransform[5]
+	stretch				= 1	# xres/yres
+	
+	if verbose:
+		print xres, yres, stretch
+		
 	xmax				= xorg + geotransform[1]* src_ds.RasterXSize
-	ymax				= yorg - geotransform[1]* src_ds.RasterYSize
+	ymax				= yorg + geotransform[5]* src_ds.RasterYSize
 
 
 	if not force and os.path.exists(fileName):
@@ -77,7 +83,11 @@ def CreateLevel(l, geojsonDir, fileName, src_ds, data, attr, _force, _verbose):
 		# -L		left margin
 		# -B		bottom margin
 
-		cmd = str.format("potrace -i -z black -a 1.5 -t 3 -b geojson -o {0} {1} -x {2} -L {3} -B {4} ", fileName+".geojson", fileName+".pgm", pres, xorg, ymax ); 
+		if stretch != 1:
+			cmd = str.format("potrace -i -z black -a 1.5 -t 3 -b geojson -o {0} {1} -x {2} -S {3} -L {4} -B {5} ", fileName+".geojson", fileName+".pgm", xres, stretch, xorg, ymax ); 
+		else:
+			cmd = str.format("potrace -i -z black -a 1.5 -t 3 -b geojson -o {0} {1} -x {2} -L {3} -B {4} ", fileName+".geojson", fileName+".pgm", xres, xorg, ymax ); 
+			
 		execute(cmd)
 
 		#cmd = str.format("node set_geojson_property.js --file {0} --prop frost={1}", fileName+".geojson", frost)

@@ -124,9 +124,14 @@ var productQueries = {
 					})	
 				}
 				
-				async.each( queries, queryProduct, function(err ) {
+				if( queries ) {
+					async.each( queries, queryProduct, function(err ) {
+						cb(null)
+					})
+				} else {
+					logger.info("No query found for", asset)
 					cb(null)
-				})
+				}
 				
 			} else {
 				debug(asset, " not selected")

@@ -201,6 +201,12 @@
 				"href": 		"/opensearch",
 				"checked": 		true,
 				"selected":   false
+			},
+			{
+				"source": 		"geos5",
+				"href": 		"/opensearch",
+				"checked": 		true,
+				"selected":   false
 			}
 		]
 }

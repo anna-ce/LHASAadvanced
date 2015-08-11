@@ -208,7 +208,8 @@
         "gsfc": "NASA GSFC",
         "umd": "University of Maryland Geographic Department",
         "chirps": "CHIRPS",
-        "gfms": "UMD Global Flood Monitoring System"
+        "gfms": "UMD Global Flood Monitoring System",
+        "geos5": "GSFC GEOS-5 model"
     },
     "sensors": {
         "sar": "SAR",
@@ -225,7 +226,8 @@
         "usgs": "USGS",
         "avhrr": "AVHRR",
         "viirs": "VIIRS",
-        "gfms": "NASA TMPA"
+        "gfms": "NASA TMPA",
+        "geos5": "GSFC GEOS-5 model"
     },
     "duration": {
         "hours": "%{hours} hours",
@@ -276,7 +278,8 @@
         "burned_areas": "Burned Areas",
         "precip_1d": "1-d Accumulated Rainfall",
         "precip_3d": "3-d Accumulated Rainfall",
-        "precip_7d": "7-d Accumulated Rainfall"
+        "precip_7d": "7-d Accumulated Rainfall",
+        "precip_1d_forecast": "1-d Accumulated Rainfall Forecast"
     },
     "filesize": {
         "B": "B",

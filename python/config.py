@@ -36,6 +36,7 @@ LS_DIR						= os.path.join(DATA_DIR, "ls")
 QUAKES_DIR					= os.path.join(DATA_DIR, "quakes")
 VIIRS_CHLA_DIR				= os.path.join(DATA_DIR, "viirs_chla")
 CHIRPS_PRELIM_DIR			= os.path.join(DATA_DIR, "chirps2_prelim")
+GEOS5_DIR					= os.path.join(DATA_DIR, "geos5")
 
 
 today 		= date.today()

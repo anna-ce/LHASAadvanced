@@ -158,8 +158,7 @@ function styleFeature( feature, id, style ) {
 		var option = id + "_" + k;
 		dust.render(option, feature.properties, function(err, out) {
 			try {
-				//console.log("dust", err, out, option)
-	
+				//console.log("dust", err, out, option)	
 				var result = eval(out);
 				if( result ) {
 					var index = option.replace(id+"_", "");
@@ -184,7 +183,7 @@ function loadData( topojsonUrl, displayName, mapinfos ) {
 	var legendObject, styleObject, creditObject;
 	var styleId;
 	
-	console.log("loadData",topojsonUrl,displayName);
+	// console.log("loadData",topojsonUrl,displayName);
 	
 	if( mapinfos ) {
 		for( var el in mapinfos) {
@@ -196,8 +195,11 @@ function loadData( topojsonUrl, displayName, mapinfos ) {
 			
 			switch( id ) {
 				case "legend":
-					legendObject 	= map_el;
-					legendObject.id = hc;
+					legendObject 			= map_el;
+					legendObject.id 		= hc;
+					legendObject.loaded 	= false
+					legendObject.product 	= hc
+					
 					for( var i in legends) {
 						if( legends[i].legend == hc ) {
 							legendObject.loaded = true
@@ -271,7 +273,6 @@ function loadData( topojsonUrl, displayName, mapinfos ) {
 								color: styleOptions.color
 							});
 						}
-								
 					},
 					onEachFeature: function(feature, layer) {
 						var html = "<br/><table>"

@@ -209,15 +209,21 @@ def bbox(lat, lon, zoom, width, height):
 	
 	px, py 	= MetersToPixels( mx, my, zoom)
 
-	mx,my = PixelsToMeters( px - width/2, py + height/2, zoom)
+	mx,my 	= PixelsToMeters( px - width/2, py + height/2, zoom)
 	ullat, ullon = MetersToLatLon( mx, my )
 	
 	mx,my = PixelsToMeters( px + width/2, py - height/2, zoom)
 	lrlat, lrlon = MetersToLatLon( mx, my )
 		
+	if ullon < -180:
+		ulllon = -180
+		
+	if lrlon > 180:
+		lrlon = 180
+		
 	return ullon, ullat, lrlon, lrlat
 	
-def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, levels, hexColors, _force, _verbose, zoom=4):
+def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, levels, hexColors, _force, _verbose, zoom=4, scale=1):
 	verbose = _verbose
 	force	= _force
 	
@@ -233,11 +239,17 @@ def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_o
 	band				= src_ds.GetRasterBand(1)
 	data				= band.ReadAsArray(0, 0, src_ds.RasterXSize, src_ds.RasterYSize )
 	
+	if scale != 1:
+		print "rescale for browse", scale
+		data *= scale
+	
+	print geotransform
+	
 	xorg				= geotransform[0]
 	yorg  				= geotransform[3]
-	pres				= geotransform[1]
+
 	xmax				= xorg + geotransform[1]* src_ds.RasterXSize
-	ymax				= yorg - geotransform[1]* src_ds.RasterYSize
+	ymax				= yorg + geotransform[5]* src_ds.RasterYSize
 	
 	if verbose:
 		print "original coords", xorg, xmax, yorg, ymax
@@ -318,8 +330,8 @@ def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_o
 	if verbose:
 		print "** Adjust", src_ds.RasterXSize, src_ds.RasterYSize, minDim, ratio, rasterXSize, rasterYSize
 		
-	#if 1 or force or not os.path.isfile(osm_bg_image):	
-	mapbox_image(centerlat, centerlon, zoom, rasterXSize, rasterYSize, osm_bg_image)
+	if 1 or force or not os.path.isfile(osm_bg_image):	
+		mapbox_image(centerlat, centerlon, zoom, rasterXSize, rasterYSize, osm_bg_image)
 
 	ullon, ullat, lrlon, lrlat = bbox(centerlat, centerlon, zoom, rasterXSize, rasterYSize)
 	if verbose:
@@ -334,7 +346,6 @@ def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_o
 		overwriteStr 		= ' -overwrite ' # Overwrite output if it exists
 		additionalOptions 	= ' -co COMPRESS=DEFLATE -setci  ' # Additional options
 		wh 					= ' -ts %d %d  ' % ( rasterXSize, rasterYSize )
-
 		warpOptions 	= ofStr + bbStr + projectionStr + resStr + overwriteStr + additionalOptions + wh
 		warpCMD = 'gdalwarp ' + warpOptions + browse_filename + ' ' + subset_filename
 		execute(warpCMD)
@@ -374,9 +385,9 @@ if __name__ == '__main__':
 
 	xorg			= geomatrix[0]
 	yorg  			= geomatrix[3]
-	pres			= geomatrix[1]
+
 	xmax			= xorg + geomatrix[1]* rasterXSize
-	ymax			= yorg - geomatrix[1]* rasterYSize
+	ymax			= yorg - geomatrix[5]* rasterYSize
 
 	centerlon		= (xorg + xmax) / 2
 	centerlat		= (yorg + ymax) / 2
