@@ -209,7 +209,7 @@
         "umd": "University of Maryland Geographic Department",
         "chirps": "CHIRPS",
         "gfms": "UMD Global Flood Monitoring System",
-        "geos5": "GSFC GEOS-5 model"
+        "geos5": "GSFC Global Modeling and Assimilation Office"
     },
     "sensors": {
         "sar": "SAR",
@@ -227,7 +227,7 @@
         "avhrr": "AVHRR",
         "viirs": "VIIRS",
         "gfms": "NASA TMPA",
-        "geos5": "GSFC GEOS-5 model"
+        "geos5": "GEOS-5 Model"
     },
     "duration": {
         "hours": "%{hours} hours",
@@ -475,6 +475,30 @@
             "gpm_1d": "1-d Rainfall Accumulation",
             "gpm_3d": "3-d Rainfall Accumulation",
             "gpm_7d": "7-d Rainfall Accumulation",
+            "legend": {
+                "1mm": "1mm",
+                "2mm": "2mm",
+                "3mm": "3mm",
+                "5mm": "5mm",
+                "8mm": "8mm",
+                "13mm": "13mm",
+                "21mm": "21mm",
+                "34mm": "34mm",
+                "55mm": "55mm",
+                "89mm": "89mm",
+                "144mm": "144mm",
+                "233mm": "233mm",
+                "377mm": "377mm"
+            }
+        },
+        "precipitation_forecast": {
+            "title": "Precipitation Forecast",
+            "credits": "NASA GSFC Global Modeling and Assimilation Office",
+            "source": {
+                "label": "Source",
+                "source": "NASA GSFC GMAO"
+            },
+            "precip_1d_forecast": "1-d Rainfall Accumulation Forecast",
             "legend": {
                 "1mm": "1mm",
                 "2mm": "2mm",
