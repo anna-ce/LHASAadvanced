@@ -10,6 +10,9 @@ def CopyToS3( s3_bucket, s3_folder, file_list, force, verbose ):
 	
 	conn 		= S3Connection(aws_access_key, aws_secret_access_key)
 	
+	if verbose:
+		print "CopyToS3", s3_bucket, s3_folder, file_list
+		
 	mybucket 	= conn.get_bucket(s3_bucket)
 	k 			= Key(mybucket)
 

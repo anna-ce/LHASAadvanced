@@ -60,6 +60,7 @@ class TRMM:
 		self.trmm_d03_dir		=  os.path.join(config.data_dir,"trmm","d03", self.ymd)
 		self.trmm_d07_dir		=  os.path.join(config.data_dir,"trmm","d07", self.ymd)
 		self.trmm_d08_dir		=  os.path.join(config.data_dir,"trmm","d08", self.ymd)
+		self.trmm_global_dir	=  os.path.join(config.data_dir,"trmm","global", self.ymd)
 
 		self.trmm_dir			=  os.path.join(config.data_dir,"trmm", self.ymd)
 
@@ -274,7 +275,7 @@ class TRMM:
 		
 		src_ds = None	
 	
-	def process_trmm_region_to_s3( self, dx, thumbnail_file, topojson_gz_file, topojson_file, tif_file):
+	def process_trmm_region_to_s3( self, dx, thumbnail_file, topojson_gz_file, topojson_file, tif_file, shp_file):
 		# copy mbtiles to S3
 		region 		= config.regions[dx]
 		bucketName 	= region['bucket']
@@ -309,6 +310,13 @@ class TRMM:
 		#if force:
 		cmd += " --force"
 		self.execute(cmd)
+		
+		cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + folder + " --file " + shp_file
+		if verbose:
+			cmd += " --verbose"
+		#if force:
+		cmd += " --force"
+		self.execute(cmd)
 	
 	def process_trmm_region_cleanup(self, dx):
 		if not verbose:			# probably debugging, so do not dispose of artifacts
@@ -325,7 +333,8 @@ class TRMM:
 				os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24_%s_%s.topojson" % (dx,self.ymd)),
 				os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24_%s_%s_100m.*" % (dx,self.ymd)),
 				os.path.join(config.data_dir,"trmm", dx, self.ymd, "geojson"),
-				os.path.join(config.data_dir,"trmm", dx, self.ymd, "levels")
+				os.path.join(config.data_dir,"trmm", dx, self.ymd, "levels"),
+				os.path.join(config.data_dir,"trmm", dx, self.ymd, "shp")
 			]
 			cmd = "rm -rf "+ " ".join(delete_files)
 			self.execute(cmd)
@@ -363,6 +372,9 @@ class TRMM:
 		thumbnail_file 			= os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24.%s_thn.jpg" % (self.ymd))
 		topojson_file			= os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24.%s.topojson" % (self.ymd))
 		topojson_gz_file		= os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24.%s.topojson.gz" % (self.ymd))
+		shp_gz_file				= os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24.%s.shp.gz" % (self.ymd))
+
+		merge_filename 			= os.path.join(config.data_dir,"trmm", dx, self.ymd, "geojson", "trmm_levels.geojson")
 
 		self.process_trmm_region_subset(self.output_file_180, bbox, subset_file, self.color_file, rgb_subset_file)
 	
@@ -380,7 +392,23 @@ class TRMM:
 			cmd = "node trmm_merge.js "+dx+ " " + self.ymd
 			self.execute(cmd)
 			
-		self.process_trmm_region_to_s3( dx, thumbnail_file, topojson_gz_file, topojson_file, subset_file)
+		# Convert to shapefile	
+
+		self.shpDir		= os.path.join(config.data_dir,"trmm", dx, self.ymd, "shp")
+		cmd = "rm -rf " + self.shpDir
+		self.execute(cmd)
+		os.makedirs(self.shpDir)
+			
+		if force or not os.path.exists(self.shpDir) and os.path.exists(merge_filename):
+			cmd= "ogr2ogr -f 'ESRI Shapefile' %s %s" % ( self.shpDir, merge_filename)
+			self.execute(cmd)
+	
+		if force or not os.path.exists(shp_gz_file):
+			mydir	= os.path.join(config.data_dir,"trmm", dx, self.ymd)
+			cmd 	= "cd %s; tar -cvzf %s shp" %(mydir, shp_gz_file)
+			self.execute(cmd)
+		
+		self.process_trmm_region_to_s3( dx, thumbnail_file, topojson_gz_file, topojson_file, subset_file, shp_gz_file)
 		
 		self.process_trmm_region_cleanup(dx)
 		
@@ -411,6 +439,9 @@ class TRMM:
 
 		if not os.path.exists(self.trmm_d08_dir):
 		    os.makedirs(self.trmm_d08_dir)
+
+		if not os.path.exists(self.trmm_global_dir):
+		    os.makedirs(self.trmm_global_dir)
 		
 		if not os.path.exists(self.trmm_dir):
 		    os.makedirs(self.trmm_dir)
@@ -427,7 +458,7 @@ if __name__ == '__main__':
 	parser 		= argparse.ArgumentParser(description='TRMM Rainfall Processing')
 	apg_input 	= parser.add_argument_group('Input')
 	
-	apg_input.add_argument("-f", "--force", action='store_true', help="HydroSHEDS forces new water image to be generated")
+	apg_input.add_argument("-f", "--force", action='store_true', help="Forces new product to be generated")
 	apg_input.add_argument("-v", "--verbose", action='store_true', help="Verbose Flag")
 	apg_input.add_argument("-d", "--date", help="date")
 	apg_input.add_argument("-r", "--region", help="region d02|d03")

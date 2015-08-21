@@ -97,11 +97,11 @@ def CreateLevel(l, geojsonDir, fileName, src_ds, data, attr):
 		#execute(cmd)
 	
 		#cmd = str.format("topojson -o {0} --simplify-proportion 0.5 -p {3}={1} -- {3}={2}", fileName+".topojson", l, fileName+".geojson", attr ); 
-		cmd = str.format("topojson -q -o {0} --no-stitch-poles -p {3}={1} -- {3}={2}", fileName+".topojson", l, fileName+".geojson", attr ); 
+		cmd = str.format("topojson --bbox --simplify-proportion 0.5 -o {0} --no-stitch-poles -p {3}={1} -- {3}={2}", fileName+".topojson", l, fileName+".geojson", attr ); 
 		execute(cmd)
 	
 		# convert it back to json
-		cmd = "topojson-geojson --precision 3 -o %s %s" % ( geojsonDir, fileName+".topojson" )
+		cmd = "topojson-geojson --precision 4 -o %s %s" % ( geojsonDir, fileName+".topojson" )
 		execute(cmd)
 	
 		# rename file
@@ -142,7 +142,7 @@ def get_daily_gpm_files(trmm_gis_files, mydir, year, month):
 				ftp.retrbinary("RETR " + f, file.write)
 				file.close()
 			except Exception as e:
-				print "TRMM FTP Error", sys.exc_info()[0], e					
+				print "GPM IMERG FTP Error", sys.exc_info()[0], e					
 				os.remove(local_filename)
 				ftp.close();
 				sys.exit(-2)
@@ -179,9 +179,9 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 	if not os.path.exists(region_dir):            
 		os.makedirs(region_dir)
 	
-	origFileName 	= os.path.join(gpm_dir,gis_file_day)
-	ds 				= gdal.Open(origFileName)
-	geotransform	= ds.GetGeoTransform()
+	origFileName 		= os.path.join(gpm_dir,gis_file_day)
+	ds 					= gdal.Open(origFileName)
+	geotransform		= ds.GetGeoTransform()
 
 	xorg				= geotransform[0]
 	yorg  				= geotransform[3]
@@ -194,7 +194,7 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 	supersampled_file	= os.path.join(region_dir, "%s.%s_x2.tif" % (name, ymd))
 
 	if force or not os.path.exists(supersampled_file):
-		cmd 				= "gdalwarp -overwrite -q -tr %f %f -te %f %f %f %f -r cubicspline -co COMPRESS=LZW %s %s"%(pixelsize/2, pixelsize/2, bbox[0], bbox[1], bbox[2], bbox[3], origFileName, supersampled_file)
+		cmd 			= "gdalwarp -overwrite -q -tr %f %f -te %f %f %f %f -r cubicspline -co COMPRESS=LZW %s %s"%(pixelsize/2, pixelsize/2, bbox[0], bbox[1], bbox[2], bbox[3], origFileName, supersampled_file)
 		execute(cmd)
 	
 	geojsonDir	= os.path.join(region_dir,"geojson_%s" % (name))
@@ -205,15 +205,25 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 	if not os.path.exists(levelsDir):            
 		os.makedirs(levelsDir)
 
+	shpDir	= os.path.join(region_dir,"shp_%s" % (name))
+	cmd 	= "rm -rf " + shpDir
+	execute(cmd)
+	os.makedirs(shpDir)
+
 	merge_filename 		= os.path.join(geojsonDir, "%s.%s.geojson" % (name, ymd))
 	topojson_filename 	= os.path.join(geojsonDir, "..", "%s.%s.topojson" % (name,ymd))
 	browse_filename 	= os.path.join(geojsonDir, "..", "%s.%s_browse.tif" % (name,ymd))
+	subset_aux_filename = os.path.join(geojsonDir, "..", "%s.%s_small_browse.tif.aux.xml" % (name, ymd))
 	subset_filename 	= os.path.join(geojsonDir, "..", "%s.%s_small_browse.tif" % (name, ymd))
-	osm_bg_image		= os.path.join(geojsonDir, "..", "osm_bg.png")
+	
+	#osm_bg_image		= os.path.join(geojsonDir, "..", "osm_bg.png")	
+	osm_bg_image		= os.path.join(config.data_dir, "gpm", "osm_bg.png")
+	
 	sw_osm_image		= os.path.join(geojsonDir, "..", "%s.%s_thn.jpg" % (name, ymd))
 	tif_image			= os.path.join(geojsonDir, "..", "%s.%s.tif" % (name, ymd))
 
 	geojson_filename 	= os.path.join(geojsonDir, "..", "%s.%s.json" % (name,ymd))
+	shapefile_gz		= os.path.join(geojsonDir, "..", "%s.shp.gz" % name)
 
 	levels 				= [377, 233, 144, 89, 55, 34, 21, 13, 8, 5, 3, 2]
 		
@@ -251,37 +261,25 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 		    json.dump(jsonDict, outfile)	
 
 		# Convert to topojson
-		cmd 	= "topojson -p precip -o "+ topojson_filename + " " + merge_filename
+		cmd 	= "topojson --bbox --simplify-proportion 0.5 -p precip -o "+ topojson_filename + " " + merge_filename
 		execute(cmd)
 
 		cmd 	= "gzip --keep "+ topojson_filename
 		execute(cmd)
-		
-	if force or not os.path.exists(geojson_filename):	
-		jsonDict = dict(type='FeatureCollection', features=[])
 	
-		for l in reversed(levels):
-			fileName 		= os.path.join(levelsDir,  ymd+"_level_%d.tif.geojson"%l)
-			if os.path.exists(fileName):
-				print "merge", fileName
-				with open(fileName) as data_file:    
-					jdata = json.load(data_file)
-		
-				if 'features' in jdata:
-					for f in jdata['features']:
-						jsonDict['features'].append(f)
-	
-
-		with open(geojson_filename, 'w') as outfile:
-		    json.dump(jsonDict, outfile)	
-	
-		cmd 	= "gzip --keep "+ geojson_filename
+	# Convert to shapefile		
+	if force or not os.path.exists(shpDir) and os.path.exists(merge_filename):
+		cmd= "ogr2ogr -f 'ESRI Shapefile' %s %s" % ( shpDir, merge_filename)
 		execute(cmd)
 	
+	if force or not os.path.exists(shapefile_gz):
+		cmd 	= "cd %s; tar -cvzf %s shp" %(region_dir, shapefile_gz)
+		execute(cmd)
+		
 	# problem is that we need to scale it or adjust the levels for coloring (easier)
-	adjusted_levels 				= [3770, 2330, 1440, 890, 550, 340, 210, 130, 80, 50, 30, 20]
+	adjusted_levels 		= [3770, 2330, 1440, 890, 550, 340, 210, 130, 80, 50, 30, 20]
 	
-	zoom = 0
+	zoom = 1
 	if force or not os.path.exists(sw_osm_image):
 		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, adjusted_levels, hexColors, force, verbose, zoom)
 	
@@ -291,11 +289,12 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 		
 	ds = None
 	
-	file_list = [ sw_osm_image, topojson_filename+".gz", tif_image ]
-	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
+	file_list = [ sw_osm_image, topojson_filename+".gz", tif_image, shapefile_gz ]
+	#CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
+	CopyToS3( s3_bucket, s3_folder, file_list, 1, 1 )
 	
 	if not verbose: # Cleanup
-		cmd = "rm -rf %s %s %s %s %s %s %s" % (origFileName, merge_filename, browse_filename, subset_filename, osm_bg_image, geojsonDir, levelsDir)
+		cmd = "rm -rf %s %s %s %s %s %s %s %s %s %s %s" % (origFileName, supersampled_file, merge_filename, topojson_filename, subset_aux_filename, browse_filename, subset_filename, osm_bg_image, geojsonDir, levelsDir, shpDir)
 		execute(cmd)
 
 # ===============================
@@ -335,8 +334,8 @@ if __name__ == '__main__':
 	if not os.path.exists(gpm_dir):
 	    os.makedirs(gpm_dir)
 		
-	s3_folder	= os.path.join("gpm", str(year), doy)
-	s3_bucket	= 'ojo-global'
+	s3_folder			= os.path.join("gpm", str(year), doy)
+	s3_bucket			= 'ojo-global'
 	
 	gis_file_day		= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.1day.tif"%(year, month, day)
 	gis_file_day_tfw 	= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.1day.tfw"%(year, month, day)
@@ -348,9 +347,20 @@ if __name__ == '__main__':
 	gis_file_7day_tfw 	= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.7day.tfw"%(year, month, day)
 	
 	print gis_file_day
+	files 				= [
+		gis_file_day, gis_file_day_tfw, 
+		gis_file_3day, gis_file_3day_tfw, 
+		gis_file_7day, gis_file_7day_tfw
+	]
+	
 	if force or not os.path.exists(os.path.join(gpm_dir,gis_file_day)):
-		get_daily_gpm_files([gis_file_day, gis_file_day_tfw, gis_file_3day, gis_file_3day_tfw, gis_file_7day_tfw, gis_file_7day_tfw], gpm_dir, year, month)
+		get_daily_gpm_files(files, gpm_dir, year, month)
 	
 	process(gpm_dir, "gpm_1d", gis_file_day, ymd)
-	process(gpm_dir, "gpm_3d", gis_file_day, ymd)
-	process(gpm_dir, "gpm_7d", gis_file_day, ymd)
+	process(gpm_dir, "gpm_3d", gis_file_3day, ymd)
+	process(gpm_dir, "gpm_7d", gis_file_7day, ymd)
+	
+	if not verbose:
+		for f in files:
+			cmd = "rm -rf %s" % (os.path.join(gpm_dir,f))
+			execute(cmd)

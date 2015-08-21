@@ -121,7 +121,7 @@ def process_url( mydir, url, ymd, bbox, zoom, s3_bucket, s3_folder ):
 	
 	mapbox_image(centerlat, centerlon, zoom, rasterXSize, rasterYSize, osm_bg_image)
 	
-	ullon, ullat, lrlon, lrlat = browseimage.bbox(centerlat, centerlon, zoom, rasterXSize, rasterYSize)
+	ullon, ullat, lrlon, lrlat = browseimage.Gen_bbox(centerlat, centerlon, zoom, rasterXSize, rasterYSize)
 	#print ullon, lrlat, lrlon, ullat
 	
 	url = "https://firms.modaps.eosdis.nasa.gov/wms/?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=fires24&width=400&height=250&BBOX="

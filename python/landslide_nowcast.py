@@ -365,9 +365,7 @@ def process(mydir, scene, s3_bucket, s3_folder, zoom):
 	shpDir	= os.path.join(mydir,"shp")
 	cmd = "rm -rf " + shpDir
 	execute(cmd)
-	
-	if not os.path.exists(levelsDir):            
-		os.makedirs(levelsDir)
+	os.makedirs(shpDir)
 
 	merge_filename 		= os.path.join(geojsonDir, "%s.geojson" % scene)
 	topojson_filename 	= os.path.join(mydir, "%s.topojson" % scene)
@@ -417,7 +415,7 @@ def process(mydir, scene, s3_bucket, s3_folder, zoom):
 		execute(cmd)
 
 	# Convert to shapefile		
-	if force or not os.path.exists(shpDir):
+	if force or not os.path.exists(shpDir) and os.path.exists(merge_filename):
 		cmd= "ogr2ogr -f 'ESRI Shapefile' %s %s" % ( shpDir, merge_filename)
 		execute(cmd)
 	
@@ -446,6 +444,15 @@ def process(mydir, scene, s3_bucket, s3_folder, zoom):
 		execute(cmd)
 		cmd = "rm -rf "+geojsonDir
 		execute(cmd)
+		
+		fpath 	= os.path.join(config.data_dir,"landslide_nowcast", region, ymd)
+		cmd	= "rm -rf " + os.path.join(fpath,"iabr*")
+		execute(cmd)
+		cmd	= "rm -rf " + os.path.join(fpath,"rr_*")
+		execute(cmd)
+		cmd	= "rm -rf " + os.path.join(fpath,"step_*")
+		execute(cmd)
+
 		
 		
 		

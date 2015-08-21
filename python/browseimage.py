@@ -204,7 +204,7 @@ def google_center_image(lat, lon, zoom, width, heigth, osm_bg_image):
 #	
 # Generate the BBOX for that center latlon and zoom level
 #
-def bbox(lat, lon, zoom, width, height):	
+def Gen_bbox(lat, lon, zoom, width, height):	
 	mx, my 	= LatLonToMeters( lat, lon )
 	
 	px, py 	= MetersToPixels( mx, my, zoom)
@@ -223,7 +223,7 @@ def bbox(lat, lon, zoom, width, height):
 		
 	return ullon, ullat, lrlon, lrlat
 	
-def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, levels, hexColors, _force, _verbose, zoom=4, scale=1):
+def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, levels, hexColors, _force, _verbose, zoom=4, scale=1, bbox=[]):
 	verbose = _verbose
 	force	= _force
 	
@@ -330,12 +330,20 @@ def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_o
 	if verbose:
 		print "** Adjust", src_ds.RasterXSize, src_ds.RasterYSize, minDim, ratio, rasterXSize, rasterYSize
 		
-	if 1 or force or not os.path.isfile(osm_bg_image):	
-		mapbox_image(centerlat, centerlon, zoom, rasterXSize, rasterYSize, osm_bg_image)
+	if len(bbox) == 0:
+		if force or not os.path.isfile(osm_bg_image):	
+			mapbox_image(centerlat, centerlon, zoom, rasterXSize, rasterYSize, osm_bg_image)
 
-	ullon, ullat, lrlon, lrlat = bbox(centerlat, centerlon, zoom, rasterXSize, rasterYSize)
-	if verbose:
-		print "bbox coords", ullon, ullat, lrlon, lrlat
+		ullon, ullat, lrlon, lrlat = Gen_bbox(centerlat, centerlon, zoom, rasterXSize, rasterYSize)
+	
+	else:
+		ullon = bbox[0]
+		ullat = bbox[1]
+		lrlon = bbox[2]
+		lrlat = bbox[3]
+
+	if 1:
+		print "mapbbox coords", ullon, ullat, lrlon, lrlat
 		
 	if force or not os.path.isfile(subset_filename):	
 		ofStr 				= ' -of GTiff '

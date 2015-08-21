@@ -116,7 +116,7 @@ def process_url( mydir, url, ymd, bbox, zoom, s3_bucket, s3_folder ):
 	
 	mapbox_image(centerlat, centerlon, zoom, rasterXSize, rasterYSize, osm_bg_image)
 	
-	ullon, ullat, lrlon, lrlat = browseimage.bbox(centerlat, centerlon, zoom, rasterXSize, rasterYSize)
+	ullon, ullat, lrlon, lrlat = browseimage.Gen_bbox(centerlat, centerlon, zoom, rasterXSize, rasterYSize)
 	dx = (lrlon-ullon)/rasterXSize
 	dy = (ullat-lrlat)/rasterXSize
 

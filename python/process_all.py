@@ -141,6 +141,9 @@ if __name__ == '__main__':
 	
 	yesterday	= today - timedelta(1)
 	ydt			= yesterday.strftime("%Y-%m-%d")
+
+	dayAfterYesterday	= today - timedelta(2)
+	ydt2				= dayAfterYesterday.strftime("%Y-%m-%d")
 		
 	if 1:
 		process_script('trmm_process.py', ydt)
@@ -153,6 +156,8 @@ if __name__ == '__main__':
 		process_script('modis-burnedareas.py', ydt)
 		process_script('quake.py', ydt)
 		process_global_script('gfms_vectorizer.py', ydt)
+		process_global_script('geos5.py', dt)
+		process_global_script('gpm_global.py', ydt2)
 
 		#process_script('viirs_CHLA.py', ydt)
 		#process_script('chirps_prelim.py --period monthly', ydt)

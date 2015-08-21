@@ -85,6 +85,9 @@ regions		= {
 		'global':		"World",
 		'bbox': 		[-180, -50, 180, 50 ],
 		'bucket':		"ojo-global",
+		'pixelsize':	0.008333333333330,
+		'thn_width':	720,
+		'thn_height':	240,
         'tiles-zoom':   "2-6"
 	
 	},

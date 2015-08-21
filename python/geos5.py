@@ -32,13 +32,13 @@ def execute( cmd ):
 	os.system(cmd)
 
 def get_files(year, mydir, files):
-	# ftp://ftp.nccs.nasa.gov/fp/forecast/Y2015/M08/D10/H06/
+	# ftp://ftp.nccs.nasa.gov/fp/forecast/Y2015/M08/D10/H00/
 
 	mstr		= "%02d" % month
 	dstr		= "%02d" % day
 
 	ftp_site 	= "ftp.nccs.nasa.gov"
-	path 		= "fp/forecast/Y%s/M%s/D%s/H06" % (year, mstr, dstr)		
+	path 		= "fp/forecast/Y%s/M%s/D%s/H00" % (year, mstr, dstr)		
 	if verbose:
 		print "get_files", ftp_site, path
 	
@@ -49,7 +49,8 @@ def get_files(year, mydir, files):
 
 	for f in files:
 		filename = f
-		print "Trying to download", filename
+		if verbose:
+			print "Trying to download", filename
 		local_filename = os.path.join(mydir, filename)
 		if not os.path.exists(local_filename):
 			if verbose:
@@ -129,7 +130,8 @@ def process_file( mydir, filename, s3_bucket, s3_folder):
 		for l in reversed(levels):
 			fileName 		= os.path.join(geojsonDir, "geos5_precip_level_%d.geojson"%l)
 			if os.path.exists(fileName):
-				print "merge", fileName
+				if verbose:
+					print "merge", fileName
 				with open(fileName) as data_file:    
 					data = json.load(data_file)
 		
@@ -145,17 +147,14 @@ def process_file( mydir, filename, s3_bucket, s3_folder):
 		cmd 	= "topojson -p --bbox --simplify-proportion 0.5 -o "+ topojson_filename + " " + merge_filename
 		execute(cmd)
 
-		if verbose:
-			cmd 	= "gzip --keep "+ topojson_filename
-		else:
-			cmd 	= "gzip "+ topojson_filename
+		cmd 	= "gzip --keep "+ topojson_filename
 			
 		execute(cmd)
 	
 	# Create shapefile gz
 	if force or not os.path.exists(shp_filename):
 		# Convert simplified topojson to geojson
-		cmd = "topojson-geojson --precision 5 %s -o %s" % (topojson_filename, geojsonDir)
+		cmd = "topojson-geojson --precision 4 %s -o %s" % (topojson_filename, geojsonDir)
 		execute(cmd)
 		
 		cmd = "ogr2ogr -f 'ESRI Shapefile' %s %s" % (shpDir, json_filename)
@@ -175,9 +174,9 @@ def process_file( mydir, filename, s3_bucket, s3_folder):
 	file_list = [ sw_osm_image, topojson_filename, topojson_filename+".gz", filename, shp_filename ]
 	CopyToS3( s3_bucket, s3_folder, file_list, 1, 1 )
 	
-	#if not verbose: # Cleanup
-	#	cmd = "rm -rf %s %s %s %s %s %s %s %s %s" % ( merge_filename, browse_filename, subset_filename, super_subset_file, osm_bg_image, subset_aux_filename, geojsonDir, levelsDir, shpDir)
-	#	execute(cmd)
+	if not verbose: # Cleanup
+		cmd = "rm -rf %s %s %s %s %s %s %s %s %s %s" % ( merge_filename, browse_filename, topojson_filename, subset_filename, super_subset_file, osm_bg_image, subset_aux_filename, geojsonDir, levelsDir, shpDir)
+		execute(cmd)
 		
 # ======================================================================
 #	python geos5.py --date 2015-08-10 -v
@@ -216,37 +215,16 @@ if __name__ == '__main__':
 	if not os.path.exists(mydir):            
 		os.makedirs(mydir)
 	
-	files = [
-		 "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_06+%s_1030.V01.nc4" %(ymd, ymd),
-		 "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_06+%s_1130.V01.nc4" %(ymd, ymd),
-		 "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_06+%s_1230.V01.nc4" %(ymd, ymd),
-		 "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_06+%s_1330.V01.nc4" %(ymd, ymd),
-		 "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_06+%s_1430.V01.nc4" %(ymd, ymd),
-		 "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_06+%s_1530.V01.nc4" %(ymd, ymd),
-		 "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_06+%s_1630.V01.nc4" %(ymd, ymd),
-		 "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_06+%s_1730.V01.nc4" %(ymd, ymd),
-		 "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_06+%s_1830.V01.nc4" %(ymd, ymd),
-		 "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_06+%s_1930.V01.nc4" %(ymd, ymd),
-		 "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_06+%s_2030.V01.nc4" %(ymd, ymd),
-		 "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_06+%s_2130.V01.nc4" %(ymd, ymd),
-		 "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_06+%s_2230.V01.nc4" %(ymd, ymd),
-		 "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_06+%s_2330.V01.nc4" %(ymd, ymd),
-		 "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_06+%s_0030.V01.nc4" %(ymd, ymd1),
-		 "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_06+%s_0130.V01.nc4" %(ymd, ymd1),
-		 "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_06+%s_0230.V01.nc4" %(ymd, ymd1),
-		 "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_06+%s_0330.V01.nc4" %(ymd, ymd1),
-		 "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_06+%s_0630.V01.nc4" %(ymd, ymd1),
-		 "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_06+%s_0730.V01.nc4" %(ymd, ymd1),
-		 "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_06+%s_0830.V01.nc4" %(ymd, ymd1),
-		 "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_06+%s_0930.V01.nc4" %(ymd, ymd1),
-		 "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_06+%s_1030.V01.nc4" %(ymd, ymd1),
-		 "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_06+%s_1130.V01.nc4" %(ymd, ymd1)
-	]	
+	files = []
+	for i in range(0,24):	# 0-23
+		filename =  "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_00+%s_%02d30.V01.nc4" %(ymd, ymd, i)
+		files.append(filename)
 	
 	tif_filename	= os.path.join(mydir, "geos5_precip.%s.tif" % ymd)
 	
 	if force or not os.path.exists(tif_filename):          
-		print "file not found",   tif_filename
+		if verbose:
+			print "file not found",   tif_filename
 		get_files(str(year), mydir, files)
 
 	for f in files:
@@ -283,3 +261,10 @@ if __name__ == '__main__':
 	s3_bucket	= 'ojo-global'
 	
 	process_file( mydir, tif_filename, s3_bucket, s3_folder)
+		
+	if not verbose:
+		for f in files:
+			ffilename 		= os.path.join(mydir,f)
+			ftif_filename 	= ffilename + ".tif"
+			cmd = "rm %s %s" %(ffilename, ftif_filename)
+			execute(cmd)
