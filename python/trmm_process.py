@@ -341,8 +341,6 @@ class TRMM:
 		
 			if verbose:
 				print "Removed files"
-		else:
-			print "cannot delete... in verbose"
 	
 	# ===========================
 	# Subset 24hr Rainfall Accumulation and resample for specific region
@@ -397,11 +395,9 @@ class TRMM:
 		self.shpDir		= os.path.join(config.data_dir,"trmm", dx, self.ymd, "shp")
 		cmd = "rm -rf " + self.shpDir
 		self.execute(cmd)
-		os.makedirs(self.shpDir)
 			
-		if force or not os.path.exists(self.shpDir) and os.path.exists(merge_filename):
-			cmd= "ogr2ogr -f 'ESRI Shapefile' %s %s" % ( self.shpDir, merge_filename)
-			self.execute(cmd)
+		cmd= "ogr2ogr -f 'ESRI Shapefile' %s %s" % ( self.shpDir, merge_filename)
+		self.execute(cmd)
 	
 		if force or not os.path.exists(shp_gz_file):
 			mydir	= os.path.join(config.data_dir,"trmm", dx, self.ymd)

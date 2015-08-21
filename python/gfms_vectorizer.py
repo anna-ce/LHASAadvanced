@@ -254,6 +254,8 @@ class GFMS:
 		topojson_fullname		= os.path.join(self.inpath, "gfms", ymd, topojson_fname)
 		topojson_fullname_gz	= topojson_fullname + ".gz"
 		
+		shp_gz_file				= os.path.join(self.inpath, "gfms", ymd, "%s.%s%02d.shp.gz" % (name, ym, day))
+
 		output_rgb_fname		= "%s.%s%02d_rgb.tif" % (name, ym, day)
 		output_rgb_fullname		= os.path.join(self.inpath, "gfms", ymd, output_rgb_fname)
 		color_file 				= os.path.join("cluts", "gfms_colors.txt")
@@ -266,6 +268,10 @@ class GFMS:
 		levelsDir	= os.path.join(flood_dir,"levels")
 		if not os.path.exists(levelsDir):
 			os.makedirs(levelsDir)
+
+		shpDir		= os.path.join(flood_dir, "shp")
+		cmd = "rm -rf " + shpDir
+		self.execute(cmd)
 		
 		merge_filename 			= os.path.join(geojsonDir, "%s_levels.geojson" % ymd)
 		browse_filename 		= os.path.join(geojsonDir, "..", "%s_browse.tif" % ymd)
@@ -377,14 +383,22 @@ class GFMS:
 				
 			self.execute(cmd)
 
+		cmd= "ogr2ogr -f 'ESRI Shapefile' %s %s" % ( shpDir, merge_filename)
+		self.execute(cmd)
+	
+		if force or not os.path.exists(shp_gz_file):
+			mydir	= os.path.join(self.inpath, "gfms", ymd)
+			cmd 	= "cd %s; tar -cvzf %s shp" %(mydir, shp_gz_file)
+			self.execute(cmd)
+			
 		if self.force or not os.path.exists(sw_osm_image):
 			MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, levels, hexColors, force, verbose, zoom=2)
 			
-		file_list = [ sw_osm_image, topojson_fullname_gz ]
+		file_list = [ sw_osm_image, topojson_fullname_gz, shp_gz_file, output_fullname ]
 		CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 
 		if not self.verbose:
-			cmd = "rm -rf %s %s %s %s %s %s %s %s %s %s" % ( browse_filename, input_fullname, output_fullname, subset_filename, super_fullname, output_rgb_fullname, osm_bg_image, browse_aux_filename, levelsDir, geojsonDir )
+			cmd = "rm -rf %s %s %s %s %s %s %s %s %s %s" % ( browse_filename, input_fullname, subset_filename, super_fullname, output_rgb_fullname, osm_bg_image, browse_aux_filename, levelsDir, geojsonDir, shpDir )
 			print cmd
 			self.execute(cmd)
 			
