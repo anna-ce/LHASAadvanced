@@ -240,6 +240,7 @@
         "topojson": "topojson",
         "topojsongz": "topojson.gz",
         "shpgz": "shp.gz",
+        "shpzip": "shp.zip",
         "osmbz2": "osm.bz2",
         "geotiff": "geotiff",
         "png": "png",
