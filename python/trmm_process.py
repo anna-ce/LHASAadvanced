@@ -275,7 +275,7 @@ class TRMM:
 		
 		src_ds = None	
 	
-	def process_trmm_region_to_s3( self, dx, thumbnail_file, topojson_gz_file, topojson_file, tif_file, shp_file):
+	def process_trmm_region_to_s3( self, dx, thumbnail_file, topojson_gz_file, topojson_file, tif_file, shp_file, zip_file):
 		# copy mbtiles to S3
 		region 		= config.regions[dx]
 		bucketName 	= region['bucket']
@@ -312,6 +312,13 @@ class TRMM:
 		self.execute(cmd)
 		
 		cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + folder + " --file " + shp_file
+		if verbose:
+			cmd += " --verbose"
+		#if force:
+		cmd += " --force"
+		self.execute(cmd)
+		
+		cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + folder + " --file " + zip_file
 		if verbose:
 			cmd += " --verbose"
 		#if force:
@@ -371,6 +378,7 @@ class TRMM:
 		topojson_file			= os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24.%s.topojson" % (self.ymd))
 		topojson_gz_file		= os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24.%s.topojson.gz" % (self.ymd))
 		shp_gz_file				= os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24.%s.shp.gz" % (self.ymd))
+		shp_zip_file			= os.path.join(config.data_dir,"trmm", dx, self.ymd, "trmm_24.%s.shp.zip" % (self.ymd))
 
 		merge_filename 			= os.path.join(config.data_dir,"trmm", dx, self.ymd, "geojson", "trmm_levels.geojson")
 
@@ -404,8 +412,13 @@ class TRMM:
 			cmd 	= "cd %s; tar -cvzf %s shp" %(mydir, shp_gz_file)
 			self.execute(cmd)
 		
-		self.process_trmm_region_to_s3( dx, thumbnail_file, topojson_gz_file, topojson_file, subset_file, shp_gz_file)
-		
+		if force or not os.path.exists(shp_zip_file):
+			mydir	= os.path.join(config.data_dir,"trmm", dx, self.ymd)
+			cmd 	= "cd %s; zip %s shp/*" %(mydir, shp_zip_file)
+			self.execute(cmd)
+
+		self.process_trmm_region_to_s3( dx, thumbnail_file, topojson_gz_file, topojson_file, subset_file, shp_gz_file, shp_zip_file)
+		 
 		self.process_trmm_region_cleanup(dx)
 		
 		
