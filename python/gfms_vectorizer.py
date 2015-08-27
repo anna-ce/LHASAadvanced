@@ -255,6 +255,7 @@ class GFMS:
 		topojson_fullname_gz	= topojson_fullname + ".gz"
 		
 		shp_gz_file				= os.path.join(self.inpath, "gfms", ymd, "%s.%s%02d.shp.gz" % (name, ym, day))
+		shp_zip_file			= os.path.join(self.inpath, "gfms", ymd, "%s.%s%02d.shp.zip" % (name, ym, day))
 
 		output_rgb_fname		= "%s.%s%02d_rgb.tif" % (name, ym, day)
 		output_rgb_fullname		= os.path.join(self.inpath, "gfms", ymd, output_rgb_fname)
@@ -386,15 +387,16 @@ class GFMS:
 		cmd= "ogr2ogr -f 'ESRI Shapefile' %s %s" % ( shpDir, merge_filename)
 		self.execute(cmd)
 	
-		if force or not os.path.exists(shp_gz_file):
+		if force or not os.path.exists(shp_zip_file):
 			mydir	= os.path.join(self.inpath, "gfms", ymd)
-			cmd 	= "cd %s; tar -cvzf %s shp" %(mydir, shp_gz_file)
+			#cmd 	= "cd %s; tar -cvzf %s shp" %(mydir, shp_gz_file)
+			cmd 	= "cd %s; zip %s shp/*" %(mydir, shp_zip_file)
 			self.execute(cmd)
 			
 		if self.force or not os.path.exists(sw_osm_image):
 			MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, levels, hexColors, force, verbose, zoom=2)
 			
-		file_list = [ sw_osm_image, topojson_fullname_gz, shp_gz_file, output_fullname ]
+		file_list = [ sw_osm_image, topojson_fullname_gz, shp_zip_file, output_fullname ]
 		CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 
 		if not self.verbose:

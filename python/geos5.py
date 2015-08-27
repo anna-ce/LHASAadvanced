@@ -92,6 +92,7 @@ def process_file( mydir, filename, s3_bucket, s3_folder):
 	sw_osm_image		= os.path.join(geojsonDir, "..", "geos5_precip.%s_thn.jpg" % ymd)
 	shp_filename 		= os.path.join(mydir, "geos5_precip.%s.shp.gz" % (ymd))
 	json_filename		= os.path.join(geojsonDir, "geos5_precip.%s.json" % (ymd))
+	shp_zip_file		= os.path.join(mydir, "geos5_precip.%s.shp.zip" % (ymd))
 	
 	#if force or not os.path.exists(subset_file):
 	#	cmd = "gdalwarp -overwrite -q -te %f %f %f %f %s %s" % (bbox[0], bbox[1], bbox[2], bbox[3], filename, subset_file)
@@ -160,7 +161,9 @@ def process_file( mydir, filename, s3_bucket, s3_folder):
 		cmd = "ogr2ogr -f 'ESRI Shapefile' %s %s" % (shpDir, json_filename)
 		execute(cmd)
 		
-		cmd = "cd %s; tar -zcvf %s %s" % (mydir, shp_filename, shpDir)
+		#cmd = "cd %s; tar -zcvf %s %s" % (mydir, shp_filename, shpDir)
+		cmd 	= "cd %s; zip %s shp/*" %(mydir, shp_zip_file)
+		
 		execute(cmd)
 		
 		
@@ -171,7 +174,7 @@ def process_file( mydir, filename, s3_bucket, s3_folder):
 		
 	ds = None
 	
-	file_list = [ sw_osm_image, topojson_filename, topojson_filename+".gz", filename, shp_filename ]
+	file_list = [ sw_osm_image, topojson_filename, topojson_filename+".gz", filename, shp_zip_file ]
 	CopyToS3( s3_bucket, s3_folder, file_list, 1, 1 )
 	
 	if not verbose: # Cleanup

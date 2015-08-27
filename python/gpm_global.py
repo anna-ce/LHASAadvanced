@@ -18,6 +18,7 @@ from browseimage import MakeBrowseImage
 from s3 import CopyToS3
 #from level import CreateLevel
 
+
 verbose 	= 0
 force 		= 0
 ftp_site 	= "jsimpson.pps.eosdis.nasa.gov"
@@ -29,9 +30,11 @@ def execute( cmd ):
 		print cmd
 	os.system(cmd)
 
+#def CreateLevel(maxl, minl, geojsonDir, fileName, src_ds, data, attr):
 def CreateLevel(l, geojsonDir, fileName, src_ds, data, attr):
 	global force, verbose
 		
+	minl				= l
 	projection  		= src_ds.GetProjection()
 	geotransform		= src_ds.GetGeoTransform()
 	#band				= src_ds.GetRasterBand(1)
@@ -54,13 +57,16 @@ def CreateLevel(l, geojsonDir, fileName, src_ds, data, attr):
 	o_band		 		= dst_ds_dataset.GetRasterBand(1)
 	o_data				= o_band.ReadAsArray(0, 0, dst_ds_dataset.RasterXSize, dst_ds_dataset.RasterYSize )
 	
-	count 				= (data >= l).sum()	
-
-	o_data[data>=l] 	= 255
+	#o_data.fill(255)
+	#o_data[data>=maxl] 	= 0
+	#o_data[data<minl]	= 0
+	
+	o_data[data>=l]		= 255
 	o_data[data<l]		= 0
 
+	count 				= (o_data > 0).sum()	
 	if verbose:
-		print "*** Level", l, " count:", count
+		print "Level", minl, maxl, " count:", count
 
 	if count > 0 :
 
@@ -97,7 +103,7 @@ def CreateLevel(l, geojsonDir, fileName, src_ds, data, attr):
 		#execute(cmd)
 	
 		#cmd = str.format("topojson -o {0} --simplify-proportion 0.5 -p {3}={1} -- {3}={2}", fileName+".topojson", l, fileName+".geojson", attr ); 
-		cmd = str.format("topojson --bbox --simplify-proportion 0.5 -o {0} --no-stitch-poles -p {3}={1} -- {3}={2}", fileName+".topojson", l, fileName+".geojson", attr ); 
+		cmd = str.format("topojson --bbox --simplify-proportion 0.5 -o {0} --no-stitch-poles -p {3}={1} -- {3}={2}", fileName+".topojson", minl, fileName+".geojson", attr ); 
 		execute(cmd)
 	
 		# convert it back to json
@@ -105,7 +111,7 @@ def CreateLevel(l, geojsonDir, fileName, src_ds, data, attr):
 		execute(cmd)
 	
 		# rename file
-		output_file = "%s_level_%d.geojson" % (attr, l)
+		output_file = "%s_level_%d.geojson" % (attr, minl)
 		json_file	= "%s.json" % attr
 		cmd 		= "mv %s %s" % (os.path.join(geojsonDir,json_file), os.path.join(geojsonDir, output_file))
 		execute(cmd)
@@ -224,6 +230,7 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 
 	geojson_filename 	= os.path.join(geojsonDir, "..", "%s.%s.json" % (name,ymd))
 	shapefile_gz		= os.path.join(geojsonDir, "..", "%s.shp.gz" % name)
+	shp_zip_file		= os.path.join(geojsonDir, "..", "%s.shp.zip" % name)
 
 	levels 				= [377, 233, 144, 89, 55, 34, 21, 13, 8, 5, 3, 2]
 		
@@ -240,8 +247,11 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 	sdata 				= data/10			# back to mm
 	
 	if force or not os.path.exists(topojson_filename+".gz"):
-		for l in levels:
+		for idx, l in enumerate(levels):
+			print "level", idx
+			#if idx < len(levels)-1:
 			fileName 		= os.path.join(levelsDir, ymd+"_level_%d.tif"%l)
+			#CreateLevel(l, levels[idx+1], geojsonDir, fileName, ds, sdata, "precip")
 			CreateLevel(l, geojsonDir, fileName, ds, sdata, "precip")
 	
 		jsonDict = dict(type='FeatureCollection', features=[])
@@ -261,19 +271,20 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 		    json.dump(jsonDict, outfile)	
 
 		# Convert to topojson
-		cmd 	= "topojson --bbox --simplify-proportion 0.5 -p precip -o "+ topojson_filename + " " + merge_filename
+		cmd 	= "topojson --bbox -p precip -o "+ topojson_filename + " " + merge_filename
 		execute(cmd)
 
 		cmd 	= "gzip --keep "+ topojson_filename
 		execute(cmd)
 	
 	# Convert to shapefile		
-	if force or not os.path.exists(shpDir) and os.path.exists(merge_filename):
+	if 1: #and os.path.exists(merge_filename):
 		cmd= "ogr2ogr -f 'ESRI Shapefile' %s %s" % ( shpDir, merge_filename)
 		execute(cmd)
 	
-	if force or not os.path.exists(shapefile_gz):
-		cmd 	= "cd %s; tar -cvzf %s shp" %(region_dir, shapefile_gz)
+	if force or not os.path.exists(shp_zip_file):
+		#cmd 	= "cd %s; tar -cvzf %s shp" %(region_dir, shapefile_gz)
+		cmd 	= "cd %s; zip %s shp_%s/*" %(region_dir, shp_zip_file, name)
 		execute(cmd)
 		
 	# problem is that we need to scale it or adjust the levels for coloring (easier)
@@ -289,7 +300,7 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 		
 	ds = None
 	
-	file_list = [ sw_osm_image, topojson_filename+".gz", tif_image, shapefile_gz ]
+	file_list = [ sw_osm_image, topojson_filename+".gz", tif_image, shp_zip_file ]
 	#CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 	CopyToS3( s3_bucket, s3_folder, file_list, 1, 1 )
 	
@@ -357,8 +368,8 @@ if __name__ == '__main__':
 		get_daily_gpm_files(files, gpm_dir, year, month)
 	
 	process(gpm_dir, "gpm_1d", gis_file_day, ymd)
-	process(gpm_dir, "gpm_3d", gis_file_3day, ymd)
-	process(gpm_dir, "gpm_7d", gis_file_7day, ymd)
+	#process(gpm_dir, "gpm_3d", gis_file_3day, ymd)
+	#process(gpm_dir, "gpm_7d", gis_file_7day, ymd)
 	
 	if not verbose:
 		for f in files:

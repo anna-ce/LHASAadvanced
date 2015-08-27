@@ -170,7 +170,8 @@
         "share": "share",
         "like": "like",
         "task": "task",
-        "map": "map"
+        "map": "map",
+        "value": "value"
     },
     "stream": {
         "displayName": "Publisher Flood Surface Water Products"
@@ -473,9 +474,10 @@
                 "label": "Source",
                 "source": "NASA GSFC GPM/TRMM"
             },
-            "gpm_1d": "1-d Rainfall Accumulation",
-            "gpm_3d": "3-d Rainfall Accumulation",
-            "gpm_7d": "7-d Rainfall Accumulation",
+            "trmm_24": "1-d Rainfall Accumulation (TRMM)",
+            "gpm_1d": "1-d Rainfall Accumulation (GPM)",
+            "gpm_3d": "3-d Rainfall Accumulation (GPM)",
+            "gpm_7d": "7-d Rainfall Accumulation (GPM)",
             "legend": {
                 "1mm": "1mm",
                 "2mm": "2mm",

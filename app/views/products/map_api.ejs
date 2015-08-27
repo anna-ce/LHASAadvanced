@@ -50,6 +50,7 @@
 
 		var region = <%- JSON.stringify(region) %>
 		var map_controls;
+		var value_url = undefined
 		
 		if(region.bbox) {
 			var line_points = [
@@ -105,10 +106,14 @@
 					} else if( action['@type'] == 'ojo:map') {
 						mapinfos = action['using']
 						console.log("found mapinfos")
+					} else if( action['@type'] == 'ojo:value') {
+						var using = action['using'][0]
+						value_url = using.url
+						console.log("found value action", value_url)
 					}
 				}
 				
-				loadData( topojson_url, id, mapinfos );
+				loadData( topojson_url, id, mapinfos, value_url );
 				
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
@@ -139,6 +144,7 @@
 			legends = {};
 			credits = [];
 		})	
+		
 	</script>
   </body>
 </html>

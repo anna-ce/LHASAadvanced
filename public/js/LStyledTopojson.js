@@ -179,7 +179,7 @@ function styleFeature( feature, id, style ) {
 }
 
 
-function loadData( topojsonUrl, displayName, mapinfos ) {
+function loadData( topojsonUrl, displayName, mapinfos, value_url ) {
 	var legendObject, styleObject, creditObject;
 	var styleId;
 	
@@ -247,7 +247,7 @@ function loadData( topojsonUrl, displayName, mapinfos ) {
 					attribution = creditsData.credits;
 				}
 				
-				var geoJsonLayer = L.geoJson(geojson, {
+				var options = {
 					style: function(feature) {
 					 	return styleFeature( feature, styleId, styleData );
 					},
@@ -287,9 +287,50 @@ function loadData( topojsonUrl, displayName, mapinfos ) {
 						layer.bindPopup( html)
 					},
 					attribution: attribution
-				})
-			
+				}
 				
+				if( value_url ) {
+					 options.onEachFeature 	= undefined
+					 options.pointToLayer 	= undefined
+				}
+					
+				var geoJsonLayer = L.geoJson(geojson, options)
+				
+				if( value_url ) {
+					geoJsonLayer.on("click", function(e) {
+						var latlng  = e.latlng
+						var lat     = parseFloat(latlng.lat.toFixed(2))
+						var lng	    = parseFloat(latlng.lng.toFixed(2))
+						var url		= value_url
+						
+						console.log("GeoJSON Layer click", lat, lng, url)
+						url = url.replace("{latitude}", lat.toString())
+						url = url.replace("{longitude}", lng.toString())
+			            
+						console.log("value_url", url)
+						
+			            $.ajax({
+			            	dataType: "json",
+			            	url: url,
+			            	success: function( data ) {
+
+			                var content = "<table>"
+			                content += "<tr><td><b>latitude:</b></td><td>"+data.lat+"</td><tr>"
+			                content += "<tr><td><b>longitude:</b></td><td>"+data.lng+"</td><tr>"
+			                content += "<tr><td><b>" + data.name + ":</b></td><td>"+data.value+"</td><tr>"
+			                content += "</table>"
+ 
+			                var popup = L.popup()
+			                .setLatLng([lat,lng])
+			                .setContent(content)
+			                .openOn(map);
+			              },
+			              error: function(jqXHR, textStatus, errorThrown) {
+			          	  	console.log(textStatus, errorThrown);
+			              }
+			            })
+					})
+				}
 				// Add to map
 				geoJsonLayer.addTo(map)		
 			
