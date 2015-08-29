@@ -21,7 +21,7 @@ var express 		= require('express'),
 	i18n			= require('./lib/i18n-abide'),
 	filesize 		= require('filesize'),
 	_				= require('underscore'),
-	
+	compress		= require('compression'),
 	bodyParser 		= require('body-parser'),
 	errorHandler 	= require('errorhandler'),
 	methodOverride 	= require('method-override'),
@@ -147,6 +147,8 @@ function bootApplication(app) {
 	  sess.messages.push(msg);
 	  return this;
 	};
+	
+	app.use(compress());  
 	
 	// serve static files
 	app.use(express.static(__dirname + '/public'));

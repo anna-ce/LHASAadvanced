@@ -303,12 +303,9 @@ function loadData( topojsonUrl, displayName, mapinfos, value_url ) {
 						var lng	    = parseFloat(latlng.lng.toFixed(2))
 						var url		= value_url
 						
-						console.log("GeoJSON Layer click", lat, lng, url)
 						url = url.replace("{latitude}", lat.toString())
 						url = url.replace("{longitude}", lng.toString())
-			            
-						console.log("value_url", url)
-						
+			            						
 			            $.ajax({
 			            	dataType: "json",
 			            	url: url,

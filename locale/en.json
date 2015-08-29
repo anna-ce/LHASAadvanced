@@ -171,7 +171,10 @@
         "like": "like",
         "task": "task",
         "map": "map",
-        "value": "value"
+        "value": "value",
+        "metadata": "metadata",
+        "subset": "subset",
+        "export": "export"
     },
     "stream": {
         "displayName": "Publisher Flood Surface Water Products"

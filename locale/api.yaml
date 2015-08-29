@@ -26,6 +26,9 @@ en:
     task: task
     map: map
     value: value
+    metadata: metadata
+    export: export
+    subset: subset
 
   stream:
     displayName: Publisher Flood Surface Water Products
