@@ -130,6 +130,19 @@
 	        		"href": 		"/opensearch",
 	        		"checked":  	false
 	        	},
+    			{
+    				"source": 		"geos5",
+    				"href": 		"/opensearch",
+    				"checked": 		true,
+    				"selected":   false
+    			},
+    			{
+    				"source": 		"gfms",
+    				"href": 		"/opensearch",
+    				"checked": 		true,
+    				"selected":   false
+    			},
+                		
 				{
 					"source": 		"gpm",
 					"href": 		"/opensearch",
@@ -161,7 +174,7 @@
 	            "checked":  	false
 	          },
 	          {
-	              "source": 		"noaa",
+	              "source": 	"noaa",
 	              "href": 		"/opensearch",
 	              "checked": 		false
 	          },
@@ -176,17 +189,17 @@
 	            "checked":  	false
 	          },
 	        	{
-	              "source": 		"radarsat_2",
+	              "source": 	"radarsat_2",
 	              "href": 		"/opensearch",
 	              "checked":  	false
 	          },
 	          {
-	              "source": 		"trmm",
+	              "source": 	"trmm",
 	              "href": 		"/opensearch",
 	              "checked": 		false
 	          },
 	          {
-	              "source": 		"usgs",
+	              "source": 	"usgs",
 	              "href": 		"/opensearch",
 	              "checked": 		false
 	          },
@@ -194,18 +207,6 @@
 				"source": 		"viirs",
 				"href": 		"/opensearch",
 				"checked": 		false,
-				"selected":   false
-			},
-			{
-				"source": 		"gfms",
-				"href": 		"/opensearch",
-				"checked": 		true,
-				"selected":   false
-			},
-			{
-				"source": 		"geos5",
-				"href": 		"/opensearch",
-				"checked": 		true,
 				"selected":   false
 			}
 		]
