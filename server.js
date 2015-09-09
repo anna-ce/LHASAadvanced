@@ -14,6 +14,7 @@ var express 		= require('express'),
 	glob			= require('glob'),
 	home			= require('./app/controllers/home'),
 	s3				= require('./app/controllers/s3'),
+	esri			= require('./app/controllers/esri'),
 	test			= require('./app/controllers/test'),
 	users			= require('./app/controllers/users'),
 	stats			= require('./app/controllers/stats'),
@@ -202,6 +203,9 @@ app.get('/privacy', 							home.privacy);
 app.get('/terms',	 							home.terms);
 app.get('/support', 							home.support);
 
+// Testing ESRI ARCGIS Compliance
+app.get('/esri/:id',	 						esri.index);
+
 //app.get('/login', 							login.index);
 //app.get('/logout', 							login.logout);
 
@@ -290,13 +294,14 @@ app.get('/mapinfo/pop/style',						mapinfo_pop.pop_style);
 app.get('/mapinfo/pop/legend',						mapinfo_pop.pop_legend);
 app.get('/mapinfo/pop/credits',						mapinfo_pop.pop_credits);
 
-app.get('/products/:subfolder/browse/:regionKey/:year/:doy/:prefix',	function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Browse(req, res); })
-app.get('/products/:subfolder/map/:regionKey/:year/:doy/:prefix',		function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Map(req, res); })
-app.get('/products/:subfolder/query/:regionKey/:year/:doy/:prefix',		function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].QueryProduct(req, res); })
-app.get('/products/:subfolder/value/:regionKey/:year/:doy/:prefix',		function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Value(req, res); })
-app.get('/products/:subfolder/metadata/:regionKey/:year/:doy/:prefix',	function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Metadata(req, res); })
-app.get('/products/:subfolder/export/:regionKey/:year/:doy/:prefix',	function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Export(req, res); })
-app.get('/products/:subfolder/subset/:regionKey/:year/:doy/:prefix',	function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Subset(req, res); })
+app.get('/products/:subfolder/browse/:regionKey/:year/:doy/:prefix',			function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Browse(req, res); })
+app.get('/products/:subfolder/map/:regionKey/:year/:doy/:prefix',				function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Map(req, res); })
+app.get('/products/:subfolder/query/:regionKey/:year/:doy/:prefix',				function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].QueryProduct(req, res); })
+app.get('/products/:subfolder/value/:regionKey/:year/:doy/:prefix',				function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Value(req, res); })
+app.get('/products/:subfolder/metadata/:regionKey/:year/:doy/:prefix',			function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Metadata(req, res); })
+app.get('/products/:subfolder/export/:regionKey/:year/:doy/:prefix',			function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Export(req, res); })
+app.get('/products/:subfolder/subset/:regionKey/:year/:doy/:prefix',			function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Subset(req, res); })
+app.get('/products/:subfolder/features/:regionKey/:year/:doy/:prefix/query',	function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Features(req, res); })
 
 app.get('/products/s3/:regionKey/:subfolder/:year/:doy/:id',	function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].S3(req, res); })
 

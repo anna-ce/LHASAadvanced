@@ -174,7 +174,8 @@
         "value": "value",
         "metadata": "metadata",
         "subset": "subset",
-        "export": "export"
+        "export": "export",
+        "esri": "ESRI Feature Service"
     },
     "stream": {
         "displayName": "Publisher Flood Surface Water Products"
