@@ -110,6 +110,11 @@
     				"selected":   false
     			},
 				{
+					"source": 		"dk",
+					"href": 		"/opensearch",
+					"checked":  	false
+				},
+				{
 					"source": 		"dfo",
 					"href": 		"/opensearch",
 					"checked":  	false

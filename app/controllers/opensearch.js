@@ -146,6 +146,9 @@ var productQueries = {
 				}
 			} else {
 				function compareDates(a,b) {
+					if( a.properties.date === undefined ) return 0
+					if( b.properties.date === undefined ) return 0
+						
 					return new Date(b.properties.date['@value']) - new Date(a.properties.date['@value']);
 				}
 				

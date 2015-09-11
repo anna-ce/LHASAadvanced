@@ -7,7 +7,7 @@ module.exports = {
 		var latitude	= 33.87
 		var longitude	= -90.77
 		
-		if( product === "precip_1d") {
+		if( (product === "precip_1d") || (product === "precip_3d") || (product == "precip_7d") ){
 			source 	= "gpm"
 		} else if( product === 'landslide_nowcast') {
 			source  	= "landslide_model"
@@ -15,6 +15,10 @@ module.exports = {
 			longitude	= 83
 		} else if( product === 'flood_nowcast') {
 			source 		= "gfms"
+			latitude	= 27
+			longitude	= 83
+		} else if( product === 'landslide_catalog') {
+			source 		= "dk"
 			latitude	= 27
 			longitude	= 83
 		} else {

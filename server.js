@@ -302,6 +302,7 @@ app.get('/products/:subfolder/metadata/:regionKey/:year/:doy/:prefix',			functio
 app.get('/products/:subfolder/export/:regionKey/:year/:doy/:prefix',			function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Export(req, res); })
 app.get('/products/:subfolder/subset/:regionKey/:year/:doy/:prefix',			function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Subset(req, res); })
 app.get('/products/:subfolder/features/:regionKey/:year/:doy/:prefix/query',	function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Features(req, res); })
+app.get('/products/:subfolder/features/:regionKey/:year/:doy/:prefix',			function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].FeatureService(req, res); })
 
 app.get('/products/s3/:regionKey/:subfolder/:year/:doy/:id',	function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].S3(req, res); })
 

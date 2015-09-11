@@ -22,6 +22,7 @@
     body { margin:0; padding:0; }
     #map { position: absolute; height:800; width:900; }
     #prefix { position: absolute; top:810; left:10; }
+    #opensearch_url { position: absolute; top:830; left:10; }
   </style>
 </head>
 <body>
@@ -64,6 +65,9 @@
 <br/>
 <div id='prefix'>
 </div>
+<br/>
+<div id='opensearch_url'>
+</div>
 
 
 <script>
@@ -97,16 +101,43 @@
 
 // Let's do an opensearch query for gpm precipitation
   var opensearch_url = "<%=host%>/opensearch?q=<%=product%>&lat=<%=latitude%>&lon=<%=longitude%>&startTime=2015-09-01&endTime=2015-09-09&limit=1&sources=<%=source%>"
+  
+  $("#opensearch_url").html("<a href='"+opensearch_url+"'>OpenSearch URL</a>")
+  
   require(["esri/request"], function(esriRequest) {
 	  var style;
+	  var layer;
+	  
+	  function OnEachFeature(feature) {
+		  return {
+			  weight:2
+		  }
+	  }
+	  
+	  function PointToLayer(feature, latlng) {
+		 
+		  var styling = style["true"]
+		  if( styling.icon ) {
+			  var icon = L.icon( {
+				  iconUrl: 		styling.icon,
+				  iconSize: 	styling.iconSize,
+				  iconAnchor: 	styling.iconAnchor
+			  })
+			  return L.marker(latlng, {
+				  icon: icon
+			  });
+		  }
+	  }
 	  
 	  function StyleFeature(feature) {
+		
 		  for( var k in style) {
 			  // k is something like {precip}==2
 			  var key = k.replace(/{[^{}]+}/g, function(key){
     			  return "feature.properties." + key.replace(/[{}]+/g, "") || "";
 			  });
 			  var result = eval(key);
+			 
 			  if( result ) return style[k]
 		  }
 	  }
@@ -114,12 +145,25 @@
 	  function FetchFeatureLayer(url) {
 		  console.log("FetchFeatureLayer at", url)
 		  if( url) {
-			  L.esri.featureLayer({
+			  layer = L.esri.featureLayer({
 				  url: url,
 				  simplifyFactor: 0.5,
 				  precision: 5,
-				  style: StyleFeature
+				  style: StyleFeature,
+	//			  onEachFeature: OnEachFeature,
+				  pointToLayer: PointToLayer
 			  }).addTo(map);
+			  
+			  layer.bindPopup(function (feature) {
+				  var html = "<table>"
+				  var props = feature.properties
+				  delete props.objectid
+				  for( var f in props) {
+				  	html +="<tr><td>"+f+":</td><td>"+props[f]+"</td></tr>"
+				  }
+				  html += "</table>"
+			      return html;
+			    });
 		  }
 	  }
 	  

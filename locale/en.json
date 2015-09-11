@@ -553,6 +553,15 @@
                 "level_2": "red"
             }
         },
+        "landslide_catalog": {
+            "title": "Landslide Catalog",
+            "credits": "NASA GSFC",
+            "source": {
+                "label": "Source",
+                "source": "NASA"
+            },
+            "legend": "Landslide Catalog"
+        },
         "soil_moisture": {
             "title": "Soil Moisture",
             "credits": "University of Oklahoma",
