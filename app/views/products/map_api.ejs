@@ -98,9 +98,12 @@
 						var using = action['using']
 						for( var u in using ) {
 							var use = using[u]
-							if( use['mediaType'] == 'application/json') {
-								var topojson_url = use['url']
-								console.log("topojson", topojson_url)
+							if( use['mediaType'] == 'application/gzip') {
+								var use_url = use['url']
+								if( use_url.indexOf(".topojson.gz")>0 ) {
+									topojson_url = use_url
+									console.log("topojson", topojson_url)
+								}
 							}
 						}
 					} else if( action['@type'] == 'ojo:map') {
@@ -109,7 +112,7 @@
 					} else if( action['@type'] == 'ojo:value') {
 						var using = action['using'][0]
 						value_url = using.url
-						console.log("found value action", value_url)
+						//console.log("found value action", value_url)
 					}
 				}
 				
