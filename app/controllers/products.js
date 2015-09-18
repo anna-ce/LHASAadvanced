@@ -1317,6 +1317,8 @@ module.exports = {
 			id: 			id,
 			ymd: 			ymd, 
 			region:  		region,
+			latitude: 		region.target[1],
+			longitude: 		region.target[0],
 			worldmapid: 	app.config.worldmapid,
 			fname: 			fname,
 			topojson: 		topojson,
