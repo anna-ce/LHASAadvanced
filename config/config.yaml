@@ -151,13 +151,13 @@
     			{
     				"source": 		"geos5",
     				"href": 		"/opensearch",
-    				"checked": 		true,
+    				"checked": 		false,
     				"selected":   false
     			},
     			{
     				"source": 		"gfms",
     				"href": 		"/opensearch",
-    				"checked": 		true,
+    				"checked": 		false,
     				"selected":   false
     			},
                 		
@@ -184,7 +184,7 @@
 	          {
 	          	"source": 		"modis",
 	          	"href": 		"/opensearch",
-	          	"checked":  	false
+	          	"checked":  	true
 	          },
 	          {
 	            "source": 		"modis_lst",

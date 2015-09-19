@@ -372,7 +372,7 @@ class TRMM:
 		file_list = [ thumbnail_file, topojson_gz_file, topojson_file, subset_file, shp_zip_file ]
 
 		#self.process_trmm_region_to_s3( dx, file_list)
-		s3_folder	= 'trmm_24'
+		s3_folder	= os.path.join("trmm_24", str(self.year), self.doy)
 		region 		= config.regions[dx]
 		s3_bucket 	= region['bucket']
 		
