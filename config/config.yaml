@@ -90,6 +90,19 @@
             "ojotiler":     "http://ojo-tiler.herokuapp.com",
             "ojotiler-dev": "http://localhost:8888",
             "susmap":       "cappelaere.5enw2e0e"
+        },
+        "d09": {
+            "name":		    "Peru",
+            "bbox":         [-81.3551483, -18.3485451, -68.6718150,  -0.0402117],
+            "target":       [-75.0134816,-9.1943784],
+            "min_zoom":     5,
+            "max_zoom":	    18,
+            "map_id":       "cappelaere.map-q4hdwmh3",
+            "bucket":       "ojo-d9",
+            "ojotiler":     "http://ojo-tiler.herokuapp.com",
+            "ojobot":       "http://ojo-bot.herokuapp.com",
+            "ojobot-dev":   "http://localhost:7465",
+            "susmap":       "cappelaere.kj6mvx6r"
         }
     },
 	

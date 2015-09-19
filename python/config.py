@@ -183,6 +183,20 @@ regions		= {
 		'bucket':		"ojo-d8",
 		'thn_zoom': 	5,
 		'tiles-zoom':    "6-14"
+	},
+	'd09': {
+		'name':			"Peru",
+		'bbox': 		[-81.3551483, -18.3485451, -68.6718150,  -0.0402117],
+		'centerlat':	-9.1943784,
+		'centerlon':	-75.0134816,  
+		'pixelsize':	0.008333333333330,
+		'columns': 		1522,
+		'rows': 		2197,
+		'thn_width':	304,
+		'thn_height':	439,
+		'bucket':		"ojo-d9",
+		'thn_zoom': 	5,
+		'tiles-zoom':    "6-14"
 	}
 }
 

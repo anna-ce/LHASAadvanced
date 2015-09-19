@@ -69,6 +69,9 @@ def process_script( str, dt ):
 
 	cmd = "python ./%s --region d08 --date %s" % (str, dt)
 	execute(cmd)
+
+	cmd = "python ./%s --region d09 --date %s" % (str, dt)
+	execute(cmd)
 	
 def process_global_script( str, dt ):
 	cmd = "python ./%s --date %s" % (str, dt)
@@ -151,7 +154,6 @@ if __name__ == '__main__':
 		#get_flood_nowcast()
 		
 		process_script('landslide_nowcast.py', dt)
-		#process_script('gpm_process.py', ydt)
 		process_script('modis-active-fires.py', ydt)
 		process_script('modis-burnedareas.py', ydt)
 		process_script('quake.py', ydt)

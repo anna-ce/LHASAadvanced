@@ -61,6 +61,7 @@ class TRMM:
 		self.trmm_d03_dir		=  os.path.join(config.data_dir,"trmm","d03", self.ymd)
 		self.trmm_d07_dir		=  os.path.join(config.data_dir,"trmm","d07", self.ymd)
 		self.trmm_d08_dir		=  os.path.join(config.data_dir,"trmm","d08", self.ymd)
+		self.trmm_d09_dir		=  os.path.join(config.data_dir,"trmm","d09", self.ymd)
 		self.trmm_global_dir	=  os.path.join(config.data_dir,"trmm","global", self.ymd)
 
 		self.trmm_dir			=  os.path.join(config.data_dir,"trmm", self.ymd)
@@ -406,6 +407,9 @@ class TRMM:
 
 		if not os.path.exists(self.trmm_d08_dir):
 		    os.makedirs(self.trmm_d08_dir)
+
+		if not os.path.exists(self.trmm_d09_dir):
+		    os.makedirs(self.trmm_d09_dir)
 
 		if not os.path.exists(self.trmm_global_dir):
 		    os.makedirs(self.trmm_global_dir)
