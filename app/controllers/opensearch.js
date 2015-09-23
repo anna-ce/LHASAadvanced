@@ -93,7 +93,7 @@ var productQueries = {
 		} else {
 			sources 	= _.keys(productQueries)
 		}
-		var host 		= req.protocol + "://"+req.headers['host']
+		var host 		= req.protocol + "://"+ req.get('Host')
 		var originalUrl	= host + req.originalUrl
 		var user		= req.session.user
 		var credentials	= req.session.credentials
@@ -172,7 +172,7 @@ var productQueries = {
 	
 module.exports = {
 	classic: function(req, res) {
-		var host 	= req.protocol+"://"+req.headers.host
+		var host 	= req.protocol + "://"+ req.get('Host')
 		var region 	= app.config.regions.Global
 		var user	= req.session.user
 		
@@ -189,7 +189,7 @@ module.exports = {
 
 	description: function(req, res) {
 		res.contentType('application/xml');
-		var host = "http://"+req.headers.host;
+		var host 	= req.protocol + "://"+ req.get('Host')
 		//console.log("Host set to:"+host);
 		res.render("opensearch/description.ejs", {layout:false, host:host});
 	},

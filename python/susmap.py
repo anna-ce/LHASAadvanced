@@ -100,12 +100,14 @@ def generate_map( dx ):
 		out_ds 	= drv.CreateCopy(input_file_bool, src_ds, 0, [ 'COMPRESS=DEFLATE' ] )
 		band 	= out_ds.GetRasterBand(1)
 		data 	= band.ReadAsArray(0, 0, out_ds.RasterXSize, out_ds.RasterYSize )
-
+		nodata	= band.GetNoDataValue()
+		
 		# 1-5, 15 is water/no_data
 		
-		data[data==15]  = 0
-		data[data==1]  	= 0
-		data[data>1] 	= 1
+		data[data==nodata]  = 0
+		data[data==15]  	= 0
+		data[data==1]  		= 0
+		data[data>1] 		= 1
 		
 		ct = gdal.ColorTable()
 

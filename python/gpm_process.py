@@ -136,7 +136,7 @@ def process(gpm_dir, gis_file_day, regionName, region, s3_bucket, s3_folder, ymd
 		cmd 	= "topojson -p -o "+ topojson_filename + " " + merge_filename
 		execute(cmd)
 
-		cmd 	= "gzip --keep "+ topojson_filename
+		cmd 	= "gzip -f "+ topojson_filename
 		execute(cmd)
 		
 	# problem is that we need to scale it or adjust the levels for coloring (easier)
@@ -148,7 +148,7 @@ def process(gpm_dir, gis_file_day, regionName, region, s3_bucket, s3_folder, ymd
 		
 	ds = None
 	
-	file_list = [ sw_osm_image, topojson_filename, topojson_filename+".gz", subset_file ]
+	file_list = [ sw_osm_image, topojson_filename+".gz", subset_file ]
 	
 	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 	

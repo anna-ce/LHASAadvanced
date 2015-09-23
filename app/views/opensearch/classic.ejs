@@ -355,6 +355,12 @@
 		$('#query_container').toggle();
 	}
 
+	function MapIt( id ) {
+		console.log( "MapIt: " + id);
+		var result 	= query_results[id];
+		processDroppedResult(id, result)
+	}
+	
   	function NavTab( str, id ) {
 		//console.log(str + ","+id);
 		$('#general-'+id).hide();
@@ -373,14 +379,14 @@
   	}
 	
 	function FormatResponseElement(key, el) {
+		var id = el["@id"]
+
 		var html = "<div class='well'>";
-		html += key
+		html += "<a href='JavaScript:MapIt(\""+id+"\")' class='btn'><span class='glyphicon glyphicon-globe'></span>&nbsp;Map</a>&nbsp;";
 		html += "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>";
 		html += "<table class='table table-condensed'>";
-		html += "<tr><td width='150'>"
-		
-		var id = el["@id"]
-		
+		html += "<tr><td width='100'>"
+				
 		// take last image
 		var image_url = el.image[0];
 		if (image_url.url) image_url = image_url.url; 

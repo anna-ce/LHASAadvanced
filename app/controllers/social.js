@@ -11,9 +11,9 @@ module.exports = {
 	facebook: function(req, res) {  
 		var user 			= req.session.user;
 		var url 			= req.query['url'];
-		var host			= req.headers['host'];
+		var host 			= req.protocol + "://"+ req.get('Host')
 		
-		var redirect_uri 	= "http://"+host+"/social/facebook?url="+url;
+		var redirect_uri 	= host+"/social/facebook?url="+url;
 		console.log(redirect_uri)
 		// we don't have a code yet
 		// so we'll redirect to the oauth dialog

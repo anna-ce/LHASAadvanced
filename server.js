@@ -350,6 +350,6 @@ logger.info("trying to start on port:"+ app.get('port'));
 
 //s3.synchronize();
 
-app.listen(app.get('port'),function(){
+var server = app.listen(app.get('port'),function(){
 	logger.info( "*** "+app.config.application+' started on port:'+app.get('port')+" mode:"+app.settings.env);
 });

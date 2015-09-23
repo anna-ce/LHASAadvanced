@@ -351,25 +351,24 @@ class TRMM:
 			self.execute(cmd)
 			
 		# Convert to shapefile	
-
-		self.shpDir		= os.path.join(config.data_dir,"trmm", dx, self.ymd, "shp")
-		cmd = "rm -rf " + self.shpDir
-		self.execute(cmd)
+		#self.shpDir		= os.path.join(config.data_dir,"trmm", dx, self.ymd, "shp")
+		#cmd = "rm -rf " + self.shpDir
+		#self.execute(cmd)
 			
-		cmd= "ogr2ogr -f 'ESRI Shapefile' %s %s" % ( self.shpDir, merge_filename)
-		self.execute(cmd)
+		#cmd= "ogr2ogr -f 'ESRI Shapefile' %s %s" % ( self.shpDir, merge_filename)
+		#self.execute(cmd)
 	
 		#if force or not os.path.exists(shp_gz_file):
 		#	mydir	= os.path.join(config.data_dir,"trmm", dx, self.ymd)
 		#	cmd 	= "cd %s; tar -cvzf %s shp" %(mydir, shp_gz_file)
 		#	self.execute(cmd)
 		
-		if force or not os.path.exists(shp_zip_file):
-			mydir	= os.path.join(config.data_dir,"trmm", dx, self.ymd)
-			cmd 	= "cd %s; zip %s shp/*" %(mydir, shp_zip_file)
-			self.execute(cmd)
+		#if force or not os.path.exists(shp_zip_file):
+		#	mydir	= os.path.join(config.data_dir,"trmm", dx, self.ymd)
+		#	cmd 	= "cd %s; zip %s shp/*" %(mydir, shp_zip_file)
+		#	self.execute(cmd)
 
-		file_list = [ thumbnail_file, topojson_gz_file, topojson_file, subset_file, shp_zip_file ]
+		file_list = [ thumbnail_file, topojson_gz_file, subset_file ]
 
 		#self.process_trmm_region_to_s3( dx, file_list)
 		s3_folder	= os.path.join("trmm_24", str(self.year), self.doy)

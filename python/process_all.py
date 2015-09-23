@@ -16,7 +16,7 @@ except:
 	print "Error", sys.exc_info()[0]
 	sys.exit(-1)
 	
-force 	= 0
+force 	= 1
 verbose = 0
 	
 def emailErrorFile():
@@ -60,18 +60,11 @@ def get_daily_forecast():
 	cmd = "./wrfqpe.py "
 	execute(cmd)
 
-def process_script( str, dt ):
-	cmd = "python ./%s --region d02 --date %s" % (str, dt)
-	execute(cmd)
+def process_script( str, dt, regions ):	
+	for r in regions :
+		cmd = "python ./%s --region %s --date %s" % (str, r, dt)
+		execute(cmd)
 
-	cmd = "python ./%s --region d03 --date %s" % (str, dt)
-	execute(cmd)
-
-	cmd = "python ./%s --region d08 --date %s" % (str, dt)
-	execute(cmd)
-
-	cmd = "python ./%s --region d09 --date %s" % (str, dt)
-	execute(cmd)
 	
 def process_global_script( str, dt ):
 	cmd = "python ./%s --date %s" % (str, dt)
@@ -95,7 +88,7 @@ def restart_ojo_streamer():
 	os.system(cmd)
 
 def backup_ojo_streamer():
-	cmd = "heroku pgbackups:capture --app ojo-streamer HEROKU_POSTGRESQL_COPPER_URL --expire"
+	cmd = "heroku pg:backups capture --app ojo-streamer HEROKU_POSTGRESQL_COPPER_URL "
 	print cmd
 	os.system(cmd)
 
@@ -104,7 +97,7 @@ def backup_ojo_wiki():
 	print cmd
 	os.system(cmd)
 
-	cmd = "heroku pgbackups:capture --app ojo-wiki HEROKU_POSTGRESQL_ORANGE_URL --expire"
+	cmd = "heroku pg:backups capture --app ojo-wiki HEROKU_POSTGRESQL_ORANGE_URL "
 	print cmd
 	os.system(cmd)
 	
@@ -124,14 +117,15 @@ if __name__ == '__main__':
 		mypath		= os.path.dirname(me) 
 	
 		print "Process All Path:",  sys.argv[0], mypath
-		os.chdir(mypath)
+		if mypath:
+			os.chdir(mypath)
 	except:
 		print "Unexpected error:", sys.exc_info()[0]
 		sys.exit(-1)
 	
 	
-	apg_input.add_argument("-f", "--force", action='store_true', help="Forces new products to be re-generated")
-	apg_input.add_argument("-v", "--verbose", action='store_true', help="Verbose Flag")
+	apg_input.add_argument("-f", "--force", 	action='store_true', help="Forces new products to be re-generated")
+	apg_input.add_argument("-v", "--verbose", 	action='store_true', help="Verbose Flag")
 	apg_input.add_argument("-d", "--date", 		help="date")
 	
 	options 	= parser.parse_args()
@@ -147,16 +141,21 @@ if __name__ == '__main__':
 
 	dayAfterYesterday	= today - timedelta(2)
 	ydt2				= dayAfterYesterday.strftime("%Y-%m-%d")
+	
+	regions 			= ["d02", "d03", "d08", "d09"]
 		
 	if 1:
-		process_script('trmm_process.py', ydt)
+		process_script('trmm_process.py', ydt, regions)
 		#get_daily_forecast()
 		#get_flood_nowcast()
 		
-		process_script('landslide_nowcast.py', dt)
-		process_script('modis-active-fires.py', ydt)
-		process_script('modis-burnedareas.py', ydt)
-		process_script('quake.py', ydt)
+		
+		# skip d09 for now... no threshold
+		process_script('landslide_nowcast.py', dt, regions)
+		process_script('modis-active-fires.py', ydt, regions)
+		process_script('modis-burnedareas.py', ydt, regions)
+		process_script('quake.py', ydt, regions)
+		
 		process_global_script('gfms_vectorizer.py', ydt)
 		process_global_script('geos5.py', dt)
 		process_global_script('gpm_global.py', ydt2)

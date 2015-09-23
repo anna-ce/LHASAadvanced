@@ -148,23 +148,23 @@ def process_file( mydir, filename, s3_bucket, s3_folder):
 		cmd 	= "topojson -p --bbox --simplify-proportion 0.5 -o "+ topojson_filename + " " + merge_filename
 		execute(cmd)
 
-		cmd 	= "gzip --keep "+ topojson_filename
+		cmd 	= "gzip -f "+ topojson_filename
 			
 		execute(cmd)
 	
 	# Create shapefile gz
-	if force or not os.path.exists(shp_filename):
-		# Convert simplified topojson to geojson
-		cmd = "topojson-geojson --precision 4 %s -o %s" % (topojson_filename, geojsonDir)
-		execute(cmd)
+	#if force or not os.path.exists(shp_filename):
+	#	# Convert simplified topojson to geojson
+	#	cmd = "topojson-geojson --precision 4 %s -o %s" % (topojson_filename, geojsonDir)
+	#	execute(cmd)
 		
-		cmd = "ogr2ogr -f 'ESRI Shapefile' %s %s" % (shpDir, json_filename)
-		execute(cmd)
+	#	cmd = "ogr2ogr -f 'ESRI Shapefile' %s %s" % (shpDir, json_filename)
+	#	execute(cmd)
 		
 		#cmd = "cd %s; tar -zcvf %s %s" % (mydir, shp_filename, shpDir)
-		cmd 	= "cd %s; zip %s shp/*" %(mydir, shp_zip_file)
+	#	cmd 	= "cd %s; zip %s shp/*" %(mydir, shp_zip_file)
 		
-		execute(cmd)
+	#	execute(cmd)
 		
 		
 	if force or not os.path.exists(sw_osm_image):
@@ -174,7 +174,7 @@ def process_file( mydir, filename, s3_bucket, s3_folder):
 		
 	ds = None
 	
-	file_list = [ sw_osm_image, topojson_filename, topojson_filename+".gz", filename, shp_zip_file ]
+	file_list = [ sw_osm_image, topojson_filename+".gz", filename ]
 	CopyToS3( s3_bucket, s3_folder, file_list, 1, 1 )
 	
 	if not verbose: # Cleanup

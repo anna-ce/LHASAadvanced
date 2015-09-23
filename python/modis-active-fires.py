@@ -106,7 +106,7 @@ def process_url( mydir, url, ymd, bbox, zoom, s3_bucket, s3_folder ):
 		csv_to_geojson(csv_filename, geojson_filename, bbox)
 		
 	if force or not os.path.exists(geojsongz_filename):
-		cmd = 'gzip < %s > %s' %( geojson_filename, geojsongz_filename)
+		cmd = 'gzip -f < %s > %s' %( geojson_filename, geojsongz_filename)
 		execute(cmd)
 
 	#url = "https://firms.modaps.eosdis.nasa.gov/wms/?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=fires24&width=400&height=250&BBOX=54,5.5,102,40"

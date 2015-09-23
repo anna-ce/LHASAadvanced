@@ -31,7 +31,7 @@ module.exports = {
 	index: function(req, res) {  
 		var region 	= app.config.regions['Global']
 		var user	= req.session.user
-		var host	= req.protocol +"://" + req.headers.host
+		var host 	= req.protocol + "://"+ req.get('Host')
 				
 		//console.log("home index user:", user)		
 		if( req.session.returnTo ) {

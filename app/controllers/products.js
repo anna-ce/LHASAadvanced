@@ -160,7 +160,7 @@ var util	= require('util'),
 		var tmp_dir 		= app.get("tmp_dir")
 		
 		var user			= req.session.user
-		var host			= req.protocol + "://" + req.headers.host
+		var host 			= req.protocol + "://"+ req.get('Host')
 		var originalUrl		= host + req.originalUrl
 		var results 		= []
 	
@@ -286,7 +286,7 @@ var util	= require('util'),
 		var tmp_dir 		= app.get("tmp_dir")
 		
 		var user			= req.session.user
-		var host			= req.protocol + "://" + req.headers.host
+		var host 			= req.protocol + "://"+ req.get('Host')
 		var originalUrl		= host + req.originalUrl
 		var results 		= []
 	
@@ -408,7 +408,7 @@ var util	= require('util'),
 	function sendWrfProducts(query, region, ymds, limit, req, res ) {
 		var tmp_dir 		= app.get("tmp_dir")
 		var user			= req.session.user
-		var host			= req.protocol + "://" + req.headers.host
+		var host 			= req.protocol + "://"+ req.get('Host')
 		var originalUrl		= host + req.originalUrl
 		var results 		= []
 		console.log("Looking for WRF products...")
@@ -530,7 +530,7 @@ var util	= require('util'),
 	function sendGFMSProducts(query, region, ymds, limit, req, res ) {
 		var tmp_dir 		= app.get("tmp_dir")
 		var user			= req.session.user
-		var host			= req.protocol + "://" + req.headers.host
+		var host 			= req.protocol + "://"+ req.get('Host')
 		var originalUrl		= host + req.originalUrl
 		var results 		= []
 		console.log("Looking for GFMS products...")
@@ -653,7 +653,7 @@ var util	= require('util'),
 	function sendEO1Products(query, region, ymds, limit, req, res ) {
 		var tmp_dir 		= app.get("tmp_dir")
 		var user			= req.session.user
-		var host			= req.protocol + "://" + req.headers.host
+		var host 			= req.protocol + "://"+ req.get('Host')
 		var originalUrl		= host + req.originalUrl
 		var results 		= []
 		console.log("Looking for EO1 products...")
@@ -798,7 +798,7 @@ module.exports = {
 		var lat				= req.query.lat ? parseFloat(req.query.lat) : undefined
 		var lon				= req.query.lon ? parseFloat(req.query.lon) : undefined
 		var user			= req.session.user
-		var host			= req.protocol + "://" + req.headers.host
+		var host 			= req.protocol + "://"+ req.get('Host')
 		var originalUrl		= host + req.originalUrl
 		
 		console.log("Product opensearch", originalUrl)
@@ -875,8 +875,8 @@ module.exports = {
 		var fmt		= req.params.fmt || 'html'
 		var tmp_dir = app.get("tmp_dir")
 		
-		var host	= req.headers.host
-		var url		= req.protocol+"://"+host + "/products/"+reg_id+"/"+ymd+"/"+id+"."+fmt
+		var host 	= req.protocol + "://"+ req.get('Host')
+		var url		= host + "/products/"+reg_id+"/"+ymd+"/"+id+"."+fmt
 		
 		var region;
 		
@@ -901,8 +901,8 @@ module.exports = {
 			case 'html':
 				var fbAppId 	= app.config.fbAppId;
 				var fname		= id //+ "_"+reg_id+"_"+ymd
-				var image 		= req.protocol + "://" + host +"/products/" + reg_id + "/" + ymd + "/" + fname + ".thn.png"
-				var topojson 	= req.protocol + "://" + host +"/products/" + reg_id + "/" + ymd + "/" + fname + ".topojson.gz"
+				var image 		= host +"/products/" + reg_id + "/" + ymd + "/" + fname + ".thn.png"
+				var topojson 	= host +"/products/" + reg_id + "/" + ymd + "/" + fname + ".topojson.gz"
 				
 				if( id.indexOf('trmm_24') >= 0 ) {
 					var date = moment(ymd, "YYYYMMDD")
@@ -1258,12 +1258,12 @@ module.exports = {
 		var reg_id 		= req.params.region
 		var ymd			= req.params.ymd
 		var id			= req.params.id
-		var host		= req.headers.host
+		var host 		= req.protocol + "://"+ req.get('Host')
 		var date 		= moment(ymd, "YYYYMMDD")
 		var user		= req.session.user
 			 
 		var fname		= id
-		var topojson 	= req.protocol + "://" + host +"/products/" + reg_id + "/" + ymd + "/" + fname
+		var topojson 	= host +"/products/" + reg_id + "/" + ymd + "/" + fname
 					
 		switch(reg_id) {
 			case 'd02':

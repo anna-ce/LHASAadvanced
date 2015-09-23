@@ -2,8 +2,8 @@ module.exports = {
   
   	// List all
 	index: function(req, res) {	
-		var product	= req.params['id']
-		var host 		= "http://"+req.headers.host
+		var product		= req.params['id']
+		var host 		= req.protocol + "://"+ req.get('Host')
 		var latitude	= 33.87
 		var longitude	= -90.77
 		

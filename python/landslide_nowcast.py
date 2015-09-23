@@ -43,6 +43,7 @@ def save_tiff(dx, data, fname, ds):
 	ct = gdal.ColorTable()
 	ct.SetColorEntry( 0, (0, 0, 0, 0) )
 	ct.SetColorEntry( 1, (255, 0, 0, 255) )
+	ct.SetColorEntry( 127, (255, 255, 0, 255) )
 	band.SetRasterColorTable(ct)
 	
 	out_ds	= None
@@ -104,8 +105,7 @@ def build_tif(dx, region, dir, date):
 	forecast_landslide_bin_rgb 			= os.path.join(config.data_dir, "landslide_nowcast", dx, ymd, "landslide_nowcast.%s_rgb.tif" %(ymd))
 
 	forecast_landslide_100m_bin 		= os.path.join(config.data_dir, "landslide_nowcast", dx, ymd, "landslide_nowcast.%s_100m.tif" %(ymd))
-	forecast_landslide_100m_bin_rgb 	= os.path.join(config.data_dir, "landslide_nowcast", dx, ymd, "landslide_nowcast.%s_100m_rgb.tif" %(ymd))
-		
+	forecast_landslide_100m_bin_rgb 	= os.path.join(config.data_dir, "landslide_nowcast", dx, ymd, "landslide_nowcast.%s_100m_rgb.tif" %(ymd))	
 	
 	color_file							= "./cluts/landslide_colors.txt"
 	
@@ -130,6 +130,7 @@ def build_tif(dx, region, dir, date):
 		smap_nrows 		= smap_ds.RasterYSize
 		smap_band 		= smap_ds.GetRasterBand(1)
 		smap_data 		= smap_band.ReadAsArray(0, 0, smap_ncols, smap_nrows )
+		smap_nodata		= smap_band.GetNoDataValue()
 		projection   	= smap_ds.GetProjection()
 		geotransform 	= smap_ds.GetGeoTransform()
 
@@ -140,6 +141,9 @@ def build_tif(dx, region, dir, date):
 		ymax			= yorg - geotransform[1]* smap_ds.RasterYSize
 			
 		if verbose:
+			print "Loaded", susmap, smap_ncols, smap_nrows, smap_nodata
+			
+		if verbose:
 			print "Loading ", daily_rainfall
 
 		rainfall_ds		= gdal.Open( daily_rainfall )
@@ -147,6 +151,8 @@ def build_tif(dx, region, dir, date):
 		rainfall_nrows 	= rainfall_ds.RasterYSize
 		rainfall_band 	= rainfall_ds.GetRasterBand(1)
 		rainfall_data 	= rainfall_band.ReadAsArray(0, 0, rainfall_ncols, rainfall_nrows )
+		if verbose:
+			print "Loaded", daily_rainfall, rainfall_ncols, rainfall_nrows
 	
 		assert( smap_ncols == rainfall_ncols)
 		assert( smap_nrows == rainfall_nrows)
@@ -237,17 +243,21 @@ def build_tif(dx, region, dir, date):
 		if verbose:
 			save_tiff(dx, step_8_3, "step_8_3", smap_ds)
 		
+		# Clear no data
+		smap_data[ smap_data == smap_nodata ] = 0
+
 		step_8_4 = numpy.logical_and(smap_data, step_8_3)
 		if verbose:
 			save_tiff(dx, step_8_4, "step_8_4", smap_ds)
-
+			
 		# Write the file
 		driver 			= gdal.GetDriverByName("GTiff")
 		cur_ds 			= driver.Create(forecast_landslide_bin, smap_ncols, smap_nrows, 1, gdal.GDT_Byte)
 		outband 		= cur_ds.GetRasterBand(1)
 		
 		outband.WriteArray(step_8_4, 0, 0)
-
+		outband.SetNoDataValue(smap_nodata)
+		
 		cur_ds.SetGeoTransform( geotransform )
 		cur_ds.SetGeoTransform( geotransform )
 
@@ -296,7 +306,7 @@ def build_tif(dx, region, dir, date):
 			cmd = str.format("topojson -o {0} --simplify-proportion 0.5 -p nowcast=1 -- landslide_nowcast={1}", file+".topojson", file+".geojson"); 
 			execute(cmd)
 	
-			cmd = "gzip %s" % (file+".topojson")
+			cmd = "gzip -f %s" % (file+".topojson")
 			execute(cmd)
 
 			cmd = "mv " + file+".topojson.gz" + " " + topojson_gz_file
@@ -411,7 +421,7 @@ def process(mydir, scene, s3_bucket, s3_folder, zoom):
 		cmd 	= "topojson -p -o "+ topojson_filename + " " + merge_filename
 		execute(cmd)
 
-		cmd 	= "gzip --keep "+ topojson_filename
+		cmd 	= "gzip -f --keep "+ topojson_filename
 		execute(cmd)
 
 	# Convert to shapefile		
