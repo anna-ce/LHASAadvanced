@@ -565,8 +565,8 @@
                 "source": "NASA GSFC"
             },
             "legend": {
-                "level_1": "yellow",
-                "level_2": "red"
+                "level_1": "moderate",
+                "level_2": "high"
             }
         },
         "landslide_catalog": {

@@ -425,27 +425,27 @@ def process(mydir, scene, s3_bucket, s3_folder, zoom):
 		execute(cmd)
 
 	# Convert to shapefile		
-	if force or not os.path.exists(shpDir) and os.path.exists(merge_filename):
-		cmd= "ogr2ogr -f 'ESRI Shapefile' %s %s" % ( shpDir, merge_filename)
-		execute(cmd)
+	#if force or not os.path.exists(shpDir) and os.path.exists(merge_filename):
+	#	cmd= "ogr2ogr -f 'ESRI Shapefile' %s %s" % ( shpDir, merge_filename)
+	#	execute(cmd)
 	
-	if force or not os.path.exists(shapefile_gz):
-		cmd 	= "cd %s; tar -cvzf %s shp" %(mydir, shapefile_gz)
-		execute(cmd)
+	#if force or not os.path.exists(shapefile_gz):
+	#	cmd 	= "cd %s; tar -cvzf %s shp" %(mydir, shapefile_gz)
+	#	execute(cmd)
 	
 	if force or not os.path.exists(sw_osm_image):
 		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image,levels, hexColors, force, verbose, zoom)
 		
 	ds = None
 	
-	file_list = [ sw_osm_image, topojson_filename, topojson_filename+".gz", fullName, shapefile_gz ]
+	file_list = [ sw_osm_image, topojson_filename+".gz", fullName]
 	
 	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 		
 	if not verbose:
 		verbose = 1
 
-		cmd = "rm -f %s %s %s %s" %(osm_bg_image, subset_filename, subset_filename+".aux.xml", browse_filename )
+		cmd = "rm -f %s %s %s %s %s" %(osm_bg_image, subset_filename, subset_filename+".aux.xml", browse_filename,topojson_filename )
 		execute(cmd)
 
 		cmd = "rm -rf "+shpDir

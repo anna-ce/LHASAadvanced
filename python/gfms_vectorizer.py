@@ -247,6 +247,9 @@ class GFMS:
 		super_fname 			= "%s.%s%02d.x2.tif" % (name, ym, day)
 		super_fullname			= os.path.join(self.inpath, "gfms", ymd, super_fname)
 
+		super_fname_rgb 		= "%s.%s%02d.x2.rgb.tif" % (name, ym, day)
+		super_fullname_rgb		= os.path.join(self.inpath, "gfms", ymd, super_fname_rgb)
+
 		geojson_fname 			= "%s.%s%02d.geojson" % (name, ym, day)
 		geojson_fullname		= os.path.join(self.inpath, "gfms", ymd, geojson_fname)
 
@@ -322,14 +325,18 @@ class GFMS:
 		
 		# Supersample it
 		if self.force or not os.path.exists(super_fullname):			
-			cmd = "gdalwarp -overwrite -q -tr %f %f -r cubicspline %s %s" % (res/10,res/10,output_fullname,super_fullname)
+			cmd = "gdalwarp -overwrite -q -tr %f %f -r average %s %s" % (res/10,res/10,output_fullname,super_fullname)
 			self.execute(cmd)
 		
 		# Create RGB
 		if self.verbose and (self.force or not os.path.exists(output_rgb_fullname)):		
 			cmd = "gdaldem color-relief -q -alpha "+ output_fullname + " " + color_file + " " + output_rgb_fullname
 			self.execute(cmd)
-		
+
+		if self.verbose and (self.force or not os.path.exists(super_fullname_rgb)):		
+			cmd = "gdaldem color-relief -q -alpha "+ super_fullname + " " + color_file + " " + super_fullname_rgb
+			self.execute(cmd)
+						
 		# json
 		#if self.force or not os.path.exists(geojson_fullname):			
 		#	cmd = "makesurface vectorize --classfile gmfs_classes.csv --outfile %s --outvar flood %s " %( geojson_fullname, super_fullname)
@@ -384,19 +391,19 @@ class GFMS:
 				
 			self.execute(cmd)
 
-		cmd= "ogr2ogr -f 'ESRI Shapefile' %s %s" % ( shpDir, merge_filename)
-		self.execute(cmd)
+		#cmd= "ogr2ogr -f 'ESRI Shapefile' %s %s" % ( shpDir, merge_filename)
+		#self.execute(cmd)
 	
-		if force or not os.path.exists(shp_zip_file):
-			mydir	= os.path.join(self.inpath, "gfms", ymd)
-			#cmd 	= "cd %s; tar -cvzf %s shp" %(mydir, shp_gz_file)
-			cmd 	= "cd %s; zip %s shp/*" %(mydir, shp_zip_file)
-			self.execute(cmd)
+		#if force or not os.path.exists(shp_zip_file):
+		#	mydir	= os.path.join(self.inpath, "gfms", ymd)
+		#	#cmd 	= "cd %s; tar -cvzf %s shp" %(mydir, shp_gz_file)
+		#	cmd 	= "cd %s; zip %s shp/*" %(mydir, shp_zip_file)
+		#	self.execute(cmd)
 			
 		if self.force or not os.path.exists(sw_osm_image):
 			MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, levels, hexColors, force, verbose, zoom=2)
 			
-		file_list = [ sw_osm_image, topojson_fullname_gz, shp_zip_file, output_fullname ]
+		file_list = [ sw_osm_image, topojson_fullname_gz, output_fullname ]
 		CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 
 		if not self.verbose:
