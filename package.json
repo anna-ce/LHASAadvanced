@@ -50,7 +50,6 @@
     "terraformer": "^1.0.5",
     "terraformer-arcgis-parser": "^1.0.4",
     "terraformer-geostore": "^1.0.4",
-    "terraformer-geostore-leveldb": "^1.1.1",
     "terraformer-geostore-localstorage": "^1.0.0",
     "terraformer-geostore-memory": "^1.0.0",
     "terraformer-rtree": "^1.0.0",
