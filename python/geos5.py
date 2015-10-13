@@ -145,7 +145,11 @@ def process_file( mydir, filename, s3_bucket, s3_folder):
 		    json.dump(jsonDict, outfile)	
 
 		# Convert to topojson
-		cmd 	= "topojson -p --bbox --simplify-proportion 0.5 -o "+ topojson_filename + " " + merge_filename
+		quiet = "> /dev/null 2>&1"
+		if verbose:
+			quiet = " "
+			
+		cmd 	= "topojson -p --bbox --simplify-proportion 0.5 -o "+ topojson_filename + " " + merge_filename + quiet
 		execute(cmd)
 
 		cmd 	= "gzip -f "+ topojson_filename

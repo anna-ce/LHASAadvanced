@@ -148,7 +148,7 @@ class GFMS:
 		if force or not os.path.exists(thumbnail_file):
 			cmd="gdalwarp -overwrite -q -multi -ts %d %d -r cubicspline -co COMPRESS=LZW %s %s" % (thn_width, thn_height, supersampled_file_rgb, tmp_file )
 			self.execute(cmd)
-			cmd = "composite -blend 60 %s %s %s" % ( tmp_file, static_file, thumbnail_file)
+			cmd = "composite -quiet -blend 60 %s %s %s" % ( tmp_file, static_file, thumbnail_file)
 			self.execute(cmd)
 			self.execute("rm "+tmp_file)
 		

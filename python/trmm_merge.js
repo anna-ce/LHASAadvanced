@@ -17,7 +17,7 @@ var ymd	 		= process.argv[3]
 var data_dir 	= "/Users/patricecappelaere/landslide/data"
 var dir 		= path.join(data_dir, "trmm",region, ymd)
 
-console.log("trmm merging of ", dir)
+//console.log("trmm merging of ", dir)
 
 function ReadFile( filename) {
 	var data	= fs.readFileSync(filename)
@@ -59,12 +59,12 @@ for( var f in files) {
 
 var str = JSON.stringify(json1)
 fs.writeFileSync(merge_filename, str)
-console.log("wrote", merge_filename, " with features:", json1.features.length)
+//console.log("wrote", merge_filename, " with features:", json1.features.length)
 
 var cmd 	= "topojson -p -o "+ topojson_filename + " " + merge_filename
 var child 	= exec(cmd, function(error, stdout, stderr) {
-	console.log('stdout: ' + stdout);
-	console.log('stderr: ' + stderr);
+	//console.log('stdout: ' + stdout);
+	//console.log('stderr: ' + stderr);
 	if (error !== null) {
 		console.log('exec error: ' + error);
 	} else {

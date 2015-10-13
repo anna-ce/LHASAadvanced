@@ -166,9 +166,7 @@ class TRMM:
 	
 	
 	def process_trmm_region_upsample(self, pixelsize, bbox, global_file, resampled_file, resampled_rgb_file):
-		if force or not os.path.exists(resampled_file):
-			print "pixelsize", pixelsize
-			
+		if force or not os.path.exists(resampled_file):			
 			cmd = "gdalwarp -overwrite -q -tr %s %s -te %f %f %f %f -co COMPRESS=LZW %s %s" % (str(pixelsize), str(pixelsize), bbox[0], bbox[1], bbox[2], bbox[3], global_file, resampled_file)
 			self.execute(cmd)
 			
@@ -181,7 +179,7 @@ class TRMM:
 		if force or not os.path.exists(thumbnail_file):
 			cmd="gdalwarp -overwrite -q -multi -ts %d %d -r cubicspline -co COMPRESS=LZW %s %s" % (thn_width, thn_height, rgb_subset_file, tmp_file )
 			self.execute(cmd)
-			cmd = "composite -blend 60 %s %s %s" % ( tmp_file, static_file, thumbnail_file)
+			cmd = "composite -quiet -blend 60 %s %s %s" % ( tmp_file, static_file, thumbnail_file)
 			self.execute(cmd)
 			self.execute("rm "+tmp_file)
 	
@@ -200,7 +198,9 @@ class TRMM:
 		o_band.WriteArray(data, 0, 0)
 
 		dst_ds_dataset = None
-		print "Created", fileName
+
+		if verbose:
+			print "Created", fileName
 
 		cmd = "gdal_translate -q -of PNM -expand gray " + fileName + " "+fileName+".bmp"
 		self.execute(cmd)
@@ -216,7 +216,11 @@ class TRMM:
 		cmd = str.format("potrace -i -z black -a 1.5 -t 3 -b geojson -o {0} {1} -x {2} -L {3} -B {4} ", fileName+".geojson", fileName+".bmp", pres, xorg, ymax ); 
 		self.execute(cmd)
 	
-		cmd = str.format("topojson -o {0} --simplify-proportion 0.75 -p daily_precipitation={1} -- daily_precipitation={2}", fileName+".topojson", water, fileName+".geojson" ); 
+		quiet = "> /dev/null 2>&1"
+		if verbose:
+			quiet = " "
+		
+		cmd = str.format("topojson -o {0} --simplify-proportion 0.75 -p daily_precipitation={1} -- daily_precipitation={2} {3}", fileName+".topojson", water, fileName+".geojson", quiet ); 
 		self.execute(cmd)
 	
 		# convert it back to json

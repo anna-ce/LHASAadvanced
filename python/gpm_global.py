@@ -66,7 +66,7 @@ def CreateLevel(l, geojsonDir, fileName, src_ds, data, attr):
 
 	count 				= (o_data > 0).sum()	
 	if verbose:
-		print "Level", minl, maxl, " count:", count
+		print "Level", minl, " count:", count
 
 	if count > 0 :
 
@@ -103,7 +103,11 @@ def CreateLevel(l, geojsonDir, fileName, src_ds, data, attr):
 		#execute(cmd)
 	
 		#cmd = str.format("topojson -o {0} --simplify-proportion 0.5 -p {3}={1} -- {3}={2}", fileName+".topojson", l, fileName+".geojson", attr ); 
-		cmd = str.format("topojson --bbox --simplify-proportion 0.5 -o {0} --no-stitch-poles -p {3}={1} -- {3}={2}", fileName+".topojson", minl, fileName+".geojson", attr ); 
+		quiet = " > /dev/null 2>&1"
+		if verbose:
+			quiet = " "
+			
+		cmd = str.format("topojson --bbox --simplify-proportion 0.5 -o {0} --no-stitch-poles -p {3}={1} -- {3}={2} {4}", fileName+".topojson", minl, fileName+".geojson", attr, quiet ); 
 		execute(cmd)
 	
 		# convert it back to json
@@ -211,10 +215,10 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 	if not os.path.exists(levelsDir):            
 		os.makedirs(levelsDir)
 
-	shpDir	= os.path.join(region_dir,"shp_%s" % (name))
-	cmd 	= "rm -rf " + shpDir
-	execute(cmd)
-	os.makedirs(shpDir)
+	#shpDir	= os.path.join(region_dir,"shp_%s" % (name))
+	#cmd 	= "rm -rf " + shpDir
+	#execute(cmd)
+	#os.makedirs(shpDir)
 
 	merge_filename 		= os.path.join(geojsonDir, "%s.%s.geojson" % (name, ymd))
 	topojson_filename 	= os.path.join(geojsonDir, "..", "%s.%s.topojson" % (name,ymd))
@@ -248,7 +252,7 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 	
 	if force or not os.path.exists(topojson_filename+".gz"):
 		for idx, l in enumerate(levels):
-			print "level", idx
+			#print "level", idx
 			#if idx < len(levels)-1:
 			fileName 		= os.path.join(levelsDir, ymd+"_level_%d.tif"%l)
 			#CreateLevel(l, levels[idx+1], geojsonDir, fileName, ds, sdata, "precip")
@@ -270,22 +274,26 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 		with open(merge_filename, 'w') as outfile:
 		    json.dump(jsonDict, outfile)	
 
+		quiet = " > /dev/null 2>&1"
+		if verbose:
+			quiet = " "
+				
 		# Convert to topojson
-		cmd 	= "topojson --bbox -p precip -o "+ topojson_filename + " " + merge_filename
+		cmd 	= "topojson --no-stitch-poles --bbox -p precip -o "+ topojson_filename + " " + merge_filename + quiet
 		execute(cmd)
 
 		cmd 	= "gzip --keep "+ topojson_filename
 		execute(cmd)
 	
 	# Convert to shapefile		
-	if 1: #and os.path.exists(merge_filename):
-		cmd= "ogr2ogr -f 'ESRI Shapefile' %s %s" % ( shpDir, merge_filename)
-		execute(cmd)
+	#if 1: #and os.path.exists(merge_filename):
+	#	cmd= "ogr2ogr -f 'ESRI Shapefile' %s %s" % ( shpDir, merge_filename)
+	#	execute(cmd)
 	
-	if force or not os.path.exists(shp_zip_file):
-		#cmd 	= "cd %s; tar -cvzf %s shp" %(region_dir, shapefile_gz)
-		cmd 	= "cd %s; zip %s shp_%s/*" %(region_dir, shp_zip_file, name)
-		execute(cmd)
+	#if force or not os.path.exists(shp_zip_file):
+	#	#cmd 	= "cd %s; tar -cvzf %s shp" %(region_dir, shapefile_gz)
+	#	cmd 	= "cd %s; zip %s shp_%s/*" %(region_dir, shp_zip_file, name)
+	#	execute(cmd)
 		
 	# problem is that we need to scale it or adjust the levels for coloring (easier)
 	adjusted_levels 		= [3770, 2330, 1440, 890, 550, 340, 210, 130, 80, 50, 30, 20]
@@ -300,12 +308,12 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 		
 	ds = None
 	
-	file_list = [ sw_osm_image, topojson_filename+".gz", tif_image, shp_zip_file ]
+	file_list = [ sw_osm_image, topojson_filename+".gz", tif_image ]
 	#CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 	CopyToS3( s3_bucket, s3_folder, file_list, 1, 1 )
 	
 	if not verbose: # Cleanup
-		cmd = "rm -rf %s %s %s %s %s %s %s %s %s %s %s" % (origFileName, supersampled_file, merge_filename, topojson_filename, subset_aux_filename, browse_filename, subset_filename, osm_bg_image, geojsonDir, levelsDir, shpDir)
+		cmd = "rm -rf %s %s %s %s %s %s %s %s %s %s" % (origFileName, supersampled_file, merge_filename, topojson_filename, subset_aux_filename, browse_filename, subset_filename, osm_bg_image, geojsonDir, levelsDir)
 		execute(cmd)
 
 # ===============================
@@ -368,8 +376,8 @@ if __name__ == '__main__':
 		get_daily_gpm_files(files, gpm_dir, year, month)
 	
 	process(gpm_dir, "gpm_1d", gis_file_day, ymd)
-	#process(gpm_dir, "gpm_3d", gis_file_3day, ymd)
-	#process(gpm_dir, "gpm_7d", gis_file_7day, ymd)
+	process(gpm_dir, "gpm_3d", gis_file_3day, ymd)
+	process(gpm_dir, "gpm_7d", gis_file_7day, ymd)
 	
 	if not verbose:
 		for f in files:

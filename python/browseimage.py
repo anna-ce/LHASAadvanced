@@ -15,7 +15,7 @@ import numpy
 
 MAXZOOMLEVEL 		= 32
 
-verbose = 1
+verbose = 0
 force 	= 0
 
 def execute( cmd ):
@@ -113,6 +113,8 @@ def tilenum2deg(xtile, ytile, zoom):
 # Using Mabox
 #
 def mapbox_image(centerlat, centerlon, z, rasterXSize, rasterYSize, osm_bg_image):
+	global verbose
+	
 	#if verbose:
 	#	print "outputbrowse_image", rasterXSize, rasterYSize, z, centerlat, centerlon
 	
@@ -120,11 +122,11 @@ def mapbox_image(centerlat, centerlon, z, rasterXSize, rasterYSize, osm_bg_image
 		mapbox_url = str.format("http://api.tiles.mapbox.com/v3/cappelaere.map-1d8e1acq/{0},{1},{2}/{3}x{4}.png32",centerlon, centerlat, z, rasterXSize,rasterYSize)
 
 		if verbose:
-			print "wms url:" , mapbox_url
+			print "wms url:" , mapbox_url, verbose
 	
 		urllib.urlretrieve(mapbox_url, osm_bg_image)
 		if verbose:
-			print "created:" , osm_bg_image
+			print "created:" , osm_bg_image, verbose
 
 
 # Using Mapquest bbox... but does not seem to be accurate
@@ -243,7 +245,7 @@ def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_o
 		print "rescale for browse", scale
 		data *= scale
 	
-	print geotransform
+	#print geotransform
 	
 	xorg				= geotransform[0]
 	yorg  				= geotransform[3]
@@ -296,7 +298,6 @@ def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_o
 		a_band.WriteArray(data.astype('i1'), 0, 0)
 		
 		ct = gdal.ColorTable()
-		ct = gdal.ColorTable()
 		for i in range(256):
 			ct.SetColorEntry( i, (0, 0, 0, 0) )
 		
@@ -305,10 +306,12 @@ def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_o
 			ct.SetColorEntry( idx+1, decColors[idx] )
 		
 		o_band.SetRasterColorTable(ct)
-		band.SetNoDataValue(0)
+		o_band.SetNoDataValue(0)
 		
 		dst_ds_dataset 	= None
-		print "Created Browse Image:", browse_filename
+
+		if verbose:
+			print "Created Browse Image:", browse_filename
 	
 	# 
 	centerlon		= (xorg + xmax)/2
@@ -342,7 +345,7 @@ def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_o
 		lrlon = bbox[2]
 		lrlat = bbox[3]
 
-	if 1:
+	if verbose:
 		print "mapbbox coords", ullon, ullat, lrlon, lrlat
 		
 	if force or not os.path.isfile(subset_filename):	
@@ -355,14 +358,14 @@ def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_o
 		additionalOptions 	= ' -co COMPRESS=DEFLATE -setci  ' # Additional options
 		wh 					= ' -ts %d %d  ' % ( rasterXSize, rasterYSize )
 		warpOptions 	= ofStr + bbStr + projectionStr + resStr + overwriteStr + additionalOptions + wh
-		warpCMD = 'gdalwarp ' + warpOptions + browse_filename + ' ' + subset_filename
+		warpCMD = 'gdalwarp -q ' + warpOptions + browse_filename + ' ' + subset_filename
 		execute(warpCMD)
 	
 	
 	# superimpose the suface water over map background
 	#if force or not os.path.isfile(sw_osm_image):	
 	if force or not os.path.isfile(sw_osm_image):	
-		cmd = str.format("composite -gravity center -blend 60 {0} {1} {2}", subset_filename, osm_bg_image, sw_osm_image)
+		cmd = str.format("composite -quiet -gravity center -blend 60 {0} {1} {2}", subset_filename, osm_bg_image, sw_osm_image)
 		execute(cmd)
 		
 if __name__ == '__main__':
@@ -448,7 +451,7 @@ if __name__ == '__main__':
 	
 	# superimpose the suface water over map background
 	if force or not os.path.isfile(sw_osm_image):	
-		cmd = str.format("composite -gravity center {0} {1} {2}", surface_water_image, osm_bg_image, sw_osm_image)
+		cmd = str.format("composite -quiet -gravity center {0} {1} {2}", surface_water_image, osm_bg_image, sw_osm_image)
 		if verbose:
 			print cmd
 		os.system(cmd)

@@ -16,6 +16,7 @@ import numpy, sys, os, inspect, io
 import urllib
 import csv
 import json
+import ssl
 
 from datetime import date
 from dateutil.parser import parse
@@ -99,8 +100,10 @@ def process_url( mydir, url, ymd, bbox, zoom, s3_bucket, s3_folder ):
 	osm_bg_image		= os.path.join(os.path.join(mydir,  "osm_bg_image.tif"))
 	thn_image			= os.path.join(os.path.join(mydir,  "modis_af." + ymd + '_thn.jpg'))
 	
+	context 			= ssl._create_unverified_context()
+	
 	if force or not os.path.exists(csv_filename):
-		urllib.urlretrieve(url, csv_filename)
+		urllib.urlretrieve(url, csv_filename, context=context)
 		
 	if force or not os.path.exists(geojson_filename):
 		csv_to_geojson(csv_filename, geojson_filename, bbox)
@@ -129,12 +132,12 @@ def process_url( mydir, url, ymd, bbox, zoom, s3_bucket, s3_folder ):
 	url += str(ullon) + ","+ str(lrlat) + "," + str(lrlon) + "," + str(ullat)
 	
 	if force or not os.path.exists(tif_filename):
-		urllib.urlretrieve(url, tif_filename)
+		urllib.urlretrieve(url, tif_filename, context=context)
 		#print "retrieved ", tif_filename
 	
 	# superimpose the suface water over map background
 	if force or not os.path.isfile(thn_image):	
-		cmd = str.format("composite -gravity center {0} {1} {2}", tif_filename, osm_bg_image, thn_image)
+		cmd = str.format("composite -quiet -gravity center {0} {1} {2}", tif_filename, osm_bg_image, thn_image)
 		execute(cmd)
 		
 	file_list = [ tif_filename, geojson_filename, geojsongz_filename, thn_image ]
@@ -142,6 +145,8 @@ def process_url( mydir, url, ymd, bbox, zoom, s3_bucket, s3_folder ):
 
 #
 # ======================================================================
+#
+# python modis-active-fires.py --region d02 --date 2015-10-13
 #
 if __name__ == '__main__':
 	parser 		= argparse.ArgumentParser(description='MODIS Processing')

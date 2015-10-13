@@ -303,7 +303,7 @@ def build_tif(dx, region, dir, date):
 			execute(cmd)
 
 		if force or not os.path.exists(file+".topojson.gz"):
-			cmd = str.format("topojson -o {0} --simplify-proportion 0.5 -p nowcast=1 -- landslide_nowcast={1}", file+".topojson", file+".geojson"); 
+			cmd = str.format("topojson -o {0} --simplify-proportion 0.5 -p nowcast=1 -- landslide_nowcast={1} > /dev/null 2>&1", file+".topojson", file+".geojson"); 
 			execute(cmd)
 	
 			cmd = "gzip -f %s" % (file+".topojson")
@@ -317,7 +317,7 @@ def build_tif(dx, region, dir, date):
 		if force or not os.path.exists(thumbnail_file):
 			cmd="gdalwarp -overwrite -q -multi -ts %d %d -r cubicspline -co COMPRESS=LZW %s %s" % (thn_width, thn_height, forecast_landslide_bin_rgb, tmp_file )
 			execute(cmd)
-			cmd = "composite %s %s %s" % ( tmp_file, static_file, thumbnail_file)
+			cmd = "composite -quiet %s %s %s" % ( tmp_file, static_file, thumbnail_file)
 			execute(cmd)
 			execute("rm -f "+tmp_file)
 			
@@ -405,7 +405,8 @@ def process(mydir, scene, s3_bucket, s3_folder, zoom):
 		for l in reversed(levels):
 			fileName 		= os.path.join(geojsonDir, "landslide_nowcast_level_%d.geojson"%l)
 			if os.path.exists(fileName):
-				print "merge", fileName
+				if verbose:
+					print "merge", fileName
 				with open(fileName) as data_file:    
 					data = json.load(data_file)
 		
@@ -418,7 +419,7 @@ def process(mydir, scene, s3_bucket, s3_folder, zoom):
 		    json.dump(jsonDict, outfile)	
 
 		# Convert to topojson
-		cmd 	= "topojson -p -o "+ topojson_filename + " " + merge_filename
+		cmd 	= "topojson -p -o "+ topojson_filename + " " + merge_filename + " > /dev/null 2>&1"
 		execute(cmd)
 
 		cmd 	= "gzip -f --keep "+ topojson_filename
@@ -443,8 +444,6 @@ def process(mydir, scene, s3_bucket, s3_folder, zoom):
 	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 		
 	if not verbose:
-		verbose = 1
-
 		cmd = "rm -f %s %s %s %s %s" %(osm_bg_image, subset_filename, subset_filename+".aux.xml", browse_filename,topojson_filename )
 		execute(cmd)
 
@@ -528,4 +527,5 @@ if __name__ == '__main__':
 		
 	generate_map(region, dt, year, doy)
 	
-	print "Done."
+	if verbose:
+		print "Done."

@@ -195,7 +195,7 @@ def process_wrf_file(dx, file_name):
 	if force or not os.path.exists(thumbnail_file):
 		cmd="gdalwarp -overwrite -q -multi -ts %d %d -r cubicspline -co COMPRESS=LZW %s %s" % (thn_width, thn_height, resampled_rgb_file, tmp_file )
 		execute(cmd)
-		cmd = "composite -blend 60 %s %s %s" % ( tmp_file, static_file, thumbnail_file)
+		cmd = "composite -quiet -blend 60 %s %s %s" % ( tmp_file, static_file, thumbnail_file)
 		execute(cmd)
 		execute("rm "+tmp_file)
 		

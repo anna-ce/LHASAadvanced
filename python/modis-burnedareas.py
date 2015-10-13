@@ -165,7 +165,11 @@ def process_mcd45_file(mydir, dx, file_name, s3_bucket, s3_folder):
 		execute(cmd)
 
 	if force or not os.path.exists(topojson_file):
-		cmd = str.format("topojson --bbox --simplify-proportion 0.5 {0} -o {1} ", geojson_file, topojson_file ); 
+		quiet = "> /dev/null 2>&1"
+		if verbose:
+			quiet = " "
+			
+		cmd = str.format("topojson --bbox --simplify-proportion 0.5 {0} -o {1} {2}", geojson_file, topojson_file, quiet ); 
 		execute(cmd)
 
 	if force or not os.path.exists(topojsongz_file):
@@ -186,7 +190,7 @@ def process_mcd45_file(mydir, dx, file_name, s3_bucket, s3_folder):
 	ds = None
 #
 # ======================================================================
-#	python modis-burnedareas.py --region d03 -v
+#	python modis-burnedareas.py --region d03 --date 2015-10-13 -v
 #
 if __name__ == '__main__':
 	version_num = int(gdal.VersionInfo('VERSION_NUM'))

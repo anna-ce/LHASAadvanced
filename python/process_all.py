@@ -62,11 +62,17 @@ def get_daily_forecast():
 
 def process_script( str, dt, regions ):	
 	for r in regions :
+		cmd = "rm -rf errorlog.txt"
+		execute(cmd)
+		
 		cmd = "python ./%s --region %s --date %s" % (str, r, dt)
 		execute(cmd)
 
 	
 def process_global_script( str, dt ):
+	cmd = "rm -rf errorlog.txt"
+	execute(cmd)
+	
 	cmd = "python ./%s --date %s" % (str, dt)
 	execute(cmd)
 
@@ -128,37 +134,35 @@ if __name__ == '__main__':
 	apg_input.add_argument("-v", "--verbose", 	action='store_true', help="Verbose Flag")
 	apg_input.add_argument("-d", "--date", 		help="date")
 	
-	options 	= parser.parse_args()
-	force		= options.force or force
-	verbose		= options.verbose or verbose
-	d			= options.date
+	options 			= parser.parse_args()
+	force				= options.force or force
+	verbose				= options.verbose or verbose
+	d					= options.date
 
-	today		= date.today()
-	dt			= d or today.strftime("%Y-%m-%d")
+	today				= date.today()
+	dt					= d or today.strftime("%Y-%m-%d")
 	
-	yesterday	= today - timedelta(1)
-	ydt			= yesterday.strftime("%Y-%m-%d")
+	yesterday			= today - timedelta(1)
+	ydt					= yesterday.strftime("%Y-%m-%d")
 
 	dayAfterYesterday	= today - timedelta(2)
 	ydt2				= dayAfterYesterday.strftime("%Y-%m-%d")
 	
 	regions 			= ["d02", "d03", "d08", "d09"]
-		
+	
 	if 1:
 		process_script('trmm_process.py', ydt, regions)
 		#get_daily_forecast()
 		#get_flood_nowcast()
 		
-		
-		# skip d09 for now... no threshold
 		process_script('landslide_nowcast.py', dt, regions)
 		process_script('modis-active-fires.py', ydt, regions)
 		process_script('modis-burnedareas.py', ydt, regions)
 		process_script('quake.py', ydt, regions)
 		
 		process_global_script('gfms_vectorizer.py', ydt)
-		process_global_script('geos5.py', dt)
 		process_global_script('gpm_global.py', ydt2)
+		process_global_script('geos5.py', dt)
 
 		#process_script('viirs_CHLA.py', ydt)
 		#process_script('chirps_prelim.py --period monthly', ydt)

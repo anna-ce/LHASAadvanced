@@ -243,7 +243,7 @@ class MODIS:
 		if force or not os.path.exists(self.thumbnail_file):
 			cmd="gdalwarp -overwrite -q -multi -ts %d %d -r cubicspline -co COMPRESS=LZW %s %s" % (thn_width, thn_height, self.rgb, tmp_file )
 			self.execute(cmd)
-			cmd = "composite -blend 60 %s %s %s" % ( tmp_file, self.static_file, self.thumbnail_file)
+			cmd = "composite -quiet -blend 60 %s %s %s" % ( tmp_file, self.static_file, self.thumbnail_file)
 			self.execute(cmd)
 			#self.execute("rm "+tmp_file)
 		

@@ -133,16 +133,16 @@ def process_viirs_chla_file( mydir, regionName, viirs_filename, s3_bucket, s3_fo
 		execute(cmd)
 	
 	# Create shapefile gz
-	if force or not os.path.exists(shp_filename):
+	#if force or not os.path.exists(shp_filename):
 		# Convert simplified topojson to geojson
-		cmd = "topojson-geojson --precision 5 %s -o %s" % (topojson_filename, geojsonDir)
-		execute(cmd)
+	#	cmd = "topojson-geojson --precision 5 %s -o %s" % (topojson_filename, geojsonDir)
+	#	execute(cmd)
 		
-		cmd = "ogr2ogr -f 'ESRI Shapefile' %s %s" % (shpDir, json_filename)
-		execute(cmd)
+	#	cmd = "ogr2ogr -f 'ESRI Shapefile' %s %s" % (shpDir, json_filename)
+	#	execute(cmd)
 		
-		cmd = "cd %s; tar -zcvf %s %s" % (rdir, shp_filename, shpDir)
-		execute(cmd)
+	#	cmd = "cd %s; tar -zcvf %s %s" % (rdir, shp_filename, shpDir)
+	#	execute(cmd)
 		
 		
 	if force or not os.path.exists(sw_osm_image):
@@ -152,7 +152,7 @@ def process_viirs_chla_file( mydir, regionName, viirs_filename, s3_bucket, s3_fo
 		
 	ds = None
 	
-	file_list = [ sw_osm_image, topojson_filename, topojson_filename+".gz", subset_file, shp_filename ]
+	file_list = [ sw_osm_image, topojson_filename, topojson_filename+".gz", subset_file ]
 	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 #
 # ======================================================================
