@@ -361,7 +361,8 @@
                 "label": "Source",
                 "source": "NASA"
             },
-            "legend": "Active Fires"
+            "legend": "Active Fires",
+			"modis_af": "Active Fires"
         },
         "quakes": {
             "title": "USGS Earthquakes",
