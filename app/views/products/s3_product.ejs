@@ -1,12 +1,15 @@
 <html prefix="og: http://ogp.me/ns# fb:http://ogp.me/ns/fb# ">
 	<head>
+	<meta content="text/html; charset=UTF-8" name="Content-Type" />
+		
 	<!-- Twitter Tags -->
-	<meta name="twitter:card" content="summary">
+	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:site" content="<%= social_envs.TWITTER_SITE %>">
 	<meta name="twitter:site:id" content="<%= social_envs.TWITTER_SITE_ID %>">
 	<meta name="twitter:creator" content="<%= social_envs.TWITTER_CREATOR %>">
 	<meta name="twitter:creator:id" content="<%= social_envs.TWITTER_CREATOR_ID %>">
 	<meta name="twitter:domain" content="<%= social_envs.TWITTER_DOMAIN %>">
+	<meta name="twitter:image:src" content="<%= url %>?123">
 	
 	<!-- Open Graph Tags (accepted by Twitter as well -->
 	<meta property="fb:app_id" content="<%= social_envs.FACEBOOK_APP_ID %>" /> 
@@ -15,7 +18,7 @@
 	<meta property="og:type" content="ojo-nasa:geoss_product" />
 	<meta property="og:title" content="geoss.<%= product_title %>" />
 	<meta property="og:description" content="<%= description %>" />
-	<meta property="og:image" content="<%= image %>?2" />
+	<meta property="og:image" content="<%= image %>?123" />
 	<meta property="og:image:type" content="image/jpeg" />
 	<meta property="og:url" content="<%= url %>" />
 	<meta property="og:updated_time" content="<%= date %>" />
