@@ -323,7 +323,7 @@ def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_o
 		
 	# Check raster size - thumbnail should be about 256x256
 	minDim 	= min(src_ds.RasterXSize, src_ds.RasterYSize)
-	ratio	= 256.0 / minDim
+	ratio	= 512.0 / minDim
 	if ratio >= 1:
 		ratio = round(ratio)+1	# round up
 	

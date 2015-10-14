@@ -229,7 +229,7 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 	#osm_bg_image		= os.path.join(geojsonDir, "..", "osm_bg.png")	
 	osm_bg_image		= os.path.join(config.data_dir, "gpm", "osm_bg.png")
 	
-	sw_osm_image		= os.path.join(geojsonDir, "..", "%s.%s_thn.jpg" % (name, ymd))
+	sw_osm_image		= os.path.join(geojsonDir, "..", "%s.%s_thn.png" % (name, ymd))
 	tif_image			= os.path.join(geojsonDir, "..", "%s.%s.tif" % (name, ymd))
 
 	geojson_filename 	= os.path.join(geojsonDir, "..", "%s.%s.json" % (name,ymd))
