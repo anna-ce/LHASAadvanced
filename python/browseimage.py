@@ -15,7 +15,7 @@ import numpy
 
 MAXZOOMLEVEL 		= 32
 
-verbose = 0
+verbose = 1
 force 	= 0
 
 def execute( cmd ):
@@ -218,7 +218,7 @@ def Gen_bbox(lat, lon, zoom, width, height):
 	lrlat, lrlon = MetersToLatLon( mx, my )
 		
 	if ullon < -180:
-		ulllon = -180
+		ullon = -180
 		
 	if lrlon > 180:
 		lrlon = 180
@@ -321,7 +321,7 @@ def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_o
 	if verbose:
 		print "center target", centerlon, centerlat, zoom
 		
-	# Check raster size - thumbnail should be about 256x256
+	# Check raster size - thumbnail should be about 512x512 or more
 	minDim 	= min(src_ds.RasterXSize, src_ds.RasterYSize)
 	ratio	= 512.0 / minDim
 	if ratio >= 1:
@@ -331,12 +331,15 @@ def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_o
 	rasterYSize = int(src_ds.RasterYSize*ratio)
 	
 	if verbose:
-		print "** Adjust", src_ds.RasterXSize, src_ds.RasterYSize, minDim, ratio, rasterXSize, rasterYSize
+		print "** Adjust", src_ds.RasterXSize, src_ds.RasterYSize, minDim, ratio, rasterXSize, rasterYSize, zoom, bbox
 		
 	if len(bbox) == 0:
-		if force or not os.path.isfile(osm_bg_image):	
+		if force or not os.path.isfile(osm_bg_image):
+			print "** not", osm_bg_image
 			mapbox_image(centerlat, centerlon, zoom, rasterXSize, rasterYSize, osm_bg_image)
-
+		else:
+			print "found", osm_bg_image
+			
 		ullon, ullat, lrlon, lrlat = Gen_bbox(centerlat, centerlon, zoom, rasterXSize, rasterYSize)
 	
 	else:

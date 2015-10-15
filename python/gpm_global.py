@@ -298,7 +298,7 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 	# problem is that we need to scale it or adjust the levels for coloring (easier)
 	adjusted_levels 		= [3770, 2330, 1440, 890, 550, 340, 210, 130, 80, 50, 30, 20]
 	
-	zoom = 1
+	zoom = 2
 	if force or not os.path.exists(sw_osm_image):
 		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, adjusted_levels, hexColors, force, verbose, zoom)
 	
@@ -309,8 +309,8 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 	ds = None
 	
 	file_list = [ sw_osm_image, topojson_filename+".gz", tif_image ]
-	#CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
-	CopyToS3( s3_bucket, s3_folder, file_list, 1, 1 )
+	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
+	#CopyToS3( s3_bucket, s3_folder, file_list, 1, 1 )
 	
 	if not verbose: # Cleanup
 		cmd = "rm -rf %s %s %s %s %s %s %s %s %s %s" % (origFileName, supersampled_file, merge_filename, topojson_filename, subset_aux_filename, browse_filename, subset_filename, osm_bg_image, geojsonDir, levelsDir)
@@ -376,8 +376,8 @@ if __name__ == '__main__':
 		get_daily_gpm_files(files, gpm_dir, year, month)
 	
 	process(gpm_dir, "gpm_1d", gis_file_day, ymd)
-	process(gpm_dir, "gpm_3d", gis_file_3day, ymd)
-	process(gpm_dir, "gpm_7d", gis_file_7day, ymd)
+	#process(gpm_dir, "gpm_3d", gis_file_3day, ymd)
+	#process(gpm_dir, "gpm_7d", gis_file_7day, ymd)
 	
 	if not verbose:
 		for f in files:
