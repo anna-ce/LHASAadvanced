@@ -1,0 +1,362 @@
+<!doctype html>
+<html>
+<head>
+    <title>GFMS Client Vector Tiling</title>
+    <meta charset="utf-8">
+
+    <style>
+        html, body {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            background: rgb(14, 21, 30);
+            height: 100%;
+            font-family: Tahoma, Geneva, Verdana, sans-serif;
+            font-size:12px;
+            color:#808080;
+        }
+        h2,a {
+          color: white;
+        }
+        
+        #map {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+    		   
+            background-color: #333;
+        }
+    
+        .black {
+          color: black;
+        }
+		</style>
+		<style id='flood_nowcast_legend_style' >
+	    .flood_nowcast_map-info .legend-scale ul {
+	       margin: 0;
+	       margin-bottom: 5px;
+	       padding: 0;
+	       float: right;
+	       list-style: none;
+	       }
+		.flood_nowcast_map-info .legend-scale ul li {
+		   font-size: 80%;
+		   list-style: none;
+		    margin-left: 0;
+		    line-height: 18px;
+		    margin-bottom: 2px;
+		}
+	    .flood_nowcast_map-info ul.legend-labels li span {
+	      display: block;
+	      float: left;
+	      height: 16px;
+	      width: 30px;
+	      margin-right: 5px;
+	      margin-left: 0;
+	      border: 1px solid #999;
+	    }
+	    .flood_nowcast_map-info .legend-source {
+	       font-size: 70%;
+	       color: #999;
+	       clear: both;
+	    }
+		.flood_nowcast_map-info {
+		    padding: 6px 8px;
+		    font: 14px/16px Arial, Helvetica, sans-serif;
+		    background: white;
+		    background: rgba(255,255,255,0.8);
+		    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+		    border-radius: 5px;
+			 position: relative;
+			 float: right;
+		    line-height: 18px;
+		    color: #555;
+	
+		}
+		</style>
+  
+</head>
+</head>
+
+<body>
+  <h2>&nbsp;GFMS Example </h2>
+</br>
+  
+    <div id="map"></div>
+    <br/>
+		<div id='flood_nowcast_legend' class='flood_nowcast_map-info'>
+		  <div class='legend-title'>GFMS Flood Nowcast</div>
+		  <div class='legend-scale'>
+		    <ul class='legend-labels'>
+			   <li><span style='background:  #FF0000' ></span>200mm</li>
+			   <li><span style='background:  #FFA500' ></span>100mm</li>
+			   <li><span style='background:  #FFD700' ></span>50mm</li>
+			   <li><span style='background:  #0000FF' ></span>20mm</li>
+			   <li><span style='background:  #00BFFF' ></span>10mm</li>
+			   <li><span style='background:  #00FF00' ></span>5mm</li>
+		    </ul>
+		  </div>
+		<div class='legend-source'>Source: <a class='black' href='http://flood.umd.edu/'>UMD</a>
+		</div>&nbsp;&nbsp;
+    
+	<!-- Leaflet -->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    
+      
+    <script src="http://www.sumbera.com/gist/js/vt/geojson-vt-dev.js"></script>
+    <script src="http://www.sumbera.com/gist/js/leaflet/canvas/L.CanvasTiles.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>	
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+	<script src="/js/moment.js"></script>
+
+    <script>
+		var levels 			= [ 200, 		100, 		50, 		20, 		10, 		5]
+		var hexColors 		= [ "#FF0000",  "#FFA500", "#FFD700", 	"#0000FF", "#00BFFF", 	"#00FF00" ]
+		
+		
+        var accessToken = '<%=token%>';
+        var map         = L.map('map', {minZoom:3, maxZoom:12}).setView([<%=latitude%>, <%=longitude%>], 5);
+                  
+        L.tileLayer('https://{s}.tiles.mapbox.com/v4/cappelaere.map-1d8e1acq/{z}/{x}/{y}.png?access_token=' + accessToken, {
+			attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
+		}).addTo(map);
+        
+        L.control.scale().addTo(map);
+
+
+        var tileOptions = {
+            maxZoom:		14,			// max zoom to preserve detail on
+            tolerance:		5,			// simplification tolerance (higher means simpler)
+            extent:			4096,       // tile extent (both width and height)
+            buffer:         64,     	// tile buffer on each side
+            debug:          0,        	// logging level (0 to disable, 1 or 2)
+
+            indexMaxZoom:   0,        	// max zoom in the initial tile index
+            indexMaxPoints: 100000,   	// max number of points per tile in the index
+        };
+  
+        function hexToRgb(hex) {
+            var opacity = 1.0;
+            var h		= hex.replace('#', '');
+          
+            var bigint 	= parseInt(h, 16);
+            var r 		= (bigint >> 16) & 255;
+            var g 		= (bigint >> 8) & 255;
+            var b 		= bigint & 255;
+
+            return "rgba("+ r + "," + g + "," + b + "," + opacity +")";
+        }
+        
+        //-------------------------------------------------
+        function colorizeFeatures(data) {
+            var counter = 0;
+            for (var i = 0; i < data.features.length; i++) {
+              counter += data.features[i].geometry.coordinates[0].length;
+              
+              switch( data.features[i].properties.flood ) {
+	              case 200:
+	                data.features[i].properties.color = hexToRgb(hexColors[0]);
+	                break;
+	              case 100:
+	                data.features[i].properties.color = hexToRgb(hexColors[1]);
+	                break;
+	              case 50:
+	                data.features[i].properties.color = hexToRgb(hexColors[2]);
+	                break;
+	              case 20:
+	                data.features[i].properties.color = hexToRgb(hexColors[3]);
+	                break;
+	              case 10:
+	                data.features[i].properties.color = hexToRgb(hexColors[4]);
+	                break;
+	              case 5:
+	                data.features[i].properties.color = hexToRgb(hexColors[5]);
+	                break;
+              }
+            }
+            return counter
+        }
+		    
+        var pad = 0;
+      
+        function drawingOnCanvas(canvasOverlay, params) {
+
+            var bounds          = params.bounds;
+            params.tilePoint.z  = params.zoom;
+
+            var ctx = params.canvas.getContext('2d');
+            ctx.globalCompositeOperation = 'source-over';
+
+            var tile = tileIndex.getTile(params.tilePoint.z, params.tilePoint.x, params.tilePoint.y);
+            if (!tile) {
+                //console.log('tile empty');
+                return;
+            } else {
+                //console.log('getting tile z' + params.tilePoint.z + '-' + params.tilePoint.x + '-' + params.tilePoint.y);
+            }
+
+            ctx.clearRect(0, 0, params.canvas.width, params.canvas.height);
+
+            var features = tile.features;
+
+            ctx.strokeStyle = 'grey';
+
+            for (var i = 0; i < features.length; i++) {
+                var feature = features[i],
+                    type = feature.type;
+
+                ctx.fillStyle = feature.tags.color ? feature.tags.color : 'rgba(255,255,0,0.05)';
+                ctx.beginPath();
+
+                for (var j = 0; j < feature.geometry.length; j++) {
+                    var geom = feature.geometry[j];
+
+                    if (type === 1) {
+                        ctx.arc(geom[0] * ratio + pad, geom[1] * ratio + pad, 2, 0, 2 * Math.PI, false);
+                        continue;
+                    }
+
+                    for (var k = 0; k < geom.length; k++) {
+                        var p = geom[k];
+                        var extent = 4096;
+                       
+                        var x = p[0] / extent * 256;
+                        var y = p[1] / extent * 256;
+                        if (k) ctx.lineTo(x  + pad, y   + pad);
+                        else ctx.moveTo(x  + pad, y  + pad);
+                    }
+                }
+
+                if (type === 3 || type === 1) ctx.fill('evenodd');
+                ctx.stroke();
+            }
+
+        };
+
+        var tileindex;
+		var getvalue_url = undefined;
+		
+		function loadGFMSData(url) {
+			console.log("loadGFMSData", url)
+	        $.ajax({
+	        	dataType: "json",
+	        	url: url,
+	        	success: function( data ) {
+	        		console.log("Loading data")
+	            	var start = new Date().getTime();
+            
+	    			for (var key in data.objects) {
+	    				var geodata = topojson.feature(data, data.objects[key]);
+	    			}
+	           		var vertices  = colorizeFeatures(geodata);
+	            	tileIndex     = geojsonvt(geodata, tileOptions);
+	            	elapsed       = new Date().setTime(new Date().getTime() - start);
+            
+	            	console.log("features", geodata.features.length)
+	            	console.log("vertices", vertices, " ms", elapsed)
+            
+	           	 	var tileLayer = L.canvasTiles()
+	                      .params({ debug: false, padding: 5 })
+	                      .drawing(drawingOnCanvas)
+
+	            	tileLayer.addTo(map);
+				},
+	        	error: function(jqXHR, textStatus, errorThrown) {
+	        	  	console.log(textStatus, errorThrown);
+	        	}
+	        })
+		}
+		
+      	map.on('click', function(e) {
+          var latlng  = e.latlng
+          var lat     = parseFloat(latlng.lat.toFixed(2))
+          var lng	  = parseFloat(latlng.lng.toFixed(2))
+          
+		  console.log("Clicked",lat,lng)
+          
+			var url = getvalue_url.replace("{latitude}", lat)
+			url = url.replace("{longitude}", lng)
+			
+			console.log("value url", url)
+          $.ajax({
+          	dataType: "json",
+          	url: url,
+          	success: function( data ) {
+              console.log("precip", data)
+              var content = "<table>"
+              content += "<tr><td><b>id</b></td><td>"+data.id+"</td><tr>"
+              content += "<tr><td><b>lat</b></td><td>"+data.lat+"</td><tr>"
+              content += "<tr><td><b>lng</b></td><td>"+data.lng+"</td><tr>"
+              content += "<tr><td><b>flood</b></td><td>"+data.value+" mm</td><tr>"
+              content += "</table>"
+ 
+              var popup = L.popup()
+              .setLatLng([lat,lng])
+              .setContent(content)
+              .openOn(map);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+        	  	console.log(textStatus, errorThrown);
+            }
+          })
+          
+        })
+
+		// search for latest
+		var opensearch_url = "/opensearch?q=flood_nowcast&limit=1&sources=gfms"
+		
+		console.log("Getting opensearch_url", opensearch_url)
+        $.ajax({
+        	dataType: "json",
+        	url: opensearch_url,
+        	success: function( data ) {
+				var result 			= data.items[0]
+				var actions 		= result.action;
+				var topojson_url 	= undefined;
+				var mapinfos		= undefined
+				var id				= result['@id']
+				
+				for (var a in actions ) {
+					var action = actions[a]
+					if( action['@type'] == 'ojo:download') {
+						var using = action['using']
+						for( var u in using ) {
+							var use = using[u]
+							console.log( use['mediaType'], use['url'])
+							if( use['mediaType'] == 'application/json' ) {
+								var topojson_url = use['url']
+								console.log("json", topojson_url)
+							} else if( (use['mediaType'] == 'application/gzip') && (use['url'].indexOf("json.gz") > 0) ) {
+								var topojson_url = use['url']
+								console.log("use ...json.gz", topojson_url)
+								break;
+							} else if( use['mediaType'] == 'image/tiff') {
+								//addThumbnailToMap(result, id) 
+								break;
+							}
+						}
+						
+						if( topojson_url) {
+							loadGFMSData(topojson_url)
+						}
+						
+					} else if( action['@type'] == 'ojo:map') {
+						mapinfos 	= action['using']
+						console.log("found mapinfos")
+					} else if( action['@type'] == 'ojo:value') {
+						var using 	= action['using']
+						var use 	= using[0]
+						getvalue_url= use.url
+						
+					}
+				}
+			},
+	        error: function(jqXHR, textStatus, errorThrown) {
+	        	  	console.log(textStatus, errorThrown);
+	        }
+	     })
+		 
+    </script>
+</body>
+</html>
