@@ -21,7 +21,7 @@
         
         #map {
             position: absolute;
-            height: 100%;
+            height: 90%;
             width: 100%;
     		   
             background-color: #333;
@@ -30,8 +30,7 @@
         .black {
           color: black;
         }
-		</style>
-		<style id='flood_nowcast_legend_style' >
+		
 	    .flood_nowcast_map-info .legend-scale ul {
 	       margin: 0;
 	       margin-bottom: 5px;
@@ -67,8 +66,8 @@
 		    background: rgba(255,255,255,0.8);
 		    box-shadow: 0 0 15px rgba(0,0,0,0.2);
 		    border-radius: 5px;
-			 position: relative;
-			 float: right;
+			position: relative;
+			float: right;
 		    line-height: 18px;
 		    color: #555;
 	
@@ -79,7 +78,9 @@
 </head>
 
 <body>
-  <h2>&nbsp;GFMS Example </h2>
+  <h2>&nbsp;GFMS Example: 
+  <span id='filename'></span>
+  </h2>
 </br>
   
     <div id="map"></div>
@@ -316,6 +317,8 @@
 				var topojson_url 	= undefined;
 				var mapinfos		= undefined
 				var id				= result['@id']
+				
+				$('#filename').html(id)
 				
 				for (var a in actions ) {
 					var action = actions[a]
