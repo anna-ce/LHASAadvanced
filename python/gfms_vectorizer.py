@@ -20,7 +20,7 @@ from ftplib import FTP
 from datetime import date, timedelta
 from s3 import CopyToS3
 
-from browseimage import MakeBrowseImage 
+from browseimage import MakeBrowseImage, wms
 from level import CreateLevel
 
 # Site configuration
@@ -274,14 +274,14 @@ class GFMS:
 			os.makedirs(levelsDir)
 
 		shpDir		= os.path.join(flood_dir, "shp")
-		cmd = "rm -rf " + shpDir
+		cmd 		= "rm -rf " + shpDir
 		self.execute(cmd)
 		
 		merge_filename 			= os.path.join(geojsonDir, "%s_levels.geojson" % ymd)
 		browse_filename 		= os.path.join(geojsonDir, "..", "%s_browse.tif" % ymd)
 		browse_aux_filename 	= os.path.join(geojsonDir, "..", "%s_small_browse.tif.aux.xml" % ymd)
 		subset_filename 		= os.path.join(geojsonDir, "..", "%s_small_browse.tif" % ymd)
-		osm_bg_image			= os.path.join(geojsonDir, "..", "osm_bg.png")
+		osm_bg_image			= os.path.join(flood_dir, "..", "osm_bg.png")
 		sw_osm_image			= os.path.join(geojsonDir, "..", "%s.%s%02d_thn.jpg" % (name,ym,day))
 
 		x		= -127.25
@@ -324,8 +324,9 @@ class GFMS:
 			dst_ds = None
 		
 		# Supersample it
+		scale = 2
 		if self.force or not os.path.exists(super_fullname):			
-			cmd = "gdalwarp -overwrite -q -tr %f %f -r average %s %s" % (res/10,res/10,output_fullname,super_fullname)
+			cmd = "gdalwarp -overwrite -q -tr %f %f -r mode %s %s" % (res/scale,res/scale,output_fullname,super_fullname)
 			self.execute(cmd)
 		
 		# Create RGB
@@ -389,9 +390,9 @@ class GFMS:
 			self.execute(cmd)
 
 			if verbose:
-				cmd 	= "gzip --keep "+ topojson_fullname
+				cmd 	= "gzip -f --keep "+ topojson_fullname
 			else:
-				cmd 	= "gzip "+ topojson_fullname
+				cmd 	= "gzip -f "+ topojson_fullname
 				
 			self.execute(cmd)
 
@@ -403,6 +404,9 @@ class GFMS:
 		#	#cmd 	= "cd %s; tar -cvzf %s shp" %(mydir, shp_gz_file)
 		#	cmd 	= "cd %s; zip %s shp/*" %(mydir, shp_zip_file)
 		#	self.execute(cmd)
+
+		if not os.path.exists(osm_bg_image):
+			wms(y, x, -y, 180, osm_bg_image)
 			
 		if self.force or not os.path.exists(sw_osm_image):
 			MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, levels, hexColors, force, verbose, zoom=2)
@@ -411,7 +415,7 @@ class GFMS:
 		CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 
 		if not self.verbose:
-			cmd = "rm -rf %s %s %s %s %s %s %s %s %s %s" % ( browse_filename, input_fullname, subset_filename, super_fullname, output_rgb_fullname, osm_bg_image, browse_aux_filename, levelsDir, geojsonDir, shpDir )
+			cmd = "rm -rf %s %s %s %s %s %s %s %s %s" % ( browse_filename, input_fullname, subset_filename, super_fullname, output_rgb_fullname, browse_aux_filename, levelsDir, geojsonDir, shpDir )
 			print cmd
 			self.execute(cmd)
 			

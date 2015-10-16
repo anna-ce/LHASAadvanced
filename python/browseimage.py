@@ -110,6 +110,30 @@ def tilenum2deg(xtile, ytile, zoom):
 # Various way to generate a background image
 #
 
+def wms(ullat, ullon, lrlat, lrlon, osm_bg_image):
+	width		= lrlon - ullon
+	height		= ullat - lrlat
+	
+	# height/width has to be > 280
+	minDim 	= min(width, height)
+	ratio	=  280.0 / minDim
+	width	= width * ratio
+	height	= height * ratio
+	
+	#"http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX=-127.25,-50,180,50&WIDTH=922&HEIGHT=300"
+	#"http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX=-127.25,-50,180,50&WIDTH=614&HEIGHT=200"
+
+	url 		= str.format("http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX={0},{1},{2},{3}&WIDTH={4}&HEIGHT={5}",ullon,lrlat,lrlon,ullat,int(width),int(height))
+	
+	if verbose:
+		print "wms url:" , url
+		
+	urllib.urlretrieve(url, osm_bg_image)
+
+	if verbose:
+		print "created:" , osm_bg_image
+		
+		
 # Using Mabox
 #
 def mapbox_image(centerlat, centerlon, z, rasterXSize, rasterYSize, osm_bg_image):
@@ -262,31 +286,37 @@ def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_o
 	driver 				= gdal.GetDriverByName( "GTiff" )
 	
 	if force or not os.path.isfile(browse_filename):	
-		dst_ds_dataset		= driver.Create( browse_filename, src_ds.RasterXSize, src_ds.RasterYSize, 2, gdal.GDT_Byte, [ 'COMPRESS=DEFLATE', 'ALPHA=YES' ] )
-		dst_ds_dataset.SetGeoTransform( geotransform )
-		dst_ds_dataset.SetProjection( projection )
+		dst_ds_dataset	= driver.Create( browse_filename, src_ds.RasterXSize, src_ds.RasterYSize, 2, gdal.GDT_Byte, [ 'COMPRESS=DEFLATE', 'ALPHA=YES' ] )
 
-		firstItem 	= levels.pop()
-		lastItem 	= levels.pop(0)
-		#print "firstItem:", firstItem, lastItem
+		# Levels are in reverse order, higher first
+		# so let's reverse this
+		rlist		= list(reversed(levels))
 		
-		rlist		= reversed(levels)	
-		data[data < firstItem]								= 0
-		idx 		= -1
-		l			= firstItem
+		firstItem 	= rlist.pop(0)
+		lastItem 	= rlist.pop()
+		
+		if verbose:
+			print "data <", firstItem, "= 0"
+		
+		data[data < firstItem]	= 0
+		idx 					= -1
+		l						= firstItem
 		
 		for idx, l in enumerate(rlist):
-			data[numpy.logical_and(data>firstItem, data<=l)]= idx+1
+			if verbose:
+				print "data >", firstItem, " and data <=", l, "=", idx+1
+			
+			data[numpy.logical_and(data>=firstItem, data<l)]= idx+1
 			firstItem = l
 			
 		idx += 2
 
+		if verbose:
+			print "data >", l, " and data <", lastItem, "=", idx
+			print "data >=", lastItem, "=", idx+1
+
 		data[numpy.logical_and(data>=l, data<lastItem)]		= idx
 		data[data>=lastItem]								= idx+1
-	
-		dst_ds_dataset.SetGeoTransform( geotransform )
-			
-		dst_ds_dataset.SetProjection( projection )
 		
 		o_band		 		= dst_ds_dataset.GetRasterBand(1)
 		o_band.WriteArray(data.astype('i1'), 0, 0)
@@ -301,12 +331,18 @@ def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_o
 		for i in range(256):
 			ct.SetColorEntry( i, (0, 0, 0, 0) )
 		
+		decColors 	= list(reversed(decColors))
 		for idx,d in enumerate(decColors):
-			#print "SetColorEntry", idx+1, decColors[idx]
 			ct.SetColorEntry( idx+1, decColors[idx] )
-		
+			print "Set BrowseImage ColorEntry", idx+1, decColors[idx]
+	
+		print "SetRasterColorTable"
 		o_band.SetRasterColorTable(ct)
 		o_band.SetNoDataValue(0)
+		
+		print "Set proj/transfor"
+		dst_ds_dataset.SetGeoTransform( geotransform )
+		dst_ds_dataset.SetProjection( projection )
 		
 		dst_ds_dataset 	= None
 
@@ -321,47 +357,55 @@ def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_o
 	if verbose:
 		print "center target", centerlon, centerlat, zoom
 		
-	# Check raster size - thumbnail should be about 512x512 or more
+	# Check raster size - thumbnail should be about width > 280 or more
 	minDim 	= min(src_ds.RasterXSize, src_ds.RasterYSize)
-	ratio	= 512.0 / minDim
+	ratio	=  280.0 / minDim
+
 	if ratio >= 1:
 		ratio = round(ratio)+1	# round up
+
 	
 	rasterXSize = int(src_ds.RasterXSize*ratio)
 	rasterYSize = int(src_ds.RasterYSize*ratio)
 	
 	if verbose:
-		print "** Adjust", src_ds.RasterXSize, src_ds.RasterYSize, minDim, ratio, rasterXSize, rasterYSize, zoom, bbox
+		print "** Adjust", src_ds.RasterXSize, src_ds.RasterYSize, ratio, minDim, rasterXSize, rasterYSize, zoom, bbox
 		
-	if len(bbox) == 0:
-		if force or not os.path.isfile(osm_bg_image):
-			print "** not", osm_bg_image
-			mapbox_image(centerlat, centerlon, zoom, rasterXSize, rasterYSize, osm_bg_image)
-		else:
-			print "found", osm_bg_image
+	#if len(bbox) == 0:
+	#	if force or not os.path.isfile(osm_bg_image):
+	#		print "** not", osm_bg_image
+	#		mapbox_image(centerlat, centerlon, zoom, rasterXSize, rasterYSize, osm_bg_image)
+	#	else:
+	#		print "found", osm_bg_image
 			
-		ullon, ullat, lrlon, lrlat = Gen_bbox(centerlat, centerlon, zoom, rasterXSize, rasterYSize)
+	#	ullon, ullat, lrlon, lrlat = Gen_bbox(centerlat, centerlon, zoom, rasterXSize, rasterYSize)
 	
-	else:
-		ullon = bbox[0]
-		ullat = bbox[1]
-		lrlon = bbox[2]
-		lrlat = bbox[3]
+	#else:
+	#	ullon = bbox[0]
+	#	ullat = bbox[1]
+	#	lrlon = bbox[2]
+	#	lrlat = bbox[3]
 
+	ullon = xorg
+	ullat = yorg
+	lrlon = xmax
+	lrlat = ymax
+	
 	if verbose:
 		print "mapbbox coords", ullon, ullat, lrlon, lrlat
 		
 	if force or not os.path.isfile(subset_filename):	
 		ofStr 				= ' -of GTiff '
 		bbStr 				= ' -te %s %s %s %s '%(ullon, lrlat, lrlon, ullat) 
+		#bbStr				= ' '
 		#resStr 			= ' -tr %s %s '%(pres, pres)
-		resStr = ' '
+		resStr 				= ' -r mode '
 		projectionStr 		= ' -t_srs EPSG:4326 '
 		overwriteStr 		= ' -overwrite ' # Overwrite output if it exists
 		additionalOptions 	= ' -co COMPRESS=DEFLATE -setci  ' # Additional options
 		wh 					= ' -ts %d %d  ' % ( rasterXSize, rasterYSize )
-		warpOptions 	= ofStr + bbStr + projectionStr + resStr + overwriteStr + additionalOptions + wh
-		warpCMD = 'gdalwarp -q ' + warpOptions + browse_filename + ' ' + subset_filename
+		warpOptions 		= ofStr + bbStr + projectionStr + resStr + overwriteStr + additionalOptions + wh
+		warpCMD 			= 'gdalwarp -q ' + warpOptions + browse_filename + ' ' + subset_filename
 		execute(warpCMD)
 	
 	

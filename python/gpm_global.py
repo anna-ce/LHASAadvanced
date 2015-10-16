@@ -282,7 +282,7 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 		cmd 	= "topojson --no-stitch-poles --bbox -p precip -o "+ topojson_filename + " " + merge_filename + quiet
 		execute(cmd)
 
-		cmd 	= "gzip --keep "+ topojson_filename
+		cmd 	= "gzip -f --keep "+ topojson_filename
 		execute(cmd)
 	
 	# Convert to shapefile		

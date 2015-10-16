@@ -62,7 +62,14 @@ module.exports = {
 			}
 		})
 	},
-	
+	gfms: function(req, res ) {
+		res.render("test/gfms.ejs", { 
+			layout: false,
+			token: process.env.MAPBOX_PUBLIC_TOKEN,
+			latitude: 30,
+			longitude: 70
+		 })	
+	},
 	gpm3: function(req, res) {
 		res.render("test/gpm3.ejs", { layout: false })	
 	},
