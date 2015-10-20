@@ -352,7 +352,7 @@ class GFMS:
 		#	cmd = "gzip --keep %s" % (topojson_fullname)
 		#	self.execute(cmd)
 		
-		levels 			= [ 200, 		100, 		50, 		20, 		10, 		5]
+		levels 			= [ 200, 		100, 		50, 		20, 		10, 		1]
 		hexColors 		= [ "#FF0000",  "#FFA500", "#FFD700", 	"#0000FF", "#00BFFF", 	"#00FF00" ]
 		
 		ds 				= gdal.Open( super_fullname )

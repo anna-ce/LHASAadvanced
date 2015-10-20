@@ -17,7 +17,7 @@ from dateutil.parser import parse
 
 import json
 
-from browseimage import MakeBrowseImage 
+from browseimage import MakeBrowseImage, wms
 from s3 import CopyToS3
 from level import CreateLevel
 
@@ -109,7 +109,7 @@ def build_tif(dx, region, dir, date):
 	
 	color_file							= "./cluts/landslide_colors.txt"
 	
-	shp_file 							= os.path.join(config.data_dir,"landslide_nowcast", dx, ymd, "landslide_nowcast.%s.shp" % (ymd))
+	#shp_file 							= os.path.join(config.data_dir,"landslide_nowcast", dx, ymd, "landslide_nowcast.%s.shp" % (ymd))
 	geojson_file 						= os.path.join(config.data_dir,"landslide_nowcast", dx, ymd, "landslide_nowcast.%s.geojson" % (ymd))
 	
 	topojson_file						= os.path.join(config.data_dir,"landslide_nowcast", dx, ymd, "landslide_nowcast.%s.topojson" % (ymd))
@@ -249,13 +249,27 @@ def build_tif(dx, region, dir, date):
 		step_8_4 = numpy.logical_and(smap_data, step_8_3)
 		if verbose:
 			save_tiff(dx, step_8_4, "step_8_4", smap_ds)
-			
+
+		# From Thomas
+		rr_v_high = numpy.zeros(shape=(rainfall_nrows,rainfall_ncols))
+		rr_v_high[rainfall_data > limit_vhigh_data] = 1
+
+		# Run high-hazard nowcast
+		step_8_5 = numpy.logical_and(smap_data, rr_v_high)
+		if verbose:
+			save_tiff(dx, step_8_5, "step_8_5", smap_ds)
+
+		# Merge high and moderate hazard layers
+		step_8_6 = numpy.add(step_8_5, step_8_4)
+		if verbose:
+			save_tiff(dx, step_8_6, "step_8_6", smap_ds)
+		
 		# Write the file
 		driver 			= gdal.GetDriverByName("GTiff")
 		cur_ds 			= driver.Create(forecast_landslide_bin, smap_ncols, smap_nrows, 1, gdal.GDT_Byte)
 		outband 		= cur_ds.GetRasterBand(1)
 		
-		outband.WriteArray(step_8_4, 0, 0)
+		outband.WriteArray(step_8_6, 0, 0)
 		outband.SetNoDataValue(smap_nodata)
 		
 		cur_ds.SetGeoTransform( geotransform )
@@ -372,18 +386,18 @@ def process(mydir, scene, s3_bucket, s3_folder, zoom):
 	if not os.path.exists(levelsDir):            
 		os.makedirs(levelsDir)
 
-	shpDir	= os.path.join(mydir,"shp")
-	cmd = "rm -rf " + shpDir
-	execute(cmd)
-	os.makedirs(shpDir)
+	#shpDir	= os.path.join(mydir,"shp")
+	#cmd = "rm -rf " + shpDir
+	#execute(cmd)
+	#os.makedirs(shpDir)
 
 	merge_filename 		= os.path.join(geojsonDir, "%s.geojson" % scene)
 	topojson_filename 	= os.path.join(mydir, "%s.topojson" % scene)
 	browse_filename 	= os.path.join(mydir, "%s_browse.tif" % scene)
 	subset_filename 	= os.path.join(mydir, "%s_small_browse.tif" % scene)
-	osm_bg_image		= os.path.join(mydir, "osm_bg.png")
+	osm_bg_image		= os.path.join(mydir, "..", "osm_bg.png")
 	sw_osm_image		= os.path.join(mydir, "%s_thn.jpg" % scene)
-	shapefile_gz		= os.path.join(mydir, "%s.shp.gz" % scene)
+	#shapefile_gz		= os.path.join(mydir, "%s.shp.gz" % scene)
 
 	levels 				= [2,1]
 	
@@ -394,6 +408,15 @@ def process(mydir, scene, s3_bucket, s3_folder, zoom):
 	ds 					= gdal.Open( fullName )
 	band				= ds.GetRasterBand(1)
 	data				= band.ReadAsArray(0, 0, ds.RasterXSize, ds.RasterYSize )
+
+	geotransform		= ds.GetGeoTransform()
+	xorg				= geotransform[0]
+	yorg  				= geotransform[3]
+
+	xmax				= xorg + geotransform[1]* ds.RasterXSize
+	ymax				= yorg + geotransform[5]* ds.RasterYSize
+	
+	#print ymax, xorg, yorg, xmax
 	
 	if force or not os.path.exists(topojson_filename+".gz"):
 		for l in levels:
@@ -434,6 +457,11 @@ def process(mydir, scene, s3_bucket, s3_folder, zoom):
 	#	cmd 	= "cd %s; tar -cvzf %s shp" %(mydir, shapefile_gz)
 	#	execute(cmd)
 	
+	if not os.path.exists(osm_bg_image):
+		print "wms", ymax, xorg, yorg, xmax, osm_bg_image
+		wms(yorg, xorg, ymax, xmax, osm_bg_image)
+	
+	
 	if force or not os.path.exists(sw_osm_image):
 		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image,levels, hexColors, force, verbose, zoom)
 		
@@ -444,11 +472,12 @@ def process(mydir, scene, s3_bucket, s3_folder, zoom):
 	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 		
 	if not verbose:
-		cmd = "rm -f %s %s %s %s %s" %(osm_bg_image, subset_filename, subset_filename+".aux.xml", browse_filename,topojson_filename )
+		cmd = "rm -f %s %s %s %s" %( subset_filename, subset_filename+".aux.xml", browse_filename,topojson_filename )
 		execute(cmd)
 
-		cmd = "rm -rf "+shpDir
-		execute(cmd)
+		#cmd = "rm -rf "+shpDir
+		#execute(cmd)
+		
 		cmd = "rm -rf "+levelsDir
 		execute(cmd)
 		cmd = "rm -rf "+geojsonDir

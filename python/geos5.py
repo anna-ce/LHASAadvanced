@@ -19,7 +19,7 @@ import urllib2
 import config
 import argparse
 
-from browseimage import MakeBrowseImage 
+from browseimage import MakeBrowseImage, wms
 from s3 import CopyToS3
 from level import CreateLevel
 
@@ -88,7 +88,7 @@ def process_file( mydir, filename, s3_bucket, s3_folder):
 	browse_filename 	= os.path.join(geojsonDir, "..", "geos5_precip.%s_browse.tif" % ymd)
 	subset_filename 	= os.path.join(geojsonDir, "..", "geos5_precip.%s_small_browse.tif" % ymd)
 	subset_aux_filename	= os.path.join(geojsonDir, "..", "geos5_precip.%s_small_browse.tif.aux.xml" % ymd)
-	osm_bg_image		= os.path.join(geojsonDir, "..", "osm_bg.png")
+	osm_bg_image		= os.path.join(mydir, "../..", "osm_bg.png")
 	sw_osm_image		= os.path.join(geojsonDir, "..", "geos5_precip.%s_thn.jpg" % ymd)
 	shp_filename 		= os.path.join(mydir, "geos5_precip.%s.shp.gz" % (ymd))
 	json_filename		= os.path.join(geojsonDir, "geos5_precip.%s.json" % (ymd))
@@ -102,8 +102,18 @@ def process_file( mydir, filename, s3_bucket, s3_folder):
 	geotransform		= ds.GetGeoTransform()
 	px					= geotransform[1] / 5
 	py					= geotransform[5] / 5
-	ds					= None
 	
+	xorg				= geotransform[0]
+	yorg  				= geotransform[3]
+
+	xmax				= xorg + geotransform[1]* ds.RasterXSize
+	ymax				= yorg + geotransform[5]* ds.RasterYSize
+	
+	#print ymax, xorg, yorg, xmax
+	
+	ds					= None
+
+
 	# upsample and convolve
 	if force or not os.path.exists(super_subset_file):
 		# we need to have square pixels
@@ -170,7 +180,10 @@ def process_file( mydir, filename, s3_bucket, s3_folder):
 		
 	#	execute(cmd)
 		
-		
+	if not os.path.exists(osm_bg_image):
+		#print "wms", ymax, xorg, yorg, xmax, osm_bg_image
+		wms(90, -180, -90, 180, osm_bg_image)
+	
 	if force or not os.path.exists(sw_osm_image):
 		zoom 	= 1
 		scale 	= 1	
@@ -182,7 +195,7 @@ def process_file( mydir, filename, s3_bucket, s3_folder):
 	CopyToS3( s3_bucket, s3_folder, file_list, 1, 1 )
 	
 	if not verbose: # Cleanup
-		cmd = "rm -rf %s %s %s %s %s %s %s %s %s %s" % ( merge_filename, browse_filename, topojson_filename, subset_filename, super_subset_file, osm_bg_image, subset_aux_filename, geojsonDir, levelsDir, shpDir)
+		cmd = "rm -rf %s %s %s %s %s %s %s %s %s" % ( merge_filename, browse_filename, topojson_filename, subset_filename, super_subset_file, subset_aux_filename, geojsonDir, levelsDir, shpDir)
 		execute(cmd)
 		
 # ======================================================================

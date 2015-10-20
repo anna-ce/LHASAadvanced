@@ -373,22 +373,6 @@
             },
             "legend": "7d Quakes"
         },
-        "flood_nowcast": {
-            "title": "Flood Nowcast",
-            "credits": "University of Maryland",
-            "source": {
-                "label": "Source",
-                "source": "University of Maryland GFMS"
-            },
-            "legend": {
-                "5mm": "5mm",
-                "10mm": "10mm",
-                "20mm": "20mm",
-                "50mm": "50mm",
-                "100mm": "100mm",
-                "200mm": "200mm"
-            }
-        },
         "flood_forecast": {
             "title": "Flood Forecast",
             "credits": "University of Oklahoma",
@@ -693,6 +677,7 @@
             },
             "flood_14km": "Flood Nowcast 1/8 deg",
             "legend": {
+                "1mm": "1mm",
                 "5mm": "5mm",
                 "10mm": "10mm",
                 "20mm": "20mm",

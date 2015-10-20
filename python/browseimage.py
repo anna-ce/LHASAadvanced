@@ -125,8 +125,8 @@ def wms(ullat, ullon, lrlat, lrlon, osm_bg_image):
 
 	url 		= str.format("http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX={0},{1},{2},{3}&WIDTH={4}&HEIGHT={5}",ullon,lrlat,lrlon,ullat,int(width),int(height))
 	
-	if verbose:
-		print "wms url:" , url
+	#if verbose:
+	print "wms url:" , url
 		
 	urllib.urlretrieve(url, osm_bg_image)
 
