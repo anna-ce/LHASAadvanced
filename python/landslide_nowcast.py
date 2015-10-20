@@ -42,7 +42,8 @@ def save_tiff(dx, data, fname, ds):
 	band.WriteArray(data, 0, 0)
 	ct = gdal.ColorTable()
 	ct.SetColorEntry( 0, (0, 0, 0, 0) )
-	ct.SetColorEntry( 1, (255, 0, 0, 255) )
+	ct.SetColorEntry( 1, (255, 255, 0, 255) )
+	ct.SetColorEntry( 2, (255, 0, 0, 255) )
 	ct.SetColorEntry( 127, (255, 255, 0, 255) )
 	band.SetRasterColorTable(ct)
 	
@@ -260,7 +261,10 @@ def build_tif(dx, region, dir, date):
 			save_tiff(dx, step_8_5, "step_8_5", smap_ds)
 
 		# Merge high and moderate hazard layers
-		step_8_6 = numpy.add(step_8_5, step_8_4)
+		step_8_6 = numpy.zeros(shape=(rainfall_nrows,rainfall_ncols))
+		step_8_6[step_8_4>0]=1
+		step_8_6[numpy.logical_and(step_8_4, step_8_5) ]=2
+		
 		if verbose:
 			save_tiff(dx, step_8_6, "step_8_6", smap_ds)
 		
