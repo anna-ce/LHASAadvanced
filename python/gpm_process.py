@@ -99,7 +99,7 @@ def process(gpm_dir, gis_file_day, regionName, region, s3_bucket, s3_folder, ymd
 	sw_osm_image		= os.path.join(geojsonDir, "..", "gpm_24.%s_thn.jpg" % ymd)
 
 
-	levels 				= [144, 89, 55, 34, 21, 13, 8, 5, 3, 2, 1]
+	levels 				= [377, 233, 144, 89, 55, 34, 21, 13, 8, 5, 3]
 	
 	# From http://colorbrewer2.org/
 	hexColors 			= [ "#f7fcf0","#e0f3db","#ccebc5","#a8ddb5","#7bccc4","#4eb3d3","#2b8cbe","#0868ac","#084081","#810F7C","#4D004A" ]

@@ -25,7 +25,7 @@ function ReadFile( filename) {
 	return json
 }
 
-var levels 	= [1,2,3,5,8,13,21,34,55,89,144]
+var levels 	= [3,5,8,13,21,34,55,89,144,233,344]
 var files 	= []
 	
 for( var l in levels) {
