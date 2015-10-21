@@ -103,6 +103,19 @@
             "ojobot":       "http://ojo-bot.herokuapp.com",
             "ojobot-dev":   "http://localhost:7465",
             "susmap":       "cappelaere.kj6mvx6r"
+        },
+        "d10": {
+            "name":		    "Rio2016",
+            "bbox":         [-45.172, -24.907, -41.172,  -20.907],
+            "target":       [-43.172,-22.907],
+            "min_zoom":     9,
+            "max_zoom":	    18,
+            "map_id":       "cappelaere.map-q4hdwmh3",
+            "bucket":       "ojo-d10",
+            "ojotiler":     "http://ojo-tiler.herokuapp.com",
+            "ojobot":       "http://ojo-bot.herokuapp.com",
+            "ojobot-dev":   "http://localhost:7465",
+            "susmap":       "cappelaere.kj6mvx6r"
         }
     },
 	

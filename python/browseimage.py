@@ -114,6 +114,12 @@ def wms(ullat, ullon, lrlat, lrlon, osm_bg_image):
 	width		= lrlon - ullon
 	height		= ullat - lrlat
 	
+	if width < 0:
+		width = -width
+		
+	if height < 0:
+		height = -height
+		
 	# height/width has to be > 280
 	minDim 	= min(width, height)
 	ratio	=  280.0 / minDim
@@ -123,7 +129,7 @@ def wms(ullat, ullon, lrlat, lrlon, osm_bg_image):
 	#"http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX=-127.25,-50,180,50&WIDTH=922&HEIGHT=300"
 	#"http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX=-127.25,-50,180,50&WIDTH=614&HEIGHT=200"
 
-	url 		= str.format("http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX={0},{1},{2},{3}&WIDTH={4}&HEIGHT={5}",ullon,lrlat,lrlon,ullat,int(width),int(height))
+	url 	= str.format("http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX={0},{1},{2},{3}&WIDTH={4}&HEIGHT={5}",ullon,lrlat,lrlon,ullat,int(width),int(height))
 	
 	#if verbose:
 	print "wms url:" , url

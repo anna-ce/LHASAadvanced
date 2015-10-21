@@ -10,7 +10,7 @@ from osgeo import osr, gdal
 from ftplib import FTP
 from datetime import date, datetime, timedelta
 from dateutil.parser import parse
-
+from browseimage import wms
 from pytrmm import TRMM3B42RTFile
 from s3 import CopyToS3
 
@@ -62,6 +62,7 @@ class TRMM:
 		self.trmm_d07_dir		=  os.path.join(config.data_dir,"trmm","d07", self.ymd)
 		self.trmm_d08_dir		=  os.path.join(config.data_dir,"trmm","d08", self.ymd)
 		self.trmm_d09_dir		=  os.path.join(config.data_dir,"trmm","d09", self.ymd)
+		self.trmm_d10_dir		=  os.path.join(config.data_dir,"trmm","d10", self.ymd)
 		self.trmm_global_dir	=  os.path.join(config.data_dir,"trmm","global", self.ymd)
 
 		self.trmm_dir			=  os.path.join(config.data_dir,"trmm", self.ymd)
@@ -174,7 +175,14 @@ class TRMM:
 			cmd = "gdaldem color-relief -q -alpha -of GTiff %s %s %s" % ( resampled_file, self.color_file, resampled_rgb_file)
 			self.execute(cmd)
 	
-	def process_trmm_region_thumbnail(self, rgb_subset_file, thn_width, thn_height, static_file,  thumbnail_file):
+	def process_trmm_region_thumbnail(self, dx, rgb_subset_file, thn_width, thn_height, static_file,  thumbnail_file):
+		if not os.path.exists(static_file):
+			region = config.regions[dx]
+			print region
+			bbox = region['bbox']
+			print "wms", bbox[1], bbox[0], bbox[3], bbox[2]
+			wms(bbox[3], bbox[0], bbox[1], bbox[2], static_file)
+			
 		tmp_file = thumbnail_file + ".tmp.tif"
 		if force or not os.path.exists(thumbnail_file):
 			cmd="gdalwarp -overwrite -q -multi -ts %d %d -r cubicspline -co COMPRESS=LZW %s %s" % (thn_width, thn_height, rgb_subset_file, tmp_file )
@@ -345,7 +353,7 @@ class TRMM:
 			self.process_trmm_region_upsample(pixelsize, bbox, self.output_file_180, resampled_file, resampled_rgb_file)
 		
 		if force or not os.path.exists(thumbnail_file):
-			self.process_trmm_region_thumbnail( rgb_subset_file, thn_width, thn_height, static_file,  thumbnail_file)
+			self.process_trmm_region_thumbnail( dx, rgb_subset_file, thn_width, thn_height, static_file,  thumbnail_file)
 		
 		if force or not os.path.exists(topojson_gz_file):
 			self.process_trmm_region_topojson( dx, subset_file, supersampled_file, supersampled_rgb_file, pixelsize, bbox, shp_file, geojson_file, topojson_file, topojson_gz_file )
@@ -413,6 +421,9 @@ class TRMM:
 
 		if not os.path.exists(self.trmm_d09_dir):
 		    os.makedirs(self.trmm_d09_dir)
+
+		if not os.path.exists(self.trmm_d10_dir):
+		    os.makedirs(self.trmm_d10_dir)
 
 		if not os.path.exists(self.trmm_global_dir):
 		    os.makedirs(self.trmm_global_dir)

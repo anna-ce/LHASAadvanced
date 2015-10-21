@@ -16,6 +16,7 @@ from ftplib import FTP
 from datetime import date
 import warnings
 from gzip import GzipFile
+from browseimage import wms
 
 from datetime import date
 from dateutil.parser import parse
@@ -57,6 +58,8 @@ def get_latest_mcd45_file(mydir, regionName, year):
 	if regionName == 'd08':
 		path		= "Collection51/TIFF/Win18/%s"%(year)		# 
 	if regionName == 'd09':
+		path		= "Collection51/TIFF/Win05/%s"%(year)		# 
+	if regionName == 'd10':
 		path		= "Collection51/TIFF/Win05/%s"%(year)		# 
 		
 	#print("cwd to "+path)
@@ -181,6 +184,9 @@ def process_mcd45_file(mydir, dx, file_name, s3_bucket, s3_folder):
 	levels 		= [365, 0]
 	hexColors 	= [ "#990066", "#ff0000"]
 
+	if not os.path.exists(osm_bg_image):
+		wms(yorg, xorg, ymax, xmax, osm_bg_image)
+		
 	if force or not os.path.exists(sw_osm_image):
 		MakeBrowseImage(ds, browse_filename, small_browse_filename, osm_bg_image, sw_osm_image, levels, hexColors, force, verbose, zoom)
 

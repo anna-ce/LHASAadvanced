@@ -11,6 +11,7 @@ from osgeo import gdal
 import numpy
 import json
 from ftplib import FTP
+from browseimage import MakeBrowseImage, wms
 
 import config
 
@@ -23,8 +24,6 @@ force 		= 0
 ftp_site 	= "jsimpson.pps.eosdis.nasa.gov"
 path	 	= "pub/merged/3B42RT/"
 gis_path 	= "NRTPUB/imerg/gis/"
-
-def MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, adjusted_levels, hexColors, force, verbose, zoom):
 	
 
 def execute( cmd ):
@@ -66,18 +65,23 @@ def get_daily_gpm_files(trmm_gis_files, mydir, year, month):
 				ftp.close();
 				sys.exit(-2)
 
-	ftp.close()
+	ftp.close()			
 			
-def process(gpm_dir, gis_file_day, regionName, region, s3_bucket, s3_folder, ymd ):
+def process(gpm_dir, name, gis_file_day, ymd, regionName, region, s3_bucket, s3_folder ):
+	
 	# subset the file for that region
 	bbox		= region['bbox']
 	gis_file	= os.path.join(gpm_dir, gis_file_day)
 	
+	if not os.path.exists(gis_file):
+		print "gis file does not exist", gis_file
+		sys.exit(-1)
+		
 	region_dir	= os.path.join(gpm_dir,regionName)
 	if not os.path.exists(region_dir):            
 		os.makedirs(region_dir)
 	
-	subset_file	= os.path.join(region_dir, "gpm_24.%s.tif" % ymd)
+	subset_file	= os.path.join(region_dir, "%s.%s.tif" % (name,ymd))
 	
 	if force or not os.path.exists(subset_file):
 		cmd = "gdalwarp -overwrite -q -te %f %f %f %f %s %s" % (bbox[0], bbox[1], bbox[2], bbox[3], gis_file, subset_file)
@@ -91,13 +95,12 @@ def process(gpm_dir, gis_file_day, regionName, region, s3_bucket, s3_folder, ymd
 	if not os.path.exists(levelsDir):            
 		os.makedirs(levelsDir)
 
-	merge_filename 		= os.path.join(geojsonDir, "gpm_24.%s.geojson" % ymd)
-	topojson_filename 	= os.path.join(geojsonDir, "..", "gpm_24.%s.topojson" % ymd)
-	browse_filename 	= os.path.join(geojsonDir, "..", "gpm_24.%s_browse.tif" % ymd)
-	subset_filename 	= os.path.join(geojsonDir, "..", "gpm_24.%s_small_browse.tif" % ymd)
+	merge_filename 		= os.path.join(geojsonDir, "%s.%s.geojson" % (name,ymd))
+	topojson_filename 	= os.path.join(geojsonDir, "..", "%s.%s.topojson" % (name,ymd))
+	browse_filename 	= os.path.join(geojsonDir, "..", "%s.%s_browse.tif" % (name,ymd))
+	subset_filename 	= os.path.join(geojsonDir, "..", "%s.%s_small_browse.tif" % (name,ymd))
 	osm_bg_image		= os.path.join(geojsonDir, "..", "osm_bg.png")
-	sw_osm_image		= os.path.join(geojsonDir, "..", "gpm_24.%s_thn.jpg" % ymd)
-
+	sw_osm_image		= os.path.join(geojsonDir, "..", "%s.%s_thn.jpg" % (name,ymd))
 
 	levels 				= [377, 233, 144, 89, 55, 34, 21, 13, 8, 5, 3]
 	
@@ -107,18 +110,25 @@ def process(gpm_dir, gis_file_day, regionName, region, s3_bucket, s3_folder, ymd
 	ds 					= gdal.Open( subset_file )
 	band				= ds.GetRasterBand(1)
 	data				= band.ReadAsArray(0, 0, ds.RasterXSize, ds.RasterYSize )
-
+	
+	geotransform 		= ds.GetGeoTransform()
+	xorg				= geotransform[0]
+	yorg  				= geotransform[3]
+	pres				= geotransform[1]
+	xmax				= xorg + geotransform[1]* ds.RasterXSize
+	ymax				= yorg - geotransform[1]* ds.RasterYSize
+	
 	data /= 10			# back to mm
 	
 	if force or not os.path.exists(topojson_filename+".gz"):
 		for l in levels:
 			fileName 		= os.path.join(levelsDir, ymd+"_level_%d.tif"%l)
-			CreateLevel(l, geojsonDir, fileName, ds, data, "daily_precipitation", force, verbose)
+			CreateLevel(l, geojsonDir, fileName, ds, data, "precip", force, verbose)
 	
 		jsonDict = dict(type='FeatureCollection', features=[])
 	
 		for l in reversed(levels):
-			fileName 		= os.path.join(geojsonDir, "daily_precipitation_level_%d.geojson"%l)
+			fileName 		= os.path.join(geojsonDir, "precip_level_%d.geojson"%l)
 			if os.path.exists(fileName):
 				print "merge", fileName
 				with open(fileName) as data_file:    
@@ -140,8 +150,15 @@ def process(gpm_dir, gis_file_day, regionName, region, s3_bucket, s3_folder, ymd
 		execute(cmd)
 		
 	# problem is that we need to scale it or adjust the levels for coloring (easier)
-	adjusted_levels 				= [1440, 890, 550, 340, 210, 130, 80, 50, 30, 20, 10]
+	adjusted_levels 				= [3770, 2330, 1440, 890, 550, 340, 210, 130, 80, 50, 30]
 	zoom = region['thn_zoom']
+	
+	if not os.path.exists(osm_bg_image):
+		ullat = yorg
+		ullon = xorg
+		lrlat = ymax
+		lrlon = xmax
+		wms(ullat, ullon, lrlat, lrlon, osm_bg_image)
 	
 	if force or not os.path.exists(sw_osm_image):
 		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, adjusted_levels, hexColors, force, verbose, zoom)
@@ -187,21 +204,37 @@ if __name__ == '__main__':
 	doy			= today.strftime('%j')
 	ymd 		= "%d%02d%02d" % (year, month, day)		
 
-	gpm_dir	= os.path.join(config.data_dir, "gpm_24", str(year),doy)
+	gpm_dir	= os.path.join(config.data_dir, "gpm", str(year),doy)
 	if not os.path.exists(gpm_dir):
 	    os.makedirs(gpm_dir)
 	
 	region		= config.regions[regionName]
 	assert(region)
 	
-	s3_folder	= os.path.join("gpm_24", str(year), doy)
+	s3_folder	= os.path.join("gpm", str(year), doy)
 	s3_bucket	= region['bucket']
 	
 	gis_file_day		= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.1day.tif"%(year, month, day)
 	gis_file_day_tfw 	= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.1day.tfw"%(year, month, day)
+
+	gis_file_3day		= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.3day.tif"%(year, month, day)
+	gis_file_3day_tfw 	= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.3day.tfw"%(year, month, day)
+
+	gis_file_7day		= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.7day.tif"%(year, month, day)
+	gis_file_7day_tfw 	= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.7day.tfw"%(year, month, day)
 	
 	print gis_file_day
-	if force or not os.path.exists(os.path.join(gpm_dir,gis_file_day)):
-		get_daily_gpm_files([gis_file_day, gis_file_day_tfw], gpm_dir, year, month)
+	files 				= [
+		gis_file_day, gis_file_day_tfw, 
+		gis_file_3day, gis_file_3day_tfw, 
+		gis_file_7day, gis_file_7day_tfw
+	]
 	
-	process(gpm_dir, gis_file_day, regionName, region, s3_bucket, s3_folder, ymd)
+	if force or not os.path.exists(os.path.join(gpm_dir,gis_file_day)):
+		get_daily_gpm_files(files, gpm_dir, year, month)
+		
+	process(gpm_dir, "gpm_1d", gis_file_day, ymd, regionName, region, s3_bucket, s3_folder)
+	
+	#process(gpm_dir, "gpm_3d", gis_file_3day, ymd)
+	#process(gpm_dir, "gpm_7d", gis_file_7day, ymd)
+

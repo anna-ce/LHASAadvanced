@@ -197,6 +197,20 @@ regions		= {
 		'bucket':		"ojo-d9",
 		'thn_zoom': 	5,
 		'tiles-zoom':    "6-14"
+	},
+	'd10': {
+		'name':			"Rio2016",
+		'bbox': 		[-45.172, -24.907, -41.172,  -20.907],
+		'centerlat':	-22.907,
+		'centerlon':	-43.172,  
+		'pixelsize':	0.008333333333330,
+		'columns': 		1523,
+		'rows': 		2198,
+		'thn_width':	280,
+		'thn_height':	280,
+		'bucket':		"ojo-d10",
+		'thn_zoom': 	8,
+		'tiles-zoom':    "8-18"
 	}
 }
 

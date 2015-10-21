@@ -462,8 +462,13 @@ def process(mydir, scene, s3_bucket, s3_folder, zoom):
 	#	execute(cmd)
 	
 	if not os.path.exists(osm_bg_image):
-		print "wms", ymax, xorg, yorg, xmax, osm_bg_image
-		wms(yorg, xorg, ymax, xmax, osm_bg_image)
+		ullat = bbox[3]
+		ullon = bbox[0]
+		lrlat = bbox[1]
+		lrlon = bbox[2]
+		
+		print "wms", ullat, ullon, lrlat, lrlon
+		wms(ullat, ullon, lrlat, lrlon, osm_bg_image)
 	
 	
 	if force or not os.path.exists(sw_osm_image):

@@ -149,16 +149,19 @@ if __name__ == '__main__':
 	ydt2				= dayAfterYesterday.strftime("%Y-%m-%d")
 	
 	regions 			= ["d02", "d03", "d08", "d09"]
+	regions2 			= ["d02", "d03", "d08", "d09", "d10"]
 	
 	if 1:
-		process_script('trmm_process.py', ydt, regions)
+		process_script('trmm_process.py', ydt, regions2)
+		process_script('gpm_process.py', ydt2, regions2)
+
 		#get_daily_forecast()
 		#get_flood_nowcast()
 		
 		process_script('landslide_nowcast.py', dt, regions)
-		process_script('modis-active-fires.py', ydt, regions)
-		process_script('modis-burnedareas.py', ydt, regions)
-		process_script('quake.py', ydt, regions)
+		process_script('modis-active-fires.py', ydt, regions2)
+		process_script('modis-burnedareas.py', ydt, regions2)
+		process_script('quake.py', ydt, regions2)
 		
 		process_global_script('gfms_vectorizer.py', ydt)
 		process_global_script('gpm_global.py', ydt2)

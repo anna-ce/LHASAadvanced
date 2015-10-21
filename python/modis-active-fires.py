@@ -34,6 +34,7 @@ active_fires_urls = {
 	"d02": "https://firms.modaps.eosdis.nasa.gov/active_fire/text/Central_America_24h.csv",
 	"d03": "https://firms.modaps.eosdis.nasa.gov/active_fire/text/Central_America_24h.csv",
 	"d09": "https://firms.modaps.eosdis.nasa.gov/active_fire/text/South_America_24h.csv",
+	"d10": "https://firms.modaps.eosdis.nasa.gov/active_fire/text/South_America_24h.csv",
 	"d04": "https://firms.modaps.eosdis.nasa.gov/active_fire/text/Southern_Africa_24h.csv",
 	"d07": "https://firms.modaps.eosdis.nasa.gov/active_fire/text/South_Asia_24h.csv",
 	"d08": "https://firms.modaps.eosdis.nasa.gov/active_fire/text/South_Asia_24h.csv"
