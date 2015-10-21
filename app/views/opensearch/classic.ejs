@@ -745,6 +745,8 @@
 		var topojson_url 	= undefined;
 		var mapinfos		= undefined
 		var id				= result['@id']
+		var displayName		= result['displayName']
+		
 		console.log("processDroppedResult", id)
 		
 		for (var a in actions ) {
@@ -772,7 +774,7 @@
 			}
 		}
 		
-		if(topojson_url) loadData( topojson_url, id, mapinfos );
+		if(topojson_url) loadData( topojson_url, displayName, mapinfos );
 	}
 	
 	function handleDrop(event) {

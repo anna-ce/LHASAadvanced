@@ -472,14 +472,37 @@
                 "5500": 5500
             }
         },
-        "precipitation": {
+        "precipitation_trmm": {
             "title": "Precipitation",
-            "credits": "NASA GPM/TRMM",
+            "credits": "NASA TRMM",
             "source": {
                 "label": "Source",
-                "source": "NASA GSFC GPM/TRMM"
+                "source": "NASA GSFC TRMM IMERG 3B42RT"
             },
             "trmm_24": "1-d Rainfall Accumulation (TRMM)",
+            "legend": {
+                "1mm": "1mm",
+                "2mm": "2mm",
+                "3mm": "3mm",
+                "5mm": "5mm",
+                "8mm": "8mm",
+                "13mm": "13mm",
+                "21mm": "21mm",
+                "34mm": "34mm",
+                "55mm": "55mm",
+                "89mm": "89mm",
+                "144mm": "144mm",
+                "233mm": "233mm",
+                "377mm": "377mm"
+            }
+        },
+        "precipitation_gpm": {
+            "title": "Precipitation",
+            "credits": "NASA GPM IMERG",
+            "source": {
+                "label": "Source",
+                "source": "NASA GSFC GPM"
+            },
             "gpm_1d": "1-d Rainfall Accumulation (GPM)",
             "gpm_3d": "3-d Rainfall Accumulation (GPM)",
             "gpm_7d": "7-d Rainfall Accumulation (GPM)",

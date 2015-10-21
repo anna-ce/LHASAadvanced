@@ -265,7 +265,7 @@ class TRMM:
 			os.makedirs(self.geojsonDir)
 		
 		# precipitation levels in 10th of mm
-		levels = [1,2,3,5,8,13,21,34,55,89,144]
+		levels = [3,5,8,13,21,34,55,89,144,233,344]
 		ct = gdal.ColorTable()
 		for i in range(256):
 			ct.SetColorEntry( i, (255, 255, 255, 255) )
