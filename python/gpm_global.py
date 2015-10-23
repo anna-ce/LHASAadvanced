@@ -231,18 +231,28 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 	
 	sw_osm_image		= os.path.join(geojsonDir, "..", "%s.%s_thn.png" % (name, ymd))
 	tif_image			= os.path.join(geojsonDir, "..", "%s.%s.tif" % (name, ymd))
+	rgb_tif_image		= os.path.join(geojsonDir, "..", "%s.%s.rgb.tif" % (name, ymd))
 
 	geojson_filename 	= os.path.join(geojsonDir, "..", "%s.%s.json" % (name,ymd))
-	shapefile_gz		= os.path.join(geojsonDir, "..", "%s.shp.gz" % name)
-	shp_zip_file		= os.path.join(geojsonDir, "..", "%s.shp.zip" % name)
+	#shapefile_gz		= os.path.join(geojsonDir, "..", "%s.shp.gz" % name)
+	#shp_zip_file		= os.path.join(geojsonDir, "..", "%s.shp.zip" % name)
 
-	levels 				= [377, 233, 144, 89, 55, 34, 21, 13, 8, 5, 3, 2]
+	levels 				= [377, 233, 144, 89, 55, 34, 21, 13, 8, 5, 3]
 		
 	# http://hclwizard.org/hcl-color-scheme/
 	# http://vis4.net/blog/posts/avoid-equidistant-hsv-colors/
 	# from http://tristen.ca/hcl-picker/#/hlc/12/1/241824/55FEFF
 	# Light to dark
-	hexColors 			= [ "#56F6FC","#58DEEE","#5BC6DE","#5EAFCC","#5E99B8","#5D84A3","#596F8D","#535B77","#4A4861","#3F374B","#322737","#241824"]
+	# hexColors 			= [ "#56F6FC","#58DEEE","#5BC6DE","#5EAFCC","#5E99B8","#5D84A3","#596F8D","#535B77","#4A4861","#3F374B","#322737","#241824"]
+	
+	# GPM palette
+	hexColors 			= [ "#f7fcf0","#e0f3db","#ccebc5","#a8ddb5","#7bccc4","#4eb3d3","#2b8cbe","#0868ac","#084081","#810F7C","#4D004A" ]
+	
+	color_file			= os.path.join("cluts", "gpm_colors.txt")
+	if force or (verbose and not os.path.exists(rgb_tif_filename)):	
+		cmd = "gdaldem color-relief -q -alpha -of GTiff %s %s %s" % ( tif_image, color_file, rgb_tif_image)
+		execute(cmd)
+	
 	
 	ds 					= gdal.Open( supersampled_file )
 	band				= ds.GetRasterBand(1)
@@ -296,7 +306,7 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 	#	execute(cmd)
 		
 	# problem is that we need to scale it or adjust the levels for coloring (easier)
-	adjusted_levels 		= [3770, 2330, 1440, 890, 550, 340, 210, 130, 80, 50, 30, 20]
+	adjusted_levels 		= [3770, 2330, 1440, 890, 550, 340, 210, 130, 80, 50, 30]
 	
 	if not os.path.exists(osm_bg_image):
 		print "wms", ymax, xorg, yorg, xmax, osm_bg_image
@@ -304,7 +314,8 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 			
 	zoom = 2
 	if force or not os.path.exists(sw_osm_image):
-		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, adjusted_levels, hexColors, force, verbose, zoom)
+		rColors 	= list(reversed(hexColors))
+		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, adjusted_levels, rColors, force, verbose, zoom)
 	
 	if force or not os.path.exists(tif_image):
 		cmd 				= "gdalwarp -overwrite -q -co COMPRESS=LZW %s %s"%( origFileName, tif_image)

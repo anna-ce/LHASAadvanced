@@ -5,146 +5,164 @@
 # Requirements:
 #	gdal...
 #
-# LandScan
+# Requires 2011 LandScan EPSG:4326
+# cd [ls]/LandScan-2011/ArcGIS/Population
+# gdalwarp lspop2011 -t_srs EPSG:4326 -of GTIFF lspop2011_4326.tif
 #
 
-import os, inspect
+import os, inspect, sys
 import argparse
-import Image, ImageDraw, ImageFont
-import textwrap
 
 from osgeo import gdal
 from osgeo import osr
 from osgeo import ogr
 
-class Landscan:
-	def __init__( self, inpath, ls, force, bbox, target ):
-		self.inpath			= inpath
-		self.ls				= ls
-		self.force			= force
-		self.bbox			= bbox
-		self.target			= target
-		
-		print "landscan target ", self.target
-		
-	def legend(self, heights):
-		template		= os.path.join(self.inpath, "density.png")
-		legend_img 		= os.path.join(self.target,"pop_density_legend.png")
+import config
+import json
+
+from browseimage import MakeBrowseImage, wms
+from s3 import CopyToS3
+from level import CreateLevel
+
+force 		= 0
+verbose 	= 0
+
+BASE_DIR 	= config.LS_DIR
+
+def execute( cmd ):
+	if verbose:
+		print cmd
+	os.system(cmd)
 	
-		font_file   	= "./pilfonts/helvB14.pil"
-		font 			= ImageFont.load(font_file)
+def process(mydir, lsFile, regionName, region, s3_bucket, s3_folder):
+	scene			= regionName
+	subsetFileName	= os.path.join(mydir, "ls.2011_subset.tif")
+	if force or not os.path.exists(subsetFileName):
+		bbox 			= region['bbox']
+		print region['name'], region['bbox']
 		
-		im 				= Image.open(template)
-		draw 			= ImageDraw.Draw(im)
-		
-		text = ""
-		X = 75
-		Y = 90
-		
-		for h in heights:
-			text = "%.1f\n" % (h)
-			draw.text((X, Y), text, (0,0,0), font=font)
-			Y += 47
-		
-		print "saved legend to ", legend_img
-		im.save(legend_img)
-		
-	def density(self):
-		# subset the oringal global file
-		base_img 		= os.path.join(self.target, "outputfile_4326_hand.tif")
-		in_img 			= os.path.join(self.inpath, self.ls)
-		out_img			= os.path.join(self.target, "outputfile_4326_density.tif")
-		dest_img		= os.path.join(self.target, "outputfile_4326_density_rgb.tif")
-		legend			= os.path.join(self.target, "density_legend.png")
-		
-		if self.force or not os.path.isfile(out_img):
-			cmd = "subset.py "+ base_img + " " + in_img + " " + out_img
-			print cmd
-			os.system(cmd)
-		
-		color_txt_file  = os.path.join(self.target, "pop_density.txt")
-		ds = gdal.Open( out_img )
-		if ds is None:
-			print('ERROR: file no data:', src)
-			sys.exit(-1)
+		warpOptions 	= "-q -overwrite -co COMPRESS=DEFLATE -t_srs EPSG:4326 -te %s %s %s %s " % (bbox[0], bbox[1], bbox[2], bbox[3])
+		warpCmd 		= 'gdalwarp ' + warpOptions + lsFile + ' ' + subsetFileName
+		execute( warpCmd )
+		if verbose:
+			print "LS Subset", subsetFileName
 
-		band 				= ds.GetRasterBand(1)
-		self.RasterXSize 	= ds.RasterXSize
-		self.RasterYSize 	= ds.RasterYSize
+	if verbose:
+		print "Processing", subsetFileName
 		
-		(min,max,mean, stddev) = band.GetStatistics(1,1)
-		print 'Min=%.3f, Max=%.3f Mean=%.3f Stdev=%.3f' % (min,max,mean,stddev)
+	geojsonDir	= os.path.join(mydir,"geojson")
+	if not os.path.exists(geojsonDir):            
+		os.makedirs(geojsonDir)
 
-		# generate the color_relief.txt file
-		mid_lower 		= (min  + mean)/2
-		mid_higher 		= (mean + max)/2
-
-		mmid_lower 		= (min+mid_lower)/2
-		mid_lower_m		= (mid_lower+mean)/2
-		mmid_higher 	= (mean+mid_higher)/2
-		mid_higher_m 	= (max+mid_higher)/2
-
-		str =  "%.2f 255 255 229\n" % (min) 
-		str += "%.2f 254 247 188\n" % (mmid_lower)
-		str += "%.2f 254 227 145\n" % (mid_lower)
-		str += "%.2f 254 196 79\n" % (mid_lower_m)
-		str += "%.2f 254 153 41\n" % (mean)
-		str += "%.2f 217 112 20\n" % (mmid_higher)
-		str += "%.2f 204 76 2\n" % (mid_higher)
-		str += "%.2f 153 52 4\n" % (mid_higher_m)
-		str += "%.2f 102 37 6\n" % (max)
+	levelsDir	= os.path.join(mydir,"levels")
+	if not os.path.exists(levelsDir):            
+		os.makedirs(levelsDir)
 	
-		if not os.path.isfile(color_txt_file) or self.force:
-			f = open(color_txt_file, 'w')
-			f.write(str)
-			f.close()
+	merge_filename 		= os.path.join(geojsonDir, "%s_levels.geojson" % scene)
+	
+	topojson_filename 	= os.path.join(geojsonDir, "..", "ls.2011.topojson" )
+	browse_filename 	= os.path.join(geojsonDir, "..", "ls.2011_browse.tif" )
+	subset_filename 	= os.path.join(geojsonDir, "..", "ls.2011_small_browse.tif" )
+	osm_bg_image		= os.path.join(geojsonDir, "..", "osm_bg.png")
+	sw_osm_image		= os.path.join(geojsonDir, "..", "ls.2011_thn.jpg" )
 
-		ds 		= None
-		band 	= None
+	levels 				= [ 5500, 3400, 2100, 1300, 800, 500, 300, 200, 100 ]
+	
+	# From http://colorbrewer2.org/	
+	hexColors 			= [	"#f7f4f9", "#e7e1ef", "#d4b9da", "#c994c7", "#df65b0", "#e7298a", "#ce1256", "#980043", "#67001f"]
+	
+	ds 					= gdal.Open( subsetFileName )
+	band				= ds.GetRasterBand(1)
+	data				= band.ReadAsArray(0, 0, ds.RasterXSize, ds.RasterYSize )
+	
+	if force or not os.path.exists(topojson_filename+".gz"):
+		for l in levels:
+			fileName 		= os.path.join(levelsDir, scene+"_level_%d.tif"%l)
+			CreateLevel(l, geojsonDir, fileName, ds, data, "population", force,verbose)
+	
+		jsonDict = dict(type='FeatureCollection', features=[])
+	
+		for l in reversed(levels):
+			fileName 		= os.path.join(geojsonDir, "population_level_%d.geojson"%l)
+			if os.path.exists(fileName):
+				print "merge", fileName
+				with open(fileName) as data_file:    
+					data = json.load(data_file)
+		
+				if 'features' in data:
+					for f in data['features']:
+						jsonDict['features'].append(f)
+	
 
-		if not os.path.isfile(dest_img) or self.force:
-			cmd ="gdaldem color-relief -co COMPRESS=DEFLATE -nearest_color_entry " + out_img + " " + color_txt_file + " " + dest_img
-			print cmd
-			err = os.system(cmd)
-			if err != 0:
-				print('ERROR: color_relief file could not be generated:', err)
-				sys.exit(-1)
+		with open(merge_filename, 'w') as outfile:
+		    json.dump(jsonDict, outfile)	
 
-		if not os.path.isfile(legend) or self.force:
-			self.legend( [min, mmid_lower, mid_lower, mid_lower_m, mean, mmid_higher, mid_higher, mid_higher_m, max])
+		# Convert to topojson
+		cmd 	= "topojson -p -o "+ topojson_filename + " " + merge_filename
+		execute(cmd)
+
+		cmd 	= "gzip --keep "+ topojson_filename
+		execute(cmd)
+
+	if not os.path.exists(osm_bg_image):
+		geotransform		= ds.GetGeoTransform()
+		xorg				= geotransform[0]
+		yorg  				= geotransform[3]
+
+		xmax				= xorg + geotransform[1]* ds.RasterXSize
+		ymax				= yorg + geotransform[5]* ds.RasterYSize
+		ullat				= yorg
+		ullon 				= xorg
+		lrlat 				= ymax
+		lrlon 				= xmax
+		
+		print "wms", ullat, ullon, lrlat, lrlon
+		wms(ullat, ullon, lrlat, lrlon, osm_bg_image)
+		
+	if force or not os.path.exists(sw_osm_image):
+		zoom = region['thn_zoom']
+		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image,levels, hexColors, force, verbose, zoom)
+		
+	ds = None
+	
+	file_list = [ sw_osm_image, topojson_filename, topojson_filename+".gz", subsetFileName ]
+	
+	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
+	
 #
-# Main
+# python landscan.py --region d04 -v -f
 #
-# landscan.py -f --year 2011 --bbox  21.35655 -18.47611  21.98187 -17.88733 --dir /shared/production/proddata/radarsat/l1g/files/RS2_OK37182_PK361606_DK319629_F1N_20130119_040305_HH_HV_SGF
-
 if __name__ == '__main__':
 	version_num = int(gdal.VersionInfo('VERSION_NUM'))
 	if version_num < 1800: # because of GetGeoTransform(can_return_null)
 		print('ERROR: Python bindings of GDAL 1.8.0 or later required')
 		sys.exit(1)
 
-	parser 		= argparse.ArgumentParser(description='Generate HAND')
+	parser 		= argparse.ArgumentParser(description='Generate Population Density')
 	apg_input 	= parser.add_argument_group('Input')
 	apg_input.add_argument("-f", "--force", action='store_true', help="forces new product to be generated")
-	apg_input.add_argument("-b", "--bbox", nargs=4, type=float, metavar=('X1', 'Y1', 'X2', 'Y2'), help="generate DEM inside a bounding box")
-	apg_input.add_argument("-d", "--dir",  nargs=1, help="Directory")
-	apg_input.add_argument("-y", "--year",  nargs=1, help="2002 or 2011")
+	apg_input.add_argument("-v", "--verbose", action='store_true', help="Verbose on/off")
+	apg_input.add_argument("-r", "--region", help="region name")
 
 	options 	= parser.parse_args()
-
 	force		= options.force
-	bbox		= options.bbox
-	year		= options.year[0]
-	target_dir	= options.dir[0]
-
-	# Landscan directory
-	dir 	= "/Volumes/MacBay3/GeoData/ls"
-
-	if year == '2002':
-		ls 		= "LandScan-2002/landscan-02.tif"
-	else:
-		ls 		= "LandScan-2011/ArcGIS/Population/lspop2011.tif"
-		
+	verbose		= options.verbose
+	regionName	= options.region
 	
-	app = Landscan(dir, ls, force, bbox, target_dir)
-	app.density()
+	# Landscan directory
+	lsFile		= "/Volumes/MacBay3/GeoData/ls/LandScan-2011/ArcGIS/Population/lspop2011_4326.tif"
+	region		= config.regions[regionName]
+	year		= 2011
+	
+	s3_folder	= os.path.join("ls", str(year))
+	s3_bucket	= region['bucket']
+
+	if not os.path.exists(lsFile):
+		print "Landscan file does not exist", lsFile
+		sys.exit(-1)
+		
+	ls_dir	= os.path.join(BASE_DIR,str(year), regionName)
+	if not os.path.exists(ls_dir):
+	    os.makedirs(ls_dir)
+
+	process(ls_dir, lsFile, regionName, region, s3_bucket, s3_folder)

@@ -470,7 +470,8 @@
                 "2100": 2100,
                 "3400": 3400,
                 "5500": 5500
-            }
+            },
+			"ls": "Population Count"
         },
         "precipitation_trmm": {
             "title": "Precipitation",

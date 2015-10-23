@@ -21,15 +21,15 @@ var fs 			 				= require('fs'),
 	//query_trmm				= require("../../lib/query_trmm"),
 	
 	query_planet_labs			= require("../../lib/query_planet_labs"),
-	query_locationcast			= require("../../lib/query_locationcast"),
-	query_pop					= require("../../lib/query_pop");
+	query_locationcast			= require("../../lib/query_locationcast");
+	// query_pop					= require("../../lib/query_pop");
 
 var productQueries = {
 		"dfo": 					[query_dfo.QueryDFO],
 		"digiglobe":			[query_digiglobe.QueryDigiglobe],
 		"eo1_ali": 				[query_eo1.QueryEO1],
 		"landsat_8": 			[query_l8.QueryLandsat8],
-		"landscan": 			[query_pop.QueryAll],
+	//	"landscan": 			[query_pop.QueryAll],
 		"ojo": 					[query_locationcast.QueryAll],
 		"radarsat_2": 			[query_radarsat2.QueryRadarsat2]
 	}

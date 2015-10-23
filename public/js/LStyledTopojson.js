@@ -26,7 +26,7 @@ function hashCode(str) {
     return hash;
 }
 
-var styles 		= [];
+var styles 		= {};
 var legends 	= {};
 var credits 	= [];
 var products	= {};
@@ -59,7 +59,7 @@ function ToggleLegend() {
 //
 function compileStyle( id, style ) {
 	// check if style has already been compiled
-	if( styles.indexOf(id) >=0 ) {
+	if( styles[id] != undefined ) {
 		return
 	}
 	
@@ -71,7 +71,7 @@ function compileStyle( id, style ) {
 	}
 	
 	// add it to array
-	styles.push(id)
+	styles[id] = style
 }
 
 //
@@ -114,11 +114,10 @@ function loadMapObject( mapObject, cb ) {
 	.done( function(data) {
 		//console.log("success:"+id, name)
 		
-		switch(name) {
+		switch(id) {
 			case "style":
 				var hc		= hashCode(url)
 				compileStyle(hc, data);
-				styles.push(url);			// to keep track of what has been loaded
 				break;
 			case "legend":
 				// add it to the legend div
@@ -213,7 +212,7 @@ function loadData( topojsonUrl, displayName, mapinfos, value_url ) {
 					styleObject = map_el;
 					styleId 	= hc
 					//console.log("styleId", styleId)
-					if( styles.indexOf(styleId) < 0 ) {
+					if( styles[styleId] === undefined ) {
 						styleObject.loaded = false
 						//console.log("Style loaded for", styleId, url)
 					} else {
@@ -242,6 +241,8 @@ function loadData( topojsonUrl, displayName, mapinfos, value_url ) {
 	    .await(function(error, data, styleData, legendData, creditsData) { 
 			//console.log("styledata", JSON.stringify(styleData))
 			function loadGeoJson( geojson, key_name ) {
+				styleData = styles[styleId]
+				
 				var attribution=""
 				if( creditsData ) {
 					attribution = creditsData.credits;

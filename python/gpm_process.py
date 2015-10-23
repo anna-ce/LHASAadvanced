@@ -33,9 +33,9 @@ def execute( cmd ):
 
 def get_daily_gpm_files(trmm_gis_files, mydir, year, month):
 	filepath = gis_path+ "%02d" % ( month)
-	print "filepath", filepath
 	
 	if verbose:
+		print "filepath", filepath
 		print("Checking "+ftp_site+"/" + filepath + " for latest file...")
 	
 	try:
@@ -50,7 +50,8 @@ def get_daily_gpm_files(trmm_gis_files, mydir, year, month):
 		sys.exit(-1)
 
 	for f in trmm_gis_files:
-		print "Trying to download", f
+		if verbose:
+			print "Trying to download", f
 		local_filename = os.path.join(mydir, f)
 		if not os.path.exists(local_filename):
 			if verbose:
@@ -130,7 +131,8 @@ def process(gpm_dir, name, gis_file_day, ymd, regionName, region, s3_bucket, s3_
 		for l in reversed(levels):
 			fileName 		= os.path.join(geojsonDir, "precip_level_%d.geojson"%l)
 			if os.path.exists(fileName):
-				print "merge", fileName
+				if verbose:
+					print "merge", fileName
 				with open(fileName) as data_file:    
 					data = json.load(data_file)
 		
@@ -142,8 +144,14 @@ def process(gpm_dir, name, gis_file_day, ymd, regionName, region, s3_bucket, s3_
 		with open(merge_filename, 'w') as outfile:
 		    json.dump(jsonDict, outfile)	
 
+		if verbose:
+			output = " > /dev/null 2>&1"
+		else:
+			output = " "
+		
+
 		# Convert to topojson
-		cmd 	= "topojson -p -o "+ topojson_filename + " " + merge_filename
+		cmd 	= "topojson -p -o "+ topojson_filename + " " + merge_filename + output
 		execute(cmd)
 
 		cmd 	= "gzip -f "+ topojson_filename
@@ -161,7 +169,8 @@ def process(gpm_dir, name, gis_file_day, ymd, regionName, region, s3_bucket, s3_
 		wms(ullat, ullon, lrlat, lrlon, osm_bg_image)
 	
 	if force or not os.path.exists(sw_osm_image):
-		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, adjusted_levels, hexColors, force, verbose, zoom)
+		rColors 	= list(reversed(hexColors))
+		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, adjusted_levels, rColors, force, verbose, zoom)
 		
 	ds = None
 	
@@ -234,7 +243,7 @@ if __name__ == '__main__':
 		get_daily_gpm_files(files, gpm_dir, year, month)
 		
 	process(gpm_dir, "gpm_1d", gis_file_day, ymd, regionName, region, s3_bucket, s3_folder)
+	process(gpm_dir, "gpm_3d", gis_file_day, ymd, regionName, region, s3_bucket, s3_folder)
+	process(gpm_dir, "gpm_7d", gis_file_day, ymd, regionName, region, s3_bucket, s3_folder)
 	
-	#process(gpm_dir, "gpm_3d", gis_file_3day, ymd)
-	#process(gpm_dir, "gpm_7d", gis_file_7day, ymd)
 

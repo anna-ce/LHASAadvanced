@@ -15,7 +15,7 @@ import numpy
 
 MAXZOOMLEVEL 		= 32
 
-verbose = 1
+verbose = 0
 force 	= 0
 
 def execute( cmd ):
@@ -340,13 +340,12 @@ def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_o
 		decColors 	= list(reversed(decColors))
 		for idx,d in enumerate(decColors):
 			ct.SetColorEntry( idx+1, decColors[idx] )
-			print "Set BrowseImage ColorEntry", idx+1, decColors[idx]
+			if verbose:
+				print "Set BrowseImage ColorEntry", idx+1, decColors[idx]
 	
-		print "SetRasterColorTable"
 		o_band.SetRasterColorTable(ct)
 		o_band.SetNoDataValue(0)
 		
-		print "Set proj/transfor"
 		dst_ds_dataset.SetGeoTransform( geotransform )
 		dst_ds_dataset.SetProjection( projection )
 		
