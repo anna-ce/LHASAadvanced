@@ -279,20 +279,20 @@ app.get('/mapinfo/eo1/style',					mapinfo.eo1_style);
 app.get('/mapinfo/eo1/legend',					mapinfo.eo1_legend);
 app.get('/mapinfo/eo1/credits',					mapinfo.eo1_credits);
 
-//app.get('/mapinfo/landslide_nowcast',			mapinfo.landslide_nowcast);
+//app.get('/mapinfo/landslide_nowcast',				mapinfo.landslide_nowcast);
 //app.get('/mapinfo/landslide_nowcast/style',		mapinfo.landslide_nowcast_style);
-//app.get('/mapinfo/landslide_nowcast/legend',	mapinfo.landslide_nowcast_legend);
-//app.get('/mapinfo/landslide_nowcast/credits',	mapinfo.landslide_nowcast_credits);
+//app.get('/mapinfo/landslide_nowcast/legend',		mapinfo.landslide_nowcast_legend);
+//app.get('/mapinfo/landslide_nowcast/credits',		mapinfo.landslide_nowcast_credits);
 
-app.get('/products/:subfolder/browse/pop/:year',	products_pop.browse);
-app.get('/products/:subfolder/map/pop/:year',		products_pop.map);
-app.get('/products/:subfolder/query/pop/:year',		products_pop.query);
-app.get('/products/:subfolder/query/pop/:year/:id',	products_pop.product);
+//app.get('/products/:subfolder/browse/pop/:year',		products_pop.browse);
+//app.get('/products/:subfolder/map/pop/:year',			products_pop.map);
+//app.get('/products/:subfolder/query/pop/:year',		products_pop.query);
+//app.get('/products/:subfolder/query/pop/:year/:id',	products_pop.product);
 
-app.get('/mapinfo/pop',								mapinfo_pop.pop);
-app.get('/mapinfo/pop/style',						mapinfo_pop.pop_style);
-app.get('/mapinfo/pop/legend',						mapinfo_pop.pop_legend);
-app.get('/mapinfo/pop/credits',						mapinfo_pop.pop_credits);
+//app.get('/mapinfo/pop',							mapinfo_pop.pop);
+//app.get('/mapinfo/pop/style',						mapinfo_pop.pop_style);
+//app.get('/mapinfo/pop/legend',					mapinfo_pop.pop_legend);
+//app.get('/mapinfo/pop/credits',					mapinfo_pop.pop_credits);
 
 app.get('/products/:subfolder/browse/:regionKey/:year/:doy/:prefix',			function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Browse(req, res); })
 app.get('/products/:subfolder/map/:regionKey/:year/:doy/:prefix',				function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Map(req, res); })
