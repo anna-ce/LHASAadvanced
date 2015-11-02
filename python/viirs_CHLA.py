@@ -18,7 +18,7 @@ import urllib2
 import config
 import argparse
 
-from browseimage import MakeBrowseImage 
+from browseimage import MakeBrowseImage, wms
 from s3 import CopyToS3
 from level import CreateLevel
 
@@ -63,9 +63,9 @@ def process_viirs_chla_file( mydir, regionName, viirs_filename, s3_bucket, s3_fo
 	if not os.path.exists(levelsDir):            
 		os.makedirs(levelsDir)
 
-	shpDir	= os.path.join(rdir,"shp")
-	if not os.path.exists(shpDir):            
-		os.makedirs(shpDir)
+	#shpDir	= os.path.join(rdir,"shp")
+	#if not os.path.exists(shpDir):            
+	#	os.makedirs(shpDir)
 
 	subset_file			= os.path.join(rdir, "viirs_chla.%s.tif" % ymd)
 	super_subset_file	= os.path.join(rdir, "viirs_chla_super.%s.tif" % ymd)
@@ -75,7 +75,7 @@ def process_viirs_chla_file( mydir, regionName, viirs_filename, s3_bucket, s3_fo
 	subset_filename 	= os.path.join(geojsonDir, "..", "viirs_chla.%s_small_browse.tif" % ymd)
 	osm_bg_image		= os.path.join(geojsonDir, "..", "osm_bg.png")
 	sw_osm_image		= os.path.join(geojsonDir, "..", "viirs_chla.%s_thn.jpg" % ymd)
-	shp_filename 		= os.path.join(rdir, "viirs_chla.%s.shp.gz" % (ymd))
+	#shp_filename 		= os.path.join(rdir, "viirs_chla.%s.shp.gz" % (ymd))
 	json_filename		= os.path.join(geojsonDir, "viirs_chla.%s.json" % (ymd))
 	
 	if force or not os.path.exists(subset_file):
@@ -102,6 +102,13 @@ def process_viirs_chla_file( mydir, regionName, viirs_filename, s3_bucket, s3_fo
 	band				= ds.GetRasterBand(1)
 	data				= band.ReadAsArray(0, 0, ds.RasterXSize, ds.RasterYSize )
 	data *= 100
+	
+	geotransform 		= ds.GetGeoTransform()
+	xorg				= geotransform[0]
+	yorg  				= geotransform[3]
+	pres				= geotransform[1]
+	xmax				= xorg + geotransform[1]* ds.RasterXSize
+	ymax				= yorg - geotransform[1]* ds.RasterYSize
 	
 	if force or not os.path.exists(topojson_filename+".gz"):
 		for l in levels:
@@ -144,6 +151,8 @@ def process_viirs_chla_file( mydir, regionName, viirs_filename, s3_bucket, s3_fo
 	#	cmd = "cd %s; tar -zcvf %s %s" % (rdir, shp_filename, shpDir)
 	#	execute(cmd)
 		
+	if not os.path.exists(osm_bg_image):
+		wms(yorg, xorg, ymax, xmax, osm_bg_image)
 		
 	if force or not os.path.exists(sw_osm_image):
 		zoom 	= region['thn_zoom']
