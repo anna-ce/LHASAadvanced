@@ -53,7 +53,13 @@ function copyFromS3(bucket, key, cb ) {
 		console.log("  s3 copy to", fileName)
 	
 		var file = fs.createWriteStream(fileName);
-		app.s3.getObject(options).createReadStream().pipe(file);
+		app.s3.getObject(params).
+		on('httpData', function(chunk) { file.write(chunk); }).
+		on('httpDone', function() { 
+			file.end(); 
+			console.log("Done")
+		}).
+		send();
 	}
 
 	cb(null)

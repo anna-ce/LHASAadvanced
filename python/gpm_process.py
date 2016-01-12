@@ -100,6 +100,7 @@ def process(gpm_dir, name, gis_file_day, ymd, regionName, region, s3_bucket, s3_
 	topojson_filename 	= os.path.join(geojsonDir, "..", "%s.%s.topojson" % (name,ymd))
 	browse_filename 	= os.path.join(geojsonDir, "..", "%s.%s_browse.tif" % (name,ymd))
 	subset_filename 	= os.path.join(geojsonDir, "..", "%s.%s_small_browse.tif" % (name,ymd))
+	subset_aux_filename = os.path.join(geojsonDir, "..", "%s.%s_small_browse.tif.aux" % (name,ymd))
 	osm_bg_image		= os.path.join(geojsonDir, "..", "osm_bg.png")
 	sw_osm_image		= os.path.join(geojsonDir, "..", "%s.%s_thn.jpg" % (name,ymd))
 
@@ -178,6 +179,10 @@ def process(gpm_dir, name, gis_file_day, ymd, regionName, region, s3_bucket, s3_
 	
 	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 	
+	if not verbose: # Cleanup
+		cmd = "rm -rf %s %s %s %s %s %s" % ( osm_bg_image, browse_filename, subset_filename, subset_aux_filename, geojsonDir, levelsDir)
+		execute(cmd)
+		
 # ===============================
 # Main
 #

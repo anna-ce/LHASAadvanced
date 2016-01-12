@@ -131,7 +131,9 @@
 								<option value='location_cast'><%= gettext('products.location_nowcast')%></option>
 								<option value='precip_1d'><%= gettext('products.precip_1d')%></option>
 								<option value='precip_1d_forecast'><%= gettext('products.precip_1d_forecast')%></option>
+								<option value='precip_30mn'><%= gettext('products.precip_30mn')%></option>
 								<option value='precip_3d'><%= gettext('products.precip_3d')%></option>
+								<option value='precip_3hrs'><%= gettext('products.precip_3hrs')%></option>
 								<option value='precip_7d'><%= gettext('products.precip_7d')%></option>
 								<option value='population_count'><%= gettext('products.population_count')%></option>
 								<option value='rgb_composite' checked=true><%= gettext('products.rgb_composite')%></option>
@@ -346,7 +348,7 @@
 	$('#endTime').datepicker({format: "yyyy-mm-dd"});
 	
 	var stop 	= moment();
-	var start 	= stop.clone().subtract(60,'days')
+	var start 	= stop.clone().subtract(7,'days')
 	
 	$('#endTime').datepicker("setValue", stop.toDate());
 	$('#startTime').datepicker("setValue", start.toDate());
@@ -485,78 +487,6 @@
 				html += "<br/>"
 			}
 			
-			html += "</td></tr></table></div>"
-			html += "</td></tr>"
-			html += "</table></div>";
-		}
-			
-		if( false ) {
-			$.each(el.action, function(key, val) {			
-				var typof = typeof el.actions[key]
-			
-				switch(typof) {
-				case 'object':
-					html += "<b>- "+key+"</b>"
-					html += "<br/>"
-					$.each(el.actions[key], function(k, el) {
-						if( el.objectType == 'HttpActionHandler') {
-							if( el.method == 'GET') {
-								html += "&nbsp;&nbsp;&nbsp;&nbsp;<a href='" + el.url+"'>" + el.displayName
-								if( el.size ) html += " ("+el.size+")"
-								if( el.duration ) html += " (" + el.duration + ")"
-								html  += "</a>&nbsp;"
-							}
-						}
-					})
-					break;
-				case 'string':
-					// special cases
-					//console.log("String key:"+key+" "+el.actions[key])
-					switch(key) {
-						case 'share':
-							html += "<b>- "+key+"</b>"
-							html += "<br/>"
-						
-							html += "&nbsp;&nbsp;&nbsp;&nbsp;"
-						
-							// Facebook
-							html += "<div class='fb-share-button' "
-							html += "data-href='" + el.actions[key] + "' "
-							html += "data-type='button' "
-							html += "></div>&nbsp;"
-						
-							//var fbpost	= "javascript:FBPost('" + el.actions[key] + "');";
-							//html += "<a href="+fbpost+">Facebook</a>&nbsp;"
-						
-							// Twitter
-							html += "<a href='https://twitter.com/intent/tweet' class='twitter-hashtag-button' "
-							html += "data-text='You may found this product interesting '"
-							html += " data-url='" + el.actions[key] + "' "
-							html += " data-lang='en' data-related='geoss'>GEOSS Tweet</a>"
-					
-							break;
-					
-						case 'like':
-							break;
-						default:
-							html += "- <a href='"+el.actions[key]+"'>"+key+"</a>";
-							break;
-					}
-					break;
-				default:
-					console.log("unhandled typof:"+typof)
-					break;
-				}
-				html += "<br/>"
-			})
-		
-			//$.each(el.actions.download, function(key, val) {
-			//	html += "<a href='"+ val.url+"'>"+val.displayName +" ("+val.size+")</a><br/>"
-			//})
-		
-			//html += "<br/>Browse <a href='"+el.actions.browse+"'>Link</a>"
-			//html += "<br/>Process"
-		
 			html += "</td></tr></table></div>"
 			html += "</td></tr>"
 			html += "</table></div>";

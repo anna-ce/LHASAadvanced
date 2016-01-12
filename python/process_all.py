@@ -62,16 +62,16 @@ def get_daily_forecast():
 
 def process_script( str, dt, regions ):	
 	for r in regions :
-		cmd = "rm -rf errorlog.txt"
-		execute(cmd)
+		cmd = "cat /dev/null > errorlog.txt"
+		os.system(cmd)
 		
 		cmd = "python ./%s --region %s --date %s" % (str, r, dt)
 		execute(cmd)
 
 	
 def process_global_script( str, dt ):
-	cmd = "rm -rf errorlog.txt"
-	execute(cmd)
+	cmd = "cat /dev/null > errorlog.txt"
+	os.system(cmd)
 	
 	cmd = "python ./%s --date %s" % (str, dt)
 	execute(cmd)
@@ -148,7 +148,7 @@ if __name__ == '__main__':
 	dayAfterYesterday	= today - timedelta(2)
 	ydt2				= dayAfterYesterday.strftime("%Y-%m-%d")
 	
-	regions 			= ["d02", "d03", "d08", "d09"]
+	regions 			= ["d02", "d03", "d08", "d09", "d10"]
 	regions2 			= ["d02", "d03", "d08", "d09", "d10"]
 	
 	if 1:
@@ -167,7 +167,8 @@ if __name__ == '__main__':
 		process_global_script('gpm_global.py', ydt2)
 		process_global_script('geos5.py', dt)
 
-		#process_script('viirs_CHLA.py', ydt)
+		process_script('viirs_CHLA.py', ydt)
+		
 		#process_script('chirps_prelim.py --period monthly', ydt)
 		#process_script('chirps_prelim.py --period dekad', ydt)
 		#process_script('chirps_prelim.py --period pentad', ydt)

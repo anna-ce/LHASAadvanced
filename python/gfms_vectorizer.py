@@ -272,10 +272,6 @@ class GFMS:
 		levelsDir	= os.path.join(flood_dir,"levels")
 		if not os.path.exists(levelsDir):
 			os.makedirs(levelsDir)
-
-		shpDir		= os.path.join(flood_dir, "shp")
-		cmd 		= "rm -rf " + shpDir
-		self.execute(cmd)
 		
 		merge_filename 			= os.path.join(geojsonDir, "%s_levels.geojson" % ymd)
 		browse_filename 		= os.path.join(geojsonDir, "..", "%s_browse.tif" % ymd)
@@ -369,7 +365,7 @@ class GFMS:
 			for l in reversed(levels):
 				fileName 		= os.path.join(geojsonDir, "flood_level_%d.geojson"%l)
 				if os.path.exists(fileName):
-					print "merge", fileName
+					# print "merge", fileName
 					with open(fileName) as data_file:    
 						data = json.load(data_file)
 		
@@ -415,7 +411,7 @@ class GFMS:
 		CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 
 		if not self.verbose:
-			cmd = "rm -rf %s %s %s %s %s %s %s %s %s" % ( browse_filename, input_fullname, subset_filename, super_fullname, output_rgb_fullname, browse_aux_filename, levelsDir, geojsonDir, shpDir )
+			cmd = "rm -rf %s %s %s %s %s %s %s %s" % ( browse_filename, input_fullname, subset_filename, super_fullname, output_rgb_fullname, browse_aux_filename, levelsDir, geojsonDir )
 			print cmd
 			self.execute(cmd)
 			

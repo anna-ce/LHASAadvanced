@@ -218,7 +218,9 @@ if __name__ == '__main__':
 	regionName	= options.region	
 	region		= config.regions[regionName]
 	
-	dt			= date.today().strftime("%Y-%m-%d")
+	todaystr	= date.today().strftime("%Y-%m-%d")
+	dt			= options.date or todaystr
+	
 	today		= parse(dt)
 	
 	year		= today.year

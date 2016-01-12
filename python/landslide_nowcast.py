@@ -371,7 +371,7 @@ def build_tif(dx, region, dir, date):
 			execute("rm -f "+" ".join(files))
 	
 	
-def process(mydir, scene, s3_bucket, s3_folder, zoom):
+def process(mydir, scene, s3_bucket, s3_folder, zoom, bbox):
 	global verbose, force
 	
 	fullName = os.path.join(mydir, scene+".tif")
@@ -506,6 +506,7 @@ def process(mydir, scene, s3_bucket, s3_folder, zoom):
 def generate_map( dx, date, year, doy ):
 	# make sure it exists
 	region		= config.regions[dx]
+	bbox		= region['bbox']
 	
 	if verbose:
 		print "Processing Forecast Landslide Map for Region:", dx, region['name']	
@@ -521,7 +522,7 @@ def generate_map( dx, date, year, doy ):
 	s3_bucket	= region['bucket']
 	
 	scene 				=  "landslide_nowcast.%s" %(ymd)
-	process(mydir, scene, s3_bucket, s3_folder, region['thn_zoom'])
+	process(mydir, scene, s3_bucket, s3_folder, region['thn_zoom'], bbox)
 	
 	
 # =======================================================================

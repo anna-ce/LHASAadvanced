@@ -8,7 +8,7 @@ var util	= require('util'),
 	Hawk	= require('hawk'),
 	glob 	= require("glob")
 	debug	= require('debug')('products'),
-	sys 	= require('sys'),
+	//sys 	= require('sys'),
 	exec 	= require('child_process').exec,
 	mime	= require('mime-types'),
 	osm_geojson	= require("osm-and-geojson/osm_geojson"),
@@ -21,7 +21,7 @@ var util	= require('util'),
 		"application/x-gzip": ["gz"]
 	})
 	
-	function puts(error, stdout, stderr) { sys.puts(stdout) }
+	//function puts(error, stdout, stderr) { sys.puts(stdout) }
 	
 	function InBBOX( lat, lon, bbox) {
 		if( (lat > bbox[2]) && (lat< bbox[3]) && (lon > bbox[0]) && (lon < bbox[2]) ) return true;
@@ -199,7 +199,7 @@ var util	= require('util'),
 							"bbox": 	region.bbox,
 							"size": 	filesize(stats.size)
 						},
-						"actions": {
+						"action": {
 							"download": [
 								{
 									"objectType": 	"HttpActionHandler",
@@ -324,7 +324,7 @@ var util	= require('util'),
 							"bbox": 	region.bbox,
 							"size": 	filesize(stats.size)
 						},
-						"actions": {
+						"action": {
 							"download": [
 								{
 									"objectType": 	"HttpActionHandler",
@@ -446,7 +446,7 @@ var util	= require('util'),
 							"bbox": 	region.bbox,
 							"size": 	filesize(stats.size)
 						},
-						"actions": {
+						"action": {
 							"download": [
 								{
 									"objectType": 	"HttpActionHandler",
@@ -568,7 +568,7 @@ var util	= require('util'),
 							"bbox": 	region.bbox,
 							"size": 	filesize(stats.size)
 						},
-						"actions": {
+						"action": {
 							"download": [
 								{
 									"objectType": 	"HttpActionHandler",
@@ -692,7 +692,7 @@ var util	= require('util'),
 							"bbox": 	region.bbox,
 							"size": 	filesize(stats.size)
 						},
-						"actions": {
+						"action": {
 							"download": [
 								{
 									"objectType": 	"HttpActionHandler",

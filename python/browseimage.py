@@ -301,25 +301,25 @@ def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_o
 		firstItem 	= rlist.pop(0)
 		lastItem 	= rlist.pop()
 		
-		if verbose:
-			print "data <", firstItem, "= 0"
+		#if verbose:
+		#	print "data <", firstItem, "= 0"
 		
 		data[data < firstItem]	= 0
 		idx 					= -1
 		l						= firstItem
 		
 		for idx, l in enumerate(rlist):
-			if verbose:
-				print "data >", firstItem, " and data <=", l, "=", idx+1
+			#if verbose:
+			#	print "data >", firstItem, " and data <=", l, "=", idx+1
 			
 			data[numpy.logical_and(data>=firstItem, data<l)]= idx+1
 			firstItem = l
 			
 		idx += 2
 
-		if verbose:
-			print "data >", l, " and data <", lastItem, "=", idx
-			print "data >=", lastItem, "=", idx+1
+		#if verbose:
+		#	print "data >", l, " and data <", lastItem, "=", idx
+		#	print "data >=", lastItem, "=", idx+1
 
 		data[numpy.logical_and(data>=l, data<lastItem)]		= idx
 		data[data>=lastItem]								= idx+1

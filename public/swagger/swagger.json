@@ -1,0 +1,1400 @@
+{
+    "basePath": "/",
+    "definitions": {
+        "ApiResponse": {
+            "properties": {
+                "code": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "Category": {
+            "properties": {
+                "id": {
+                    "format": "int64",
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "xml": {
+                "name": "Category"
+            }
+        },
+        "Order": {
+            "properties": {
+                "complete": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "id": {
+                    "format": "int64",
+                    "type": "integer"
+                },
+                "petId": {
+                    "format": "int64",
+                    "type": "integer"
+                },
+                "quantity": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "shipDate": {
+                    "format": "date-time",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "Order Status",
+                    "enum": [
+                        "placed",
+                        "approved",
+                        "delivered"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "xml": {
+                "name": "Order"
+            }
+        },
+        "Pet": {
+            "properties": {
+                "category": {
+                    "$ref": "#/definitions/Category"
+                },
+                "id": {
+                    "format": "int64",
+                    "type": "integer"
+                },
+                "name": {
+                    "example": "doggie",
+                    "type": "string"
+                },
+                "photoUrls": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array",
+                    "xml": {
+                        "name": "photoUrl",
+                        "wrapped": true
+                    }
+                },
+                "status": {
+                    "description": "pet status in the store",
+                    "enum": [
+                        "available",
+                        "pending",
+                        "sold"
+                    ],
+                    "type": "string"
+                },
+                "tags": {
+                    "items": {
+                        "$ref": "#/definitions/Tag"
+                    },
+                    "type": "array",
+                    "xml": {
+                        "name": "tag",
+                        "wrapped": true
+                    }
+                }
+            },
+            "required": [
+                "name",
+                "photoUrls"
+            ],
+            "type": "object",
+            "xml": {
+                "name": "Pet"
+            }
+        },
+        "Tag": {
+            "properties": {
+                "id": {
+                    "format": "int64",
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "xml": {
+                "name": "Tag"
+            }
+        },
+        "User": {
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "firstName": {
+                    "type": "string"
+                },
+                "id": {
+                    "format": "int64",
+                    "type": "integer"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "userStatus": {
+                    "description": "User Status",
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "xml": {
+                "name": "User"
+            }
+        }
+    },
+    "externalDocs": {
+        "description": "Find out more about OJO",
+        "url": "http://ojo-bot.herokuapp.com"
+    },
+    "host": "localhost:7465",
+    "info": {
+        "contact": {
+            "email": "pat@cappelaere.com"
+        },
+        "description": "This is OJO Server REST Application Programming Interface Defintions.",
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "termsOfService": "http://ojo-bot.herokuapp.com/terms/",
+        "title": "OJO-BOT API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/opensearch": {
+            "get": {
+                "description": "Generic Search for Actionable Product",
+                "operationId": "opensearch",
+                "parameters": [
+                    {
+                        "default": "precip_3hrs",
+                        "description": "Product query",
+                        "enum": [
+                            "precip_30mn",
+                            "precip_3hrs",
+                            "precip_1d",
+                            "precip_7d"
+                        ],
+                        "in": "query",
+                        "name": "q",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": 0,
+                        "description": "Latitude",
+                        "in": "query",
+                        "maximum": 90.0,
+                        "minimum": -90.0,
+                        "name": "lat",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": 0,
+                        "description": "Longitude",
+                        "in": "query",
+                        "maximum": 180.0,
+                        "minimum": -180.0,
+                        "name": "lon",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": 2,
+                        "description": "Limit number of responses",
+                        "in": "query",
+                        "maximum": 1000,
+                        "minimum": 1,
+                        "name": "limit",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "default": "gpm",
+                        "description": "Product sources",
+                        "enum": [
+                            "gpm",
+                            "trmm"
+                        ],
+                        "in": "query",
+                        "name": "sources",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "description": "Start Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "startTime",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "description": "End Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "endTime",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "summary": "Generic OpenSearch",
+                "tags": [
+                    "opensearch"
+                ]
+            }
+        },
+        "/opensearch/precip_gpm_1d": {
+            "get": {
+                "description": "OpenSearch for Global 1-day Accumulated Rainfall (GPM)",
+                "operationId": "opensearch",
+                "parameters": [
+                    {
+                        "default": "precip_1d",
+                        "description": "Product query",
+                        "in": "query",
+                        "name": "q",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": 0,
+                        "description": "Latitude",
+                        "in": "query",
+                        "maximum": 90.0,
+                        "minimum": -90.0,
+                        "name": "lat",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": 0,
+                        "description": "Longitude",
+                        "in": "query",
+                        "maximum": 180.0,
+                        "minimum": -180.0,
+                        "name": "lon",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": 10,
+                        "description": "Limit number of responses",
+                        "in": "query",
+                        "maximum": 1000,
+                        "minimum": 1,
+                        "name": "limit",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "default": "gpm",
+                        "description": "Product sources",
+                        "in": "query",
+                        "name": "sources",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "description": "Start Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "startTime",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "description": "End Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "endTime",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "summary": "OpenSearch for Global 1-day Accumulated Rainfall Product (GPM)",
+                "tags": [
+                    "opensearch"
+                ]
+            }
+        },
+        "/opensearch/precip_gpm_30mn": {
+            "get": {
+                "description": "OpenSearch for Golbal 30mn Accumulated Rainfall (GPM)",
+                "operationId": "opensearch",
+                "parameters": [
+                    {
+                        "default": "precip_30mn",
+                        "description": "Product query",
+                        "in": "query",
+                        "name": "q",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": 0,
+                        "description": "Latitude",
+                        "in": "query",
+                        "maximum": 90.0,
+                        "minimum": -90.0,
+                        "name": "lat",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": 0,
+                        "description": "Longitude",
+                        "in": "query",
+                        "maximum": 180.0,
+                        "minimum": -180.0,
+                        "name": "lon",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": 10,
+                        "description": "Limit number of responses",
+                        "in": "query",
+                        "maximum": 1000,
+                        "minimum": 1,
+                        "name": "limit",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "default": "gpm",
+                        "description": "Product sources",
+                        "in": "query",
+                        "name": "sources",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "description": "Start Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "startTime",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "description": "End Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "endTime",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "summary": "OpenSearch for Global 30mn Accumulated Rainfall Product (GPM)",
+                "tags": [
+                    "opensearch"
+                ]
+            }
+        },
+        "/opensearch/precip_gpm_3hrs": {
+            "get": {
+                "description": "OpenSearch for Global 3hrs Accumulated Rainfall (GPM)",
+                "operationId": "opensearch",
+                "parameters": [
+                    {
+                        "default": "precip_3hrs",
+                        "description": "Product query",
+                        "in": "query",
+                        "name": "q",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": 0,
+                        "description": "Latitude",
+                        "in": "query",
+                        "maximum": 90.0,
+                        "minimum": -90.0,
+                        "name": "lat",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": 0,
+                        "description": "Longitude",
+                        "in": "query",
+                        "maximum": 180.0,
+                        "minimum": -180.0,
+                        "name": "lon",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": 2,
+                        "description": "Limit number of responses",
+                        "in": "query",
+                        "maximum": 1000,
+                        "minimum": 1,
+                        "name": "limit",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "default": "gpm",
+                        "description": "Product sources",
+                        "in": "query",
+                        "name": "sources",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "description": "Start Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "startTime",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "description": "End Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "endTime",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "summary": "OpenSearch for Global 3Hr Accumulated Rainfall Product (GPM)",
+                "tags": [
+                    "opensearch"
+                ]
+            }
+        },
+        "/opensearch/precip_gpm_7d": {
+            "get": {
+                "description": "OpenSearch for Global 7-day Accumulated Rainfall (GPM)",
+                "operationId": "opensearch",
+                "parameters": [
+                    {
+                        "default": "precip_7d",
+                        "description": "Product query",
+                        "in": "query",
+                        "name": "q",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": 0,
+                        "description": "Latitude",
+                        "in": "query",
+                        "maximum": 90.0,
+                        "minimum": -90.0,
+                        "name": "lat",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": 0,
+                        "description": "Longitude",
+                        "in": "query",
+                        "maximum": 180.0,
+                        "minimum": -180.0,
+                        "name": "lon",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": 10,
+                        "description": "Limit number of responses",
+                        "in": "query",
+                        "maximum": 1000,
+                        "minimum": 1,
+                        "name": "limit",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "default": "gpm",
+                        "description": "Product sources",
+                        "in": "query",
+                        "name": "sources",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "description": "Start Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "startTime",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "description": "End Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "endTime",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "summary": "OpenSearch for Global 7-day Accumulated Rainfall Product (GPM)",
+                "tags": [
+                    "opensearch"
+                ]
+            }
+        },
+        "/opensearch/precip_trmm_1d": {
+            "get": {
+                "description": "OpenSearch for Regional 1-day Accumulated Rainfall (TRMM)",
+                "operationId": "opensearch",
+                "parameters": [
+                    {
+                        "default": "precip_1d",
+                        "description": "Product query",
+                        "in": "query",
+                        "name": "q",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": 9.84,
+                        "description": "Latitude",
+                        "in": "query",
+                        "maximum": 90.0,
+                        "minimum": -90.0,
+                        "name": "lat",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": -84.14,
+                        "description": "Longitude",
+                        "in": "query",
+                        "maximum": 180.0,
+                        "minimum": -180.0,
+                        "name": "lon",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": 10,
+                        "description": "Limit number of responses",
+                        "in": "query",
+                        "maximum": 1000,
+                        "minimum": 1,
+                        "name": "limit",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "default": "trmm",
+                        "description": "Product sources",
+                        "in": "query",
+                        "name": "sources",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "description": "Start Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "startTime",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "description": "End Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "endTime",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "summary": "OpenSearch for Regional 1-day Accumulated Rainfall Product (TRMM)",
+                "tags": [
+                    "opensearch"
+                ]
+            }
+        },
+        "/opensearch/flood_nowcast_11km": {
+            "get": {
+                "description": "OpenSearch for GLobal Flood Nowcast 1/8 deg (GFMS)",
+                "operationId": "opensearch",
+                "parameters": [
+                    {
+                        "default": "flood_nowcast",
+                        "description": "Product query",
+                        "in": "query",
+                        "name": "q",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": 0,
+                        "description": "Latitude",
+                        "in": "query",
+                        "maximum": 90.0,
+                        "minimum": -90.0,
+                        "name": "lat",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": 0,
+                        "description": "Longitude",
+                        "in": "query",
+                        "maximum": 180.0,
+                        "minimum": -180.0,
+                        "name": "lon",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": 10,
+                        "description": "Limit number of responses",
+                        "in": "query",
+                        "maximum": 1000,
+                        "minimum": 1,
+                        "name": "limit",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "default": "gfms",
+                        "description": "Product sources",
+                        "in": "query",
+                        "name": "sources",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "description": "Start Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "startTime",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "description": "End Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "endTime",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "summary": "OpenSearch for Global Flood Nowcast (GFMS)",
+                "tags": [
+                    "opensearch"
+                ]
+            }
+        },
+        "/opensearch/landslide_catalog": {
+            "get": {
+                "description": "OpenSearch for Global Landslide Catalog (GSFC)",
+                "operationId": "opensearch",
+                "parameters": [
+                    {
+                        "default": "landslide_catalog",
+                        "description": "Product query",
+                        "in": "query",
+                        "name": "q",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "description": "Latitude",
+                        "in": "query",
+                        "maximum": 90.0,
+                        "minimum": -90.0,
+                        "name": "lat",
+                        "required": false,
+                        "type": "number"
+                    },
+                    {
+                        "description": "Longitude",
+                        "in": "query",
+                        "maximum": 180.0,
+                        "minimum": -180.0,
+                        "name": "lon",
+                        "required": false,
+                        "type": "number"
+                    },
+                    {
+                        "default": 100,
+                        "description": "Limit number of responses",
+                        "in": "query",
+                        "maximum": 1000,
+                        "minimum": 1,
+                        "name": "limit",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "default": "dk",
+                        "description": "Product sources",
+                        "in": "query",
+                        "name": "sources",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "description": "Start Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "startTime",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "description": "End Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "endTime",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "summary": "OpenSearch for Regional Landslide Catalog (GSFC Dr Dalia Kirschbaum)",
+                "tags": [
+                    "opensearch"
+                ]
+            }
+        },
+        "/opensearch/landslide_nowcast": {
+            "get": {
+                "description": "OpenSearch for Regional Landslide Nowcast (GSFC)",
+                "operationId": "opensearch",
+                "parameters": [
+                    {
+                        "default": "landslide_nowcast",
+                        "description": "Product query",
+                        "in": "query",
+                        "name": "q",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": 9.84,
+                        "description": "Latitude",
+                        "in": "query",
+                        "maximum": 90.0,
+                        "minimum": -90.0,
+                        "name": "lat",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": -84.14,
+                        "description": "Longitude",
+                        "in": "query",
+                        "maximum": 180.0,
+                        "minimum": -180.0,
+                        "name": "lon",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": 10,
+                        "description": "Limit number of responses",
+                        "in": "query",
+                        "maximum": 1000,
+                        "minimum": 1,
+                        "name": "limit",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "default": "gfms",
+                        "description": "Product sources",
+                        "in": "query",
+                        "name": "sources",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "description": "Start Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "startTime",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "description": "End Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "endTime",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "summary": "OpenSearch for Regional Landslide Nowcast (GSFC)",
+                "tags": [
+                    "opensearch"
+                ]
+            }
+        },
+        "/opensearch/population_count": {
+            "get": {
+                "description": "OpenSearch for Regional Population Count (ORNL)",
+                "operationId": "opensearch",
+                "parameters": [
+                    {
+                        "default": "population_count",
+                        "description": "Product query",
+                        "in": "query",
+                        "name": "q",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": 9.84,
+                        "description": "Latitude",
+                        "in": "query",
+                        "maximum": 90.0,
+                        "minimum": -90.0,
+                        "name": "lat",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": -84.14,
+                        "description": "Longitude",
+                        "in": "query",
+                        "maximum": 180.0,
+                        "minimum": -180.0,
+                        "name": "lon",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": 10,
+                        "description": "Limit number of responses",
+                        "in": "query",
+                        "maximum": 1000,
+                        "minimum": 1,
+                        "name": "limit",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "default": "gfms",
+                        "description": "Product sources",
+                        "in": "query",
+                        "name": "sources",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "description": "Start Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "startTime",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "description": "End Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "endTime",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "summary": "OpenSearch for Population Count (ORNL Lansscan)",
+                "tags": [
+                    "opensearch"
+                ]
+            }
+        },
+        "/opensearch/active_fires": {
+            "get": {
+                "description": "OpenSearch for Regional Active Fires (MODIS)",
+                "operationId": "opensearch",
+                "parameters": [
+                    {
+                        "default": "active_fires",
+                        "description": "Product query",
+                        "in": "query",
+                        "name": "q",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": 9.84,
+                        "description": "Latitude",
+                        "in": "query",
+                        "maximum": 90.0,
+                        "minimum": -90.0,
+                        "name": "lat",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": -84.14,
+                        "description": "Longitude",
+                        "in": "query",
+                        "maximum": 180.0,
+                        "minimum": -180.0,
+                        "name": "lon",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": 10,
+                        "description": "Limit number of responses",
+                        "in": "query",
+                        "maximum": 1000,
+                        "minimum": 1,
+                        "name": "limit",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "default": "modis",
+                        "description": "Product sources",
+                        "in": "query",
+                        "name": "sources",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "description": "Start Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "startTime",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "description": "End Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "endTime",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "summary": "OpenSearch for Regional Active Fires (MODIS)",
+                "tags": [
+                    "opensearch"
+                ]
+            }
+        },
+        "/opensearch/burned_areas": {
+            "get": {
+                "description": "OpenSearch for Regional Burned Areas (MODIS)",
+                "operationId": "opensearch",
+                "parameters": [
+                    {
+                        "default": "burned_areas",
+                        "description": "Product query",
+                        "in": "query",
+                        "name": "q",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": 9.84,
+                        "description": "Latitude",
+                        "in": "query",
+                        "maximum": 90.0,
+                        "minimum": -90.0,
+                        "name": "lat",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": -84.14,
+                        "description": "Longitude",
+                        "in": "query",
+                        "maximum": 180.0,
+                        "minimum": -180.0,
+                        "name": "lon",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": 10,
+                        "description": "Limit number of responses",
+                        "in": "query",
+                        "maximum": 1000,
+                        "minimum": 1,
+                        "name": "limit",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "default": "modis",
+                        "description": "Product sources",
+                        "in": "query",
+                        "name": "sources",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "description": "Start Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "startTime",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "description": "End Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "endTime",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "summary": "OpenSearch for Regional Burned Areas (MODIS)",
+                "tags": [
+                    "opensearch"
+                ]
+            }
+        },
+        "/opensearch/quakes": {
+            "get": {
+                "description": "OpenSearch for Regional Earthquakes (USGS)",
+                "operationId": "opensearch",
+                "parameters": [
+                    {
+                        "default": "quakes",
+                        "description": "Product query",
+                        "in": "query",
+                        "name": "q",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": 9.84,
+                        "description": "Latitude",
+                        "in": "query",
+                        "maximum": 90.0,
+                        "minimum": -90.0,
+                        "name": "lat",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": -84.14,
+                        "description": "Longitude",
+                        "in": "query",
+                        "maximum": 180.0,
+                        "minimum": -180.0,
+                        "name": "lon",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": 10,
+                        "description": "Limit number of responses",
+                        "in": "query",
+                        "maximum": 1000,
+                        "minimum": 1,
+                        "name": "limit",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "default": "usgs",
+                        "description": "Product sources",
+                        "in": "query",
+                        "name": "sources",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "description": "Start Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "startTime",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "description": "End Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "endTime",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "summary": "OpenSearch for Regional Earthquakes (USGS)",
+                "tags": [
+                    "opensearch"
+                ]
+            }
+        },
+        "/opensearch/chla": {
+            "get": {
+                "description": "OpenSearch for Regional Chlorophyll-A (VIIRS)",
+                "operationId": "opensearch",
+                "parameters": [
+                    {
+                        "default": "viirs_chla",
+                        "description": "Product query",
+                        "in": "query",
+                        "name": "q",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": 9.84,
+                        "description": "Latitude",
+                        "in": "query",
+                        "maximum": 90.0,
+                        "minimum": -90.0,
+                        "name": "lat",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": -84.14,
+                        "description": "Longitude",
+                        "in": "query",
+                        "maximum": 180.0,
+                        "minimum": -180.0,
+                        "name": "lon",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": 10,
+                        "description": "Limit number of responses",
+                        "in": "query",
+                        "maximum": 1000,
+                        "minimum": 1,
+                        "name": "limit",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "default": "viirs",
+                        "description": "Product sources",
+                        "in": "query",
+                        "name": "sources",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "description": "Start Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "startTime",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "description": "End Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "endTime",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "summary": "OpenSearch for Regional Chlorophyll-A (VIIRS)",
+                "tags": [
+                    "opensearch"
+                ]
+            }
+        }
+    },
+    "schemes": [
+        "http"
+    ],
+    "securityDefinitions": {
+        "api_key": {
+            "in": "header",
+            "name": "api_key",
+            "type": "apiKey"
+        },
+        "petstore_auth": {
+            "authorizationUrl": "http://petstore.swagger.io/api/oauth/dialog",
+            "flow": "implicit",
+            "scopes": {
+                "read:pets": "read your pets",
+                "write:pets": "modify pets in your account"
+            },
+            "type": "oauth2"
+        }
+    },
+    "swagger": "2.0",
+    "tags": [
+        {
+            "description": "OpenSearch",
+            "externalDocs": {
+                "description": "Find out more",
+                "url": "http://swagger.io"
+            },
+            "name": "opensearch"
+        },
+        {
+            "description": "Everything about your Pets",
+            "externalDocs": {
+                "description": "Find out more",
+                "url": "http://swagger.io"
+            },
+            "name": "pet"
+        },
+        {
+            "description": "Access to Petstore orders",
+            "name": "store"
+        },
+        {
+            "description": "Operations about user",
+            "externalDocs": {
+                "description": "Find out more about our store",
+                "url": "http://swagger.io"
+            },
+            "name": "user"
+        }
+    ]
+}

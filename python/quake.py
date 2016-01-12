@@ -168,15 +168,20 @@ if __name__ == '__main__':
 	region		= config.regions[regionName]
 	assert(region)
 	
-	dt			= date.today().strftime("%Y-%m-%d")
-	today		= parse(dt)
+	todaystr	= date.today().strftime("%Y-%m-%d")
+	dt			= options.date or todaystr
 	
+	today		= parse(dt)
+
 	year		= today.year
 	month		= today.month
 	day			= today.day
 	doy			= today.strftime('%j')
 	
 	ymd 		= "%d%02d%02d" % (year, month, day)		
+
+	if verbose:
+		print "dt", dt, ymd
 
 	mydir		= os.path.join(config.data_dir,"quakes", str(year),doy, regionName)
 	if not os.path.exists(mydir):            

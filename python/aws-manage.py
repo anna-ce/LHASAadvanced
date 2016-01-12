@@ -18,18 +18,31 @@ import argparse
 force		= 0
 verbose		= 0
 
-buckets = ["ojo-d2", "ojo-d3"]
+buckets = ["ojo-d2", "ojo-d3", "ojo-d4", "ojo-d5", "ojo-d6", "ojo-d7", "ojo-d8", "ojo-d9"]
 
 dirs2	= ["trmm"]
 
 dirs	= [	"ant_r/d02",
 			"ant_r/d03",
+			"ant_r/d07",
+			"ant_r/d08",
+			"ant_r/d09",
+			"geos5",
+			"gpm",
 			"landslide_nowcast/d02",
 			"landslide_nowcast/d03",
+			"landslide_nowcast/d07",
+			"landslide_nowcast/d08",
+			"landslide_nowcast/d09",
+			"landslide_nowcast/d10",
+			"modis_af",
+			"modis_burned_areas",
+			"quakes",
 			"trmm",
 			"trmm/3B42RT",
 			"trmm/d02",
 			"trmm/d03"
+			"viirs_chla"
 		]
 	
 def manage_buckets(conn, dl):
@@ -44,7 +57,8 @@ def manage_buckets(conn, dl):
 			msg 	= ""
 			name	= key.name
 			dirname	= os.path.dirname(name)
-			if (len(dirname)==8) and (dt.date() < dl):
+			#print dirname, dt.date(), dl
+			if (dt.date() < dl):
 				msg = "** delete **"
 				print b, name, key.size, dt, msg
 				keysList.append(key)
@@ -96,7 +110,7 @@ if __name__ == '__main__':
 	conn 	= S3Connection(aws_access_key, aws_secret_access_key)
 	
 	today 	= datetime.date.today()
-	delta	= timedelta(days=90)
+	delta	= timedelta(days=60)
 	dl		= today - delta
 	
 	manage_buckets(conn, dl)

@@ -18,8 +18,7 @@ var fs 			 				= require('fs'),
 	query_digiglobe				= require("../../lib/query_digiglobe"),
 	query_modislst				= require("../../lib/query_modislst"),
 
-	//query_trmm				= require("../../lib/query_trmm"),
-	
+	qt							= require("../../lib/s3queries/query_ba")
 	query_planet_labs			= require("../../lib/query_planet_labs"),
 	query_locationcast			= require("../../lib/query_locationcast");
 	// query_pop					= require("../../lib/query_pop");
@@ -202,13 +201,14 @@ module.exports = {
 		var bbox			= req.query['bbox'] ? req.query['bbox'].split(',').map(parseFloat) : undefined
 		var itemsPerPage	= req.query['itemsPerPage'] || 10
 		var startIndex		= req.query['startIndex'] || 1
-		var startTime		= req.query['startTime'] ? moment(req.query['startTime']) : moment("1970-01-01")
+		var limit			= req.query['limit'] || 100
+		limit				= parseInt(limit)
 		var endTime			= req.query['endTime'] ? moment(req.query['endTime']) : moment()
+		var startTime		= req.query['startTime'] ? moment(req.query['startTime']) : moment().subtract(limit,"days")
 		var lat				= parseFloat(req.query['lat'])
 		var lon				= parseFloat(req.query['lon'])
-		var limit			= req.query['limit'] || 100
 					
-		logger.info("opensearch", req.query)
+		logger.info("opensearch", req.query, endTime.format(), startTime.format())
 		
 		if( bbox && !ValidateBBox(bbox)) {
 			return res.send(400, "Invalid BBox")

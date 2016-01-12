@@ -5,7 +5,9 @@
 import os, inspect, sys, math, urllib
 import argparse
 
+import datetime
 from datetime import date
+
 from dateutil.parser import parse
 from osgeo import gdal
 import numpy
@@ -141,12 +143,10 @@ def get_daily_gpm_files(trmm_gis_files, mydir, year, month):
 		sys.exit(-1)
 
 	for f in trmm_gis_files:
-		if verbose:
-			print "Trying to download", f
 		local_filename = os.path.join(mydir, f)
 		if not os.path.exists(local_filename):
 			if verbose:
-				print "Downloading it...", f
+				print "Trying to Downloading...", f
 			file = open(local_filename, 'wb')
 			try:
 				ftp.retrbinary("RETR " + f, file.write)
@@ -155,7 +155,7 @@ def get_daily_gpm_files(trmm_gis_files, mydir, year, month):
 				print "GPM IMERG FTP Error", sys.exc_info()[0], e					
 				os.remove(local_filename)
 				ftp.close();
-				sys.exit(-2)
+				return
 
 	ftp.close()
 	
@@ -190,52 +190,50 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 		os.makedirs(region_dir)
 	
 	origFileName 		= os.path.join(gpm_dir,gis_file_day)
-	ds 					= gdal.Open(origFileName)
-	geotransform		= ds.GetGeoTransform()
-
-	xorg				= geotransform[0]
-	yorg  				= geotransform[3]
-	pixelsize			= geotransform[1]
-	xmax				= xorg + geotransform[1]* ds.RasterXSize
-	ymax				= yorg - geotransform[1]* ds.RasterYSize
 	
-	bbox				= [xorg, ymax, xmax, yorg]
-	
-	supersampled_file	= os.path.join(region_dir, "%s.%s_x2.tif" % (name, ymd))
+	if not os.path.exists(origFileName):
+		print "File does not exist", origFileName
+		return
+		
+	ds 						= gdal.Open(origFileName)
+	geotransform			= ds.GetGeoTransform()
 
+	xorg					= geotransform[0]
+	yorg  					= geotransform[3]
+	pixelsize				= geotransform[1]
+	xmax					= xorg + geotransform[1]* ds.RasterXSize
+	ymax					= yorg - geotransform[1]* ds.RasterYSize
+	
+	bbox					= [xorg, ymax, xmax, yorg]
+	
+	geojsonDir				= os.path.join(region_dir,"geojson_%s" % (name))
+	levelsDir				= os.path.join(region_dir,"levels_%s" % (name))
+
+	supersampled_file		= os.path.join(region_dir, "%s.%s_x2.tif" % (name, ymd))
+	merge_filename 			= os.path.join(geojsonDir, "%s.%s.geojson" % (name, ymd))
+	topojson_filename 		= os.path.join(geojsonDir, "..", "%s.%s.topojson" % (name,ymd))
+	topojson_gz_filename 	= os.path.join(geojsonDir, "..", "%s.%s.topojson.gz" % (name,ymd))
+	browse_filename 		= os.path.join(geojsonDir, "..", "%s.%s_browse.tif" % (name,ymd))
+	subset_aux_filename 	= os.path.join(geojsonDir, "..", "%s.%s_small_browse.tif.aux.xml" % (name, ymd))
+	subset_filename 		= os.path.join(geojsonDir, "..", "%s.%s_small_browse.tif" % (name, ymd))
+	osm_bg_image			= os.path.join(config.data_dir, "gpm", "osm_bg.png")	
+	sw_osm_image			= os.path.join(geojsonDir, "..", "%s.%s_thn.png" % (name, ymd))
+	tif_image				= os.path.join(geojsonDir, "..", "%s.%s.tif" % (name, ymd))
+	rgb_tif_image			= os.path.join(geojsonDir, "..", "%s.%s.rgb.tif" % (name, ymd))
+	geojson_filename 		= os.path.join(geojsonDir, "..", "%s.%s.json" % (name,ymd))
+
+	if os.path.exists(topojson_gz_filename):
+		return
+		
 	if force or not os.path.exists(supersampled_file):
 		cmd 			= "gdalwarp -overwrite -q -tr %f %f -te %f %f %f %f -r cubicspline -co COMPRESS=LZW %s %s"%(pixelsize/2, pixelsize/2, bbox[0], bbox[1], bbox[2], bbox[3], origFileName, supersampled_file)
 		execute(cmd)
 	
-	geojsonDir	= os.path.join(region_dir,"geojson_%s" % (name))
 	if not os.path.exists(geojsonDir):            
 		os.makedirs(geojsonDir)
 
-	levelsDir	= os.path.join(region_dir,"levels_%s" % (name))
 	if not os.path.exists(levelsDir):            
 		os.makedirs(levelsDir)
-
-	#shpDir	= os.path.join(region_dir,"shp_%s" % (name))
-	#cmd 	= "rm -rf " + shpDir
-	#execute(cmd)
-	#os.makedirs(shpDir)
-
-	merge_filename 		= os.path.join(geojsonDir, "%s.%s.geojson" % (name, ymd))
-	topojson_filename 	= os.path.join(geojsonDir, "..", "%s.%s.topojson" % (name,ymd))
-	browse_filename 	= os.path.join(geojsonDir, "..", "%s.%s_browse.tif" % (name,ymd))
-	subset_aux_filename = os.path.join(geojsonDir, "..", "%s.%s_small_browse.tif.aux.xml" % (name, ymd))
-	subset_filename 	= os.path.join(geojsonDir, "..", "%s.%s_small_browse.tif" % (name, ymd))
-	
-	#osm_bg_image		= os.path.join(geojsonDir, "..", "osm_bg.png")	
-	osm_bg_image		= os.path.join(config.data_dir, "gpm", "osm_bg.png")
-	
-	sw_osm_image		= os.path.join(geojsonDir, "..", "%s.%s_thn.png" % (name, ymd))
-	tif_image			= os.path.join(geojsonDir, "..", "%s.%s.tif" % (name, ymd))
-	rgb_tif_image		= os.path.join(geojsonDir, "..", "%s.%s.rgb.tif" % (name, ymd))
-
-	geojson_filename 	= os.path.join(geojsonDir, "..", "%s.%s.json" % (name,ymd))
-	#shapefile_gz		= os.path.join(geojsonDir, "..", "%s.shp.gz" % name)
-	#shp_zip_file		= os.path.join(geojsonDir, "..", "%s.shp.zip" % name)
 
 	levels 				= [377, 233, 144, 89, 55, 34, 21, 13, 8, 5, 3]
 		
@@ -249,7 +247,7 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 	hexColors 			= [ "#f7fcf0","#e0f3db","#ccebc5","#a8ddb5","#7bccc4","#4eb3d3","#2b8cbe","#0868ac","#084081","#810F7C","#4D004A" ]
 	
 	color_file			= os.path.join("cluts", "gpm_colors.txt")
-	if force or (verbose and not os.path.exists(rgb_tif_filename)):	
+	if force or (verbose and not os.path.exists(rgb_tif_image)):	
 		cmd = "gdaldem color-relief -q -alpha -of GTiff %s %s %s" % ( tif_image, color_file, rgb_tif_image)
 		execute(cmd)
 	
@@ -325,12 +323,134 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 	
 	file_list = [ sw_osm_image, topojson_filename+".gz", tif_image ]
 	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
-	#CopyToS3( s3_bucket, s3_folder, file_list, 1, 1 )
 	
 	if not verbose: # Cleanup
 		cmd = "rm -rf %s %s %s %s %s %s %s %s %s" % (origFileName, supersampled_file, merge_filename, topojson_filename, subset_aux_filename, browse_filename, subset_filename, geojsonDir, levelsDir)
 		execute(cmd)
 
+#
+# Get 30mn files every 30mn
+#
+def process_30mn_files(gpm_dir, year, month, day, ymd):
+	# Startting looking at 30mn and 3hr files
+	startTime 	= datetime.datetime(year,month,day)
+	minute 		= 0
+	files		= []
+	today		= datetime.datetime.now()
+	
+	while minute<1440:
+		sh 	= startTime.hour
+		sm	= startTime.minute
+		ss	= startTime.second
+		em	= sm + 29
+		
+		dt					= datetime.datetime(year, month, day, sh,em,0)
+		if( dt < today):	
+			#gis_file_3hr 		= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S%02d%02d00-E%02d%d59.%04d.V03E.3hr.tif"%(year, month, day,sh,sm,sh,em,minute)
+			#gis_file_3hr_tfw 	= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S%02d%02d00-E%02d%d59.%04d.V03E.3hr.tfw"%(year, month, day,sh,sm,sh,em,minute)
+
+			gis_file_30mn 		= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S%02d%02d00-E%02d%d59.%04d.V03E.30min.tif"%(year, month, day,sh,sm,sh,em,minute)
+			gis_file_30mn_tfw 	= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S%02d%02d00-E%02d%d59.%04d.V03E.30min.tfw"%(year, month, day,sh,sm,sh,em,minute)
+		
+			print gis_file_30mn
+
+			files.append(gis_file_30mn)
+			files.append(gis_file_30mn_tfw)
+		
+			minute += 30
+			startTime += datetime.timedelta(minutes=30)
+		else:
+			minute = 1440
+	
+	print "Get 30mn files...."
+	get_daily_gpm_files(files, gpm_dir, year, month)
+	
+	# Process them
+	for f in files:
+		try:
+			if f.index(".30min.tif"):
+				arr = f.split("-")
+				print "processing", f, arr[3][1:]
+		
+				process(gpm_dir, "gpm_30mn", f, ymd+"."+arr[3][1:])
+		except ValueError:
+			pass
+	
+#
+# Get 3hr files every 3 hrs and the 1-day files so we can run the landslide model every 3hrs
+#
+def process_3hrs_files(gpm_dir, year, month, day, ymd):
+	# Startting looking at 30mn and 3hr files
+	startTime 	= datetime.datetime(year,month,day)
+	hour 		= 0
+	minute		= 0
+	files		= []
+	today		= datetime.datetime.now()
+	
+	while hour < 24:
+		sh 	= hour
+		sm	= startTime.minute
+		ss	= startTime.second
+		
+		dt						= datetime.datetime(year, month, day, sh, 0, 0)
+		if( dt < today):	
+			gis_file_3hr 		= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S%02d0000-E%02d2959.%04d.V03E.3hr.tif"%(year, month, day,sh,sh,minute)
+			gis_file_3hr_tfw 	= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S%02d0000-E%02d2959.%04d.V03E.3hr.tfw"%(year, month, day,sh,sh,minute)
+
+			gis_file_1day 		= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S%02d0000-E%02d2959.%04d.V03E.1day.tif"%(year, month, day,sh,sh,minute)
+			gis_file_1day_tfw 	= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S%02d0000-E%02d2959.%04d.V03E.1day.tfw"%(year, month, day,sh,sh,minute)
+		
+			#print gis_file_3hr
+			print gis_file_1day
+			
+			files.append(gis_file_3hr )
+			files.append(gis_file_3hr_tfw)
+			
+			files.append(gis_file_1day )
+			files.append(gis_file_1day_tfw)
+		
+			hour 		+= 3
+			minute		+= 3*60 
+			startTime 	+= datetime.timedelta(hours=3)
+		else:
+			hour = 24
+	
+	print "Get 3hr/1-day files...."
+	get_daily_gpm_files(files, gpm_dir, year, month)
+	
+	for f in files:
+		try:
+			if f.index(".3hrs.tif"):
+				arr = f.split("-")
+				print "processing", f, arr[3][1:]
+		
+				process(gpm_dir, "gpm_3hrs", f, ymd+"."+arr[3][1:])
+		except ValueError:
+			pass
+
+		try:
+			if f.index(".1day.tif"):
+				arr = f.split("-")
+				print "processing", f, arr[3][1:]
+		
+				process(gpm_dir, "gpm_1day", f, ymd+"."+arr[3][1:])
+		except ValueError:
+			pass
+			
+	
+def process_daily_files(files, gpm_dir, year, month, gis_file_day, gis_file_3day, gis_file_7day ):
+	if force or not os.path.exists(os.path.join(gpm_dir,gis_file_day)):
+		get_daily_gpm_files(files, gpm_dir, year, month)
+	
+	process(gpm_dir, "gpm_1d", gis_file_day, ymd)
+	process(gpm_dir, "gpm_3d", gis_file_3day, ymd)
+	process(gpm_dir, "gpm_7d", gis_file_7day, ymd)
+	
+	if not verbose:
+		for f in files:
+			cmd = "rm -rf %s" % (os.path.join(gpm_dir,f))
+			execute(cmd)
+			
 # ===============================
 # Main
 #
@@ -347,7 +467,8 @@ if __name__ == '__main__':
 	apg_input = parser.add_argument_group('Input')
 	apg_input.add_argument("-f", "--force", action='store_true', help="HydroSHEDS forces new water image to be generated")
 	apg_input.add_argument("-v", "--verbose", action='store_true', help="Verbose on/off")
-	apg_input.add_argument("-d", "--date", help="Date 2015-03-20 or today if not defined")
+	apg_input.add_argument("-d", "--date", help="--date 2015-03-20 or today if not defined")
+	apg_input.add_argument("-t", "--timespan", help="-timespan 1day | 3hrs | 30mn")
 
 	todaystr	= date.today().strftime("%Y-%m-%d")
 
@@ -356,6 +477,7 @@ if __name__ == '__main__':
 	dt			= options.date or todaystr
 	force		= options.force
 	verbose		= options.verbose
+	timespan	= options.timespan or "1day"
 	
 	today		= parse(dt)
 	year		= today.year
@@ -380,21 +502,23 @@ if __name__ == '__main__':
 	gis_file_7day		= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.7day.tif"%(year, month, day)
 	gis_file_7day_tfw 	= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.7day.tfw"%(year, month, day)
 	
-	print gis_file_day
 	files 				= [
 		gis_file_day, gis_file_day_tfw, 
 		gis_file_3day, gis_file_3day_tfw, 
 		gis_file_7day, gis_file_7day_tfw
 	]
 	
-	if force or not os.path.exists(os.path.join(gpm_dir,gis_file_day)):
-		get_daily_gpm_files(files, gpm_dir, year, month)
+	if timespan == '1day':
+		process_daily_files(files, gpm_dir, year, month, gis_file_day, gis_file_3day, gis_file_7day )
+		
+	if timespan == '3hrs':
+		process_3hrs_files(gpm_dir, year, month, day, ymd)
+		
+	if timespan == '30mn':
+		process_30mn_files(gpm_dir, year, month, day, ymd)
+		
+		
+
+
+
 	
-	process(gpm_dir, "gpm_1d", gis_file_day, ymd)
-	process(gpm_dir, "gpm_3d", gis_file_3day, ymd)
-	process(gpm_dir, "gpm_7d", gis_file_7day, ymd)
-	
-	if not verbose:
-		for f in files:
-			cmd = "rm -rf %s" % (os.path.join(gpm_dir,f))
-			execute(cmd)

@@ -67,9 +67,9 @@ require(supportEnv)
 require('./settings').boot(app)  
 
 var planetlabs_dir 		= path.join(app.get("tmp_dir"),"planet-labs");
-console.log("making", planetlabs_dir)
-
-mkdirp.sync(planetlabs_dir)	
+if( !fs.existsSync(planetlabs_dir)) {
+	mkdirp.sync(planetlabs_dir)	
+}
 var products_planetlabs	= require('./lib/products_planetlabs');
 	
 // load controllers
@@ -202,6 +202,7 @@ app.get('/contact', 							home.contact);
 app.get('/privacy', 							home.privacy);
 app.get('/terms',	 							home.terms);
 app.get('/support', 							home.support);
+app.get('/swagger.json', 						home.swagger);
 
 // Testing ESRI ARCGIS Compliance
 app.get('/esri/:id',	 						esri.index);
@@ -231,6 +232,7 @@ app.options('/opensearch',						function(req, res) { setOptionsHeaders(req, res)
 app.get('/opensearch',							if_authorized, opensearch.index);
 app.get('/opensearch/classic',					if_authorized, opensearch.classic);
 app.get('/opensearch/description',				opensearch.description);
+app.get('/opensearch/:id',						if_authorized, opensearch.index);
 
 app.all('/persona/verify',						persona.verify);
 app.all('/persona/logout',						persona.logout);

@@ -282,9 +282,11 @@
         "vhi": "Vegetation Health Index",
         "algal_bloom": "Algal Bloom",
         "burned_areas": "Burned Areas",
-        "precip_1d": "1-d Accumulated Rainfall",
-        "precip_3d": "3-d Accumulated Rainfall",
-        "precip_7d": "7-d Accumulated Rainfall",
+        "precip_1d": "1day Accumulated Rainfall",
+        "precip_30mn": "30mn Accumulated Rainfall",
+        "precip_3hrs": "3hr Accumulated Rainfall",
+        "precip_3d": "3day Accumulated Rainfall",
+        "precip_7d": "7day Accumulated Rainfall",
         "precip_1d_forecast": "1-d Accumulated Rainfall Forecast"
     },
     "filesize": {
@@ -507,6 +509,8 @@
             "gpm_1d": "1-d Rainfall Accumulation (GPM)",
             "gpm_3d": "3-d Rainfall Accumulation (GPM)",
             "gpm_7d": "7-d Rainfall Accumulation (GPM)",
+            "gpm_3hrs": "3hrs Rainfall Accumulation (GPM)",
+            "gpm_30mn": "30mn Rainfall Accumulation (GPM)",
             "legend": {
                 "1mm": "1mm",
                 "2mm": "2mm",

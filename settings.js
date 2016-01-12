@@ -98,7 +98,7 @@ var express 		= require('express'),
 			var env_var = process.env[e]
 			assert(env_var, "Missing env:"+e)
 			app.social_envs[e] = env_var
-			console.log(e, env_var)
+			//console.log(e, env_var)
 		})
 		
 		var appId				= process.env.FACEBOOK_APP_ID

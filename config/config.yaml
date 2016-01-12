@@ -106,16 +106,16 @@
         },
         "d10": {
             "name":		    "Rio2016",
-            "bbox":         [-45.172, -24.907, -41.172,  -20.907],
-            "target":       [-43.172,-22.907],
-            "min_zoom":     9,
-            "max_zoom":	    18,
+            "bbox":         [-45.0, -23.37494, -39,  -17.8916067],
+            "target":       [-42,-20.6332733],
+            "min_zoom":     8,
+            "max_zoom":	    12,
             "map_id":       "cappelaere.map-q4hdwmh3",
             "bucket":       "ojo-d10",
             "ojotiler":     "http://ojo-tiler.herokuapp.com",
             "ojobot":       "http://ojo-bot.herokuapp.com",
             "ojobot-dev":   "http://localhost:7465",
-            "susmap":       "cappelaere.kj6mvx6r"
+            "susmap":       "cappelaere.6tl0kfef"
         }
     },
 	

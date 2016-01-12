@@ -200,6 +200,20 @@ regions		= {
 	},
 	'd10': {
 		'name':			"Rio2016",
+		'bbox': 		[-45.0, -23.37494, -39,  -17.8916067],
+		'centerlat':	-20.6332733,
+		'centerlon':	-42.0,  
+		'pixelsize':	0.008333333333330,
+		'columns': 		720,
+		'rows': 		658,
+		'thn_width':	720,
+		'thn_height':	658,
+		'bucket':		"ojo-d10",
+		'thn_zoom': 	8,
+		'tiles-zoom':    "8-18"
+	},
+	'd11': {
+		'name':			"Rio2016",
 		'bbox': 		[-45.172, -24.907, -41.172,  -20.907],
 		'centerlat':	-22.907,
 		'centerlon':	-43.172,  

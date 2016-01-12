@@ -4,6 +4,7 @@ var util	= require('util'),
 	debug	= require('debug')('home'),
 	request = require('request'),
 	fs		= require('fs'),
+	path	= require('path'),
 	user	= require('../../models/user');
 
 	function render_region(dx, req, res) {
@@ -47,7 +48,16 @@ module.exports = {
 			user: 		user
 		})
 	},
-	
+	swagger: function(req, res) {
+		console.log("send swagger file")
+		var saggerFile = "./public/swagger/swagger.json"
+		res.header("Access-Control-Allow-Origin", "*")
+		var basename 	= path.basename(saggerFile)
+		var dirname 	= path.dirname(saggerFile)
+		var ext			= path.extname(saggerFile)
+		
+		res.sendFile(basename, {root: dirname})
+	},
 	// About
 	about: function(req, res) {
 		var user = req.session.user
