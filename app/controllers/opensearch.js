@@ -98,7 +98,7 @@ var productQueries = {
 		var credentials	= req.session.credentials
 		var product		= req.query['q']
 			
-		logger.info('query sources', sources, "q", product)
+		logger.info('QueryNodes sources', sources, "q", product)
 		
 		var items 	= []
 		var errMsg	= []
@@ -106,6 +106,8 @@ var productQueries = {
 		async.each( sources, function(asset, cb) {
 
 			if( _.contains(sources, asset)) {
+				//console.log("contains", sources, asset)
+				
 				var queries = productQueries[asset]
 				
 				function queryProduct(q, callback) {
@@ -208,7 +210,7 @@ module.exports = {
 		var lat				= parseFloat(req.query['lat'])
 		var lon				= parseFloat(req.query['lon'])
 					
-		logger.info("opensearch", req.query, endTime.format(), startTime.format())
+		logger.info("opensearch", req.query)
 		
 		if( bbox && !ValidateBBox(bbox)) {
 			return res.send(400, "Invalid BBox")

@@ -146,7 +146,7 @@ def get_daily_gpm_files(trmm_gis_files, mydir, year, month):
 		local_filename = os.path.join(mydir, f)
 		if not os.path.exists(local_filename):
 			if verbose:
-				print "Trying to Downloading...", f
+				print "Trying to Download...", f, " to ", local_filename
 			file = open(local_filename, 'wb')
 			try:
 				ftp.retrbinary("RETR " + f, file.write)
@@ -222,8 +222,8 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 	rgb_tif_image			= os.path.join(geojsonDir, "..", "%s.%s.rgb.tif" % (name, ymd))
 	geojson_filename 		= os.path.join(geojsonDir, "..", "%s.%s.json" % (name,ymd))
 
-	if os.path.exists(topojson_gz_filename):
-		return
+	#if os.path.exists(topojson_gz_filename):
+	#	return
 		
 	if force or not os.path.exists(supersampled_file):
 		cmd 			= "gdalwarp -overwrite -q -tr %f %f -te %f %f %f %f -r cubicspline -co COMPRESS=LZW %s %s"%(pixelsize/2, pixelsize/2, bbox[0], bbox[1], bbox[2], bbox[3], origFileName, supersampled_file)

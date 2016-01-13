@@ -167,7 +167,7 @@ if __name__ == '__main__':
 		process_global_script('gpm_global.py', ydt2)
 		process_global_script('geos5.py', dt)
 
-		process_script('viirs_CHLA.py', ydt)
+		process_script('viirs_CHLA.py', ydt, regions2)
 		
 		#process_script('chirps_prelim.py --period monthly', ydt)
 		#process_script('chirps_prelim.py --period dekad', ydt)
