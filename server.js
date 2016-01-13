@@ -46,6 +46,7 @@ var express 		= require('express'),
 				if( fname.indexOf("query_s3.js") < 0 )  {
 					var rq 			= require(fname).query
 					var subfolder	= rq.options.subfolder
+					debug("loading product", subfolder)
 					s3_products[subfolder] = rq
 				}
 			}
