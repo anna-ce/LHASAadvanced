@@ -164,7 +164,10 @@ if __name__ == '__main__':
 	region		= config.regions[regionName]
 	assert(region)
 	
-	dt			= date.today().strftime("%Y-%m-%d")
+	todaystr	= date.today().strftime("%Y-%m-%d")
+	options 	= parser.parse_args()
+
+	dt			= options.date or todaystr
 	today		= parse(dt)
 	
 	year		= today.year
