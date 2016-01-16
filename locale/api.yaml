@@ -108,10 +108,6 @@ en:
   products:
     active_fires: Active Fires
     burn_scar: Burn Scar
-    precip_1: 1-Day Precipitation
-    precip_5: 5-Day Precipitation
-    precip_10: 10-Day Precipitation
-    precip_30: 30-Day Precipitation
     flood_forecast: Flood Forecast
     flood_nowcast: Flood Nowcast
     flood_catalog: Flood Catalog
@@ -135,6 +131,8 @@ en:
     vhi: Vegetation Health Index
     algal_bloom: Algal Bloom
     burned_areas: Burned Areas
+    precip_30mn: 30-min Accumulated Rainfall
+    precip_3hrs: 3-hrs Accumulated Rainfall
     precip_1d: 1-d Accumulated Rainfall
     precip_3d: 3-d Accumulated Rainfall
     precip_7d: 7-d Accumulated Rainfall

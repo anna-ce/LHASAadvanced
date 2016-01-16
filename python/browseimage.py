@@ -15,8 +15,8 @@ import numpy
 
 MAXZOOMLEVEL 		= 32
 
-verbose = 0
-force 	= 0
+verbose = 1
+force 	= 1
 
 def execute( cmd ):
 	if verbose:

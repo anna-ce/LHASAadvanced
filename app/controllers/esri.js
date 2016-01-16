@@ -7,7 +7,9 @@ module.exports = {
 		var latitude	= 33.87
 		var longitude	= -90.77
 		
-		if( (product === "precip_1d") || (product === "precip_3d") || (product == "precip_7d") ){
+		console.log("esri product", product)
+		
+		if( (product === "precip_1d") || (product === "precip_3d") || (product == "precip_7d") || (product=="precip_3hrs") || (product="precip_30mn")){
 			source 	= "gpm"
 		} else if( product === 'landslide_nowcast') {
 			source  	= "landslide_model"

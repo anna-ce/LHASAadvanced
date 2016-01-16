@@ -1,0 +1,46 @@
+bounds: Infinity Infinity -Infinity -Infinity (spherical)
+pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
+topology: 0 arcs, 0 points
+post-quantization: 111.195km (1.00°) 111.195km (1.00°)
+prune: retained 0 / 0 arcs (NaN%)
+Processing /Users/patricecappelaere/landslide/data/viirs_chla/2016/015/V2016015.L3m_DAY_NPP_CHL_chlor_a_4km.tif:chlor_a
+wms url: http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX=-45.0,-23.391607,-39.0,-17.891607&WIDTH=305&HEIGHT=280
+created: /Users/patricecappelaere/landslide/data/viirs_chla/2016/015/d10/geojson/../osm_bg.png
+rescale for browse 100
+gdalwarp -q  -of GTiff  -te -45.0 -23.37494 -39.0 -17.891607  -t_srs EPSG:4326  -r mode  -overwrite  -co COMPRESS=DEFLATE -setci   -ts 305 280  /Users/patricecappelaere/landslide/data/viirs_chla/2016/015/d10/geojson/../viirs_chla.20160115_browse.tif /Users/patricecappelaere/landslide/data/viirs_chla/2016/015/d10/geojson/../viirs_chla.20160115_small_browse.tif
+composite -quiet -gravity center -blend 60 /Users/patricecappelaere/landslide/data/viirs_chla/2016/015/d10/geojson/../viirs_chla.20160115_small_browse.tif /Users/patricecappelaere/landslide/data/viirs_chla/2016/015/d10/geojson/../osm_bg.png /Users/patricecappelaere/landslide/data/viirs_chla/2016/015/d10/geojson/../viirs_chla.20160115_thn.jpg
+Use Ctrl-C at any time to stop monitoring progress; the backup
+will continue running. Use heroku pg:backups info to check progress.
+Stop a running backup with heroku pg:backups cancel.
+
+HEROKU_POSTGRESQL_COPPER ---backup---> b110
+
+[0KRunning... 0.00B[0KRunning... 0.00B[0KRunning... 5.55MB[0KBackup completed
+Use Ctrl-C at any time to stop monitoring progress; the backup
+will continue running. Use heroku pg:backups info to check progress.
+Stop a running backup with heroku pg:backups cancel.
+
+HEROKU_POSTGRESQL_ORANGE ---backup---> b110
+
+[0KRunning... 0.00B[0KRunning... 0.00B[0KRunning... 2.97MB[0KBackup completed
+** bucket: ojo-d2
+** bucket: ojo-d3
+** bucket: ojo-d4
+** bucket: ojo-d5
+** bucket: ojo-d6
+** bucket: ojo-d7
+** bucket: ojo-d8
+** bucket: ojo-d9
+/Users/patricecappelaere/landslide/data/ojo-d2
+/Users/patricecappelaere/landslide/data/ojo-d3
+/Users/patricecappelaere/landslide/data/ojo-d4
+/Users/patricecappelaere/landslide/data/ojo-d5
+/Users/patricecappelaere/landslide/data/ojo-d6
+/Users/patricecappelaere/landslide/data/ojo-d7
+/Users/patricecappelaere/landslide/data/ojo-d8
+/Users/patricecappelaere/landslide/data/ojo-d9
+Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/process_all.py /Users/patricecappelaere/Development/ojo/ojo-bot/python
+heroku pg:backups capture --app ojo-streamer HEROKU_POSTGRESQL_COPPER_URL 
+cd /Users/patricecappelaere/Development/ojo/ojo-wiki
+heroku pg:backups capture --app ojo-wiki HEROKU_POSTGRESQL_ORANGE_URL 
+process_all.sh Done: Sat Jan 16 07:43:20 EST 2016

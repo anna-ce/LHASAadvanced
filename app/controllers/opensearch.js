@@ -98,6 +98,7 @@ var productQueries = {
 		var credentials	= req.session.credentials
 		var product		= req.query['q']
 			
+		
 		logger.info('QueryNodes sources', sources, "q", product)
 		
 		var items 	= []

@@ -101,6 +101,7 @@
 
 // Let's do an opensearch query for gpm precipitation
   var opensearch_url = "<%=host%>/opensearch?q=<%=product%>&lat=<%=latitude%>&lon=<%=longitude%>&limit=1&sources=<%=source%>"
+  console.log("opensearch_url", opensearch_url)
   
   $("#opensearch_url").html("<a href='"+opensearch_url+"'>OpenSearch URL</a>")
   

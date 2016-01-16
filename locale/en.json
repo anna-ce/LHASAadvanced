@@ -287,7 +287,8 @@
         "precip_3hrs": "3hr Accumulated Rainfall",
         "precip_3d": "3day Accumulated Rainfall",
         "precip_7d": "7day Accumulated Rainfall",
-        "precip_1d_forecast": "1-d Accumulated Rainfall Forecast"
+        "precip_1d_forecast": "1-d Accumulated Rainfall Forecast",
+        "precip_movie": "30mn Rainfall Movie"
     },
     "filesize": {
         "B": "B",

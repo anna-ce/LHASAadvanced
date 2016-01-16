@@ -73,12 +73,12 @@ def get_latest_mcd45_file(mydir, regionName, year):
 	
 	local_filename = os.path.join(mydir, download)
 	if os.path.exists(local_filename):
-		print "already downloaded and processed..."
-		ftp.close()
-		if not force:
-			sys.exit(0)
-		else:
-			return local_filename
+		print "already downloaded."
+		#ftp.close()
+		#if not force:
+		#	sys.exit(0)
+		#else:
+		return local_filename
 	else:
 		if verbose:
 			print "Downloading ", download+".gz", " to:", local_filename+".gz"
@@ -234,6 +234,10 @@ if __name__ == '__main__':
 	if not os.path.exists(mydir):            
 		os.makedirs(mydir)
 	
+	# File only availabel every month
+	if month == 1:
+		year -= 1
+		
 	latest_file = get_latest_mcd45_file(mydir, regionName, year)
 	
 	s3_folder	= os.path.join("burned_areas", str(year), doy)
