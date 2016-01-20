@@ -473,7 +473,8 @@ if __name__ == '__main__':
 	todaystr	= date.today().strftime("%Y-%m-%d")
 
 	options 	= parser.parse_args()
-
+	
+	
 	dt			= options.date or todaystr
 	force		= options.force
 	verbose		= options.verbose

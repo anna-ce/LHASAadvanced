@@ -384,17 +384,28 @@
 	function FormatResponseElement(key, el) {
 		var id = el["@id"]
 
-		var html = "<div class='well'>";
-		html += "<a href='JavaScript:MapIt(\""+id+"\")' class='btn'><span class='glyphicon glyphicon-globe'></span>&nbsp;Map</a>&nbsp;";
-		html += "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>";
+		var html 		= "<div class='well'>";
+		var draggable	= " ";
+		
+		// only map if we have a map action
+		var action = el.action;
+		for( var a in action ) {
+			if( action[a]['@type'] == "ojo:map" ) {
+				html += "<a href='JavaScript:MapIt(\""+id+"\")' class='btn'><span class='glyphicon glyphicon-globe'></span>&nbsp;Map</a>&nbsp;";
+				html += "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>";				
+				draggable = " ondragstart='handleDrag(event);' draggable='true' "
+			}
+		} 
+			
 		html += "<table class='table table-condensed'>";
 		html += "<tr><td width='100'>"
 				
 		// take last image
 		var image_url = el.image[0];
 		if (image_url.url) image_url = image_url.url; 
+		console.log("browse_image_url", image_url)
 		
-		html += "&nbsp;<a href='"+ image_url+"' id='"+id+"' ondragstart='handleDrag(event);' draggable='true' ><img class='img-thumbnail' id='"+id+"' src=\'"+image_url+"\' width='140' /></a>";
+		html += "&nbsp;<a href='"+ image_url+"' id='"+id+"'" + draggable +"' ><img class='img-thumbnail' id='"+id+"' src=\'"+image_url+"\' width='140' /></a>";
 		html += "<a href='javascript:footprint(\""+id+"\");'><img src='/img/footprint.png' width=32 /></a>"
 		html += "</td><td>"
 		

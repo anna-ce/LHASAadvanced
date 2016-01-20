@@ -39,6 +39,7 @@
     "mkdirp": "0.4.0",
     "moment": "~2.5.1",
     "multer": "0.1.7",
+    "ngeohash": "^0.6.0",
     "osm-and-geojson": "0.1.2",
     "pg": "git://github.com/cappelaere/node-postgres.git",
     "request": "2.33.0",

@@ -15,7 +15,7 @@ import numpy
 
 MAXZOOMLEVEL 		= 32
 
-verbose = 1
+verbose = 0
 force 	= 1
 
 def execute( cmd ):

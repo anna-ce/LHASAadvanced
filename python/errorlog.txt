@@ -3,26 +3,26 @@ pre-quantization: 111.195km (1.00°) 111.195km (1.00°)
 topology: 0 arcs, 0 points
 post-quantization: 111.195km (1.00°) 111.195km (1.00°)
 prune: retained 0 / 0 arcs (NaN%)
-Processing /Users/patricecappelaere/landslide/data/viirs_chla/2016/015/V2016015.L3m_DAY_NPP_CHL_chlor_a_4km.tif:chlor_a
+Processing /Users/patricecappelaere/landslide/data/viirs_chla/2016/018/V2016018.L3m_DAY_NPP_CHL_chlor_a_4km.tif:chlor_a
 wms url: http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX=-45.0,-23.391607,-39.0,-17.891607&WIDTH=305&HEIGHT=280
-created: /Users/patricecappelaere/landslide/data/viirs_chla/2016/015/d10/geojson/../osm_bg.png
+created: /Users/patricecappelaere/landslide/data/viirs_chla/2016/018/d10/geojson/../osm_bg.png
 rescale for browse 100
-gdalwarp -q  -of GTiff  -te -45.0 -23.37494 -39.0 -17.891607  -t_srs EPSG:4326  -r mode  -overwrite  -co COMPRESS=DEFLATE -setci   -ts 305 280  /Users/patricecappelaere/landslide/data/viirs_chla/2016/015/d10/geojson/../viirs_chla.20160115_browse.tif /Users/patricecappelaere/landslide/data/viirs_chla/2016/015/d10/geojson/../viirs_chla.20160115_small_browse.tif
-composite -quiet -gravity center -blend 60 /Users/patricecappelaere/landslide/data/viirs_chla/2016/015/d10/geojson/../viirs_chla.20160115_small_browse.tif /Users/patricecappelaere/landslide/data/viirs_chla/2016/015/d10/geojson/../osm_bg.png /Users/patricecappelaere/landslide/data/viirs_chla/2016/015/d10/geojson/../viirs_chla.20160115_thn.jpg
+gdalwarp -q  -of GTiff  -te -45.0 -23.37494 -39.0 -17.891607  -t_srs EPSG:4326  -r mode  -overwrite  -co COMPRESS=DEFLATE -setci   -ts 305 280  /Users/patricecappelaere/landslide/data/viirs_chla/2016/018/d10/geojson/../viirs_chla.20160118_browse.tif /Users/patricecappelaere/landslide/data/viirs_chla/2016/018/d10/geojson/../viirs_chla.20160118_small_browse.tif
+composite -quiet -gravity center -blend 60 /Users/patricecappelaere/landslide/data/viirs_chla/2016/018/d10/geojson/../viirs_chla.20160118_small_browse.tif /Users/patricecappelaere/landslide/data/viirs_chla/2016/018/d10/geojson/../osm_bg.png /Users/patricecappelaere/landslide/data/viirs_chla/2016/018/d10/geojson/../viirs_chla.20160118_thn.jpg
 Use Ctrl-C at any time to stop monitoring progress; the backup
 will continue running. Use heroku pg:backups info to check progress.
 Stop a running backup with heroku pg:backups cancel.
 
-HEROKU_POSTGRESQL_COPPER ---backup---> b110
+HEROKU_POSTGRESQL_COPPER ---backup---> b113
 
-[0KRunning... 0.00B[0KRunning... 0.00B[0KRunning... 5.55MB[0KBackup completed
+[0KRunning... 0.00B[0KRunning... 0.00B[0KRunning... 0.00B[0KRunning... 4.72MB[0KRunning... 4.72MB[0KBackup completed
 Use Ctrl-C at any time to stop monitoring progress; the backup
 will continue running. Use heroku pg:backups info to check progress.
 Stop a running backup with heroku pg:backups cancel.
 
-HEROKU_POSTGRESQL_ORANGE ---backup---> b110
+HEROKU_POSTGRESQL_ORANGE ---backup---> b113
 
-[0KRunning... 0.00B[0KRunning... 0.00B[0KRunning... 2.97MB[0KBackup completed
+[0KPending... /[0KRunning... 0.00B[0KRunning... 2.98MB[0KBackup completed
 ** bucket: ojo-d2
 ** bucket: ojo-d3
 ** bucket: ojo-d4
@@ -43,4 +43,4 @@ Process All Path: /Users/patricecappelaere/Development/ojo/ojo-bot/python/proces
 heroku pg:backups capture --app ojo-streamer HEROKU_POSTGRESQL_COPPER_URL 
 cd /Users/patricecappelaere/Development/ojo/ojo-wiki
 heroku pg:backups capture --app ojo-wiki HEROKU_POSTGRESQL_ORANGE_URL 
-process_all.sh Done: Sat Jan 16 07:43:20 EST 2016
+process_all.sh Done: Tue Jan 19 07:42:59 EST 2016

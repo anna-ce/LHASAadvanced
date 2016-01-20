@@ -8,7 +8,7 @@
 import os, sys, inspect
 import argparse
 
-import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont
 import textwrap
 import numpy as np
 import tempfile
@@ -52,9 +52,10 @@ class LEGEND:
 		yoffset = 5
 		
 		for iy in np.arange(255):
+			print iy, int(value)
 			for ix in np.arange(25):
-				#print iy, int(value)
-				im.putpixel( (ix+xoffset,iy+yoffset), int(value))
+				#im.putpixel( (ix+xoffset,iy+yoffset), int(value))
+				pix[ix+xoffset,iy+yoffset] = int(value)
 			value -= step
 			
 		tf 		= tempfile.NamedTemporaryFile()
@@ -67,7 +68,7 @@ class LEGEND:
 		print cmd
 		os.system(cmd) 
 		
-		os.remove(tmpName)
+		#os.remove(tmpName)
 				
 	def addNumbers(self):
 		im				= Image.open(self.outputFileName)
