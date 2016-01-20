@@ -246,7 +246,7 @@ def process_files(gpm_dir, prefix):
 	pool.close()
 	pool.join()
 
-	#make_movie()
+	make_movie()
 	
 #
 # ======================================================================
@@ -302,9 +302,8 @@ if __name__ == '__main__':
 	ymd 		= "%d%02d%02d" % (year, month, day)		
 	
 	#
-	# Make sure we have ffmpeg & ImageMagick installed
+	# Make sure we have gdal & ImageMagick installed
 	#
-	# confirm_availability_of("ffmpeg")
 	confirm_availability_of("convert")
 	confirm_availability_of("gdalwarp")
 	confirm_availability_of("gdaldem")

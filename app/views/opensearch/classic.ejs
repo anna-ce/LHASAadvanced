@@ -169,7 +169,7 @@
 						<% } %>
 					    <div class="form-group">
 					      <label for="limit"><%= gettext('query.limit')%>:</label>
-					      	<input id="limit" size='3' value="90">
+					      	<input id="limit" size='3' value="10">
 					    </div>
 										
 					    <button type='submit' class="btn btn-primary"><%= gettext('query.submit')%></button>
@@ -403,7 +403,6 @@
 		// take last image
 		var image_url = el.image[0];
 		if (image_url.url) image_url = image_url.url; 
-		console.log("browse_image_url", image_url)
 		
 		html += "&nbsp;<a href='"+ image_url+"' id='"+id+"'" + draggable +"' ><img class='img-thumbnail' id='"+id+"' src=\'"+image_url+"\' width='140' /></a>";
 		html += "<a href='javascript:footprint(\""+id+"\");'><img src='/img/footprint.png' width=32 /></a>"

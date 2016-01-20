@@ -99,7 +99,7 @@
 						for( var u in using ) {
 							var use = using[u]
 							console.log("ojo:download", use)
-							if( use['mediaType'] == 'application/gzip') {
+							if( (use['mediaType'] == 'application/gzip') || (use['mediaType'] == 'application/x-gzip')) {
 								var use_url = use['url']
 								if( use_url.indexOf(".topojson.gz")>0 ) {
 									topojson_url = use_url
