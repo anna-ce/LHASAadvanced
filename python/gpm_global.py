@@ -27,6 +27,7 @@ ftp_site 	= "jsimpson.pps.eosdis.nasa.gov"
 #gis_path 	= "pub/merged/3B42RT/"
 gis_path 	= "data/imerg/gis/"
 
+
 def execute( cmd ):
 	if verbose:
 		print cmd
@@ -152,7 +153,7 @@ def get_daily_gpm_files(trmm_gis_files, mydir, year, month):
 				ftp.retrbinary("RETR " + f, file.write)
 				file.close()
 			except Exception as e:
-				print "GPM IMERG FTP Error", sys.exc_info()[0], e					
+				print "GPM IMERG FTP Error", filepath, sys.exc_info()[0], e					
 				os.remove(local_filename)
 				ftp.close();
 				return
@@ -246,10 +247,11 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 	# GPM palette
 	hexColors 			= [ "#f7fcf0","#e0f3db","#ccebc5","#a8ddb5","#7bccc4","#4eb3d3","#2b8cbe","#0868ac","#084081","#810F7C","#4D004A" ]
 	
-	color_file			= os.path.join("cluts", "gpm_colors.txt")
-	if force or (verbose and not os.path.exists(rgb_tif_image)):	
-		cmd = "gdaldem color-relief -q -alpha -of GTiff %s %s %s" % ( tif_image, color_file, rgb_tif_image)
-		execute(cmd)
+	if verbose:
+		color_file			= os.path.join("cluts", "gpm_colors.txt")
+		if force or (verbose and not os.path.exists(rgb_tif_image)):	
+			cmd = "gdaldem color-relief -q -alpha -of GTiff %s %s %s" % ( supersampled_file, color_file, rgb_tif_image)
+			execute(cmd)
 	
 	
 	ds 					= gdal.Open( supersampled_file )
@@ -307,7 +309,8 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 	adjusted_levels 		= [3770, 2330, 1440, 890, 550, 340, 210, 130, 80, 50, 30]
 	
 	if not os.path.exists(osm_bg_image):
-		print "wms", ymax, xorg, yorg, xmax, osm_bg_image
+		if verbose:
+			print "wms", ymax, xorg, yorg, xmax, osm_bg_image
 		wms(yorg, xorg, ymax, xmax, osm_bg_image)
 			
 	zoom = 2
@@ -473,7 +476,6 @@ if __name__ == '__main__':
 	todaystr	= date.today().strftime("%Y-%m-%d")
 
 	options 	= parser.parse_args()
-	
 	
 	dt			= options.date or todaystr
 	force		= options.force

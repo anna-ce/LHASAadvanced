@@ -4,7 +4,7 @@
 #
 # Daily processing of all products
 #
-import sys, os, argparse
+import sys, os, argparse, logging
 from datetime import date, timedelta
 from subprocess import call
 from smtplib import SMTP_SSL as SMTP  
@@ -18,11 +18,9 @@ except:
 	
 force 	= 1
 verbose = 0
-	
-def emailErrorFile():
+
+def emailFile( textfile):
 	try:
-		# Read Error File
-		textfile 	= "./errorlog.txt"
 		fp 			= open(textfile, 'rb')
 		msg 		= MIMEText(fp.read())
 		fp.close()
@@ -34,7 +32,8 @@ def emailErrorFile():
 		msg['Subject'] 	= 'Error processing daily landslide'
 		msg['From'] 	= me
 		msg['To'] 		= me
-		print "sending error email to ", me
+		if verbose:
+			print "sending email to ", me
 		# Send the message via our own SMTP server, but don't include the envelope header.
 		s = SMTP(smtp)
 		s.login(me, password)
@@ -43,6 +42,10 @@ def emailErrorFile():
 	except Exception as e:
 		print "exception sending email exception", e
 		
+def emailErrorFile():
+		textfile 	= "./errorlog.txt"
+		emailFile( textfile)
+		
 def execute(cmd):
 	if( force ):
 		cmd += " -f"
@@ -50,10 +53,12 @@ def execute(cmd):
 	if(verbose):
 		cmd += " -v"
 		print cmd	
+	
+	logger.info(cmd)
 		
 	err = call(cmd, shell=True)
 	if err > 0:
-		print "process_all execute err", err
+		logger.error("execute err %s", err)
 		emailErrorFile()
 	
 def get_daily_forecast():
@@ -67,7 +72,6 @@ def process_script( str, dt, regions ):
 		
 		cmd = "python ./%s --region %s --date %s" % (str, r, dt)
 		execute(cmd)
-
 	
 def process_global_script( str, dt ):
 	cmd = "cat /dev/null > errorlog.txt"
@@ -118,6 +122,12 @@ if __name__ == '__main__':
 	parser 		= argparse.ArgumentParser(description='Landslide/Flood Processing')
 	apg_input 	= parser.add_argument_group('Input')
 	
+	logfile		= "./process.log"
+	os.system("rm -f "+logfile)
+	
+	logging.basicConfig(filename = "./process.log", level=logging.INFO, format='%(asctime)s %(message)s')
+	logger 		= logging.getLogger();
+	
 	try:
 		me 			= sys.argv[0]
 		mypath		= os.path.dirname(me) 
@@ -128,7 +138,6 @@ if __name__ == '__main__':
 	except:
 		print "Unexpected error:", sys.exc_info()[0]
 		sys.exit(-1)
-	
 	
 	apg_input.add_argument("-f", "--force", 	action='store_true', help="Forces new products to be re-generated")
 	apg_input.add_argument("-v", "--verbose", 	action='store_true', help="Verbose Flag")
@@ -180,4 +189,5 @@ if __name__ == '__main__':
 		backup_ojo_wiki()
 
 	cleanup()
+	emailFile( logfile )
 	

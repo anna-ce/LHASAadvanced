@@ -412,7 +412,6 @@ class GFMS:
 
 		if not self.verbose:
 			cmd = "rm -rf %s %s %s %s %s %s %s %s" % ( browse_filename, input_fullname, subset_filename, super_fullname, output_rgb_fullname, browse_aux_filename, levelsDir, geojsonDir )
-			print cmd
 			self.execute(cmd)
 			
 # ======================================================================

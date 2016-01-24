@@ -6,10 +6,11 @@ import os
 #
 
 #data_dir 	= "/Volumes/MacBay3/landslide/data"
-data_dir 	= "/Users/patricecappelaere/landslide/data"
+#data_dir 	= "/Users/patricecappelaere/landslide/data"
 
 #DATA_DIR					= os.environ['WORKSHOP_DIR'] + "/data"
-DATA_DIR					= data_dir
+#DATA_DIR					= data_dir
+DATA_DIR					= os.environ['DATA_DIR']
 
 #
 # Data Directories

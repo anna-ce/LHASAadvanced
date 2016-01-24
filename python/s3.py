@@ -22,8 +22,8 @@ def CopyToS3( s3_bucket, s3_folder, file_list, force, verbose ):
 	
 		# Check if it already exists
 		possible_key = mybucket.get_key(k.key)
-		if verbose:
-			print "Possible key", possible_key, k.key
+		#if verbose:
+		#	print "Possible key", possible_key, k.key
 		
 		if force or not possible_key:
 			if verbose:

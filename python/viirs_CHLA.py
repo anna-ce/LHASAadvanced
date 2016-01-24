@@ -120,7 +120,8 @@ def process_viirs_chla_file( mydir, regionName, viirs_filename, s3_bucket, s3_fo
 		for l in reversed(levels):
 			fileName 		= os.path.join(geojsonDir, "viirs_chla_level_%d.geojson"%l)
 			if os.path.exists(fileName):
-				print "merge", fileName
+				if verbose:
+					print "merge", fileName
 				with open(fileName) as data_file:    
 					data = json.load(data_file)
 		
@@ -133,7 +134,11 @@ def process_viirs_chla_file( mydir, regionName, viirs_filename, s3_bucket, s3_fo
 		    json.dump(jsonDict, outfile)	
 
 		# Convert to topojson
-		cmd 	= "topojson -p -o "+ topojson_filename + " " + merge_filename
+		quiet = "> /dev/null 2>&1"
+		if verbose:
+			quiet = " "
+		
+		cmd 	= "topojson -p -o "+ topojson_filename + " " + merge_filename+quiet
 		execute(cmd)
 
 		cmd 	= "gzip --keep "+ topojson_filename

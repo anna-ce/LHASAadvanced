@@ -14,6 +14,7 @@ import json
 from datetime import date
 from dateutil.parser import parse
 import urllib2
+import multiprocessing
 
 # Site configuration
 import config
@@ -25,13 +26,49 @@ from level import CreateLevel
 
 verbose 	= 0
 force 		= 0
+processes	= multiprocessing.cpu_count()
 
 def execute( cmd ):
 	if verbose:
 		print cmd
 	os.system(cmd)
 
+def multiprocessing_download(filepath, local_filename):
+	ftp_site 	= "ftp.nccs.nasa.gov"
+	ftp 		= FTP(ftp_site)
+
+	ftp.login('gmao_ops','')
+	ftp.cwd(filepath)
+	
+	f 			= os.path.basename(local_filename)
+	if not os.path.exists(local_filename):
+		print "Trying to Download...", f
+		file = open(local_filename, 'wb')
+		try:
+			ftp.retrbinary("RETR " + f, file.write)
+			file.close()
+		except Exception as e:
+			print "GEOS5 FTP Error", filepath, filename, sys.exc_info()[0], e					
+			os.remove(local_filename)
+			ftp.close();
+			sys.exit(-2)
+		
 def get_files(year, mydir, files):
+	pool 		= multiprocessing.Pool(processes=processes)
+	mstr		= "%02d" % month
+	dstr		= "%02d" % day
+
+	ftp_site 		= "ftp.nccs.nasa.gov"
+	filepath 		= "fp/forecast/Y%s/M%s/D%s/H00" % (year, mstr, dstr)		
+	local_filenames = map(lambda x: os.path.join(mydir, x), files)
+
+	for f in local_filenames:
+		pool.apply_async(multiprocessing_download, args=(filepath, f, ))
+	
+	pool.close()
+	pool.join()
+	
+def get_files_old(year, mydir, files):
 	# ftp://ftp.nccs.nasa.gov/fp/forecast/Y2015/M08/D10/H00/
 
 	mstr		= "%02d" % month

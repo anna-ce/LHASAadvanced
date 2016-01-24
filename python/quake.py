@@ -101,7 +101,9 @@ def process_url( mydir, url, ymd, bbox, zoom, s3_bucket, s3_folder ):
 			
 			results['features'].append(f)
 			
-	print "found", len(results['features'])
+	if verbose:
+		print "found", len(results['features'])
+		
 	with open(geojson_filename, 'w') as outfile:
 	    json.dump(results, outfile)
 		

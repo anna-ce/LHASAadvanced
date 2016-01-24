@@ -4,7 +4,7 @@
 #
 # Generates a BrowseImage using an OSM Map Background and superimposing the product
 #
-import os, inspect
+import os, inspect, socket
 import sys, urllib, httplib
 import math
 import argparse
@@ -12,6 +12,10 @@ from osgeo import gdal
 from osgeo import osr
 from osgeo import ogr
 import numpy
+
+# timeout in seconds
+timeout = 10
+socket.setdefaulttimeout(timeout)
 
 MAXZOOMLEVEL 		= 32
 
@@ -272,7 +276,8 @@ def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_o
 	data				= band.ReadAsArray(0, 0, src_ds.RasterXSize, src_ds.RasterYSize )
 	
 	if scale != 1:
-		print "rescale for browse", scale
+		if verbose:
+			print "rescale for browse", scale
 		data *= scale
 	
 	#print geotransform

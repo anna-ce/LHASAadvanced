@@ -73,7 +73,8 @@ def get_latest_mcd45_file(mydir, regionName, year):
 	
 	local_filename = os.path.join(mydir, download)
 	if os.path.exists(local_filename):
-		print "already downloaded."
+		if verbose:
+			print "already downloaded:", local_filename
 		#ftp.close()
 		#if not force:
 		#	sys.exit(0)
@@ -140,16 +141,16 @@ def process_mcd45_file(mydir, dx, file_name, s3_bucket, s3_folder):
 	# use ullr
 	if force or not os.path.exists(subset_file):
 		lonlats	= "" + str(bbox[0]) + " " + str(bbox[3]) + " " + str(bbox[2]) + " " + str(bbox[1])
-		cmd 	= "gdal_translate -projwin " + lonlats +" "+ file_name + " " + subset_file
+		cmd 	= "gdal_translate -q -projwin " + lonlats +" "+ file_name + " " + subset_file
 		execute(cmd)
 
 	# color it using colormap
 	if force or not os.path.exists(resampled_rgb_file):
-		cmd = "gdaldem color-relief -alpha " + subset_file + " " + color_file + " " + resampled_rgb_file
+		cmd = "gdaldem color-relief -q -alpha " + subset_file + " " + color_file + " " + resampled_rgb_file
 		execute(cmd)
 		
 	if force or not os.path.exists(bmp_file):
-		cmd = "gdal_translate -b 1 -of BMP -ot Byte %s %s" % (resampled_rgb_file, bmp_file)
+		cmd = "gdal_translate -q -b 1 -of BMP -ot Byte %s %s" % (resampled_rgb_file, bmp_file)
 		execute(cmd)
 	
 		execute("rm -f "+bmp_file+".aux.xml")

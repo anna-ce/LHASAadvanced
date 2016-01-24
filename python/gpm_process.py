@@ -146,10 +146,9 @@ def process(gpm_dir, name, gis_file_day, ymd, regionName, region, s3_bucket, s3_
 		    json.dump(jsonDict, outfile)	
 
 		if verbose:
-			output = " > /dev/null 2>&1"
-		else:
 			output = " "
-		
+		else:
+			output = " > /dev/null 2>&1"		
 
 		# Convert to topojson
 		cmd 	= "topojson -p -o "+ topojson_filename + " " + merge_filename + output

@@ -1,6 +1,7 @@
 .DS_Store
 *.log
 node_modules/*
+python/*.pyc
 tmp/*
 .monitor
 transifex.auth
