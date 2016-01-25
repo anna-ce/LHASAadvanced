@@ -1,6 +1,6 @@
 # OJO Bot
 
-This is a prototype for NASA. 
+This is an experimental publisher for NASA disaster architecture
 
 Pat Cappelaere	Vightel		pat@cappelaere.com
 
@@ -24,3 +24,24 @@ npm install
 > ngrok 7465
 	This will display the current status of the tunnel and a public URL To use for testing
 	You will have to change the Facebook App Setting Website Site URL to point to proper URL
+	
+## Local Docker
+Install docker and start VM
+
+> docker-machine env default
+> bash
+> eval "$(docker-machine env default)"
+> docker ps
+
+### Building container
+> docker-compose build
+
+### Start locally
+> docker-compose up web
+> open "http://$(docker-machine ip default):8080"
+
+Start shell
+> docker-compose run shell
+
+### Deploy to heroku
+> heroku docker:release

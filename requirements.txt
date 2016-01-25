@@ -1,2 +1,7 @@
 python-dateutil
+python-numpy
+python-scipy
+python-psycopg2 
+python-argparse
+python-boto
 
