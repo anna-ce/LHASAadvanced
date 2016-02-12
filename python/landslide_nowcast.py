@@ -5,7 +5,7 @@
 # Generates 24hr Forecast Landslide Estimate
 #
 
-import numpy, sys, os, inspect, urllib
+import numpy, sys, os, glob, inspect, urllib, shutil
 import argparse
 
 from osgeo import osr, gdal
@@ -108,7 +108,7 @@ def build_tif(dx, region, dir, date):
 	forecast_landslide_100m_bin 		= os.path.join(config.data_dir, "landslide_nowcast", dx, ymd, "landslide_nowcast.%s_100m.tif" %(ymd))
 	forecast_landslide_100m_bin_rgb 	= os.path.join(config.data_dir, "landslide_nowcast", dx, ymd, "landslide_nowcast.%s_100m_rgb.tif" %(ymd))	
 	
-	color_file							= "./cluts/landslide_colors.txt"
+	color_file							= os.path.join(basedir,"cluts", "landslide_colors.txt")
 	
 	#shp_file 							= os.path.join(config.data_dir,"landslide_nowcast", dx, ymd, "landslide_nowcast.%s.shp" % (ymd))
 	geojson_file 						= os.path.join(config.data_dir,"landslide_nowcast", dx, ymd, "landslide_nowcast.%s.geojson" % (ymd))
@@ -339,21 +339,21 @@ def build_tif(dx, region, dir, date):
 			execute(cmd)
 			execute("rm -f "+tmp_file)
 			
-		cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + ymd + " --file " + topojson_gz_file
+		cmd = "aws-copy.py --bucket " + bucketName + " --folder " + ymd + " --file " + topojson_gz_file
 		if verbose:
 			cmd += " --verbose"
 		if force:
 			cmd += " --force"
 		execute(cmd)
 
-		cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + ymd + " --file " + thumbnail_file
+		cmd = "aws-copy.py --bucket " + bucketName + " --folder " + ymd + " --file " + thumbnail_file
 		if verbose:
 			cmd += " --verbose"
 		if force:
 			cmd += " --force"	
 		execute(cmd)
 
-		cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + ymd + " --file " + forecast_landslide_bin
+		cmd = "aws-copy.py --bucket " + bucketName + " --folder " + ymd + " --file " + forecast_landslide_bin
 		if verbose:
 			cmd += " --verbose"
 		if force:
@@ -500,9 +500,7 @@ def process(mydir, scene, s3_bucket, s3_folder, zoom, bbox):
 		cmd	= "rm -rf " + os.path.join(fpath,"step_*")
 		execute(cmd)
 
-		
-		
-		
+
 def generate_map( dx, date, year, doy ):
 	# make sure it exists
 	region		= config.regions[dx]
@@ -524,7 +522,31 @@ def generate_map( dx, date, year, doy ):
 	scene 				=  "landslide_nowcast.%s" %(ymd)
 	process(mydir, scene, s3_bucket, s3_folder, region['thn_zoom'], bbox)
 	
+def cleanup(dx):
+	today 		= datetime.date.today()
+	delta		= timedelta(days=config.DAYS_KEEP)
+	dl			= today - delta
 	
+	# For that particular region, delete directory
+	regiondir	= os.path.join(config.data_dir, "landslide_nowcast", dx)
+	
+	lst 		= glob.glob(regiondir+'/[0-9]*')
+	
+	for l in lst:
+		basename = os.path.basename(l)
+		if len(basename)==8:
+			year 	= int(basename[0:4])
+			month	= int(basename[4:6])
+			day		= int(basename[6:8])
+			dt		= datetime.date(year,month,day)
+		
+			if dt < dl:
+				msg = "** delete "+l
+				if verbose:
+					print msg
+				shutil.rmtree(l)
+				
+				
 # =======================================================================
 # Main
 # python landslide_nowcast.py --region d03 --date 2015-04-07 -v
@@ -538,6 +560,7 @@ if __name__ == '__main__':
 	apg_input.add_argument("-r", "--region", 	required=True, help="Region: d02|d03")
 	apg_input.add_argument("-d", "--date", 		help="date: 2014-11-20 or today if not defined")
 	
+		
 	todaystr	= date.today().strftime("%Y-%m-%d")
 	
 	options 	= parser.parse_args()
@@ -546,6 +569,8 @@ if __name__ == '__main__':
 	region		= options.region
 	dt			= options.date or todaystr
 	
+	basedir 	= os.path.dirname(os.path.realpath(sys.argv[0]))
+
 	assert(config.regions[region])
 	
 	today		= parse(dt)
@@ -565,6 +590,8 @@ if __name__ == '__main__':
 		print "generating forecast for", today.strftime("%Y-%m-%d")
 		
 	generate_map(region, dt, year, doy)
+	
+	cleanup(region)
 	
 	if verbose:
 		print "Done."

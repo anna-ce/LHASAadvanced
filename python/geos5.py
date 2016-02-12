@@ -1,18 +1,22 @@
+#!/usr/bin/env python
+#
 # GEOS-5 precipitaiton Product
 # http://gmao.gsfc.nasa.gov/products/documents/GEOS_5_FP_File_Specification_ON4v1_0.pdf
 
-import numpy, sys, os, inspect
+import numpy, sys, os, inspect, glob, shutil
 from osgeo import osr, gdal
 from ftplib import FTP
 import datetime
 
-from datetime import date
+import datetime
+from datetime import date, timedelta
+from dateutil.parser import parse
+
 import warnings
 from gzip import GzipFile
 import numpy
 import json
-from datetime import date
-from dateutil.parser import parse
+
 import urllib2
 import multiprocessing
 
@@ -239,7 +243,28 @@ def process_file( mydir, filename, s3_bucket, s3_folder):
 	if not verbose: # Cleanup
 		cmd = "rm -rf %s %s %s %s %s %s %s %s" % ( merge_filename, browse_filename, topojson_filename, subset_filename, super_subset_file, subset_aux_filename, geojsonDir, levelsDir)
 		execute(cmd)
-		
+
+def cleanupdir( mydir):
+	print "cleaning up", mydir
+	today 		= datetime.date.today()
+	delta		= timedelta(days=config.DAYS_KEEP)
+	dl			= today - delta
+	lst 		= glob.glob(mydir+'/[0-9]*')
+
+	for l in lst:
+		basename = os.path.basename(l)
+		if len(basename)==8:
+			year 	= int(basename[0:4])
+			month	= int(basename[4:6])
+			day		= int(basename[6:8])
+			dt		= datetime.date(year,month,day)
+	
+			if dt < dl:
+				msg = "** delete "+l
+				if verbose:
+					print msg
+				shutil.rmtree(l)
+	
 # ======================================================================
 #	python geos5.py --date 2015-08-10 -v
 #
@@ -259,6 +284,8 @@ if __name__ == '__main__':
 	force		= options.force
 	verbose		= options.verbose
 	
+	basedir 	= os.path.dirname(os.path.realpath(sys.argv[0]))
+	
 	todaystr	= date.today().strftime("%Y-%m-%d")
 	dt			= options.date or todaystr
 	
@@ -273,7 +300,7 @@ if __name__ == '__main__':
 	ymd 		= "%d%02d%02d" % (year, month, day)
 	ymd1 		= "%d%02d%02d" % (tomorrow.year, tomorrow.month, tomorrow.day)
 	
-	mydir 		= os.path.join(config.GEOS5_DIR, str(year), doy)
+	mydir 		= os.path.join(config.GEOS5_DIR, ymd)
 	if not os.path.exists(mydir):            
 		os.makedirs(mydir)
 	
@@ -288,7 +315,7 @@ if __name__ == '__main__':
 	#	files.append(filename)
 
 	
-	color_file				= os.path.join("cluts", "geos5_colors.txt")
+	color_file				= os.path.join(basedir, "cluts", "geos5_colors.txt")
 	tif_filename			= os.path.join(mydir, "geos5_precip.%s.unflipped.tif" % ymd)
 	flipped_tif_filename	= os.path.join(mydir, "geos5_precip.%s.tif" % ymd)
 	
@@ -333,7 +360,7 @@ if __name__ == '__main__':
 		ds		= None
 		
 		# Flip it since it is bottom up
-		cmd = "python ./flip_raster.py -o %s %s" % ( flipped_tif_filename, tif_filename )
+		cmd = "flip_raster.py -o %s %s" % ( flipped_tif_filename, tif_filename )
 		execute(cmd)
 		
 	rgb_tif_filename	= os.path.join(mydir, "geos5_precip.%s.flipped.rgb.tif" % ymd)
@@ -353,3 +380,5 @@ if __name__ == '__main__':
 			cmd = "rm %s %s" %(ffilename, ftif_filename)
 			execute(cmd)
 			cmd = "rm %s %s" %(tif_filename, rgb_tif_filename)
+
+	cleanupdir(config.GEOS5_DIR)

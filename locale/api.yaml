@@ -10,6 +10,7 @@ en:
     list: List
     query: Query
     search: Search
+    api: Api
             
   tabs:
     general: General
@@ -68,6 +69,7 @@ en:
     chirps: CHIRPS
     gfms: UMD Global Flood Monitoring System
     geos5: GSFC Global Modeling and Assimilation Office
+    viirs: NASA/NOAA VIIRS
 
   sensors:
     sar: SAR
@@ -202,6 +204,14 @@ en:
       source: 
         label: Source
         source: NASA
+      legend: Active Fires
+
+    active_fires_viirs:
+      title: VIIRS Active Fires
+      credits: VIIRS Geog UMD
+      source: 
+        label: Source
+        source: UMD
       legend: Active Fires
 
     quakes:

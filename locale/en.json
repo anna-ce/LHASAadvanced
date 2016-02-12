@@ -155,7 +155,8 @@
         "register": "Register",
         "list": "List",
         "query": "Query",
-        "search": "Search"
+        "search": "Search",
+        "api": "Api"
     },
     "tabs": {
         "general": "General",
@@ -214,8 +215,9 @@
         "umd": "University of Maryland Geographic Department",
         "chirps": "CHIRPS",
         "gfms": "UMD Global Flood Monitoring System",
-        "geos5": "GSFC Global Modeling and Assimilation Office"
-    },
+        "geos5": "GSFC Global Modeling and Assimilation Office",
+        "viirs": "NASA/NOAA VIIRS"
+     },
     "sensors": {
         "sar": "SAR",
         "ali": "ALI",
@@ -367,6 +369,16 @@
             "legend": "Active Fires",
 			"modis_af": "Active Fires"
         },
+        "active_fires_viirs": {
+            "title": "VIIRS Active Fires",
+            "credits": "VIIRS Geog UMD",
+            "source": {
+                "label": "Source",
+                "source": "UMD"
+            },
+            "legend": "Active Fires",
+			"viirs_af": "Active Fires"
+        },
         "quakes": {
             "title": "USGS Earthquakes",
             "credits": "USGS",
@@ -507,25 +519,29 @@
                 "label": "Source",
                 "source": "NASA GSFC GPM"
             },
-            "gpm_1d": "1-d Rainfall Accumulation (GPM)",
-            "gpm_3d": "3-d Rainfall Accumulation (GPM)",
-            "gpm_7d": "7-d Rainfall Accumulation (GPM)",
-            "gpm_3hrs": "3hrs Rainfall Accumulation (GPM)",
-            "gpm_30mn": "30mn Rainfall Accumulation (GPM)",
+            "gpm_1d": "1-d Rainfall Accum. (GPM)",
+            "gpm_3d": "3-d Rainfall Accum. (GPM)",
+            "gpm_7d": "7-d Rainfall Accum. (GPM)",
+            "gpm_3hrs": "3hrs Rainfall Accum. (GPM)",
+            "gpm_30mn": "30mn Rainfall Accum. (GPM)",
             "legend": {
-                "1mm": "1mm",
-                "2mm": "2mm",
-                "3mm": "3mm",
-                "5mm": "5mm",
-                "8mm": "8mm",
-                "13mm": "13mm",
-                "21mm": "21mm",
-                "34mm": "34mm",
-                "55mm": "55mm",
-                "89mm": "89mm",
-                "144mm": "144mm",
-                "233mm": "233mm",
-                "377mm": "377mm"
+                "1": "1mm",
+                "2": "2mm",
+                "3": "3mm",
+                "5": "5mm",                
+                "8": "8mm",
+                "13": "13mm",
+                "21": "21mm",
+                "34": "34mm",
+                "55": "65mm",
+                "89": "89mm",           
+                "144": "144mm",
+                "233": "233mm",                
+                "377": "377mm",
+                "610": "610mm",
+                "987": "987mm",
+                "1597": "1597mm",
+                "2584": "2584mm"
             }
         },
         "precipitation_forecast": {

@@ -129,7 +129,8 @@ if __name__ == '__main__':
 	apg_input.add_argument("-r", "--region", 	required=True, 		 help="Region: d02|d03")
 	apg_input.add_argument("-d", "--date", 		required=True, 		 help="Date: 2014-11-20")
 	
-	options = parser.parse_args()
+	options 		= parser.parse_args()
+	basedir 		= os.path.dirname(os.path.realpath(sys.argv[0]))
 
 	force			= options.force
 	verbose			= options.verbose

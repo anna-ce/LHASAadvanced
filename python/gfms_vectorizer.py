@@ -7,11 +7,12 @@
 # Requirements:
 #	gdal, numpy pytrmm...
 #
-import numpy, sys, os, inspect, urllib
+import numpy, sys, os, inspect, urllib, glob, shutil
 import argparse
 import numpy
 import json
 
+import datetime
 from datetime import date
 from dateutil.parser import parse
 
@@ -89,22 +90,22 @@ class GFMS:
 		if self.verbose:
 			print "gfms highres processing region:", dx, dt
 			
-		output_file			= os.path.join(self.inpath, "gfms", ymd, "Routed_%s%02d00.tif" % (ym, day))
-		subset_file			= os.path.join(self.inpath, "gfms", dx, ymd, "Routed_%s_subset_%s.tif" % (dt, dx))
-		subset_rgb_file		= os.path.join(self.inpath, "gfms", dx, ymd, "Routed_%s_subset_%s_rgb.tif" % (dt, dx))
+		output_file				= os.path.join(self.inpath, "gfms", ymd, "Routed_%s%02d00.tif" % (ym, day))
+		subset_file				= os.path.join(self.inpath, "gfms", dx, ymd, "Routed_%s_subset_%s.tif" % (dt, dx))
+		subset_rgb_file			= os.path.join(self.inpath, "gfms", dx, ymd, "Routed_%s_subset_%s_rgb.tif" % (dt, dx))
 		
 		supersampled_file		= os.path.join(self.inpath, "gfms", dx, ymd, "Routed_%s_hr_subset_%s.tif" % (dt, dx))
 		supersampled_file_rgb	= os.path.join(self.inpath, "gfms", dx, ymd, "Routed_%s_hr_subset_%s_rgb.tif" % (dt, dx))
 		
-		color_file 			= os.path.join("cluts", "gfms_colors.txt")
+		color_file 				= os.path.join(basdir, "cluts", "gfms_colors.txt")
 		
-		shp_file 			= os.path.join(config.data_dir,"gfms", dx, ymd, "gfms_24_"+dx+"_"+ymd+".shp")
-		geojson_file 		= os.path.join(config.data_dir,"gfms", dx, ymd, "gfms_24_"+dx+"_"+ymd+".geojson")
-		topojson_file		= os.path.join(config.data_dir,"gfms", dx, ymd, "gfms_24_"+dx+"_"+ymd+".topojson")
-		topojson_gz_file	= os.path.join(config.data_dir,"gfms", dx, ymd, "gfms_24_"+dx+"_"+ymd+".topojson.gz")
-		thumbnail_file 		= os.path.join(config.data_dir,"gfms", dx, ymd, "gfms_24_%s_%s.thn.png" % (dx,ymd))
+		shp_file 				= os.path.join(config.data_dir,"gfms", dx, ymd, "gfms_24_"+dx+"_"+ymd+".shp")
+		geojson_file 			= os.path.join(config.data_dir,"gfms", dx, ymd, "gfms_24_"+dx+"_"+ymd+".geojson")
+		topojson_file			= os.path.join(config.data_dir,"gfms", dx, ymd, "gfms_24_"+dx+"_"+ymd+".topojson")
+		topojson_gz_file		= os.path.join(config.data_dir,"gfms", dx, ymd, "gfms_24_"+dx+"_"+ymd+".topojson.gz")
+		thumbnail_file 			= os.path.join(config.data_dir,"gfms", dx, ymd, "gfms_24_%s_%s.thn.png" % (dx,ymd))
 		
-		static_file 		= os.path.join(config.data_dir,"gfms", dx, "%s_static.tiff" % (dx))
+		static_file 			= os.path.join(config.data_dir,"gfms", dx, "%s_static.tiff" % (dx))
 		
 		#mbtiles_dir 		= os.path.join(config.data_dir,"mbtiles", "gfms_highres_%s_%s" % (dt, dx))
 		#mbtiles_fname 		= mbtiles_dir+".mbtiles"
@@ -154,12 +155,12 @@ class GFMS:
 			self.execute(cmd)
 			self.execute("rm "+tmp_file)
 		
-		cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + ymd + " --file " + topojson_gz_file
+		cmd = "aws-copy.py --bucket " + bucketName + " --folder " + ymd + " --file " + topojson_gz_file
 		if verbose:
 			cmd += " --verbose"
 		self.execute(cmd)
 
-		cmd = "./aws-copy.py --bucket " + bucketName + " --folder " + ymd + " --file " + thumbnail_file
+		cmd = "aws-copy.py --bucket " + bucketName + " --folder " + ymd + " --file " + thumbnail_file
 		if verbose:
 			cmd += " --verbose"
 		self.execute(cmd)
@@ -193,7 +194,7 @@ class GFMS:
 		output_rgb_fname		= "Routed_%s%02d00_rgb.tif" % (ym, day)
 		
 		output_rgb_fullname		= os.path.join(self.inpath, "gfms", ymd, output_rgb_fname)
-		color_file 				= os.path.join("cluts", "gfms_colors.txt")
+		color_file 				= os.path.join(basedir, "cluts", "gfms_colors.txt")
 		
 		#mbtiles_dir 			= os.path.join(config.data_dir,"mbtiles", "gfms_highres_%s%02d00" % (ym, day))
 		#mbtiles_fname 			= mbtiles_dir+".mbtiles"
@@ -423,6 +424,34 @@ def checkdirs():
 				
 	if not os.path.exists(gmfs_dir):
 	    os.makedirs(gmfs_dir)
+
+def cleanupdir( mydir):
+	if verbose:
+		print "cleaning up", mydir
+		
+	today 		= datetime.date.today()
+	delta		= timedelta(days=config.DAYS_KEEP)
+	dl			= today - delta
+	lst 		= glob.glob(mydir+'/[0-9]*')
+
+	for l in lst:
+		basename = os.path.basename(l)
+		if len(basename)==8:
+			year 	= int(basename[0:4])
+			month	= int(basename[4:6])
+			day		= int(basename[6:8])
+			dt		= datetime.date(year,month,day)
+	
+			if dt < dl:
+				msg = "** delete "+l
+				if verbose:
+					print msg
+				shutil.rmtree(l)
+
+def cleanup():
+	_dir			=  os.path.join(config.data_dir,"gfms")
+	cleanupdir(_dir)
+	
 #
 # ======================================================================
 #
@@ -440,6 +469,8 @@ if __name__ == '__main__':
 	apg_input.add_argument("-d", "--date", help="Date 2015-03-20 or today if not defined")
 	
 	options 	= parser.parse_args()
+	basedir 	= os.path.dirname(os.path.realpath(sys.argv[0]))
+	
 	todaystr	= date.today().strftime("%Y-%m-%d")
 
 	force		= options.force
@@ -465,5 +496,8 @@ if __name__ == '__main__':
 	
 	app.get_latest_file()
 	app.process_lowres()
+	
 	#app.get_latest_highres_file()
 	#app.process_highres()
+	
+	cleanup()

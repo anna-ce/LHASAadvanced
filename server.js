@@ -57,7 +57,7 @@ var express 		= require('express'),
 	
 global.app 			= express();
 app.root 			= process.cwd();
-
+console.log("app root", app.root)
 var mainEnv 		= path.join(app.root, '/config/environment'+'.js');
 var supportEnv 		= path.join(app.root, '/config/environments/' + app.settings.env+'.js');
 
@@ -204,6 +204,7 @@ app.get('/privacy', 							home.privacy);
 app.get('/terms',	 							home.terms);
 app.get('/support', 							home.support);
 app.get('/swagger.json', 						home.swagger);
+app.get('/api',			 						home.api);
 
 // Testing ESRI ARCGIS Compliance
 app.get('/esri/:id',	 						esri.index);

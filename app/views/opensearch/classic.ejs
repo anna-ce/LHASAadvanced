@@ -700,7 +700,7 @@
 					if( use['mediaType'] == 'application/json' ) {
 						var topojson_url = use['url']
 						console.log("json", topojson_url)
-					} else if( (use['mediaType'] == 'application/gzip') && (use['url'].indexOf("json.gz") > 0) ) {
+					} else if( (use['mediaType'] == 'application/x-gzip') && (use['url'].indexOf("json.gz") > 0) ) {
 						var topojson_url = use['url']
 						console.log("use ...json.gz", topojson_url)
 						break;
