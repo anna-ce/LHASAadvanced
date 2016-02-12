@@ -207,7 +207,7 @@ module.exports = {
 		var limit			= req.query['limit'] || 100
 		limit				= parseInt(limit)
 		var endTime			= req.query['endTime'] ? moment(req.query['endTime']) : moment()
-		var startTime		= req.query['startTime'] ? moment(req.query['startTime']) : moment().subtract(limit,"days")
+		var startTime		= req.query['startTime'] ? moment(req.query['startTime']) : moment().subtract(7,"days")
 		var lat				= parseFloat(req.query['lat'])
 		var lon				= parseFloat(req.query['lon'])
 					
