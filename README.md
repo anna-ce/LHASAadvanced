@@ -9,8 +9,7 @@ Pat Cappelaere	Vightel		pat@cappelaere.com
 npm install
 
 ## Set  Env	
-Edit the env.template file and source it
-
+Edit the envs.docker.sh.tmpl file, save it as envs.docker.sh and source it
 
 ## Local Docker
 Install docker and start VM
