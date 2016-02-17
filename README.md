@@ -54,9 +54,6 @@ Start shell
 > docker run -i -p 8080:8080 -t ojobot_development /bin/bash	!Note: Seems to work with curl -i 192.168.99.100:8080
 > docker-compose up development			!Note: postgres connection problem
 
-### Deploy to Heroku
-Note: it uses docker-compose "web"
-> heroku docker:release
 
 ### Checking/Cleaning docker images
 > docker images
@@ -75,28 +72,36 @@ Lambda functions for scheduling python scripts
 
 Postgresql database to host sessions and landslide inventory
 
-
 Install new rack from GUI (Takes a while)
 
 Enable SSH
 > convox instances keyroll
+
 Check
 > convox instances
+
 Scale Up
 > convox rack scale --type m3.large
 
 > convox scale web --count 1 
+
 > convox scale web --memory 512
+
 > convox scale worker --count 1 
+
 > convox scale worker --memory 512
 
 Create App
 > convox apps create ojo-bot
+
 Check
 > convox apps info
+
 > convox instances
+
 Deploy
 > convox deploy
+
 Check logs
 > convox logs
 

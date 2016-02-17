@@ -90,7 +90,8 @@ class TRMM:
 	#			
 	def get_daily_trmm_files(self):
 		#filepath = path+str(self.year)
-		filepath = gis_path+ "%d%02d" % (self.year,self.month)
+		#filepath = gis_path+ "%d%02d" % (self.year,self.month)
+		filepath  = gis_path
 		
 		if verbose:
 			print("Checking "+ftp_site+"/" + filepath + " for latest file...")
@@ -103,15 +104,8 @@ class TRMM:
 		
 		except Exception as e:
 			print "FTP login Error", sys.exc_info()[0], e
-			
-			# Try alternate
-			try:
-				print "Try alternate", gis_path
-				filepath = gis_path
-				ftp.cwd(filepath)
-			except Exception as e:
-				print "Exception", e
-				sys.exit(-1)
+			print "Exception", e
+			sys.exit(-1)
 
 		#print self.trmm_gis_files
 		for f in self.trmm_gis_files:

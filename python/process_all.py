@@ -182,7 +182,7 @@ if __name__ == '__main__':
 		
 		process_global_script('gfms_vectorizer.py', ydt)
 		process_global_script('gpm_global.py', ydt2)
-		process_global_script('geos5.py', dt)
+		#process_global_script('geos5.py', dt)
 
 		#process_script('viirs_CHLA.py', ydt, regions2)
 		
@@ -193,8 +193,8 @@ if __name__ == '__main__':
 	
 		#get_modis_floodmap()
 		
-		backup_ojo_streamer()
-		backup_ojo_wiki()
+		#backup_ojo_streamer()
+		#backup_ojo_wiki()
 
 	cleanup()
 	emailFile( logfile, "Success processing python scripts!" )

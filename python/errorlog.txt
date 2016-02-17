@@ -1,0 +1,53 @@
+Traceback (most recent call last):
+  File "./gpm_global.py", line 18, in <module>
+    import config
+  File "/Users/patricecappelaere/Development/ojo/ojo-bot/python/config.py", line 12, in <module>
+    DATA_DIR					= os.environ['DATA_DIR']
+  File "/usr/local/Cellar/python/2.7.10_2/Frameworks/Python.framework/Versions/2.7/lib/python2.7/UserDict.py", line 23, in __getitem__
+    raise KeyError(key)
+KeyError: 'DATA_DIR'
+Traceback (most recent call last):
+  File "aws-manage.py", line 15, in <module>
+    import config
+  File "/Users/patricecappelaere/Development/ojo/ojo-bot/python/config.py", line 12, in <module>
+    DATA_DIR					= os.environ['DATA_DIR']
+  File "/usr/local/Cellar/python/2.7.10_2/Frameworks/Python.framework/Versions/2.7/lib/python2.7/UserDict.py", line 23, in __getitem__
+    raise KeyError(key)
+KeyError: 'DATA_DIR'
+Process All Path: process_all.py 
+Processing date: 2016-02-17 2016-02-16 2016-02-15
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+exception sending email exception 'FASTMAIL_USER'
+process_all.sh Done: Wed Feb 17 09:57:40 EST 2016

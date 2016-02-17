@@ -13,7 +13,7 @@ DATA_DIR					= os.environ['DATA_DIR']
 data_dir					= DATA_DIR
 
 # NUmber of days to keep data for
-DAYS_KEEP					= 60
+DAYS_KEEP					= 70
 #
 # Data Directories
 #
