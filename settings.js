@@ -31,7 +31,6 @@ var express 		= require('express'),
 
   	require('winston-papertrail').Papertrail;
 
-
 	global.logger = new winston.Logger({
 		transports: [
 			new (winston.transports.Console)(),
@@ -53,13 +52,15 @@ var express 		= require('express'),
 		accessKeyId: 		process.env.AWS_ACCESSKEYID, 
 		secretAccessKey: 	process.env.AWS_SECRETACCESSKEY,
 		region:				process.env.AWS_REGION || 'us-east-1',
-		cache_dir: 			"./tmp",
+		cache_dir: 			app.get('tmp_dir')
 	}
-
+	
+	//console.log(process.env)
+	
 	assert( app.s3_config.accessKeyId, "Missing S3 accessKeyID env" )
 	assert( app.s3_config.secretAccessKey, "Missing S3 secretAccessKey env")
 	assert( app.s3_config.region, "Missing S3 region env" )
-
+	
 	aws.config.update(app.s3_config);
 
 	app.s3 = new aws.S3();
@@ -69,7 +70,6 @@ var express 		= require('express'),
 	// Pick a secret to secure your session storage
 	app.sessionSecret = process.env.COOKIEHASH || 'OJO-BOT-PGC-2014-04';
 	
-
 	exports.boot = function(app){
 
 		// The port that this express app will listen on

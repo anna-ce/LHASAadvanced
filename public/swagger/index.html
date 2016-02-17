@@ -52,7 +52,7 @@
               clientId: "your-client-id",
               clientSecret: "your-client-secret-if-required",
               realm: "your-realms",
-              appName: "your-app-name", 
+              appName: "OJO-BOT", 
               scopeSeparator: ",",
               additionalQueryStringParams: {}
             });
@@ -71,7 +71,7 @@
         onFailure: function(data) {
           log("Unable to Load SwaggerUI");
         },
-        docExpansion: "none",
+        docExpansion: "list",
         jsonEditor: false,
         apisSorter: "alpha",
         defaultModelRendering: 'schema',
@@ -107,6 +107,7 @@
 </head>
 
 <body class="swagger-section">
+<!--
 <div id='header'>
   <div class="swagger-ui-wrap">
     <a id="logo" href="http://swagger.io">swagger</a>
@@ -116,6 +117,16 @@
       <div class='input'><a id="explore" href="#" data-sw-translate>Explore</a></div>
     </form>
   </div>
+</div>
+-->
+<div id=header>
+    <div class="swagger-ui-wrap">
+      <a id="logo" href="/">Home</a>
+	</div>
+</div>
+<br/>
+<div class="swagger-ui-wrap">
+<img src='/img/logo.png' width=32 />	
 </div>
 
 <div id="message-bar" class="swagger-ui-wrap" data-sw-translate>&nbsp;</div>

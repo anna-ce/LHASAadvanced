@@ -12,13 +12,14 @@
 # http://firms.modaps.eosdis.nasa.gov/active_fire/text/Central_America_24h.csv
 #
 
-import numpy, sys, os, inspect, io
+import numpy, sys, os, inspect, io, glob, shutil
 import urllib
 import csv
 import json
 import ssl
 
-from datetime import date
+import datetime
+from datetime import date, timedelta
 from dateutil.parser import parse
 
 import browseimage
@@ -101,10 +102,22 @@ def process_url( mydir, url, ymd, bbox, zoom, s3_bucket, s3_folder ):
 	osm_bg_image		= os.path.join(os.path.join(mydir,  "osm_bg_image.tif"))
 	thn_image			= os.path.join(os.path.join(mydir,  "modis_af." + ymd + '_thn.jpg'))
 	
-	context 			= ssl._create_unverified_context()
+	if verbose:
+		print "sys version", sys.version_info[0], sys.version_info[1], sys.version_info[2]
+	
+	if (sys.version_info[0] == 2) and (sys.version_info[1] >= 7) and (sys.version_info[2] > 9):
+		context 			= ssl._create_unverified_context()
+	else:
+		context				= None
 	
 	if force or not os.path.exists(csv_filename):
-		urllib.urlretrieve(url, csv_filename, context=context)
+		if verbose:
+			print "retrieve", url, csv_filename
+		
+		if context:
+			urllib.urlretrieve(url, csv_filename, context=context)
+		else:
+			urllib.urlretrieve(url, csv_filename)
 		
 	if force or not os.path.exists(geojson_filename):
 		csv_to_geojson(csv_filename, geojson_filename, bbox)
@@ -133,7 +146,13 @@ def process_url( mydir, url, ymd, bbox, zoom, s3_bucket, s3_folder ):
 	url += str(ullon) + ","+ str(lrlat) + "," + str(lrlon) + "," + str(ullat)
 	
 	if force or not os.path.exists(tif_filename):
-		urllib.urlretrieve(url, tif_filename, context=context)
+		if verbose:
+			print "retrieve", tif_filename
+		
+		if context:
+			urllib.urlretrieve(url, tif_filename, context=context)
+		else:
+			urllib.urlretrieve(url, tif_filename)
 		#print "retrieved ", tif_filename
 	
 	# superimpose the suface water over map background
@@ -144,6 +163,32 @@ def process_url( mydir, url, ymd, bbox, zoom, s3_bucket, s3_folder ):
 	file_list = [ tif_filename, geojson_filename, geojsongz_filename, thn_image ]
 	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 
+def cleanupdir( mydir):
+	if verbose:
+		print "cleaning up", mydir
+		
+	today 		= datetime.date.today()
+	delta		= timedelta(days=config.DAYS_KEEP)
+	dl			= today - delta
+	lst 		= glob.glob(mydir+'/[0-9]*')
+
+	for l in lst:
+		basename = os.path.basename(l)
+		if len(basename)==8:
+			year 	= int(basename[0:4])
+			month	= int(basename[4:6])
+			day		= int(basename[6:8])
+			dt		= datetime.date(year,month,day)
+	
+			if dt < dl:
+				msg = "** delete "+l
+				if verbose:
+					print msg
+				shutil.rmtree(l)
+
+def cleanup():
+	_dir			=  os.path.join(config.data_dir,"modis_af")
+	cleanupdir(_dir)
 #
 # ======================================================================
 #
@@ -177,7 +222,7 @@ if __name__ == '__main__':
 	
 	ymd 		= "%d%02d%02d" % (year, month, day)		
 
-	mydir		= os.path.join(config.MODIS_ACTIVE_FIRES_DIR, str(year),doy, regionName)
+	mydir		= os.path.join(config.MODIS_ACTIVE_FIRES_DIR, ymd, regionName)
 	if not os.path.exists(mydir):            
 		os.makedirs(mydir)
 
@@ -192,3 +237,4 @@ if __name__ == '__main__':
 	zoom		= region['thn_zoom']
 	
 	process_url(mydir, url_24hr, ymd, bbox, zoom, s3_bucket, s3_folder)
+	cleanup()

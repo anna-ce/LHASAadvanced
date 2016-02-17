@@ -10,10 +10,12 @@
 # Monthly product
 # 
 #
-import numpy, sys, os, inspect
+import numpy, sys, os, inspect, glob, shutil
 from osgeo import osr, gdal
 from ftplib import FTP
-from datetime import date
+
+import datetime
+from datetime import date, timedelta
 import warnings
 from gzip import GzipFile
 from browseimage import wms
@@ -62,7 +64,7 @@ def get_latest_mcd45_file(mydir, regionName, year):
 	if regionName == 'd10':
 		path		= "Collection51/TIFF/Win05/%s"%(year)		# 
 		
-	#print("cwd to "+path)
+	print("cwd to "+path)
 	ftp.cwd(path)
 	filenames 	= []
 	ftp.retrlines('NLST', filenames.append )
@@ -195,6 +197,33 @@ def process_mcd45_file(mydir, dx, file_name, s3_bucket, s3_folder):
 	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 
 	ds = None
+	
+def cleanupdir( mydir):
+	if verbose:
+		print "cleaning up", mydir
+		
+	today 		= datetime.date.today()
+	delta		= timedelta(days=config.DAYS_KEEP)
+	dl			= today - delta
+	lst 		= glob.glob(mydir+'/[0-9]*')
+
+	for l in lst:
+		basename = os.path.basename(l)
+		if len(basename)==8:
+			year 	= int(basename[0:4])
+			month	= int(basename[4:6])
+			day		= int(basename[6:8])
+			dt		= datetime.date(year,month,day)
+	
+			if dt < dl:
+				msg = "** delete "+l
+				if verbose:
+					print msg
+				shutil.rmtree(l)
+
+def cleanup():
+	_dir			=  os.path.join(config.data_dir,"modis_af")
+	cleanupdir(_dir)
 #
 # ======================================================================
 #	python modis-burnedareas.py --region d03 --date 2015-10-13 -v
@@ -231,11 +260,11 @@ if __name__ == '__main__':
 	
 	ymd 		= "%d%02d%02d" % (year, month, day)
 	
-	mydir = config.MODIS_BURNEDAREAS_DIR
+	mydir 		= os.path.join(config.MODIS_BURNEDAREAS_DIR, ymd, regionName)
 	if not os.path.exists(mydir):            
 		os.makedirs(mydir)
 	
-	# File only availabel every month
+	# File only available every month
 	if month == 1:
 		year -= 1
 		
@@ -245,3 +274,4 @@ if __name__ == '__main__':
 	s3_bucket	= region['bucket']
 	
 	process_mcd45_file( mydir, regionName, latest_file, s3_bucket, s3_folder)
+	cleanup()

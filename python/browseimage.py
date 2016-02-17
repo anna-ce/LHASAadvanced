@@ -14,7 +14,7 @@ from osgeo import ogr
 import numpy
 
 # timeout in seconds
-timeout = 10
+timeout = 30
 socket.setdefaulttimeout(timeout)
 
 MAXZOOMLEVEL 		= 32
@@ -137,9 +137,9 @@ def wms(ullat, ullon, lrlat, lrlon, osm_bg_image):
 	
 	#if verbose:
 	print "wms url:" , url
-		
+	
 	urllib.urlretrieve(url, osm_bg_image)
-
+	
 	if verbose:
 		print "created:" , osm_bg_image
 		
@@ -348,9 +348,9 @@ def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_o
 			if verbose:
 				print "Set BrowseImage ColorEntry", idx+1, decColors[idx]
 	
-		o_band.SetRasterColorTable(ct)
+		o_band.SetRasterColorTable(ct)	# Causes a TIFF ERROR  Cannot modify tag "PhotometricInterpretation" while writing
 		o_band.SetNoDataValue(0)
-		
+	
 		dst_ds_dataset.SetGeoTransform( geotransform )
 		dst_ds_dataset.SetProjection( projection )
 		

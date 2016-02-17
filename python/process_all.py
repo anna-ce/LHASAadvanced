@@ -19,7 +19,7 @@ except:
 force 	= 1
 verbose = 0
 
-def emailFile( textfile):
+def emailFile( textfile, subject):
 	try:
 		fp 			= open(textfile, 'rb')
 		msg 		= MIMEText(fp.read())
@@ -29,7 +29,7 @@ def emailFile( textfile):
 		password 	= os.environ['FASTMAIL_PASSWORD']
 		smtp		= os.environ['FASTMAIL_SMTP']
 		
-		msg['Subject'] 	= 'Error processing daily landslide'
+		msg['Subject'] 	= subject
 		msg['From'] 	= me
 		msg['To'] 		= me
 		if verbose:
@@ -44,7 +44,8 @@ def emailFile( textfile):
 		
 def emailErrorFile():
 		textfile 	= "./errorlog.txt"
-		emailFile( textfile)
+		subject		= "Error processing daily scripts"
+		emailFile( textfile, subject)
 		
 def execute(cmd):
 	if( force ):
@@ -151,32 +152,39 @@ if __name__ == '__main__':
 	today				= date.today()
 	dt					= d or today.strftime("%Y-%m-%d")
 	
-	yesterday			= today - timedelta(1)
-	ydt					= yesterday.strftime("%Y-%m-%d")
+	if d == None:		# Date has not been specified, it is today
+		yesterday			= today - timedelta(1)
+		ydt					= yesterday.strftime("%Y-%m-%d")
 
-	dayAfterYesterday	= today - timedelta(2)
-	ydt2				= dayAfterYesterday.strftime("%Y-%m-%d")
-	
+		dayAfterYesterday	= today - timedelta(2)
+		ydt2				= dayAfterYesterday.strftime("%Y-%m-%d")
+		
+	else:				# We want to run for that specific date
+		ydt					= dt
+		ydt2				= dt
+		
+	print "Processing date:", dt, ydt, ydt2
+		
 	regions 			= ["d02", "d03", "d08", "d09", "d10"]
 	regions2 			= ["d02", "d03", "d08", "d09", "d10"]
 	
 	if 1:
-		process_script('trmm_process.py', ydt, regions2)
-		process_script('gpm_process.py', ydt2, regions2)
-
-		#get_daily_forecast()
-		#get_flood_nowcast()
-		
-		process_script('landslide_nowcast.py', dt, regions)
+		process_script('trmm_process.py', 		ydt, regions2)
+		process_script('gpm_process.py', 		ydt2, regions2)		
+		process_script('landslide_nowcast.py', 	dt, regions)
 		process_script('modis-active-fires.py', ydt, regions2)
-		process_script('modis-burnedareas.py', ydt, regions2)
-		process_script('quake.py', ydt, regions2)
+		process_script('viirs-active-fires.py', ydt, regions2)
+		
+		# broken for 2016
+		#process_script('modis-burnedareas.py', 	ydt, regions2)
+		
+		process_script('quake.py', 				ydt, regions2)
 		
 		process_global_script('gfms_vectorizer.py', ydt)
 		process_global_script('gpm_global.py', ydt2)
-		process_global_script('geos5.py', dt)
+		#process_global_script('geos5.py', dt)
 
-		process_script('viirs_CHLA.py', ydt, regions2)
+		#process_script('viirs_CHLA.py', ydt, regions2)
 		
 		#process_script('chirps_prelim.py --period monthly', ydt)
 		#process_script('chirps_prelim.py --period dekad', ydt)
@@ -185,9 +193,9 @@ if __name__ == '__main__':
 	
 		#get_modis_floodmap()
 		
-		backup_ojo_streamer()
-		backup_ojo_wiki()
+		#backup_ojo_streamer()
+		#backup_ojo_wiki()
 
 	cleanup()
-	emailFile( logfile )
+	emailFile( logfile, "Success processing python scripts!" )
 	

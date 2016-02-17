@@ -5,10 +5,11 @@
 # Requirements:
 #	gdal, numpy pytrmm...
 #
-import numpy, sys, os, inspect, math
+import numpy, sys, os, inspect, math, glob, shutil
 from osgeo import osr, gdal
 from ftplib import FTP
-from datetime import date, datetime, timedelta
+import datetime
+from datetime import date, timedelta
 from dateutil.parser import parse
 from browseimage import wms
 from pytrmm import TRMM3B42RTFile
@@ -76,7 +77,7 @@ class TRMM:
 		self.output_file_180_2	= os.path.join(self.trmm_dir, "TMP_trmm_24_%s_180_2.tif" % self.ymd)
 		self.rgb_output_file 	= os.path.join(self.trmm_dir, "trmm_24_%s_rgb.tif"% self.ymd)
 
-		self.color_file 		= os.path.join("cluts", "green-blue-gr.txt")
+		self.color_file 		= os.path.join(basedir, "cluts", "green-blue-gr.txt")
 
 
 	def execute(self, cmd):
@@ -89,7 +90,8 @@ class TRMM:
 	#			
 	def get_daily_trmm_files(self):
 		#filepath = path+str(self.year)
-		filepath = gis_path+ "%d%02d" % (self.year,self.month)
+		#filepath = gis_path+ "%d%02d" % (self.year,self.month)
+		filepath  = gis_path
 		
 		if verbose:
 			print("Checking "+ftp_site+"/" + filepath + " for latest file...")
@@ -102,15 +104,8 @@ class TRMM:
 		
 		except Exception as e:
 			print "FTP login Error", sys.exc_info()[0], e
-			
-			# Try alternate
-			try:
-				print "Try alternate", gis_path
-				filepath = gis_path
-				ftp.cwd(filepath)
-			except Exception as e:
-				print "Exception", e
-				sys.exit(-1)
+			print "Exception", e
+			sys.exit(-1)
 
 		#print self.trmm_gis_files
 		for f in self.trmm_gis_files:
@@ -359,7 +354,8 @@ class TRMM:
 			self.process_trmm_region_topojson( dx, subset_file, supersampled_file, supersampled_rgb_file, pixelsize, bbox, shp_file, geojson_file, topojson_file, topojson_gz_file )
 	
 			# merge the trmm files
-			cmd = "node trmm_merge.js "+dx+ " " + self.ymd
+			mergejs = os.path.join(basedir, "trmm_merge.js")
+			cmd = "node " + mergejs + " " + dx+ " " + self.ymd
 			self.execute(cmd)
 			
 		# Convert to shapefile	
@@ -430,7 +426,41 @@ class TRMM:
 		
 		if not os.path.exists(self.trmm_dir):
 		    os.makedirs(self.trmm_dir)
-			
+
+	def cleanupdir( self, mydir):
+		print "cleaning up", mydir
+		today 		= datetime.date.today()
+		delta		= timedelta(days=config.DAYS_KEEP)
+		dl			= today - delta
+		lst 		= glob.glob(mydir+'/[0-9]*')
+	
+		for l in lst:
+			basename = os.path.basename(l)
+			if len(basename)==8:
+				year 	= int(basename[0:4])
+				month	= int(basename[4:6])
+				day		= int(basename[6:8])
+				dt		= datetime.date(year,month,day)
+		
+				if dt < dl:
+					msg = "** delete "+l
+					if verbose:
+						print msg
+					shutil.rmtree(l)
+
+		
+	def cleanup(self, dx):
+		_dir			=  os.path.join(config.data_dir,"trmm")
+		self.cleanupdir(_dir)
+		
+		_dir			=  os.path.join(config.data_dir,"trmm", "3B42RT")
+		self.cleanupdir(_dir)
+		
+		regiondir =  os.path.join(config.data_dir,"trmm", dx)
+		self.cleanupdir(regiondir)
+		
+	
+	
 # python trmm_process.py --region d02 --date 2015-04-23 -v
 # ======================================================================
 #
@@ -453,13 +483,18 @@ if __name__ == '__main__':
 	verbose		= options.verbose
 	region		= options.region
 	d			= options.date
-		
+	
+	basedir 	= os.path.dirname(os.path.realpath(sys.argv[0]))
+	
 	assert(config.regions[region])
 	
 	app = TRMM( d, force, verbose  )
 	app.checkdirs()
+	
 	app.get_daily_trmm_files()
 	app.process_trmm_files(region)
+	
+	app.cleanup(region)
 	
 	if verbose:
 		print "Done."

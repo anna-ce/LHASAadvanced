@@ -1,17 +1,21 @@
+#!/usr/bin/env python
+#
 # VIIRS Chlorophyll-A 4km Product
 #
 # http://oceandata.sci.gsfc.nasa.gov/VIIRS/Mapped/Daily/4km/CHL/2015/
 #
-import numpy, sys, os, inspect
+import numpy, sys, os, inspect, glob, shutil
 from osgeo import osr, gdal
 from ftplib import FTP
-from datetime import date
 import warnings
 from gzip import GzipFile
 import numpy
 import json
-from datetime import date
+
+import datetime
+from datetime import date, timedelta
 from dateutil.parser import parse
+
 import urllib2
 
 # Site configuration
@@ -168,6 +172,33 @@ def process_viirs_chla_file( mydir, regionName, viirs_filename, s3_bucket, s3_fo
 	
 	file_list = [ sw_osm_image, topojson_filename, topojson_filename+".gz", subset_file ]
 	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
+
+def cleanupdir( mydir):
+	if verbose:
+		print "cleaning up", mydir
+		
+	today 		= datetime.date.today()
+	delta		= timedelta(days=config.DAYS_KEEP)
+	dl			= today - delta
+	lst 		= glob.glob(mydir+'/[0-9]*')
+
+	for l in lst:
+		basename = os.path.basename(l)
+		if len(basename)==8:
+			year 	= int(basename[0:4])
+			month	= int(basename[4:6])
+			day		= int(basename[6:8])
+			dt		= datetime.date(year,month,day)
+	
+			if dt < dl:
+				msg = "** delete "+l
+				if verbose:
+					print msg
+				shutil.rmtree(l)
+
+def cleanup(d):
+	_dir			=  os.path.join(config.data_dir,d)
+	cleanupdir(_dir)
 #
 # ======================================================================
 #	python viirs_CHLA.py --region d03 --date 2015-04-14 -v
@@ -188,6 +219,7 @@ if __name__ == '__main__':
 	options 	= parser.parse_args()
 	force		= options.force
 	verbose		= options.verbose
+	basedir 	= os.path.dirname(os.path.realpath(sys.argv[0]))
 
 	regionName	= options.region	
 	region		= config.regions[regionName]
@@ -204,7 +236,7 @@ if __name__ == '__main__':
 	
 	ymd 		= "%d%02d%02d" % (year, month, day)
 	
-	mydir 		= os.path.join(config.VIIRS_CHLA_DIR, str(year), doy)
+	mydir 		= os.path.join(config.VIIRS_CHLA_DIR, ymd, regionName)
 	if not os.path.exists(mydir):            
 		os.makedirs(mydir)
 	
@@ -224,3 +256,5 @@ if __name__ == '__main__':
 	s3_bucket	= region['bucket']
 	
 	process_viirs_chla_file( mydir, regionName, tif_viirs_filename, s3_bucket, s3_folder)
+	cleanup(config.VIIRS_CHLA_DIR)
+	

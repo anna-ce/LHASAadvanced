@@ -58,6 +58,9 @@ module.exports = {
 		
 		res.sendFile(basename, {root: dirname})
 	},
+	api: function(req, res) {
+		res.redirect("/swagger/index.html")
+	},
 	// About
 	about: function(req, res) {
 		var user = req.session.user

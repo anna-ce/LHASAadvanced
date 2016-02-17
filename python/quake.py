@@ -9,13 +9,15 @@
 #
 #
 
-import numpy, sys, os, inspect, io
+import numpy, sys, os, inspect, io, glob, shutil
 import urllib
 import csv
 import json
 
 import time
-from datetime import date
+
+import datetime
+from datetime import date, timedelta
 from dateutil.parser import parse
 
 import browseimage
@@ -151,7 +153,30 @@ def process_url( mydir, url, ymd, bbox, zoom, s3_bucket, s3_folder ):
 	if not verbose:
 		cmd = "rm -rf %s %s" % (tif_filename, osm_bg_image)
 		execute(cmd)
+
+def cleanupdir( mydir):
+	if verbose:
+		print "cleaning up", mydir
+		
+	today 		= datetime.date.today()
+	delta		= timedelta(days=config.DAYS_KEEP)
+	dl			= today - delta
+	lst 		= glob.glob(mydir+'/[0-9]*')
+
+	for l in lst:
+		basename = os.path.basename(l)
+		if len(basename)==8:
+			year 	= int(basename[0:4])
+			month	= int(basename[4:6])
+			day		= int(basename[6:8])
+			dt		= datetime.date(year,month,day)
 	
+			if dt < dl:
+				msg = "** delete "+l
+				if verbose:
+					print msg
+				shutil.rmtree(l)
+
 #
 # ======================================================================
 #
@@ -185,7 +210,7 @@ if __name__ == '__main__':
 	if verbose:
 		print "dt", dt, ymd
 
-	mydir		= os.path.join(config.data_dir,"quakes", str(year),doy, regionName)
+	mydir		= os.path.join(config.data_dir,"quakes", ymd, regionName)
 	if not os.path.exists(mydir):            
 		os.makedirs(mydir)
 
@@ -196,3 +221,4 @@ if __name__ == '__main__':
 	
 	url			= "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.geojson"
 	process_url(mydir, url, ymd, bbox, zoom, s3_bucket, s3_folder)
+	cleanupdir(config.QUAKES_DIR)

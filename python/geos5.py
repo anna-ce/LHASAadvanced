@@ -1,18 +1,22 @@
+#!/usr/bin/env python
+#
 # GEOS-5 precipitaiton Product
 # http://gmao.gsfc.nasa.gov/products/documents/GEOS_5_FP_File_Specification_ON4v1_0.pdf
 
-import numpy, sys, os, inspect
+import numpy, sys, os, inspect, glob, shutil
 from osgeo import osr, gdal
 from ftplib import FTP
 import datetime
 
-from datetime import date
+import datetime
+from datetime import date, timedelta
+from dateutil.parser import parse
+
 import warnings
 from gzip import GzipFile
 import numpy
 import json
-from datetime import date
-from dateutil.parser import parse
+
 import urllib2
 import multiprocessing
 
@@ -34,24 +38,31 @@ def execute( cmd ):
 	os.system(cmd)
 
 def multiprocessing_download(filepath, local_filename):
-	ftp_site 	= "ftp.nccs.nasa.gov"
-	ftp 		= FTP(ftp_site)
+	print "multiprocessing_download ", filepath, filename
 
-	ftp.login('gmao_ops','')
-	ftp.cwd(filepath)
+	try:
+		ftp_site 	= "ftp.nccs.nasa.gov"
+		ftp 		= FTP(ftp_site)
+
+		ftp.login('gmao_ops','')
+		ftp.cwd(filepath)
 	
-	f 			= os.path.basename(local_filename)
-	if not os.path.exists(local_filename):
-		print "Trying to Download...", f
-		file = open(local_filename, 'wb')
-		try:
-			ftp.retrbinary("RETR " + f, file.write)
-			file.close()
-		except Exception as e:
-			print "GEOS5 FTP Error", filepath, filename, sys.exc_info()[0], e					
-			os.remove(local_filename)
-			ftp.close();
-			sys.exit(-2)
+		f 			= os.path.basename(local_filename)
+		if not os.path.exists(local_filename):
+			print "Trying to Download...", f
+			file = open(local_filename, 'wb')
+			try:
+				ftp.retrbinary("RETR " + f, file.write)
+				file.close()
+			except Exception as e:
+				print "GEOS5 FTP Error", filepath, filename, sys.exc_info()[0], e					
+				os.remove(local_filename)
+				ftp.close();
+				sys.exit(-2)
+		else:
+			print "file exists", local_filename
+	except Exception as e:
+		print "multiprocessing exception:", sys.exc_info()[0], e
 		
 def get_files(year, mydir, files):
 	pool 		= multiprocessing.Pool(processes=processes)
@@ -61,7 +72,7 @@ def get_files(year, mydir, files):
 	ftp_site 		= "ftp.nccs.nasa.gov"
 	filepath 		= "fp/forecast/Y%s/M%s/D%s/H00" % (year, mstr, dstr)		
 	local_filenames = map(lambda x: os.path.join(mydir, x), files)
-
+	
 	for f in local_filenames:
 		pool.apply_async(multiprocessing_download, args=(filepath, f, ))
 	
@@ -239,7 +250,28 @@ def process_file( mydir, filename, s3_bucket, s3_folder):
 	if not verbose: # Cleanup
 		cmd = "rm -rf %s %s %s %s %s %s %s %s" % ( merge_filename, browse_filename, topojson_filename, subset_filename, super_subset_file, subset_aux_filename, geojsonDir, levelsDir)
 		execute(cmd)
-		
+
+def cleanupdir( mydir):
+	print "cleaning up", mydir
+	today 		= datetime.date.today()
+	delta		= timedelta(days=config.DAYS_KEEP)
+	dl			= today - delta
+	lst 		= glob.glob(mydir+'/[0-9]*')
+
+	for l in lst:
+		basename = os.path.basename(l)
+		if len(basename)==8:
+			year 	= int(basename[0:4])
+			month	= int(basename[4:6])
+			day		= int(basename[6:8])
+			dt		= datetime.date(year,month,day)
+	
+			if dt < dl:
+				msg = "** delete "+l
+				if verbose:
+					print msg
+				shutil.rmtree(l)
+	
 # ======================================================================
 #	python geos5.py --date 2015-08-10 -v
 #
@@ -259,6 +291,8 @@ if __name__ == '__main__':
 	force		= options.force
 	verbose		= options.verbose
 	
+	basedir 	= os.path.dirname(os.path.realpath(sys.argv[0]))
+	
 	todaystr	= date.today().strftime("%Y-%m-%d")
 	dt			= options.date or todaystr
 	
@@ -273,7 +307,7 @@ if __name__ == '__main__':
 	ymd 		= "%d%02d%02d" % (year, month, day)
 	ymd1 		= "%d%02d%02d" % (tomorrow.year, tomorrow.month, tomorrow.day)
 	
-	mydir 		= os.path.join(config.GEOS5_DIR, str(year), doy)
+	mydir 		= os.path.join(config.GEOS5_DIR, ymd)
 	if not os.path.exists(mydir):            
 		os.makedirs(mydir)
 	
@@ -288,7 +322,7 @@ if __name__ == '__main__':
 	#	files.append(filename)
 
 	
-	color_file				= os.path.join("cluts", "geos5_colors.txt")
+	color_file				= os.path.join(basedir, "cluts", "geos5_colors.txt")
 	tif_filename			= os.path.join(mydir, "geos5_precip.%s.unflipped.tif" % ymd)
 	flipped_tif_filename	= os.path.join(mydir, "geos5_precip.%s.tif" % ymd)
 	
@@ -296,7 +330,8 @@ if __name__ == '__main__':
 		if verbose:
 			print "file not found",   tif_filename
 		get_files(str(year), mydir, files)
-
+	sys.exit(-1)
+	
 	for f in files:
 		ffilename 		= os.path.join(mydir,f)
 		ftif_filename 	= ffilename + ".tif"
@@ -333,7 +368,7 @@ if __name__ == '__main__':
 		ds		= None
 		
 		# Flip it since it is bottom up
-		cmd = "python ./flip_raster.py -o %s %s" % ( flipped_tif_filename, tif_filename )
+		cmd = "flip_raster.py -o %s %s" % ( flipped_tif_filename, tif_filename )
 		execute(cmd)
 		
 	rgb_tif_filename	= os.path.join(mydir, "geos5_precip.%s.flipped.rgb.tif" % ymd)
@@ -353,3 +388,5 @@ if __name__ == '__main__':
 			cmd = "rm %s %s" %(ffilename, ftif_filename)
 			execute(cmd)
 			cmd = "rm %s %s" %(tif_filename, rgb_tif_filename)
+
+	cleanupdir(config.GEOS5_DIR)

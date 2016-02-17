@@ -9,9 +9,11 @@ import os
 #data_dir 	= "/Users/patricecappelaere/landslide/data"
 
 #DATA_DIR					= os.environ['WORKSHOP_DIR'] + "/data"
-#DATA_DIR					= data_dir
 DATA_DIR					= os.environ['DATA_DIR']
+data_dir					= DATA_DIR
 
+# NUmber of days to keep data for
+DAYS_KEEP					= 70
 #
 # Data Directories
 #
@@ -36,6 +38,7 @@ GPM_DIR						= os.path.join(DATA_DIR, "gpm_24")
 LS_DIR						= os.path.join(DATA_DIR, "ls")
 QUAKES_DIR					= os.path.join(DATA_DIR, "quakes")
 VIIRS_CHLA_DIR				= os.path.join(DATA_DIR, "viirs_chla")
+VIIRS_ACTIVE_FIRES_DIR		= os.path.join(DATA_DIR, "viirs_af")
 CHIRPS_PRELIM_DIR			= os.path.join(DATA_DIR, "chirps2_prelim")
 GEOS5_DIR					= os.path.join(DATA_DIR, "geos5")
 
@@ -209,20 +212,6 @@ regions		= {
 		'rows': 		658,
 		'thn_width':	720,
 		'thn_height':	658,
-		'bucket':		"ojo-d10",
-		'thn_zoom': 	8,
-		'tiles-zoom':    "8-18"
-	},
-	'd11': {
-		'name':			"Rio2016",
-		'bbox': 		[-45.172, -24.907, -41.172,  -20.907],
-		'centerlat':	-22.907,
-		'centerlon':	-43.172,  
-		'pixelsize':	0.008333333333330,
-		'columns': 		1523,
-		'rows': 		2198,
-		'thn_width':	280,
-		'thn_height':	280,
 		'bucket':		"ojo-d10",
 		'thn_zoom': 	8,
 		'tiles-zoom':    "8-18"

@@ -8,13 +8,16 @@ var fs 			= require('fs');
 var path		= require('path');
 var exec 		= require('child_process').exec;
 var zlib 		= require('zlib');
+var process		= require('process');
 
 var gzip 		= zlib.createGzip();
 
 var region		= process.argv[2]
 var ymd	 		= process.argv[3]
 
-var data_dir 	= "/Users/patricecappelaere/landslide/data"
+//var data_dir 	= "/Users/patricecappelaere/landslide/data"
+var data_dir	= process.env.DATA_DIR
+
 var dir 		= path.join(data_dir, "trmm",region, ymd)
 
 //console.log("trmm merging of ", dir)

@@ -2,10 +2,11 @@
 # Processes TRMM Data for a specific region
 #
 
-import os, inspect, sys, math, urllib
+import os, inspect, sys, math, urllib, glob, shutil
 import argparse
 
-from datetime import date
+import datetime
+from datetime import date, timedelta
 from dateutil.parser import parse
 from osgeo import gdal
 import numpy
@@ -181,7 +182,34 @@ def process(gpm_dir, name, gis_file_day, ymd, regionName, region, s3_bucket, s3_
 	if not verbose: # Cleanup
 		cmd = "rm -rf %s %s %s %s %s %s" % ( osm_bg_image, browse_filename, subset_filename, subset_aux_filename, geojsonDir, levelsDir)
 		execute(cmd)
-		
+	
+def cleanupdir( mydir):
+	print "cleaning up", mydir
+	today 		= datetime.date.today()
+	delta		= timedelta(days=config.DAYS_KEEP)
+	dl			= today - delta
+	lst 		= glob.glob(mydir+'/[0-9]*')
+
+	for l in lst:
+		basename = os.path.basename(l)
+		if len(basename)==8:
+			year 	= int(basename[0:4])
+			month	= int(basename[4:6])
+			day		= int(basename[6:8])
+			dt		= datetime.date(year,month,day)
+	
+			if dt < dl:
+				msg = "** delete "+l
+				if verbose:
+					print msg
+				shutil.rmtree(l)
+
+def cleanup():
+	_dir			=  os.path.join(config.data_dir,"gpm")
+	cleanupdir(_dir)
+	
+	
+
 # ===============================
 # Main
 #
@@ -217,7 +245,7 @@ if __name__ == '__main__':
 	doy			= today.strftime('%j')
 	ymd 		= "%d%02d%02d" % (year, month, day)		
 
-	gpm_dir	= os.path.join(config.data_dir, "gpm", str(year),doy)
+	gpm_dir	= os.path.join(config.data_dir, "gpm", ymd)
 	if not os.path.exists(gpm_dir):
 	    os.makedirs(gpm_dir)
 	
@@ -250,4 +278,5 @@ if __name__ == '__main__':
 	process(gpm_dir, "gpm_3d", gis_file_day, ymd, regionName, region, s3_bucket, s3_folder)
 	process(gpm_dir, "gpm_7d", gis_file_day, ymd, regionName, region, s3_bucket, s3_folder)
 	
+	cleanup()
 
