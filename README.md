@@ -1,6 +1,6 @@
 # OJO Bot
 
-This is a prototype for NASA. 
+This is a prototype data processor/publisher for NASA. 
 
 Pat Cappelaere	Vightel		pat@cappelaere.com
 
@@ -8,22 +8,9 @@ Pat Cappelaere	Vightel		pat@cappelaere.com
 
 npm install
 
-## Set HEROKU Env	
-> heroku config:set DATABASE_URL=
-> heroku config:set fbAppId=
-> heroku config:set fbSecret=
-> heroku config:set AWS_ACCESSKEYID=
-> heroku config:set AWS_SECRETACCESSKEY=
-> heroku config:set AWS_REGION=
+## Set  Env	
+Edit the env.template file and source it
 
-## And start
-> git push heroku master
-> heroku logs --tail --ps postgres --app ojo-bot
-	
-## Facebook Testing / Tunneling
-> ngrok 7465
-	This will display the current status of the tunnel and a public URL To use for testing
-	You will have to change the Facebook App Setting Website Site URL to point to proper URL
 
 ## Local Docker
 Install docker and start VM

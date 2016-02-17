@@ -8,6 +8,7 @@ transifex.auth
 docker/base_stack/envs.docker.sh
 docker.env
 envs.docker.sh
+envs.docker.sh.2
 .env
 env
 .gitignore
