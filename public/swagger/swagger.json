@@ -175,7 +175,7 @@
         "description": "Find out more about OJO",
         "url": "http://ojo-bot.herokuapp.com"
     },
-    "host": "localhost:7465",
+    "host": "ojo-bot.herokuapp.com",
     "info": {
         "contact": {
             "email": "pat@cappelaere.com"

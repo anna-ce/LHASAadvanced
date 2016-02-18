@@ -695,21 +695,21 @@ if __name__ == '__main__':
 			print "get", gis_file_day, gis_file_day_tfw
 			get_late_gpm_files([gis_file_day, gis_file_day_tfw], product_name)
 		process(gpm_dir, "gpm_1d", gis_file_day, ymd)
-		execute( "rm %s %s" % (os.path.join(gpm_dir,gis_file_day), os.path.join(gpm_dir,gis_file_day_tfw)))
+		#execute( "rm %s %s" % (os.path.join(gpm_dir,gis_file_day), os.path.join(gpm_dir,gis_file_day_tfw)))
 		
 	if timespan == '3day':
 		levels 				= [ 2584, 1597, 987, 610, 377, 233, 144, 89, 55, 34, 21, 13]
 		if force or not os.path.exists(os.path.join(gpm_dir,gis_file_3day)):
 			get_late_gpm_files([gis_file_3day, gis_file_3day_tfw], product_name)
 		process(gpm_dir, "gpm_3d", gis_file_3day, ymd)
-		execute( "rm %s %s" % (os.path.join(gpm_dir,gis_file_3day), os.path.join(gpm_dir,gis_file_3day_tfw)))
+		#execute( "rm %s %s" % (os.path.join(gpm_dir,gis_file_3day), os.path.join(gpm_dir,gis_file_3day_tfw)))
 		
 	if timespan == '7day':
 		levels 				= [ 2584, 1597, 987, 610, 377, 233, 144, 89, 55, 34, 21, 13]
 		if force or not os.path.exists(os.path.join(gpm_dir,gis_file_7day)):
 			get_late_gpm_files([gis_file_7day, gis_file_7day_tfw], product_name)
 		process(gpm_dir, "gpm_7d", gis_file_7day, ymd)
-		execute( "rm %s %s" % (os.path.join(gpm_dir,gis_file_7day), os.path.join(gpm_dir,gis_file_7day_tfw)))
+		#execute( "rm %s %s" % (os.path.join(gpm_dir,gis_file_7day), os.path.join(gpm_dir,gis_file_7day_tfw)))
 	
 	# We will check the last 24hrs from given date or today (now)
 	yesterday				= today - timedelta(hours=24)

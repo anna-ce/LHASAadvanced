@@ -170,7 +170,8 @@ if __name__ == '__main__':
 	
 	if 1:
 		process_script('trmm_process.py', 		ydt, regions2)
-		process_script('gpm_process.py', 		ydt2, regions2)		
+		
+		process_script('gpm_process.py ', 		ydt2, regions2)				
 		process_script('landslide_nowcast.py', 	dt, regions)
 		process_script('modis-active-fires.py', ydt, regions2)
 		process_script('viirs-active-fires.py', ydt, regions2)
@@ -181,8 +182,12 @@ if __name__ == '__main__':
 		process_script('quake.py', 				ydt, regions2)
 		
 		process_global_script('gfms_vectorizer.py', ydt)
-		process_global_script('gpm_global.py', ydt2)
-		#process_global_script('geos5.py', dt)
+		
+		process_global_script('gpm_global.py --timespan 1day', 		ydt2)		
+		process_global_script('gpm_global.py --timespan 3day', 		ydt2)		
+		process_global_script('gpm_global.py --timespan 7day', 		ydt2)		
+		
+		process_global_script('geos5.py', dt)
 
 		#process_script('viirs_CHLA.py', ydt, regions2)
 		
