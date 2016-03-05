@@ -49,18 +49,23 @@ module.exports = {
 		})
 	},
 	swagger: function(req, res) {
+		var host 	= req.protocol + "://"+ req.get('Host')
 		console.log("send swagger file")
+		
 		var saggerFile = "./public/swagger/swagger.json"
 		res.header("Access-Control-Allow-Origin", "*")
+		
 		var basename 	= path.basename(saggerFile)
 		var dirname 	= path.dirname(saggerFile)
 		var ext			= path.extname(saggerFile)
 		
-		res.sendFile(basename, {root: dirname})
+		res.sendFile(basename, {root: dirname, host: host})
 	},
+	
 	api: function(req, res) {
 		res.redirect("/swagger/index.html")
 	},
+	
 	// About
 	about: function(req, res) {
 		var user = req.session.user

@@ -93,7 +93,11 @@ def CreateLevel(l, geojsonDir, fileName, src_ds, data, attr, _force, _verbose):
 		#cmd = str.format("node set_geojson_property.js --file {0} --prop frost={1}", fileName+".geojson", frost)
 		#execute(cmd)
 	
-		cmd = str.format("topojson -o {0} --simplify-proportion 0.5 -p {3}={1} -- {3}={2} > /dev/null 2>&1", fileName+".topojson", l, fileName+".geojson", attr ); 
+		out = ""
+		if not verbose:
+			out = "> /dev/null 2>&1"
+			
+		cmd = str.format("topojson -o {0} --simplify-proportion 0.5 -p {3}={1} -- {3}={2} {4}", fileName+".topojson", l, fileName+".geojson", attr, out );
 		execute(cmd)
 	
 		# convert it back to json

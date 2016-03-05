@@ -85,7 +85,7 @@ function loadDataUrl(url, cb) {
 		dataType: 'json'
 	})
 	.done( function(data) {
-		//console.log("Got data from "+url)
+		console.log("Got data from "+url)
 		cb(null, data)
 	})
 	.fail( function(qXHR, textStatus, errorThrown ) {
@@ -242,7 +242,6 @@ function loadData( topojsonUrl, displayName, mapinfos, value_url ) {
 			//console.log("styledata", JSON.stringify(styleData))
 			function loadGeoJson( geojson, key_name ) {
 				styleData = styles[styleId]
-				
 				var attribution=""
 				if( creditsData ) {
 					attribution = creditsData.credits;
@@ -329,6 +328,7 @@ function loadData( topojsonUrl, displayName, mapinfos, value_url ) {
 			            })
 					})
 				}
+				console.log("Add to map...")
 				// Add to map
 				geoJsonLayer.addTo(map)		
 			

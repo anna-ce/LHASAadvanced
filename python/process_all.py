@@ -186,6 +186,8 @@ if __name__ == '__main__':
 		process_global_script('gpm_global.py --timespan 1day', 		ydt2)		
 		process_global_script('gpm_global.py --timespan 3day', 		ydt2)		
 		process_global_script('gpm_global.py --timespan 7day', 		ydt2)		
+
+		process_global_script('landslide_nowcast_global.py', dt)
 		
 		process_global_script('geos5.py', dt)
 

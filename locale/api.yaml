@@ -115,6 +115,7 @@ en:
     flood_catalog: Flood Catalog
     frost: Frost
     landslide_catalog: Landslide Catalog
+    global_landslide_nowcast: Global Landslide Nowcast
     landslide_nowcast: Landslide Forecast
     landslide_forecast: Landslide Forecast
     landslide_susceptibility: Landslide Susceptibility

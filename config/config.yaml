@@ -193,7 +193,12 @@
 	            "source": 		"landslide_model",
 	            "href": 		"/opensearch",
 	            "checked":  	false
-	            },
+	          },
+  	          {
+  	            "source": 		"global_landslide_model",
+  	            "href": 		"/opensearch",
+  	            "checked":  	false
+  	            },
 	          {
 	          	"source": 		"modis",
 	          	"href": 		"/opensearch",

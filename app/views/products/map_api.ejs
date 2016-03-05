@@ -85,7 +85,8 @@
 			url: '<%= url %>',
 			
 			success: function( result ) {
-				console.log("success:", JSON.stringify(result))
+				//console.log("success:", JSON.stringify(result))
+				console.log("success:")
 				// find the topojson file
 				var actions 		= result.action;
 				var topojson_url 	= undefined;
@@ -98,7 +99,7 @@
 						var using = action['using']
 						for( var u in using ) {
 							var use = using[u]
-							console.log("ojo:download", use)
+							//console.log("ojo:download", use)
 							if( (use['mediaType'] == 'application/gzip') || (use['mediaType'] == 'application/x-gzip')) {
 								var use_url = use['url']
 								if( use_url.indexOf(".topojson.gz")>0 ) {

@@ -26,7 +26,7 @@ var express 		= require('express'),
 	errorHandler 	= require('errorhandler'),
 	methodOverride 	= require('method-override'),
 	multer 			= require('multer'),
-	
+	moment			= require('moment'),
 	shortid			= require('shortid');
 
   	require('winston-papertrail').Papertrail;
@@ -67,6 +67,36 @@ var express 		= require('express'),
 
 	logger.info("Connected to S3...")
 
+	// Setting the mail sender
+	app.ses = new aws.SES();
+	// verified SES sender
+	app.ses.from = process.env.AWS_SMTP_SENDER
+	var params = {
+		Destination: {
+			ToAddresses:['pat@cappelaere.com']
+		},
+		Message: {
+			Body: {
+				Html: {
+					Data: "OJO-Bot restarted at " + moment().format()
+				},
+				Text: { 
+					Data: "OJO-Bot restart at " + moment().format()
+				}
+			},
+			Subject: {
+				Data: "OJO-bot restarted"
+			}
+		},
+		Source: app.ses.from,
+		ReplyToAddresses: [ app.ses.from ]
+	}
+	
+	//app.ses.sendEmail(params, function(err, data) {
+	//	if (err) console.log(err, err.stack); // an error occurred
+	//	  else console.log(data);           // successful response
+	//})
+	
 	// Pick a secret to secure your session storage
 	app.sessionSecret = process.env.COOKIEHASH || 'OJO-BOT-PGC-2014-04';
 	
@@ -291,8 +321,4 @@ function bootApplication(app) {
 	//app.use(function(req, res, next){
 	//  res.status(404).render('404', { layout: false, url: req.originalUrl })
 	//})
-		
-	//app_set_env('SENDGRID_USER')
-	//app_set_env('SENDGRID_KEY')	
-	//app.sendgrid  = require('sendgrid')(app.SENDGRID_USER, app.SENDGRID_KEY);
 }
