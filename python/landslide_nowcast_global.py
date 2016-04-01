@@ -267,11 +267,11 @@ def process(_dir, files, ymd):
 	data_2		= band_2.ReadAsArray(0, 0, ds2.RasterXSize, ds2.RasterYSize )
 		
 	# Supersample it to 1km
+	fname_1km 	= os.path.join(_dir, "total_1km.tif")
 	if force or not os.path.exists(fname_1km):
 		if verbose:
 			print "supersampling to 1km..."
 
-		fname_1km 	= os.path.join(_dir, "total_1km.tif")
 		#cmd 		= "gdal_translate -outsize 43167 21600 -co 'COMPRESS=DEFLATE' %s %s" % (fname, fname_1km)
 		cmd 		= "gdalwarp -q -overwrite -co 'COMPRESS=DEFLATE' -ts %d %d %s %s" % (ds2.RasterXSize, ds2.RasterYSize, fname, fname_1km)
 
@@ -453,7 +453,7 @@ if __name__ == '__main__':
 	# Get last 7 days
 	files = []
 	for i in range(0,7):
-		dt	 				= today + datetime.timedelta(days= -i)
+		dt	 				= today + datetime.timedelta(days= -i-1)
 		year				= dt.year
 		month				= dt.month
 		day					= dt.day
