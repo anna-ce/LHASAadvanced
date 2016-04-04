@@ -67,7 +67,7 @@ This policy will allow access to S3, SES and RDS services from the code
 
 Policy Name: OJO
 
-``
+```shell
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -82,11 +82,12 @@ Policy Name: OJO
         }
     ]
 }
-``
+```
 
 ##### Create OJO-BOT user
 
 Under Permissions tab, attach OJO Policy you just created
+
 Create Access Key and download it
 
 #### SES (Simple Email Service)
@@ -94,9 +95,11 @@ Create Access Key and download it
 To allow Publisher to send emails
 
 Email Addresses tab
+
 	Add verified send emails (sender email addresses)
 
 SMTP Settings tab
+
 	Create SMTP Credentials
 	
 You should see an ses-smtp-user in your IAM user list
