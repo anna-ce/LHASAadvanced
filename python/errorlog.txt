@@ -15,7 +15,7 @@ Traceback (most recent call last):
     raise KeyError(key)
 KeyError: 'DATA_DIR'
 Process All Path: process_all.py 
-Processing date: 2016-04-01 2016-03-31 2016-03-30
+Processing date: 2016-04-04 2016-04-03 2016-04-02
 exception sending email exception 'FASTMAIL_USER'
 exception sending email exception 'FASTMAIL_USER'
 exception sending email exception 'FASTMAIL_USER'
@@ -54,4 +54,4 @@ exception sending email exception 'FASTMAIL_USER'
 exception sending email exception 'FASTMAIL_USER'
 exception sending email exception 'FASTMAIL_USER'
 exception sending email exception 'FASTMAIL_USER'
-process_all.sh Done: Fri Apr  1 07:30:11 EDT 2016
+process_all.sh Done: Mon Apr  4 07:30:08 EDT 2016

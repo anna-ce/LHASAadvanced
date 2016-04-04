@@ -1,7 +1,38 @@
 # OJO Bot
 
 This is a prototype data processor/publisher for NASA. 
-Pat Cappelaere	Vightel		pat@cappelaere.com
+
+Maintained by Pat Cappelaere	
+Vightel Corporation
+pat@cappelaere.com
+
+## Developer Accounts
+Several developer accounts may be necessary to leverage advanced features
+
+### USGS Access
+
+[USGS Registration](https://ers.cr.usgs.gov/register/) to access USGS imagery
+
+### Facebook
+
+[Facebook Developer Site/Registration](https://developers.facebook.com/docs/apps/register) to share products
+
+### Twitter
+
+[Twitter Developer Registration](https://dev.twitter.com/) to share products
+
+### Mapbox
+
+[Mapbox Developer Registration](https://www.mapbox.com/developers/) for map bacground
+
+### ForecastIO
+
+[Forecast API registration](https://developer.forecast.io/register) for personal forecast at specific location
+
+
+### Papertrail
+
+[Papertrail Registration](https://papertrailapp.com) For Log aggregation
 
 ## Requirements & Installation
 
