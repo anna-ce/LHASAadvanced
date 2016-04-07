@@ -1,12 +1,13 @@
 {
-    "application":      "OJO-Bot",
-    "copyright":        "&copy; Vightel, 2013",
-    "contact":          "Pat Cappelaere",
-    "contact_mail":     "pat@cappelaere.com",
-    "HOSTBASEURL":      "http://ojo-bot.herokuapp.com",
-    "PORT":				80,
-    "worldmapid":       "cappelaere.map-1d8e1acq",
-    "send_email": 		0,
+    "application":          "OJO-Bot",
+    "copyright":            "&copy; Vightel, 2013",
+    "contact":              "Pat Cappelaere",
+    "contact_mail":         "pat@cappelaere.com",
+    "HOSTBASEURL":          "http://ojo-bot.herokuapp.com",
+    "PORT":				    80,
+    "worldmapid":           "cappelaere.map-1d8e1acq",
+    "send_email": 		        1,
+    "using_aws_s3_for_storage": 1,
     "regions" : {
         "Global": {
 			"name": 		"Global",

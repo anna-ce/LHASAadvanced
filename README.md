@@ -6,6 +6,17 @@ Maintained by Pat Cappelaere
 Vightel Corporation
 pat@cappelaere.com
 
+NOTE:  Some changes have been made to the code to run on a local server without required access to the AWS cloud.
+Check config/config.yaml
+using_aws_s3_for_storage could be set to 0
+
+Check python/config.py for example...
+USING_AWS_S3_FOR_STORAGE	= 1
+USING_LOCAL_DIR_FOR_STORAGE	= 1
+LOCAL_DIR_STORAGE			= "/Users/patricecappelaere/Development/ojo/tmp"
+
+NOTE 2: This may not be the best option to run as an enterprise system with multiples instances and load balancing.
+
 ## Developer Accounts
 Several developer accounts may be necessary to leverage advanced features
 

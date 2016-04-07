@@ -47,55 +47,90 @@ var express 		= require('express'),
 	shortid.seed(20130311);
 	app.shortid = shortid;
 
-	// AWS Amazon
-	app.s3_config = {
-		accessKeyId: 		process.env.AWS_ACCESSKEYID, 
-		secretAccessKey: 	process.env.AWS_SECRETACCESSKEY,
-		region:				process.env.AWS_REGION || 'us-east-1',
-		cache_dir: 			app.get('tmp_dir')
+	//
+	// Check if we use AWS S3 for persistence and make sure we can or not
+	//
+	function CheckAWS_S3() {
+		if( app.config.using_aws_s3_for_storage) {
+			console.log("using_aws_s3_for_storage...")
+		
+			// AWS Amazon
+			app.s3_config = {
+				accessKeyId: 		process.env.AWS_ACCESSKEYID, 
+				secretAccessKey: 	process.env.AWS_SECRETACCESSKEY,
+				region:				process.env.AWS_REGION || 'us-east-1',
+				cache_dir: 			app.get('tmp_dir')
+			}
+	
+			//console.log(process.env)
+	
+			assert( app.s3_config.accessKeyId, "Missing S3 accessKeyID env" )
+			assert( app.s3_config.secretAccessKey, "Missing S3 secretAccessKey env")
+			assert( app.s3_config.region, "Missing S3 region env" )
+	
+			aws.config.update(app.s3_config);
+
+			app.s3 = new aws.S3();
+
+			logger.info("Connected to AWS S3 for data...")
+		} else {
+			// check if DATA_DIR is set
+			var data_dir = process.env.DATA_DIR
+			assert( data_dir, "Data Directory is not set")
+			if( !fs.existsSync(data_dir) ) {
+				throw "Data Directory does not exists"
+			} else {
+				var tmp_dir = app.get('tmp_dir')
+				logger.info("tmp_dir:", tmp_dir)
+				logger.info("data_dir:", data_dir)
+				//if( data_dir != tmp_dir) {
+				//	throw "Data Directory is not the same as your tmp_dir... data may not be publishable"
+				//}
+			}
+		}
 	}
 	
-	//console.log(process.env)
-	
-	assert( app.s3_config.accessKeyId, "Missing S3 accessKeyID env" )
-	assert( app.s3_config.secretAccessKey, "Missing S3 secretAccessKey env")
-	assert( app.s3_config.region, "Missing S3 region env" )
-	
-	aws.config.update(app.s3_config);
-
-	app.s3 = new aws.S3();
-
-	logger.info("Connected to S3...")
-
-	// Setting the mail sender
-	app.ses = new aws.SES();
-	// verified SES sender
-	app.ses.from = process.env.AWS_SMTP_SENDER
-	var params = {
-		Destination: {
-			ToAddresses:['pat@cappelaere.com']
-		},
-		Message: {
-			Body: {
-				Html: {
-					Data: "OJO-Bot restarted at " + moment().format()
+	//
+	// Check if we can use AWS SImpel Email Service
+	//
+	function Check_AWS_SES() {
+		if( !process.env.AWS_SMTP_SENDER ) return
+			
+		// Setting the mail sender
+		app.ses = new aws.SES();
+		
+		// verified SES sender
+		app.ses.from = process.env.AWS_SMTP_SENDER
+		var params = {
+			Destination: {
+				ToAddresses:[app.ses.from]
+			},
+			Message: {
+				Body: {
+					Html: {
+						Data: "OJO-Bot restarted at " + moment().format()
+					},
+					Text: { 
+						Data: "OJO-Bot restart at " + moment().format()
+					}
 				},
-				Text: { 
-					Data: "OJO-Bot restart at " + moment().format()
+				Subject: {
+					Data: "OJO-bot restarted"
 				}
 			},
-			Subject: {
-				Data: "OJO-bot restarted"
-			}
-		},
-		Source: app.ses.from,
-		ReplyToAddresses: [ app.ses.from ]
+			Source: app.ses.from,
+			ReplyToAddresses: [ app.ses.from ]
+		}		
+
+		// Make sure it works
+		
+		//app.ses.sendEmail(params, function(err, data) {
+		//	if (err) console.log(err, err.stack); // an error occurred
+		//	  else console.log(data);           // successful response
+		//})
 	}
 	
-	//app.ses.sendEmail(params, function(err, data) {
-	//	if (err) console.log(err, err.stack); // an error occurred
-	//	  else console.log(data);           // successful response
-	//})
+
 	
 	// Pick a secret to secure your session storage
 	app.sessionSecret = process.env.COOKIEHASH || 'OJO-BOT-PGC-2014-04';
@@ -152,6 +187,9 @@ var express 		= require('express'),
 				app.hawk_id 	= appId				
 			}
 		})
+		
+		CheckAWS_S3()
+		Check_AWS_SES
 	}
 	
 // ===============================	

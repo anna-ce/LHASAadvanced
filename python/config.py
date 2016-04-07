@@ -12,8 +12,20 @@ import os
 DATA_DIR					= os.environ['DATA_DIR']
 data_dir					= DATA_DIR
 
-# NUmber of days to keep data for
-DAYS_KEEP					= 70
+# Set if you want to use AWS S3 for persistent storage of products
+USING_AWS_S3_FOR_STORAGE	= 1
+
+# This would be an alternate way to store process data (but may not scale well)
+USING_LOCAL_DIR_FOR_STORAGE	= 1
+LOCAL_DIR_STORAGE			= "/Users/patricecappelaere/Development/ojo/tmp"
+
+# Set to get emails during processing... You will have to set some additional envs
+# FASTMAIL_USER, FASTMAIL_PASSWORD, FASTMAIL_SMTP
+SEND_EMAIL					= 1
+
+# Number of days to keep data for (kept an extra day for regional landslide processing than needs 60 days of data)
+DAYS_KEEP					= 61
+
 #
 # Data Directories
 #

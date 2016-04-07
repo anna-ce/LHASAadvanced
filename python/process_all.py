@@ -4,22 +4,25 @@
 #
 # Daily processing of all products
 #
+
 import sys, os, argparse, logging
 from datetime import date, timedelta
 from subprocess import call
 from smtplib import SMTP_SSL as SMTP  
 from email.mime.text import MIMEText
 
-try:
-	from osgeo import osr, gdal
-except:
-	print "Error", sys.exc_info()[0]
-	sys.exit(-1)
+from osgeo import osr, gdal
+import config
 	
-force 	= 1
-verbose = 0
+force 		= 1
+verbose 	= 0
+
+ERRLOG_FILE = "./errorlog.txt"
 
 def emailFile( textfile, subject):
+	if not config.SEND_EMAIL:
+		return
+		
 	try:
 		fp 			= open(textfile, 'rb')
 		msg 		= MIMEText(fp.read())
@@ -43,7 +46,7 @@ def emailFile( textfile, subject):
 		print "exception sending email exception", e
 		
 def emailErrorFile():
-		textfile 	= "./errorlog.txt"
+		textfile 	= ERRLOG_FILE
 		subject		= "Error processing daily scripts"
 		emailFile( textfile, subject)
 		
@@ -58,7 +61,7 @@ def execute(cmd):
 	logger.info(cmd)
 		
 	err = call(cmd, shell=True)
-	if err > 0:
+	if err < 0:
 		logger.error("execute err %s", err)
 		emailErrorFile()
 	
@@ -68,14 +71,14 @@ def get_daily_forecast():
 
 def process_script( str, dt, regions ):	
 	for r in regions :
-		cmd = "cat /dev/null > errorlog.txt"
+		cmd = "cat /dev/null > " + ERRLOG_FILE
 		os.system(cmd)
 		
 		cmd = "python ./%s --region %s --date %s" % (str, r, dt)
 		execute(cmd)
 	
 def process_global_script( str, dt ):
-	cmd = "cat /dev/null > errorlog.txt"
+	cmd = "cat /dev/null > " + ERRLOG_FILE
 	os.system(cmd)
 	
 	cmd = "python ./%s --date %s" % (str, dt)
@@ -144,13 +147,13 @@ if __name__ == '__main__':
 	apg_input.add_argument("-v", "--verbose", 	action='store_true', help="Verbose Flag")
 	apg_input.add_argument("-d", "--date", 		help="date")
 	
-	options 			= parser.parse_args()
-	force				= options.force or force
-	verbose				= options.verbose or verbose
-	d					= options.date
+	options 				= parser.parse_args()
+	force					= options.force or force
+	verbose					= options.verbose or verbose
+	d						= options.date
 
-	today				= date.today()
-	dt					= d or today.strftime("%Y-%m-%d")
+	today					= date.today()
+	dt						= d or today.strftime("%Y-%m-%d")
 	
 	if d == None:		# Date has not been specified, it is today
 		yesterday			= today - timedelta(1)
@@ -165,8 +168,8 @@ if __name__ == '__main__':
 		
 	print "Processing date:", dt, ydt, ydt2
 		
-	regions 			= ["d02", "d03", "d08", "d09", "d10"]
-	regions2 			= ["d02", "d03", "d08", "d09", "d10"]
+	regions 				= ["d02", "d03", "d08", "d09", "d10"]
+	regions2 				= ["d02", "d03", "d08", "d09", "d10"]
 	
 	if 1:
 		process_script('trmm_process.py', 		ydt, regions2)
@@ -186,9 +189,7 @@ if __name__ == '__main__':
 		process_global_script('gpm_global.py --timespan 1day', 		ydt2)		
 		process_global_script('gpm_global.py --timespan 3day', 		ydt2)		
 		process_global_script('gpm_global.py --timespan 7day', 		ydt2)		
-
 		process_global_script('landslide_nowcast_global.py', dt)
-		
 		process_global_script('geos5.py', dt)
 
 		#process_script('viirs_CHLA.py', ydt, regions2)
@@ -200,8 +201,8 @@ if __name__ == '__main__':
 	
 		#get_modis_floodmap()
 		
-		#backup_ojo_streamer()
-		#backup_ojo_wiki()
+		backup_ojo_streamer()
+		backup_ojo_wiki()
 
 	cleanup()
 	emailFile( logfile, "Success processing python scripts!" )

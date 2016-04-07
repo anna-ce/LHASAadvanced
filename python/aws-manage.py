@@ -28,7 +28,14 @@ dirs	= [	"ant_r/d02",
 			"ant_r/d08",
 			"ant_r/d09",
 			"geos5",
+			"gfms",
 			"gpm",
+			"gpm_1d",
+			"gpm_3d",
+			"gpm_3hrs",
+			"gpm_7d",
+			"gpm_30mn",
+			"global_landslide_nowcast",
 			"landslide_nowcast/d02",
 			"landslide_nowcast/d03",
 			"landslide_nowcast/d07",
@@ -41,7 +48,7 @@ dirs	= [	"ant_r/d02",
 			"trmm",
 			"trmm/3B42RT",
 			"trmm/d02",
-			"trmm/d03"
+			"trmm/d03",
 			"viirs_chla"
 		]
 	
@@ -103,17 +110,19 @@ if __name__ == '__main__':
 	
 	force		= options.force
 	verbose		= options.verbose
-			
-	aws_access_key 			= os.environ.get('AWS_ACCESSKEYID')
-	aws_secret_access_key 	= os.environ.get('AWS_SECRETACCESSKEY')
 	
-	conn 	= S3Connection(aws_access_key, aws_secret_access_key)
+	if config.USING_AWS_S3_FOR_STORAGE:
+		aws_access_key 			= os.environ.get('AWS_ACCESSKEYID')
+		aws_secret_access_key 	= os.environ.get('AWS_SECRETACCESSKEY')
+	
+		conn 	= S3Connection(aws_access_key, aws_secret_access_key)
 	
 	today 	= datetime.date.today()
-	delta	= timedelta(days=60)
+	delta	= timedelta(days= config.DAYS_KEEP)
 	dl		= today - delta
 	
-	manage_buckets(conn, dl)
-	manage_local_dirs(dl, config.data_dir )
-	#manage_local_dirs(dl, "/Users/patricecappelaere/Development/ojo/ojo-bot/tmp")
+	if config.USING_AWS_S3_FOR_STORAGE:
+		manage_buckets(conn, dl)
+
+	manage_local_dirs(dl, config.DATA_DIR )
 	

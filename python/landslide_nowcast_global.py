@@ -163,6 +163,8 @@ def save_tif(fname, data, ds, type, ct):
 def get_late_gpm_files(gis_files, product_name, ymd_org):
 	global force, verbose
 	downloaded_files = []
+	
+	err = 0
 		
 	try:
 		ftp = FTP(ftp_site)
@@ -201,8 +203,13 @@ def get_late_gpm_files(gis_files, product_name, ymd_org):
 				if verbose:
 					print "GPM IMERG FTP Error", filepath, e					
 				os.remove(local_filename)
+				err = 1
 
 	ftp.close()
+	
+	if err:
+		sys.exit(-1)
+		
 	return gis_files
 
 def process(_dir, files, ymd):

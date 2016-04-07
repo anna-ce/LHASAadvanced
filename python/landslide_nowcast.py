@@ -83,7 +83,7 @@ def build_tif(dx, region, dir, date):
 	# Find the antecedent rainfall boolean 95th percentile accumulation file for the area
 	ant_rainfall_bool 	= os.path.join(config.data_dir,"ant_r", dx, ymd, "ant_r_%s_bool.tif" % (ymd))
 	if force or not os.path.exists(ant_rainfall_bool):
-		cmd = "antecedent_rainfall.py --region "+dx+ " --date "+date
+		cmd = "python antecedent_rainfall.py --region "+dx+ " --date "+date
 		if verbose:
 			cmd += " -v"
 		if force:

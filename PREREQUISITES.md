@@ -105,11 +105,6 @@ SMTP Settings tab
 You should see an ses-smtp-user in your IAM user list
 
 
-#### S3 (Persistent Storage Service)
-
-Create a CentroClima bucket (name as available)
-
-
 #### RDS (Relational Database Service)
 
 We will use CONVOX to create our PostgreSQL database
@@ -133,6 +128,21 @@ Clone OJO-Publisher
 Create PostgreDB
 
 > $ convox services create postgres --name workshopdb
+
+
+Create S3 Bucket
+
+> $ convox services create s3...
+
+Create Service Queue
+
+> $ convox services create sqs
+
+
+Create Lamnda Functions
+
+IN PROGRESS....
+
 
 Set the environment
 
