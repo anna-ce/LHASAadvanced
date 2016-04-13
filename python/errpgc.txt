@@ -1,0 +1,115 @@
+cleaning up /Users/patricecappelaere/landslide/data/trmm
+cleaning up /Users/patricecappelaere/landslide/data/trmm/3B42RT
+cleaning up /Users/patricecappelaere/landslide/data/trmm/d02
+cleaning up /Users/patricecappelaere/landslide/data/trmm
+cleaning up /Users/patricecappelaere/landslide/data/trmm/3B42RT
+cleaning up /Users/patricecappelaere/landslide/data/trmm/d03
+cleaning up /Users/patricecappelaere/landslide/data/trmm
+cleaning up /Users/patricecappelaere/landslide/data/trmm/3B42RT
+cleaning up /Users/patricecappelaere/landslide/data/trmm/d08
+cleaning up /Users/patricecappelaere/landslide/data/trmm
+cleaning up /Users/patricecappelaere/landslide/data/trmm/3B42RT
+cleaning up /Users/patricecappelaere/landslide/data/trmm/d09
+cleaning up /Users/patricecappelaere/landslide/data/trmm
+cleaning up /Users/patricecappelaere/landslide/data/trmm/3B42RT
+cleaning up /Users/patricecappelaere/landslide/data/trmm/d10
+3B-HHR-L.MS.MRG.3IMERG.20160411-S233000-E235959.1410.V03E.1day.tif
+wms url: http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX=-92.683333,6.15773801786,-75.85,19.083333&WIDTH=364&HEIGHT=280
+wms url: http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX=-92.683333,6.15773801786,-75.85,19.083333&WIDTH=364&HEIGHT=280
+wms url: http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX=-92.683333,6.15773801786,-75.85,19.083333&WIDTH=364&HEIGHT=280
+cleaning up /Users/patricecappelaere/landslide/data/gpm
+3B-HHR-L.MS.MRG.3IMERG.20160411-S233000-E235959.1410.V03E.1day.tif
+wms url: http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX=-74.941667,16.34199983,-64.975,21.425&WIDTH=549&HEIGHT=280
+wms url: http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX=-74.941667,16.34199983,-64.975,21.425&WIDTH=549&HEIGHT=280
+wms url: http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX=-74.941667,16.34199983,-64.975,21.425&WIDTH=549&HEIGHT=280
+cleaning up /Users/patricecappelaere/landslide/data/gpm
+3B-HHR-L.MS.MRG.3IMERG.20160411-S233000-E235959.1410.V03E.1day.tif
+3B-HHR-L.MS.MRG.3IMERG.20160411-S233000-E235959.1410.V03E.1day.tif
+3B-HHR-L.MS.MRG.3IMERG.20160411-S233000-E235959.1410.V03E.1day.tif
+get 3B-HHR-L.MS.MRG.3IMERG.20160411-S233000-E235959.1410.V03E.1day.tif 3B-HHR-L.MS.MRG.3IMERG.20160411-S233000-E235959.1410.V03E.1day.tfw
+Processing 3B-HHR-L.MS.MRG.3IMERG.20160411-S233000-E235959.1410.V03E.1day.tif /Users/patricecappelaere/landslide/data/gpm_1d/20160411/global/gpm_1d.20160411.topojson.gz
+Processing 3B-HHR-L.MS.MRG.3IMERG.20160411-S233000-E235959.1410.V03E.3day.tif /Users/patricecappelaere/landslide/data/gpm_3d/20160411/global/gpm_3d.20160411.topojson.gz
+Processing 3B-HHR-L.MS.MRG.3IMERG.20160411-S233000-E235959.1410.V03E.7day.tif /Users/patricecappelaere/landslide/data/gpm_7d/20160411/global/gpm_7d.20160411.topojson.gz
+multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_0830.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_1830.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_1030.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2030.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_0930.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_1930.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_0230.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_1230.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_0030.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_1330.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_0330.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_1730.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_0530.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_1530.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_0130.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_1430.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_0430.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_1630.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_0630.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2130.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_1130.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2230.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
+file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_0730.V01.nc4
+Use Ctrl-C at any time to stop monitoring progress; the backup
+will continue running. Use heroku pg:backups info to check progress.
+Stop a running backup with heroku pg:backups cancel.
+
+HEROKU_POSTGRESQL_COPPER ---backup---> b143
+
+[0KRunning... 5.95MB[0KBackup completed
+Use Ctrl-C at any time to stop monitoring progress; the backup
+will continue running. Use heroku pg:backups info to check progress.
+Stop a running backup with heroku pg:backups cancel.
+
+HEROKU_POSTGRESQL_ORANGE ---backup---> b143
+
+[0KRunning... 0.00B[0KRunning... 0.00B[0KBackup completed
+** bucket: ojo-d2
+** bucket: ojo-d3
+** bucket: ojo-d4
+** bucket: ojo-d5
+** bucket: ojo-d6
+** bucket: ojo-d7
+** bucket: ojo-d8
+** bucket: ojo-d9
+/Users/patricecappelaere/landslide/data/ojo-d2
+/Users/patricecappelaere/landslide/data/ojo-d3
+/Users/patricecappelaere/landslide/data/ojo-d4
+/Users/patricecappelaere/landslide/data/ojo-d5
+/Users/patricecappelaere/landslide/data/ojo-d6
+/Users/patricecappelaere/landslide/data/ojo-d7
+/Users/patricecappelaere/landslide/data/ojo-d8
+/Users/patricecappelaere/landslide/data/ojo-d9
+Process All Path: process_all.py 
+Processing date: 2016-04-13 2016-04-12 2016-04-11
+heroku pg:backups capture --app ojo-streamer HEROKU_POSTGRESQL_COPPER_URL 
+cd /Users/patricecappelaere/Development/ojo/ojo-wiki
+heroku pg:backups capture --app ojo-wiki HEROKU_POSTGRESQL_ORANGE_URL 

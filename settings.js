@@ -203,8 +203,6 @@ function app_set_env( env_var ) {
 // ===========================
 // App settings and middleware
 function bootApplication(app) {
-
-	
 	// define a custom res.message() method
 	// which stores messages in the session
 	app.response.message = function(msg){

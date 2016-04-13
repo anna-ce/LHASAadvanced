@@ -104,19 +104,24 @@ SMTP Settings tab
 	
 You should see an ses-smtp-user in your IAM user list
 
+### CONVOX PaaS setup
 
-#### RDS (Relational Database Service)
-
-We will use CONVOX to create our PostgreSQL database
-
-Get started with [CONVOX](https://convox.com/docs/getting-started/)
+Get started with [CONVOX](https://console.convox.com)
+[Docs here](https://convox.com/docs/)
 
 Steps:
 
-+  Create Grid Account
++  Create Account
 +  Install New Rack
 +  Install CONVOX CLI on your local machine
-+  Log in on the CLI
+
+Log in on the CLI
+
+> $ convox login console.convox.com --password xxxx-xxx-xx-xx-xxx
+
+Switch to your rack
+
+> $ convox switch personal/ojo-bot
 
 Clone OJO-Publisher
 
@@ -127,34 +132,139 @@ Clone OJO-Publisher
 
 Create PostgreDB
 
-> $ convox services create postgres --name workshopdb
+> $ convox services create postgres --name workshop_db
+> $ convox services info workshop_db
+
+Create [S3 Bucket](http://docs-staging.convox.com/docs/s3/)
+
+> $ convox services create s3 --name workshop_bucket
+> $ convox services info workshop_bucket
+
+Create [Service Queue](http://docs-staging.convox.com/docs/sqs/)
+
+> $ convox services create sqs --name workshop_queue
+> $ convox services info workshop_queue
+
+Create Lambda Functions for scheduling
+
+Go to your AWS Management console Compute/Lambda
+Create function to generate IMERG every 30mn (Set it to run every 30mn)
+Note: Replace AWS_QUEUE by proper queue name
+
+```python
+import boto3, datetime
+# Get the service resource
+sqs = boto3.resource('sqs')
+
+AWS_QUEUE="OJO-Q"
+
+def send_msg():
+    queue = sqs.get_queue_by_name(QueueName=AWS_QUEUE)
+    response = queue.send_message(MessageBody='process_gpm_30mn')
 
 
-Create S3 Bucket
+def lambda_handler(event, context):
+    print('Sending msg')
+    try:
+       send_msg()
+    except:
+        print('Send Message failed!')
+        raise
+    else:
+        print('Done!')
+        return 1
+    finally:
+        print('Complete at {}'.format(str(datetime.datetime.now())))
+```
 
-> $ convox services create s3...
+Create function to generate IMERG every 3hrs (set it to run every 3hrs)
 
-Create Service Queue
+```python
+import boto3, datetime
+# Get the service resource
+sqs = boto3.resource('sqs')
 
-> $ convox services create sqs
+AWS_QUEUE="OJO-Q"
+
+def send_msg():
+    queue = sqs.get_queue_by_name(QueueName=AWS_QUEUE)
+    response = queue.send_message(MessageBody='process_gpm_3hrs')
 
 
-Create Lamnda Functions
+def lambda_handler(event, context):
+    print('Sending msg')
+    try:
+       send_msg()
+    except:
+        print('Send Message failed!')
+        raise
+    else:
+        print('Done!')
+        return 1
+    finally:
+        print('Complete at {}'.format(str(datetime.datetime.now())))
+```
 
-IN PROGRESS....
+
+Create function to generate all products every day.  Set it to run once a day
+
+```python
+import boto3, datetime
+# Get the service resource
+sqs = boto3.resource('sqs')
+
+AWS_QUEUE="OJO-Q"
+
+def send_msg():
+    queue = sqs.get_queue_by_name(QueueName=AWS_QUEUE)
+    response = queue.send_message(MessageBody='process_all')
 
 
-Set the environment
+def lambda_handler(event, context):
+    print('Sending msg to process all scripts')
+    try:
+       send_msg()
+    except:
+        print('Send Message failed!')
+        raise
+    else:
+        print('Done!')
+        return 1
+    finally:
+        print('Complete at {}'.format(str(datetime.datetime.now())))
+```
 
-> $ convox services info workshopdb
-Note: You will set DATABASE_URL env as provided URL.  See above
+## Set Environment
+
+Set the environment variables in envs.docker.sh and your .bashrc or .tcshrc (if you want to develop on local machine)
 
 > $ cp envs.docker.sh.tmpl envs.docker.sh
+> $ vi .bashrc
 
-Set all your environment variables
+## Configure Database
+### Add extensions
+Connect to database using [Navicat](https://www.navicat.com/)/phpAdmin/[psql](http://postgresguide.com/utilities/psql.html)
 
+> env | grep DATABASE_URL_
+> $ psql "dbname=d6or7541hmg7qi host=ec2-54-83-32-64.compute-1.amazonaws.com user=udeeblkngvmsh4 password=xxxxxxxxxxxxxxxxxxxxxxx port=6002 sslmode=require"
 
-# NEXT.... NOT FINISHED
+> d6or7541hmg7qi=> create extension postgis;
+> d6or7541hmg7qi=> create extension fuzzystrmatch;
+> d6or7541hmg7qi=> create extension postgis_tiger_geocoder;
+> d6or7541hmg7qi=> create extension postgis_topology;
+
+###Add required tables
+
+Check /sql/public.sql and replace "udeeblkngvmsh4" with your own DATABASE OWNER as specified in your DATABASE_URL in ALTER TABLE statement
+
+> d6or7541hmg7qi=> \i ./sql/public.sql
+> d6or7541hmg7qi=> \q
+
+### Customize Configuration Files
+#### ./config/config.yaml
+#### ./python/config.py
+
+# Next Tuning Deployment
 Enable SSH
 > $ convox instances keyroll
 
