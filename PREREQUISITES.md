@@ -128,21 +128,25 @@ Clone OJO-Publisher
 > $ git clone git@github.com:vightel/ojo-bot.git
 
 > $ cd ojo-bot
+
 > $ convox apps create ojo-bot
 
 Create PostgreDB
 
 > $ convox services create postgres --name workshop_db
+
 > $ convox services info workshop_db
 
 Create [S3 Bucket](http://docs-staging.convox.com/docs/s3/)
 
 > $ convox services create s3 --name workshop_bucket
+
 > $ convox services info workshop_bucket
 
 Create [Service Queue](http://docs-staging.convox.com/docs/sqs/)
 
 > $ convox services create sqs --name workshop_queue
+
 > $ convox services info workshop_queue
 
 Create Lambda Functions for scheduling
@@ -239,6 +243,7 @@ def lambda_handler(event, context):
 Set the environment variables in envs.docker.sh and your .bashrc or .tcshrc (if you want to develop on local machine)
 
 > $ cp envs.docker.sh.tmpl envs.docker.sh
+
 > $ vi .bashrc
 
 ## Configure Database
@@ -246,11 +251,15 @@ Set the environment variables in envs.docker.sh and your .bashrc or .tcshrc (if 
 Connect to database using [Navicat](https://www.navicat.com/)/phpAdmin/[psql](http://postgresguide.com/utilities/psql.html)
 
 > env | grep DATABASE_URL_
+
 > $ psql "dbname=d6or7541hmg7qi host=ec2-54-83-32-64.compute-1.amazonaws.com user=udeeblkngvmsh4 password=xxxxxxxxxxxxxxxxxxxxxxx port=6002 sslmode=require"
 
 > d6or7541hmg7qi=> create extension postgis;
+
 > d6or7541hmg7qi=> create extension fuzzystrmatch;
+
 > d6or7541hmg7qi=> create extension postgis_tiger_geocoder;
+
 > d6or7541hmg7qi=> create extension postgis_topology;
 
 ###Add required tables
@@ -258,6 +267,7 @@ Connect to database using [Navicat](https://www.navicat.com/)/phpAdmin/[psql](ht
 Check /sql/public.sql and replace "udeeblkngvmsh4" with your own DATABASE OWNER as specified in your DATABASE_URL in ALTER TABLE statement
 
 > d6or7541hmg7qi=> \i ./sql/public.sql
+
 > d6or7541hmg7qi=> \q
 
 ### Customize Configuration Files
@@ -266,9 +276,11 @@ Check /sql/public.sql and replace "udeeblkngvmsh4" with your own DATABASE OWNER 
 
 # Next Tuning Deployment
 Enable SSH
+
 > $ convox instances keyroll
 
 Scale Up
+
 > $ convox rack scale --type m3.large
 
 > $ convox scale web --count 1 
@@ -282,4 +294,5 @@ Scale Up
 
 Check
 > $ convox apps info
+
 > $ convox instances
