@@ -24,12 +24,37 @@ Check PREREQUISITES.md
 ## Local Docker
 Install docker and start VM
 Start Docker VM via Docker Quickstart Terminal
+> docker --version
+Docker version 1.11.0
 
 > docker-machine env default
 > bash
 > eval "$(docker-machine env default)"
 > docker ps
 
+### Build locally
+> docker-compose build development
+> docker images
+
+Start shell in development mode... you can start processing python scripts
+> docker run -i -p 8080:8080 -t ojobot_development /bin/bash
+
+
+> docker-compose run development		!Note: does not work since there is no port mapping
+> docker-compose up development			!Note: postgres connection problem
+
+> docker run -i -p 8080:8080 -t ojobot_development /bin/bash	!Note: Seems to work with curl -i 192.168.99.100:8080
+
+
+### Checking/Cleaning docker images
+> docker images
+
+Clean Docker
+> docker rm -v $(docker ps -a -q -f status=exited)
+
+> docker rmi -f $(docker images | grep "<none>" | awk "{print \$3}")
+	
+> docker rmi $(docker images -f "dangling=true" -q)
 
 ### Building base container
 > docker-compose build conda
@@ -47,21 +72,3 @@ Push it
 
 > docker push cappelaere/ojo_publisher_base_stack
 
-### Build locally
-> docker-compose build development
-
-Start shell
-> docker-compose run development		!Note: does not work since there is no port mapping
-> docker run -i -p 8080:8080 -t ojobot_development /bin/bash	!Note: Seems to work with curl -i 192.168.99.100:8080
-> docker-compose up development			!Note: postgres connection problem
-
-
-### Checking/Cleaning docker images
-> docker images
-
-Clean Docker
-> docker rm -v $(docker ps -a -q -f status=exited)
-
-> docker rmi -f $(docker images | grep "<none>" | awk "{print \$3}")
-	
-> docker rmi $(docker images -f "dangling=true" -q)
