@@ -53,6 +53,7 @@ VIIRS_CHLA_DIR				= os.path.join(DATA_DIR, "viirs_chla")
 VIIRS_ACTIVE_FIRES_DIR		= os.path.join(DATA_DIR, "viirs_af")
 CHIRPS_PRELIM_DIR			= os.path.join(DATA_DIR, "chirps2_prelim")
 GEOS5_DIR					= os.path.join(DATA_DIR, "geos5")
+GEOS5_SAT_DIR				= os.path.join(DATA_DIR, "geos5_sat")
 
 
 today 		= date.today()
@@ -170,6 +171,14 @@ regions		= {
 		'centerlat':	-18,
 		'centerlon':	21,
 		'bucket':		"ojo-d4",
+		'thn_zoom': 	6
+	},
+	'd05': {
+		'name':			"RCMRD",
+		'bbox': 		[29, -8, 42, 4 ],
+		'centerlat':	-2,
+		'centerlon':	36,
+		'bucket':		"ojo-d5",
 		'thn_zoom': 	6
 	},
 	'd07': {

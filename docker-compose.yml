@@ -25,3 +25,20 @@ worker:
     - PYTHONPATH=/app/user/python:$PYTHONPATH
     - PORT=3001
     
+development:
+  build: .
+  dockerfile: Dockerfile_production
+  working_dir: /app/user
+  command: bash
+  expose: 
+    - '3000'
+    - '5432'
+    - '6002'
+  environment:
+    - NODE_ENV=development
+    - PORT=7465
+    - PYTHONPATH=/app/user/python:$PYTHONPATH
+  ports:
+    - '7465:7465'
+    - '7464:7464'
+    

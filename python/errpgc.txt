@@ -1,105 +1,872 @@
-cleaning up /Users/patricecappelaere/landslide/data/trmm
-cleaning up /Users/patricecappelaere/landslide/data/trmm/3B42RT
-cleaning up /Users/patricecappelaere/landslide/data/trmm/d02
-cleaning up /Users/patricecappelaere/landslide/data/trmm
-cleaning up /Users/patricecappelaere/landslide/data/trmm/3B42RT
-cleaning up /Users/patricecappelaere/landslide/data/trmm/d03
-cleaning up /Users/patricecappelaere/landslide/data/trmm
-cleaning up /Users/patricecappelaere/landslide/data/trmm/3B42RT
-cleaning up /Users/patricecappelaere/landslide/data/trmm/d08
-cleaning up /Users/patricecappelaere/landslide/data/trmm
-cleaning up /Users/patricecappelaere/landslide/data/trmm/3B42RT
-cleaning up /Users/patricecappelaere/landslide/data/trmm/d09
-cleaning up /Users/patricecappelaere/landslide/data/trmm
-cleaning up /Users/patricecappelaere/landslide/data/trmm/3B42RT
-cleaning up /Users/patricecappelaere/landslide/data/trmm/d10
-3B-HHR-L.MS.MRG.3IMERG.20160411-S233000-E235959.1410.V03E.1day.tif
+FTP login Error <type 'exceptions.EOFError'> 
+Exception 
+FTP login Error <type 'exceptions.EOFError'> 
+Exception 
+FTP login Error <type 'exceptions.EOFError'> 
+Exception 
+FTP login Error <type 'exceptions.EOFError'> 
+Exception 
+FTP login Error <type 'exceptions.EOFError'> 
+Exception 
+3B-HHR-L.MS.MRG.3IMERG.20160417-S233000-E235959.1410.V03E.1day.tif
 wms url: http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX=-92.683333,6.15773801786,-75.85,19.083333&WIDTH=364&HEIGHT=280
-wms url: http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX=-92.683333,6.15773801786,-75.85,19.083333&WIDTH=364&HEIGHT=280
-wms url: http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX=-92.683333,6.15773801786,-75.85,19.083333&WIDTH=364&HEIGHT=280
-cleaning up /Users/patricecappelaere/landslide/data/gpm
-3B-HHR-L.MS.MRG.3IMERG.20160411-S233000-E235959.1410.V03E.1day.tif
+3B-HHR-L.MS.MRG.3IMERG.20160417-S233000-E235959.1410.V03E.1day.tif
 wms url: http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX=-74.941667,16.34199983,-64.975,21.425&WIDTH=549&HEIGHT=280
-wms url: http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX=-74.941667,16.34199983,-64.975,21.425&WIDTH=549&HEIGHT=280
-wms url: http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX=-74.941667,16.34199983,-64.975,21.425&WIDTH=549&HEIGHT=280
-cleaning up /Users/patricecappelaere/landslide/data/gpm
-3B-HHR-L.MS.MRG.3IMERG.20160411-S233000-E235959.1410.V03E.1day.tif
-3B-HHR-L.MS.MRG.3IMERG.20160411-S233000-E235959.1410.V03E.1day.tif
-3B-HHR-L.MS.MRG.3IMERG.20160411-S233000-E235959.1410.V03E.1day.tif
-get 3B-HHR-L.MS.MRG.3IMERG.20160411-S233000-E235959.1410.V03E.1day.tif 3B-HHR-L.MS.MRG.3IMERG.20160411-S233000-E235959.1410.V03E.1day.tfw
-Processing 3B-HHR-L.MS.MRG.3IMERG.20160411-S233000-E235959.1410.V03E.1day.tif /Users/patricecappelaere/landslide/data/gpm_1d/20160411/global/gpm_1d.20160411.topojson.gz
-Processing 3B-HHR-L.MS.MRG.3IMERG.20160411-S233000-E235959.1410.V03E.3day.tif /Users/patricecappelaere/landslide/data/gpm_3d/20160411/global/gpm_3d.20160411.topojson.gz
-Processing 3B-HHR-L.MS.MRG.3IMERG.20160411-S233000-E235959.1410.V03E.7day.tif /Users/patricecappelaere/landslide/data/gpm_7d/20160411/global/gpm_7d.20160411.topojson.gz
-multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_0830.V01.nc4
-multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_1830.V01.nc4
-multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_1030.V01.nc4
-multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2030.V01.nc4
-multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_0930.V01.nc4
-multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_1930.V01.nc4
-multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_0230.V01.nc4
-multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_1230.V01.nc4
-multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_0030.V01.nc4
-multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_1330.V01.nc4
-multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_0330.V01.nc4
-multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_1730.V01.nc4
-multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_0530.V01.nc4
-multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_1530.V01.nc4
-multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_0130.V01.nc4
-multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_1430.V01.nc4
-multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_0430.V01.nc4
-multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_1630.V01.nc4
-multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_0630.V01.nc4
-multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2130.V01.nc4
-multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_1130.V01.nc4
-multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2230.V01.nc4
-multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-multiprocessing_download  fp/forecast/Y2016/M04/D13/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_2330.V01.nc4
-file exists /Users/patricecappelaere/landslide/data/geos5/20160413/GEOS.fp.fcst.tavg1_2d_flx_Nx.20160413_00+20160413_0730.V01.nc4
+3B-HHR-L.MS.MRG.3IMERG.20160417-S233000-E235959.1410.V03E.1day.tif
+wms url: http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX=72.999899,25.9835644221,97.383232,38.475026&WIDTH=546&HEIGHT=280
+3B-HHR-L.MS.MRG.3IMERG.20160417-S233000-E235959.1410.V03E.1day.tif
+wms url: http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX=-81.358333,-18.3212641654,-68.666667,-0.033273&WIDTH=280&HEIGHT=403
+3B-HHR-L.MS.MRG.3IMERG.20160417-S233000-E235959.1410.V03E.1day.tif
+wms url: http://129.206.228.72/cached/osm?LAYERS=osm_auto:all&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX=-45.0,-23.391607,-39.0,-17.891607&WIDTH=305&HEIGHT=280
+file does not exist /Users/patricecappelaere/landslide/data/trmm/d02/20160418/trmm_24_d02_20160418_1km.tif
+**ERR: file not found /Users/patricecappelaere/landslide/data/trmm/d02/20160418/trmm_24_d02_20160418_1km.tif
+file does not exist /Users/patricecappelaere/landslide/data/trmm/d03/20160418/trmm_24_d03_20160418_1km.tif
+**ERR: file not found /Users/patricecappelaere/landslide/data/trmm/d03/20160418/trmm_24_d03_20160418_1km.tif
+file does not exist /Users/patricecappelaere/landslide/data/trmm/d08/20160418/trmm_24_d08_20160418_1km.tif
+**ERR: file not found /Users/patricecappelaere/landslide/data/trmm/d08/20160418/trmm_24_d08_20160418_1km.tif
+file does not exist /Users/patricecappelaere/landslide/data/trmm/d09/20160418/trmm_24_d09_20160418_1km.tif
+**ERR: file not found /Users/patricecappelaere/landslide/data/trmm/d09/20160418/trmm_24_d09_20160418_1km.tif
+file does not exist /Users/patricecappelaere/landslide/data/trmm/d10/20160418/trmm_24_d10_20160418_1km.tif
+**ERR: file not found /Users/patricecappelaere/landslide/data/trmm/d10/20160418/trmm_24_d10_20160418_1km.tif
+MakeBrowseImage verbose False /Users/patricecappelaere/landslide/data/gfms/20160418/geojson/../20160418_small_browse.tif
+get 3B-HHR-L.MS.MRG.3IMERG.20160417-S233000-E235959.1410.V03E.1day.tif 3B-HHR-L.MS.MRG.3IMERG.20160417-S233000-E235959.1410.V03E.1day.tfw
+Processing 3B-HHR-L.MS.MRG.3IMERG.20160417-S233000-E235959.1410.V03E.1day.tif /Users/patricecappelaere/landslide/data/gpm_1d/20160417/global/gpm_1d.20160417.topojson.gz
+MakeBrowseImage verbose False /Users/patricecappelaere/landslide/data/gpm_1d/20160417/global/geojson_gpm_1d/../gpm_1d.20160417_small_browse.tif
+Processing 3B-HHR-L.MS.MRG.3IMERG.20160417-S233000-E235959.1410.V03E.3day.tif /Users/patricecappelaere/landslide/data/gpm_3d/20160417/global/gpm_3d.20160417.topojson.gz
+MakeBrowseImage verbose False /Users/patricecappelaere/landslide/data/gpm_3d/20160417/global/geojson_gpm_3d/../gpm_3d.20160417_small_browse.tif
+Processing 3B-HHR-L.MS.MRG.3IMERG.20160417-S233000-E235959.1410.V03E.7day.tif /Users/patricecappelaere/landslide/data/gpm_7d/20160417/global/gpm_7d.20160417.topojson.gz
+MakeBrowseImage verbose False /Users/patricecappelaere/landslide/data/gpm_7d/20160417/global/geojson_gpm_7d/../gpm_7d.20160417_small_browse.tif
+CopyToS3 ojo-global global_landslide_nowcast/2016/110 ['/Users/patricecappelaere/landslide/data/global_landslide_nowcast/20160419/global_landslide_nowcast_20160419_thn.jpg', '/Users/patricecappelaere/landslide/data/global_landslide_nowcast/20160419/global_landslide_nowcast_20160419.topojson.gz', '/Users/patricecappelaere/landslide/data/global_landslide_nowcast/20160419/global_landslide_nowcast_20160419.tif']
+storing to s3: <Bucket: ojo-global> global_landslide_nowcast/2016/110/global_landslide_nowcast_20160419_thn.jpg
+storing to s3: <Bucket: ojo-global> global_landslide_nowcast/2016/110/global_landslide_nowcast_20160419.topojson.gz
+storing to s3: <Bucket: ojo-global> global_landslide_nowcast/2016/110/global_landslide_nowcast_20160419.tif
+Making dest dir /Users/patricecappelaere/Development/ojo/tmp/ojo-global/global_landslide_nowcast/2016/110
+Copying  /Users/patricecappelaere/landslide/data/global_landslide_nowcast/20160419/global_landslide_nowcast_20160419_thn.jpg  to  /Users/patricecappelaere/Development/ojo/tmp/ojo-global/global_landslide_nowcast/2016/110/global_landslide_nowcast_20160419_thn.jpg
+Copying  /Users/patricecappelaere/landslide/data/global_landslide_nowcast/20160419/global_landslide_nowcast_20160419.topojson.gz  to  /Users/patricecappelaere/Development/ojo/tmp/ojo-global/global_landslide_nowcast/2016/110/global_landslide_nowcast_20160419.topojson.gz
+Copying  /Users/patricecappelaere/landslide/data/global_landslide_nowcast/20160419/global_landslide_nowcast_20160419.tif  to  /Users/patricecappelaere/Development/ojo/tmp/ojo-global/global_landslide_nowcast/2016/110/global_landslide_nowcast_20160419.tif
+multiprocessing_download  fp/forecast/Y2016/M04/D19/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+Trying to Download... GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_1030.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D19/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+Trying to Download... GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_1630.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D19/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+Trying to Download... GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_1130.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D19/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+Trying to Download... GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_1830.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D19/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+Trying to Download... GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_0730.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D19/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+Trying to Download... GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_1330.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D19/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+Trying to Download... GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_0530.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D19/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+Trying to Download... GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_1230.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D19/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+Trying to Download... GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_0430.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D19/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+Trying to Download... GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_1530.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D19/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+Trying to Download... GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_0830.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D19/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+Trying to Download... GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_1730.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D19/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+Trying to Download... GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_0230.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D19/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+Trying to Download... GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_1930.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D19/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+Trying to Download... GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_0630.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D19/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+Trying to Download... GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2230.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D19/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+Trying to Download... GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_0330.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D19/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+Trying to Download... GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_1430.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D19/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+Trying to Download... GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_0030.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D19/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+Trying to Download... GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D19/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+Trying to Download... GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_0930.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D19/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+Trying to Download... GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2030.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D19/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+Trying to Download... GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_0130.V01.nc4
+multiprocessing_download  fp/forecast/Y2016/M04/D19/H00 GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2330.V01.nc4
+Trying to Download... GEOS.fp.fcst.tavg1_2d_flx_Nx.20160419_00+20160419_2130.V01.nc4
+Processing /Users/patricecappelaere/landslide/data/geos5/20160419/geos5_precip.20160419.tif
 Use Ctrl-C at any time to stop monitoring progress; the backup
 will continue running. Use heroku pg:backups info to check progress.
 Stop a running backup with heroku pg:backups cancel.
 
-HEROKU_POSTGRESQL_COPPER ---backup---> b143
+HEROKU_POSTGRESQL_COPPER ---backup---> b153
 
-[0KRunning... 5.95MB[0KBackup completed
+[0KRunning... 0.00B[0KRunning... 0.00B[0KRunning... 5.96MB[0KBackup completed
 Use Ctrl-C at any time to stop monitoring progress; the backup
 will continue running. Use heroku pg:backups info to check progress.
 Stop a running backup with heroku pg:backups cancel.
 
-HEROKU_POSTGRESQL_ORANGE ---backup---> b143
+HEROKU_POSTGRESQL_ORANGE ---backup---> b153
 
-[0KRunning... 0.00B[0KRunning... 0.00B[0KBackup completed
+[0KPending... /[0KRunning... 0.00B[0KRunning... 0.00B[0KBackup completed
 ** bucket: ojo-d2
+ojo-d2 gpm/2016/041/gpm_1d.20160210.tif 43910 2016-02-17 13:33:13 ** delete **
+ojo-d2 gpm/2016/041/gpm_1d.20160210.topojson.gz 6010 2016-02-17 13:33:13 ** delete **
+ojo-d2 gpm/2016/041/gpm_1d.20160210_thn.jpg 29294 2016-02-17 13:33:12 ** delete **
+ojo-d2 gpm/2016/041/gpm_3d.20160210.tif 43910 2016-02-17 13:33:17 ** delete **
+ojo-d2 gpm/2016/041/gpm_3d.20160210.topojson.gz 6010 2016-02-17 13:33:17 ** delete **
+ojo-d2 gpm/2016/041/gpm_3d.20160210_thn.jpg 29294 2016-02-17 13:33:16 ** delete **
+ojo-d2 gpm/2016/041/gpm_7d.20160210.tif 43910 2016-02-17 13:33:21 ** delete **
+ojo-d2 gpm/2016/041/gpm_7d.20160210.topojson.gz 6010 2016-02-17 13:33:21 ** delete **
+ojo-d2 gpm/2016/041/gpm_7d.20160210_thn.jpg 29294 2016-02-17 13:33:20 ** delete **
+ojo-d2 gpm/2016/042/gpm_1d.20160211.tif 43910 2016-02-17 18:26:51 ** delete **
+ojo-d2 gpm/2016/042/gpm_1d.20160211.topojson.gz 5231 2016-02-17 18:26:51 ** delete **
+ojo-d2 gpm/2016/042/gpm_1d.20160211_thn.jpg 29664 2016-02-17 18:26:51 ** delete **
+ojo-d2 gpm/2016/042/gpm_3d.20160211.tif 43910 2016-02-17 18:26:56 ** delete **
+ojo-d2 gpm/2016/042/gpm_3d.20160211.topojson.gz 5231 2016-02-17 18:26:55 ** delete **
+ojo-d2 gpm/2016/042/gpm_3d.20160211_thn.jpg 29664 2016-02-17 18:26:55 ** delete **
+ojo-d2 gpm/2016/042/gpm_7d.20160211.tif 43910 2016-02-17 18:27:00 ** delete **
+ojo-d2 gpm/2016/042/gpm_7d.20160211.topojson.gz 5231 2016-02-17 18:27:00 ** delete **
+ojo-d2 gpm/2016/042/gpm_7d.20160211_thn.jpg 29664 2016-02-17 18:27:00 ** delete **
+ojo-d2 gpm/2016/044/gpm_1d.20160213.tif 43910 2016-02-17 18:32:50 ** delete **
+ojo-d2 gpm/2016/044/gpm_1d.20160213.topojson.gz 5298 2016-02-17 18:32:50 ** delete **
+ojo-d2 gpm/2016/044/gpm_1d.20160213_thn.jpg 25362 2016-02-17 18:32:50 ** delete **
+ojo-d2 gpm/2016/044/gpm_3d.20160213.tif 43910 2016-02-17 18:32:55 ** delete **
+ojo-d2 gpm/2016/044/gpm_3d.20160213.topojson.gz 5298 2016-02-17 18:32:55 ** delete **
+ojo-d2 gpm/2016/044/gpm_3d.20160213_thn.jpg 25362 2016-02-17 18:32:55 ** delete **
+ojo-d2 gpm/2016/044/gpm_7d.20160213.tif 43910 2016-02-17 18:33:01 ** delete **
+ojo-d2 gpm/2016/044/gpm_7d.20160213.topojson.gz 5298 2016-02-17 18:33:01 ** delete **
+ojo-d2 gpm/2016/044/gpm_7d.20160213_thn.jpg 25362 2016-02-17 18:33:00 ** delete **
+ojo-d2 gpm/2016/045/gpm_1d.20160214.tif 43910 2016-02-17 18:37:32 ** delete **
+ojo-d2 gpm/2016/045/gpm_1d.20160214.topojson.gz 4469 2016-02-17 18:37:32 ** delete **
+ojo-d2 gpm/2016/045/gpm_1d.20160214_thn.jpg 27847 2016-02-17 18:37:32 ** delete **
+ojo-d2 gpm/2016/045/gpm_3d.20160214.tif 43910 2016-02-17 18:37:37 ** delete **
+ojo-d2 gpm/2016/045/gpm_3d.20160214.topojson.gz 4469 2016-02-17 18:37:37 ** delete **
+ojo-d2 gpm/2016/045/gpm_3d.20160214_thn.jpg 27847 2016-02-17 18:37:36 ** delete **
+ojo-d2 gpm/2016/045/gpm_7d.20160214.tif 43910 2016-02-17 18:37:42 ** delete **
+ojo-d2 gpm/2016/045/gpm_7d.20160214.topojson.gz 4469 2016-02-17 18:37:42 ** delete **
+ojo-d2 gpm/2016/045/gpm_7d.20160214_thn.jpg 27847 2016-02-17 18:37:41 ** delete **
+ojo-d2 gpm/2016/046/gpm_1d.20160215.tif 43910 2016-02-17 18:42:06 ** delete **
+ojo-d2 gpm/2016/046/gpm_1d.20160215.topojson.gz 1919 2016-02-17 18:42:06 ** delete **
+ojo-d2 gpm/2016/046/gpm_1d.20160215_thn.jpg 22505 2016-02-17 18:42:06 ** delete **
+ojo-d2 gpm/2016/046/gpm_3d.20160215.tif 43910 2016-02-17 18:42:10 ** delete **
+ojo-d2 gpm/2016/046/gpm_3d.20160215.topojson.gz 1919 2016-02-17 18:42:10 ** delete **
+ojo-d2 gpm/2016/046/gpm_3d.20160215_thn.jpg 22505 2016-02-17 18:42:09 ** delete **
+ojo-d2 gpm/2016/046/gpm_7d.20160215.tif 43910 2016-02-17 18:42:14 ** delete **
+ojo-d2 gpm/2016/046/gpm_7d.20160215.topojson.gz 1919 2016-02-17 18:42:13 ** delete **
+ojo-d2 gpm/2016/046/gpm_7d.20160215_thn.jpg 22505 2016-02-17 18:42:13 ** delete **
+ojo-d2 landslide_nowcast/2016/041/landslide_nowcast.20160210.tif 3137600 2016-02-17 13:36:16 ** delete **
+ojo-d2 landslide_nowcast/2016/041/landslide_nowcast.20160210.topojson.gz 161 2016-02-17 13:36:16 ** delete **
+ojo-d2 landslide_nowcast/2016/041/landslide_nowcast.20160210_thn.jpg 21523 2016-02-17 13:36:15 ** delete **
+ojo-d2 landslide_nowcast/2016/042/landslide_nowcast.20160211.tif 3137600 2016-02-17 18:28:06 ** delete **
+ojo-d2 landslide_nowcast/2016/042/landslide_nowcast.20160211.topojson.gz 161 2016-02-17 18:28:05 ** delete **
+ojo-d2 landslide_nowcast/2016/042/landslide_nowcast.20160211_thn.jpg 21523 2016-02-17 18:28:05 ** delete **
+ojo-d2 landslide_nowcast/2016/043/landslide_nowcast.20160212.tif 3137600 2016-02-17 14:39:06 ** delete **
+ojo-d2 landslide_nowcast/2016/043/landslide_nowcast.20160212.topojson.gz 161 2016-02-17 14:39:06 ** delete **
+ojo-d2 landslide_nowcast/2016/043/landslide_nowcast.20160212_thn.jpg 21523 2016-02-17 14:39:05 ** delete **
+ojo-d2 landslide_nowcast/2016/044/landslide_nowcast.20160213.tif 3137600 2016-02-17 18:33:58 ** delete **
+ojo-d2 landslide_nowcast/2016/044/landslide_nowcast.20160213.topojson.gz 161 2016-02-17 18:33:58 ** delete **
+ojo-d2 landslide_nowcast/2016/044/landslide_nowcast.20160213_thn.jpg 21523 2016-02-17 18:33:57 ** delete **
+ojo-d2 landslide_nowcast/2016/045/landslide_nowcast.20160214.tif 3137600 2016-02-17 18:38:42 ** delete **
+ojo-d2 landslide_nowcast/2016/045/landslide_nowcast.20160214.topojson.gz 482 2016-02-17 18:38:42 ** delete **
+ojo-d2 landslide_nowcast/2016/045/landslide_nowcast.20160214_thn.jpg 21745 2016-02-17 18:38:41 ** delete **
+ojo-d2 landslide_nowcast/2016/046/landslide_nowcast.20160215.tif 3137600 2016-02-17 18:43:17 ** delete **
+ojo-d2 landslide_nowcast/2016/046/landslide_nowcast.20160215.topojson.gz 601 2016-02-17 18:43:16 ** delete **
+ojo-d2 landslide_nowcast/2016/046/landslide_nowcast.20160215_thn.jpg 21763 2016-02-17 18:43:16 ** delete **
+ojo-d2 landslide_nowcast/2016/047/landslide_nowcast.20160216.tif 3137600 2016-02-17 18:55:44 ** delete **
+ojo-d2 landslide_nowcast/2016/047/landslide_nowcast.20160216.topojson.gz 160 2016-02-17 18:55:44 ** delete **
+ojo-d2 landslide_nowcast/2016/047/landslide_nowcast.20160216_thn.jpg 21523 2016-02-17 18:55:44 ** delete **
+ojo-d2 landslide_nowcast/2016/048/landslide_nowcast.20160217.tif 3137600 2016-02-17 18:51:46 ** delete **
+ojo-d2 landslide_nowcast/2016/048/landslide_nowcast.20160217.topojson.gz 517 2016-02-17 18:51:46 ** delete **
+ojo-d2 landslide_nowcast/2016/048/landslide_nowcast.20160217_thn.jpg 21576 2016-02-17 18:51:46 ** delete **
+ojo-d2 modis_af/2016/041/modis_af.20160210.geojson 10802 2016-02-17 13:43:00 ** delete **
+ojo-d2 modis_af/2016/041/modis_af.20160210.geojson.gz 1042 2016-02-17 13:43:00 ** delete **
+ojo-d2 modis_af/2016/041/modis_af.20160210.tif 2084 2016-02-17 13:43:00 ** delete **
+ojo-d2 modis_af/2016/041/modis_af.20160210_thn.jpg 33375 2016-02-17 13:43:01 ** delete **
+ojo-d2 modis_af/2016/042/modis_af.20160211.geojson 10802 2016-02-17 18:28:34 ** delete **
+ojo-d2 modis_af/2016/042/modis_af.20160211.geojson.gz 1042 2016-02-17 18:28:35 ** delete **
+ojo-d2 modis_af/2016/042/modis_af.20160211.tif 2084 2016-02-17 18:28:34 ** delete **
+ojo-d2 modis_af/2016/042/modis_af.20160211_thn.jpg 33375 2016-02-17 18:28:35 ** delete **
+ojo-d2 modis_af/2016/043/modis_af.20160212.geojson 10802 2016-02-17 14:39:36 ** delete **
+ojo-d2 modis_af/2016/043/modis_af.20160212.geojson.gz 1042 2016-02-17 14:39:36 ** delete **
+ojo-d2 modis_af/2016/043/modis_af.20160212.tif 2084 2016-02-17 14:39:36 ** delete **
+ojo-d2 modis_af/2016/043/modis_af.20160212_thn.jpg 33375 2016-02-17 14:39:36 ** delete **
+ojo-d2 modis_af/2016/044/modis_af.20160213.geojson 10802 2016-02-17 18:34:26 ** delete **
+ojo-d2 modis_af/2016/044/modis_af.20160213.geojson.gz 1042 2016-02-17 18:34:27 ** delete **
+ojo-d2 modis_af/2016/044/modis_af.20160213.tif 2084 2016-02-17 18:34:26 ** delete **
+ojo-d2 modis_af/2016/044/modis_af.20160213_thn.jpg 33375 2016-02-17 18:34:27 ** delete **
+ojo-d2 modis_af/2016/045/modis_af.20160214.geojson 10802 2016-02-17 18:39:07 ** delete **
+ojo-d2 modis_af/2016/045/modis_af.20160214.geojson.gz 1042 2016-02-17 18:39:07 ** delete **
+ojo-d2 modis_af/2016/045/modis_af.20160214.tif 2084 2016-02-17 18:39:06 ** delete **
+ojo-d2 modis_af/2016/045/modis_af.20160214_thn.jpg 33375 2016-02-17 18:39:07 ** delete **
+ojo-d2 modis_af/2016/046/modis_af.20160215.geojson 10802 2016-02-17 18:43:42 ** delete **
+ojo-d2 modis_af/2016/046/modis_af.20160215.geojson.gz 1042 2016-02-17 18:43:42 ** delete **
+ojo-d2 modis_af/2016/046/modis_af.20160215.tif 2084 2016-02-17 18:43:42 ** delete **
+ojo-d2 modis_af/2016/046/modis_af.20160215_thn.jpg 33375 2016-02-17 18:43:43 ** delete **
+ojo-d2 modis_af/2016/047/modis_af.20160216.geojson 10802 2016-02-17 18:56:11 ** delete **
+ojo-d2 modis_af/2016/047/modis_af.20160216.geojson.gz 1042 2016-02-17 18:56:11 ** delete **
+ojo-d2 modis_af/2016/047/modis_af.20160216.tif 2084 2016-02-17 18:56:10 ** delete **
+ojo-d2 modis_af/2016/047/modis_af.20160216_thn.jpg 33375 2016-02-17 18:56:11 ** delete **
+ojo-d2 quakes/2016/041/quakes.20160210.geojson 10712 2016-02-17 13:43:22 ** delete **
+ojo-d2 quakes/2016/041/quakes.20160210.geojson.gz 1765 2016-02-17 13:43:22 ** delete **
+ojo-d2 quakes/2016/041/quakes.20160210_thn.jpg 17192 2016-02-17 13:43:23 ** delete **
+ojo-d2 quakes/2016/042/quakes.20160211.geojson 10712 2016-02-17 18:28:56 ** delete **
+ojo-d2 quakes/2016/042/quakes.20160211.geojson.gz 1767 2016-02-17 18:28:56 ** delete **
+ojo-d2 quakes/2016/042/quakes.20160211_thn.jpg 17192 2016-02-17 18:28:56 ** delete **
+ojo-d2 quakes/2016/043/quakes.20160212.geojson 10712 2016-02-17 14:39:55 ** delete **
+ojo-d2 quakes/2016/043/quakes.20160212.geojson.gz 1766 2016-02-17 14:39:55 ** delete **
+ojo-d2 quakes/2016/043/quakes.20160212_thn.jpg 17192 2016-02-17 14:39:56 ** delete **
+ojo-d2 quakes/2016/044/quakes.20160213.geojson 10712 2016-02-17 18:34:46 ** delete **
+ojo-d2 quakes/2016/044/quakes.20160213.geojson.gz 1767 2016-02-17 18:34:46 ** delete **
+ojo-d2 quakes/2016/044/quakes.20160213_thn.jpg 17192 2016-02-17 18:34:46 ** delete **
+ojo-d2 quakes/2016/045/quakes.20160214.geojson 10712 2016-02-17 18:39:23 ** delete **
+ojo-d2 quakes/2016/045/quakes.20160214.geojson.gz 1767 2016-02-17 18:39:24 ** delete **
+ojo-d2 quakes/2016/045/quakes.20160214_thn.jpg 17192 2016-02-17 18:39:24 ** delete **
+ojo-d2 quakes/2016/046/quakes.20160215.geojson 10712 2016-02-17 18:44:02 ** delete **
+ojo-d2 quakes/2016/046/quakes.20160215.geojson.gz 1767 2016-02-17 18:44:02 ** delete **
+ojo-d2 quakes/2016/046/quakes.20160215_thn.jpg 17192 2016-02-17 18:44:02 ** delete **
+ojo-d2 quakes/2016/047/quakes.20160216.geojson 10712 2016-02-17 18:56:32 ** delete **
+ojo-d2 quakes/2016/047/quakes.20160216.geojson.gz 1767 2016-02-17 18:56:32 ** delete **
+ojo-d2 quakes/2016/047/quakes.20160216_thn.jpg 17192 2016-02-17 18:56:32 ** delete **
+ojo-d2 trmm_24/2015/346/trmm_24.20151212.tif 7426 2016-02-17 13:36:14 ** delete **
+ojo-d2 trmm_24/2015/346/trmm_24.20151212.topojson.gz 21103 2016-02-17 13:36:14 ** delete **
+ojo-d2 trmm_24/2015/346/trmm_24.20151212_thn.jpg 26331 2016-02-17 13:36:13 ** delete **
+ojo-d2 trmm_24/2015/347/trmm_24.20151213.tif 7426 2016-02-17 13:35:57 ** delete **
+ojo-d2 trmm_24/2015/347/trmm_24.20151213.topojson.gz 17256 2016-02-17 13:35:57 ** delete **
+ojo-d2 trmm_24/2015/347/trmm_24.20151213_thn.jpg 25207 2016-02-17 13:35:57 ** delete **
+ojo-d2 trmm_24/2015/348/trmm_24.20151214.tif 7426 2016-02-17 13:35:40 ** delete **
+ojo-d2 trmm_24/2015/348/trmm_24.20151214.topojson.gz 23530 2016-02-17 13:35:40 ** delete **
+ojo-d2 trmm_24/2015/348/trmm_24.20151214_thn.jpg 27576 2016-02-17 13:35:40 ** delete **
+ojo-d2 trmm_24/2015/349/trmm_24.20151215.tif 7426 2016-02-17 13:35:22 ** delete **
+ojo-d2 trmm_24/2015/349/trmm_24.20151215.topojson.gz 23704 2016-02-17 13:35:22 ** delete **
+ojo-d2 trmm_24/2015/349/trmm_24.20151215_thn.jpg 27340 2016-02-17 13:35:22 ** delete **
+ojo-d2 trmm_24/2015/350/trmm_24.20151216.tif 7426 2016-02-17 13:35:05 ** delete **
+ojo-d2 trmm_24/2015/350/trmm_24.20151216.topojson.gz 9003 2016-02-17 13:35:05 ** delete **
+ojo-d2 trmm_24/2015/350/trmm_24.20151216_thn.jpg 23843 2016-02-17 13:35:04 ** delete **
+ojo-d2 trmm_24/2015/351/trmm_24.20151217.tif 7426 2016-02-17 13:34:48 ** delete **
+ojo-d2 trmm_24/2015/351/trmm_24.20151217.topojson.gz 5107 2016-02-17 13:34:48 ** delete **
+ojo-d2 trmm_24/2015/351/trmm_24.20151217_thn.jpg 22996 2016-02-17 13:34:48 ** delete **
+ojo-d2 trmm_24/2015/352/trmm_24.20151218.tif 7426 2016-02-17 13:34:32 ** delete **
+ojo-d2 trmm_24/2015/352/trmm_24.20151218.topojson.gz 22654 2016-02-17 13:34:32 ** delete **
+ojo-d2 trmm_24/2015/352/trmm_24.20151218_thn.jpg 25564 2016-02-17 13:34:31 ** delete **
+ojo-d2 trmm_24/2016/041/trmm_24.20160210.tif 7426 2016-02-17 13:32:12 ** delete **
+ojo-d2 trmm_24/2016/041/trmm_24.20160210.topojson.gz 13688 2016-02-17 13:32:12 ** delete **
+ojo-d2 trmm_24/2016/041/trmm_24.20160210_thn.jpg 26013 2016-02-17 13:32:12 ** delete **
+ojo-d2 trmm_24/2016/042/trmm_24.20160211.tif 7426 2016-02-17 18:25:52 ** delete **
+ojo-d2 trmm_24/2016/042/trmm_24.20160211.topojson.gz 16908 2016-02-17 18:25:52 ** delete **
+ojo-d2 trmm_24/2016/042/trmm_24.20160211_thn.jpg 26262 2016-02-17 18:25:52 ** delete **
+ojo-d2 trmm_24/2016/043/trmm_24.20160212.tif 7426 2016-02-17 14:35:36 ** delete **
+ojo-d2 trmm_24/2016/043/trmm_24.20160212.topojson.gz 12721 2016-02-17 14:35:36 ** delete **
+ojo-d2 trmm_24/2016/043/trmm_24.20160212_thn.jpg 25017 2016-02-17 14:35:35 ** delete **
+ojo-d2 trmm_24/2016/044/trmm_24.20160213.tif 7426 2016-02-17 18:31:46 ** delete **
+ojo-d2 trmm_24/2016/044/trmm_24.20160213.topojson.gz 13585 2016-02-17 18:31:46 ** delete **
+ojo-d2 trmm_24/2016/044/trmm_24.20160213_thn.jpg 25318 2016-02-17 18:31:45 ** delete **
+ojo-d2 trmm_24/2016/045/trmm_24.20160214.tif 7426 2016-02-17 18:36:29 ** delete **
+ojo-d2 trmm_24/2016/045/trmm_24.20160214.topojson.gz 11531 2016-02-17 18:36:29 ** delete **
+ojo-d2 trmm_24/2016/045/trmm_24.20160214_thn.jpg 24469 2016-02-17 18:36:29 ** delete **
+ojo-d2 trmm_24/2016/046/trmm_24.20160215.tif 7426 2016-02-17 18:41:04 ** delete **
+ojo-d2 trmm_24/2016/046/trmm_24.20160215.topojson.gz 5597 2016-02-17 18:41:04 ** delete **
+ojo-d2 trmm_24/2016/046/trmm_24.20160215_thn.jpg 23388 2016-02-17 18:41:04 ** delete **
+ojo-d2 trmm_24/2016/047/trmm_24.20160216.tif 7426 2016-02-17 18:53:36 ** delete **
+ojo-d2 trmm_24/2016/047/trmm_24.20160216.topojson.gz 3097 2016-02-17 18:53:36 ** delete **
+ojo-d2 trmm_24/2016/047/trmm_24.20160216_thn.jpg 22602 2016-02-17 18:53:36 ** delete **
+ojo-d2 viirs_af/2016/041/viirs_af.20160210.geojson 6613 2016-02-17 13:43:11 ** delete **
+ojo-d2 viirs_af/2016/041/viirs_af.20160210.geojson.gz 577 2016-02-17 13:43:12 ** delete **
+ojo-d2 viirs_af/2016/041/viirs_af.20160210.tif 2084 2016-02-17 13:43:11 ** delete **
+ojo-d2 viirs_af/2016/041/viirs_af.20160210_thn.jpg 33375 2016-02-17 13:43:12 ** delete **
+ojo-d2 viirs_af/2016/042/viirs_af.20160211.geojson 6613 2016-02-17 18:28:45 ** delete **
+ojo-d2 viirs_af/2016/042/viirs_af.20160211.geojson.gz 577 2016-02-17 18:28:46 ** delete **
+ojo-d2 viirs_af/2016/042/viirs_af.20160211.tif 2084 2016-02-17 18:28:45 ** delete **
+ojo-d2 viirs_af/2016/042/viirs_af.20160211_thn.jpg 33375 2016-02-17 18:28:46 ** delete **
+ojo-d2 viirs_af/2016/043/viirs_af.20160212.geojson 6613 2016-02-17 14:39:47 ** delete **
+ojo-d2 viirs_af/2016/043/viirs_af.20160212.geojson.gz 577 2016-02-17 14:39:47 ** delete **
+ojo-d2 viirs_af/2016/043/viirs_af.20160212.tif 2084 2016-02-17 14:39:47 ** delete **
+ojo-d2 viirs_af/2016/043/viirs_af.20160212_thn.jpg 33375 2016-02-17 14:39:47 ** delete **
+ojo-d2 viirs_af/2016/044/viirs_af.20160213.geojson 6613 2016-02-17 18:34:38 ** delete **
+ojo-d2 viirs_af/2016/044/viirs_af.20160213.geojson.gz 577 2016-02-17 18:34:38 ** delete **
+ojo-d2 viirs_af/2016/044/viirs_af.20160213.tif 2084 2016-02-17 18:34:37 ** delete **
+ojo-d2 viirs_af/2016/044/viirs_af.20160213_thn.jpg 33375 2016-02-17 18:34:38 ** delete **
+ojo-d2 viirs_af/2016/045/viirs_af.20160214.geojson 6613 2016-02-17 18:39:15 ** delete **
+ojo-d2 viirs_af/2016/045/viirs_af.20160214.geojson.gz 577 2016-02-17 18:39:15 ** delete **
+ojo-d2 viirs_af/2016/045/viirs_af.20160214.tif 2084 2016-02-17 18:39:15 ** delete **
+ojo-d2 viirs_af/2016/045/viirs_af.20160214_thn.jpg 33375 2016-02-17 18:39:16 ** delete **
+ojo-d2 viirs_af/2016/046/viirs_af.20160215.geojson 6613 2016-02-17 18:43:53 ** delete **
+ojo-d2 viirs_af/2016/046/viirs_af.20160215.geojson.gz 577 2016-02-17 18:43:53 ** delete **
+ojo-d2 viirs_af/2016/046/viirs_af.20160215.tif 2084 2016-02-17 18:43:53 ** delete **
+ojo-d2 viirs_af/2016/046/viirs_af.20160215_thn.jpg 33375 2016-02-17 18:43:53 ** delete **
+ojo-d2 viirs_af/2016/047/viirs_af.20160216.geojson 6613 2016-02-17 18:56:23 ** delete **
+ojo-d2 viirs_af/2016/047/viirs_af.20160216.geojson.gz 577 2016-02-17 18:56:23 ** delete **
+ojo-d2 viirs_af/2016/047/viirs_af.20160216.tif 2084 2016-02-17 18:56:23 ** delete **
+ojo-d2 viirs_af/2016/047/viirs_af.20160216_thn.jpg 33375 2016-02-17 18:56:23 ** delete **
 ** bucket: ojo-d3
+ojo-d3 gpm/2016/041/gpm_1d.20160210.tif 10734 2016-02-17 13:33:25 ** delete **
+ojo-d3 gpm/2016/041/gpm_1d.20160210.topojson.gz 924 2016-02-17 13:33:25 ** delete **
+ojo-d3 gpm/2016/041/gpm_1d.20160210_thn.jpg 31507 2016-02-17 13:33:25 ** delete **
+ojo-d3 gpm/2016/041/gpm_3d.20160210.tif 10734 2016-02-17 13:33:29 ** delete **
+ojo-d3 gpm/2016/041/gpm_3d.20160210.topojson.gz 924 2016-02-17 13:33:28 ** delete **
+ojo-d3 gpm/2016/041/gpm_3d.20160210_thn.jpg 31507 2016-02-17 13:33:28 ** delete **
+ojo-d3 gpm/2016/041/gpm_7d.20160210.tif 10734 2016-02-17 13:33:32 ** delete **
+ojo-d3 gpm/2016/041/gpm_7d.20160210.topojson.gz 925 2016-02-17 13:33:32 ** delete **
+ojo-d3 gpm/2016/041/gpm_7d.20160210_thn.jpg 31507 2016-02-17 13:33:31 ** delete **
+ojo-d3 gpm/2016/042/gpm_1d.20160211.tif 10734 2016-02-17 18:27:05 ** delete **
+ojo-d3 gpm/2016/042/gpm_1d.20160211.topojson.gz 3140 2016-02-17 18:27:05 ** delete **
+ojo-d3 gpm/2016/042/gpm_1d.20160211_thn.jpg 37371 2016-02-17 18:27:05 ** delete **
+ojo-d3 gpm/2016/042/gpm_3d.20160211.tif 10734 2016-02-17 18:27:10 ** delete **
+ojo-d3 gpm/2016/042/gpm_3d.20160211.topojson.gz 3140 2016-02-17 18:27:09 ** delete **
+ojo-d3 gpm/2016/042/gpm_3d.20160211_thn.jpg 37371 2016-02-17 18:27:09 ** delete **
+ojo-d3 gpm/2016/042/gpm_7d.20160211.tif 10734 2016-02-17 18:27:14 ** delete **
+ojo-d3 gpm/2016/042/gpm_7d.20160211.topojson.gz 3140 2016-02-17 18:27:14 ** delete **
+ojo-d3 gpm/2016/042/gpm_7d.20160211_thn.jpg 37371 2016-02-17 18:27:14 ** delete **
+ojo-d3 gpm/2016/044/gpm_1d.20160213.tif 10734 2016-02-17 18:33:05 ** delete **
+ojo-d3 gpm/2016/044/gpm_1d.20160213.topojson.gz 1905 2016-02-17 18:33:05 ** delete **
+ojo-d3 gpm/2016/044/gpm_1d.20160213_thn.jpg 32900 2016-02-17 18:33:04 ** delete **
+ojo-d3 gpm/2016/044/gpm_3d.20160213.tif 10734 2016-02-17 18:33:08 ** delete **
+ojo-d3 gpm/2016/044/gpm_3d.20160213.topojson.gz 1905 2016-02-17 18:33:08 ** delete **
+ojo-d3 gpm/2016/044/gpm_3d.20160213_thn.jpg 32900 2016-02-17 18:33:08 ** delete **
+ojo-d3 gpm/2016/044/gpm_7d.20160213.tif 10734 2016-02-17 18:33:12 ** delete **
+ojo-d3 gpm/2016/044/gpm_7d.20160213.topojson.gz 1905 2016-02-17 18:33:12 ** delete **
+ojo-d3 gpm/2016/044/gpm_7d.20160213_thn.jpg 32900 2016-02-17 18:33:12 ** delete **
+ojo-d3 gpm/2016/045/gpm_1d.20160214.tif 10734 2016-02-17 18:37:47 ** delete **
+ojo-d3 gpm/2016/045/gpm_1d.20160214.topojson.gz 4335 2016-02-17 18:37:47 ** delete **
+ojo-d3 gpm/2016/045/gpm_1d.20160214_thn.jpg 38614 2016-02-17 18:37:46 ** delete **
+ojo-d3 gpm/2016/045/gpm_3d.20160214.tif 10734 2016-02-17 18:37:51 ** delete **
+ojo-d3 gpm/2016/045/gpm_3d.20160214.topojson.gz 4335 2016-02-17 18:37:51 ** delete **
+ojo-d3 gpm/2016/045/gpm_3d.20160214_thn.jpg 38614 2016-02-17 18:37:50 ** delete **
+ojo-d3 gpm/2016/045/gpm_7d.20160214.tif 10734 2016-02-17 18:37:55 ** delete **
+ojo-d3 gpm/2016/045/gpm_7d.20160214.topojson.gz 4335 2016-02-17 18:37:55 ** delete **
+ojo-d3 gpm/2016/045/gpm_7d.20160214_thn.jpg 38614 2016-02-17 18:37:54 ** delete **
+ojo-d3 gpm/2016/046/gpm_1d.20160215.tif 10734 2016-02-17 18:42:18 ** delete **
+ojo-d3 gpm/2016/046/gpm_1d.20160215.topojson.gz 3308 2016-02-17 18:42:17 ** delete **
+ojo-d3 gpm/2016/046/gpm_1d.20160215_thn.jpg 37285 2016-02-17 18:42:17 ** delete **
+ojo-d3 gpm/2016/046/gpm_3d.20160215.tif 10734 2016-02-17 18:42:21 ** delete **
+ojo-d3 gpm/2016/046/gpm_3d.20160215.topojson.gz 3308 2016-02-17 18:42:21 ** delete **
+ojo-d3 gpm/2016/046/gpm_3d.20160215_thn.jpg 37285 2016-02-17 18:42:21 ** delete **
+ojo-d3 gpm/2016/046/gpm_7d.20160215.tif 10734 2016-02-17 18:42:24 ** delete **
+ojo-d3 gpm/2016/046/gpm_7d.20160215.topojson.gz 3308 2016-02-17 18:42:24 ** delete **
+ojo-d3 gpm/2016/046/gpm_7d.20160215_thn.jpg 37285 2016-02-17 18:42:24 ** delete **
+ojo-d3 landslide_nowcast/2016/041/landslide_nowcast.20160210.tif 730388 2016-02-17 13:37:18 ** delete **
+ojo-d3 landslide_nowcast/2016/041/landslide_nowcast.20160210.topojson.gz 510 2016-02-17 13:37:18 ** delete **
+ojo-d3 landslide_nowcast/2016/041/landslide_nowcast.20160210_thn.jpg 29129 2016-02-17 13:37:18 ** delete **
+ojo-d3 landslide_nowcast/2016/042/landslide_nowcast.20160211.tif 730388 2016-02-17 18:28:11 ** delete **
+ojo-d3 landslide_nowcast/2016/042/landslide_nowcast.20160211.topojson.gz 423 2016-02-17 18:28:11 ** delete **
+ojo-d3 landslide_nowcast/2016/042/landslide_nowcast.20160211_thn.jpg 28978 2016-02-17 18:28:10 ** delete **
+ojo-d3 landslide_nowcast/2016/043/landslide_nowcast.20160212.tif 730388 2016-02-17 14:39:10 ** delete **
+ojo-d3 landslide_nowcast/2016/043/landslide_nowcast.20160212.topojson.gz 988 2016-02-17 14:39:10 ** delete **
+ojo-d3 landslide_nowcast/2016/043/landslide_nowcast.20160212_thn.jpg 29445 2016-02-17 14:39:09 ** delete **
+ojo-d3 landslide_nowcast/2016/044/landslide_nowcast.20160213.tif 730388 2016-02-17 18:34:03 ** delete **
+ojo-d3 landslide_nowcast/2016/044/landslide_nowcast.20160213.topojson.gz 1356 2016-02-17 18:34:03 ** delete **
+ojo-d3 landslide_nowcast/2016/044/landslide_nowcast.20160213_thn.jpg 29421 2016-02-17 18:34:02 ** delete **
+ojo-d3 landslide_nowcast/2016/045/landslide_nowcast.20160214.tif 730388 2016-02-17 18:38:46 ** delete **
+ojo-d3 landslide_nowcast/2016/045/landslide_nowcast.20160214.topojson.gz 721 2016-02-17 18:38:45 ** delete **
+ojo-d3 landslide_nowcast/2016/045/landslide_nowcast.20160214_thn.jpg 29233 2016-02-17 18:38:45 ** delete **
+ojo-d3 landslide_nowcast/2016/046/landslide_nowcast.20160215.tif 730388 2016-02-17 18:43:21 ** delete **
+ojo-d3 landslide_nowcast/2016/046/landslide_nowcast.20160215.topojson.gz 3460 2016-02-17 18:43:21 ** delete **
+ojo-d3 landslide_nowcast/2016/046/landslide_nowcast.20160215_thn.jpg 30076 2016-02-17 18:43:21 ** delete **
+ojo-d3 landslide_nowcast/2016/047/landslide_nowcast.20160216.tif 730388 2016-02-17 18:55:50 ** delete **
+ojo-d3 landslide_nowcast/2016/047/landslide_nowcast.20160216.topojson.gz 2483 2016-02-17 18:55:49 ** delete **
+ojo-d3 landslide_nowcast/2016/047/landslide_nowcast.20160216_thn.jpg 30050 2016-02-17 18:55:49 ** delete **
+ojo-d3 landslide_nowcast/2016/048/landslide_nowcast.20160217.tif 730388 2016-02-17 18:51:50 ** delete **
+ojo-d3 landslide_nowcast/2016/048/landslide_nowcast.20160217.topojson.gz 563 2016-02-17 18:51:50 ** delete **
+ojo-d3 landslide_nowcast/2016/048/landslide_nowcast.20160217_thn.jpg 29188 2016-02-17 18:51:50 ** delete **
+ojo-d3 modis_af/2016/041/modis_af.20160210.geojson 45 2016-02-17 13:43:02 ** delete **
+ojo-d3 modis_af/2016/041/modis_af.20160210.geojson.gz 60 2016-02-17 13:43:02 ** delete **
+ojo-d3 modis_af/2016/041/modis_af.20160210.tif 1406 2016-02-17 13:43:02 ** delete **
+ojo-d3 modis_af/2016/041/modis_af.20160210_thn.jpg 25387 2016-02-17 13:43:03 ** delete **
+ojo-d3 modis_af/2016/042/modis_af.20160211.geojson 45 2016-02-17 18:28:37 ** delete **
+ojo-d3 modis_af/2016/042/modis_af.20160211.geojson.gz 60 2016-02-17 18:28:37 ** delete **
+ojo-d3 modis_af/2016/042/modis_af.20160211.tif 1406 2016-02-17 18:28:36 ** delete **
+ojo-d3 modis_af/2016/042/modis_af.20160211_thn.jpg 25387 2016-02-17 18:28:37 ** delete **
+ojo-d3 modis_af/2016/043/modis_af.20160212.geojson 45 2016-02-17 14:39:38 ** delete **
+ojo-d3 modis_af/2016/043/modis_af.20160212.geojson.gz 60 2016-02-17 14:39:38 ** delete **
+ojo-d3 modis_af/2016/043/modis_af.20160212.tif 1406 2016-02-17 14:39:38 ** delete **
+ojo-d3 modis_af/2016/043/modis_af.20160212_thn.jpg 25387 2016-02-17 14:39:38 ** delete **
+ojo-d3 modis_af/2016/044/modis_af.20160213.geojson 45 2016-02-17 18:34:29 ** delete **
+ojo-d3 modis_af/2016/044/modis_af.20160213.geojson.gz 60 2016-02-17 18:34:29 ** delete **
+ojo-d3 modis_af/2016/044/modis_af.20160213.tif 1406 2016-02-17 18:34:29 ** delete **
+ojo-d3 modis_af/2016/044/modis_af.20160213_thn.jpg 25387 2016-02-17 18:34:29 ** delete **
+ojo-d3 modis_af/2016/045/modis_af.20160214.geojson 45 2016-02-17 18:39:08 ** delete **
+ojo-d3 modis_af/2016/045/modis_af.20160214.geojson.gz 60 2016-02-17 18:39:08 ** delete **
+ojo-d3 modis_af/2016/045/modis_af.20160214.tif 1406 2016-02-17 18:39:08 ** delete **
+ojo-d3 modis_af/2016/045/modis_af.20160214_thn.jpg 25387 2016-02-17 18:39:08 ** delete **
+ojo-d3 modis_af/2016/046/modis_af.20160215.geojson 45 2016-02-17 18:43:44 ** delete **
+ojo-d3 modis_af/2016/046/modis_af.20160215.geojson.gz 60 2016-02-17 18:43:44 ** delete **
+ojo-d3 modis_af/2016/046/modis_af.20160215.tif 1406 2016-02-17 18:43:44 ** delete **
+ojo-d3 modis_af/2016/046/modis_af.20160215_thn.jpg 25387 2016-02-17 18:43:45 ** delete **
+ojo-d3 modis_af/2016/047/modis_af.20160216.geojson 45 2016-02-17 18:56:13 ** delete **
+ojo-d3 modis_af/2016/047/modis_af.20160216.geojson.gz 60 2016-02-17 18:56:13 ** delete **
+ojo-d3 modis_af/2016/047/modis_af.20160216.tif 1406 2016-02-17 18:56:13 ** delete **
+ojo-d3 modis_af/2016/047/modis_af.20160216_thn.jpg 25387 2016-02-17 18:56:13 ** delete **
+ojo-d3 quakes/2016/041/quakes.20160210.geojson 50408 2016-02-17 13:43:23 ** delete **
+ojo-d3 quakes/2016/041/quakes.20160210.geojson.gz 5249 2016-02-17 13:43:24 ** delete **
+ojo-d3 quakes/2016/041/quakes.20160210_thn.jpg 13241 2016-02-17 13:43:24 ** delete **
+ojo-d3 quakes/2016/042/quakes.20160211.geojson 50408 2016-02-17 18:28:57 ** delete **
+ojo-d3 quakes/2016/042/quakes.20160211.geojson.gz 5247 2016-02-17 18:28:57 ** delete **
+ojo-d3 quakes/2016/042/quakes.20160211_thn.jpg 13241 2016-02-17 18:28:57 ** delete **
+ojo-d3 quakes/2016/043/quakes.20160212.geojson 50408 2016-02-17 14:39:57 ** delete **
+ojo-d3 quakes/2016/043/quakes.20160212.geojson.gz 5248 2016-02-17 14:39:57 ** delete **
+ojo-d3 quakes/2016/043/quakes.20160212_thn.jpg 13241 2016-02-17 14:39:57 ** delete **
+ojo-d3 quakes/2016/044/quakes.20160213.geojson 50408 2016-02-17 18:34:48 ** delete **
+ojo-d3 quakes/2016/044/quakes.20160213.geojson.gz 5247 2016-02-17 18:34:48 ** delete **
+ojo-d3 quakes/2016/044/quakes.20160213_thn.jpg 13241 2016-02-17 18:34:48 ** delete **
+ojo-d3 quakes/2016/045/quakes.20160214.geojson 50408 2016-02-17 18:39:26 ** delete **
+ojo-d3 quakes/2016/045/quakes.20160214.geojson.gz 5247 2016-02-17 18:39:26 ** delete **
+ojo-d3 quakes/2016/045/quakes.20160214_thn.jpg 13241 2016-02-17 18:39:26 ** delete **
+ojo-d3 quakes/2016/046/quakes.20160215.geojson 50408 2016-02-17 18:44:03 ** delete **
+ojo-d3 quakes/2016/046/quakes.20160215.geojson.gz 5247 2016-02-17 18:44:03 ** delete **
+ojo-d3 quakes/2016/046/quakes.20160215_thn.jpg 13241 2016-02-17 18:44:04 ** delete **
+ojo-d3 quakes/2016/047/quakes.20160216.geojson 50408 2016-02-17 18:56:33 ** delete **
+ojo-d3 quakes/2016/047/quakes.20160216.geojson.gz 5247 2016-02-17 18:56:34 ** delete **
+ojo-d3 quakes/2016/047/quakes.20160216_thn.jpg 13241 2016-02-17 18:56:34 ** delete **
+ojo-d3 trmm_24/2015/346/trmm_24.20151212.tif 2058 2016-02-17 13:37:16 ** delete **
+ojo-d3 trmm_24/2015/346/trmm_24.20151212.topojson.gz 10862 2016-02-17 13:37:16 ** delete **
+ojo-d3 trmm_24/2015/346/trmm_24.20151212_thn.jpg 15312 2016-02-17 13:37:16 ** delete **
+ojo-d3 trmm_24/2015/347/trmm_24.20151213.tif 2058 2016-02-17 13:37:08 ** delete **
+ojo-d3 trmm_24/2015/347/trmm_24.20151213.topojson.gz 10687 2016-02-17 13:37:08 ** delete **
+ojo-d3 trmm_24/2015/347/trmm_24.20151213_thn.jpg 15408 2016-02-17 13:37:08 ** delete **
+ojo-d3 trmm_24/2015/348/trmm_24.20151214.tif 2058 2016-02-17 13:37:00 ** delete **
+ojo-d3 trmm_24/2015/348/trmm_24.20151214.topojson.gz 3691 2016-02-17 13:37:00 ** delete **
+ojo-d3 trmm_24/2015/348/trmm_24.20151214_thn.jpg 13227 2016-02-17 13:37:00 ** delete **
+ojo-d3 trmm_24/2015/349/trmm_24.20151215.tif 2058 2016-02-17 13:36:52 ** delete **
+ojo-d3 trmm_24/2015/349/trmm_24.20151215.topojson.gz 2882 2016-02-17 13:36:52 ** delete **
+ojo-d3 trmm_24/2015/349/trmm_24.20151215_thn.jpg 13082 2016-02-17 13:36:51 ** delete **
+ojo-d3 trmm_24/2015/350/trmm_24.20151216.tif 2058 2016-02-17 13:36:44 ** delete **
+ojo-d3 trmm_24/2015/350/trmm_24.20151216.topojson.gz 5550 2016-02-17 13:36:44 ** delete **
+ojo-d3 trmm_24/2015/350/trmm_24.20151216_thn.jpg 14462 2016-02-17 13:36:43 ** delete **
+ojo-d3 trmm_24/2015/351/trmm_24.20151217.tif 2058 2016-02-17 13:36:36 ** delete **
+ojo-d3 trmm_24/2015/351/trmm_24.20151217.topojson.gz 5753 2016-02-17 13:36:35 ** delete **
+ojo-d3 trmm_24/2015/351/trmm_24.20151217_thn.jpg 14152 2016-02-17 13:36:35 ** delete **
+ojo-d3 trmm_24/2015/352/trmm_24.20151218.tif 2058 2016-02-17 13:36:27 ** delete **
+ojo-d3 trmm_24/2015/352/trmm_24.20151218.topojson.gz 6014 2016-02-17 13:36:26 ** delete **
+ojo-d3 trmm_24/2015/352/trmm_24.20151218_thn.jpg 14238 2016-02-17 13:36:26 ** delete **
+ojo-d3 trmm_24/2016/041/trmm_24.20160210.tif 2058 2016-02-17 13:32:21 ** delete **
+ojo-d3 trmm_24/2016/041/trmm_24.20160210.topojson.gz 4374 2016-02-17 13:32:20 ** delete **
+ojo-d3 trmm_24/2016/041/trmm_24.20160210_thn.jpg 13374 2016-02-17 13:32:20 ** delete **
+ojo-d3 trmm_24/2016/042/trmm_24.20160211.tif 2058 2016-02-17 18:26:01 ** delete **
+ojo-d3 trmm_24/2016/042/trmm_24.20160211.topojson.gz 6388 2016-02-17 18:26:00 ** delete **
+ojo-d3 trmm_24/2016/042/trmm_24.20160211_thn.jpg 14222 2016-02-17 18:26:00 ** delete **
+ojo-d3 trmm_24/2016/043/trmm_24.20160212.tif 2058 2016-02-17 14:35:44 ** delete **
+ojo-d3 trmm_24/2016/043/trmm_24.20160212.topojson.gz 8530 2016-02-17 14:35:44 ** delete **
+ojo-d3 trmm_24/2016/043/trmm_24.20160212_thn.jpg 14865 2016-02-17 14:35:44 ** delete **
+ojo-d3 trmm_24/2016/044/trmm_24.20160213.tif 2058 2016-02-17 18:31:54 ** delete **
+ojo-d3 trmm_24/2016/044/trmm_24.20160213.topojson.gz 5391 2016-02-17 18:31:54 ** delete **
+ojo-d3 trmm_24/2016/044/trmm_24.20160213_thn.jpg 13888 2016-02-17 18:31:54 ** delete **
+ojo-d3 trmm_24/2016/045/trmm_24.20160214.tif 2058 2016-02-17 18:36:38 ** delete **
+ojo-d3 trmm_24/2016/045/trmm_24.20160214.topojson.gz 9426 2016-02-17 18:36:37 ** delete **
+ojo-d3 trmm_24/2016/045/trmm_24.20160214_thn.jpg 15397 2016-02-17 18:36:37 ** delete **
+ojo-d3 trmm_24/2016/046/trmm_24.20160215.tif 2058 2016-02-17 18:41:12 ** delete **
+ojo-d3 trmm_24/2016/046/trmm_24.20160215.topojson.gz 9198 2016-02-17 18:41:12 ** delete **
+ojo-d3 trmm_24/2016/046/trmm_24.20160215_thn.jpg 15394 2016-02-17 18:41:12 ** delete **
+ojo-d3 trmm_24/2016/047/trmm_24.20160216.tif 2058 2016-02-17 18:53:44 ** delete **
+ojo-d3 trmm_24/2016/047/trmm_24.20160216.topojson.gz 2715 2016-02-17 18:53:44 ** delete **
+ojo-d3 trmm_24/2016/047/trmm_24.20160216_thn.jpg 12998 2016-02-17 18:53:44 ** delete **
+ojo-d3 viirs_af/2016/041/viirs_af.20160210.geojson 841 2016-02-17 13:43:13 ** delete **
+ojo-d3 viirs_af/2016/041/viirs_af.20160210.geojson.gz 233 2016-02-17 13:43:14 ** delete **
+ojo-d3 viirs_af/2016/041/viirs_af.20160210.tif 1406 2016-02-17 13:43:13 ** delete **
+ojo-d3 viirs_af/2016/041/viirs_af.20160210_thn.jpg 25387 2016-02-17 13:43:14 ** delete **
+ojo-d3 viirs_af/2016/042/viirs_af.20160211.geojson 841 2016-02-17 18:28:47 ** delete **
+ojo-d3 viirs_af/2016/042/viirs_af.20160211.geojson.gz 233 2016-02-17 18:28:47 ** delete **
+ojo-d3 viirs_af/2016/042/viirs_af.20160211.tif 1406 2016-02-17 18:28:47 ** delete **
+ojo-d3 viirs_af/2016/042/viirs_af.20160211_thn.jpg 25387 2016-02-17 18:28:47 ** delete **
+ojo-d3 viirs_af/2016/043/viirs_af.20160212.geojson 841 2016-02-17 14:39:49 ** delete **
+ojo-d3 viirs_af/2016/043/viirs_af.20160212.geojson.gz 233 2016-02-17 14:39:49 ** delete **
+ojo-d3 viirs_af/2016/043/viirs_af.20160212.tif 1406 2016-02-17 14:39:49 ** delete **
+ojo-d3 viirs_af/2016/043/viirs_af.20160212_thn.jpg 25387 2016-02-17 14:39:49 ** delete **
+ojo-d3 viirs_af/2016/044/viirs_af.20160213.geojson 841 2016-02-17 18:34:39 ** delete **
+ojo-d3 viirs_af/2016/044/viirs_af.20160213.geojson.gz 233 2016-02-17 18:34:39 ** delete **
+ojo-d3 viirs_af/2016/044/viirs_af.20160213.tif 1406 2016-02-17 18:34:39 ** delete **
+ojo-d3 viirs_af/2016/044/viirs_af.20160213_thn.jpg 25387 2016-02-17 18:34:39 ** delete **
+ojo-d3 viirs_af/2016/045/viirs_af.20160214.geojson 841 2016-02-17 18:39:17 ** delete **
+ojo-d3 viirs_af/2016/045/viirs_af.20160214.geojson.gz 233 2016-02-17 18:39:17 ** delete **
+ojo-d3 viirs_af/2016/045/viirs_af.20160214.tif 1406 2016-02-17 18:39:17 ** delete **
+ojo-d3 viirs_af/2016/045/viirs_af.20160214_thn.jpg 25387 2016-02-17 18:39:17 ** delete **
+ojo-d3 viirs_af/2016/046/viirs_af.20160215.geojson 841 2016-02-17 18:43:54 ** delete **
+ojo-d3 viirs_af/2016/046/viirs_af.20160215.geojson.gz 233 2016-02-17 18:43:54 ** delete **
+ojo-d3 viirs_af/2016/046/viirs_af.20160215.tif 1406 2016-02-17 18:43:54 ** delete **
+ojo-d3 viirs_af/2016/046/viirs_af.20160215_thn.jpg 25387 2016-02-17 18:43:55 ** delete **
+ojo-d3 viirs_af/2016/047/viirs_af.20160216.geojson 841 2016-02-17 18:56:24 ** delete **
+ojo-d3 viirs_af/2016/047/viirs_af.20160216.geojson.gz 233 2016-02-17 18:56:24 ** delete **
+ojo-d3 viirs_af/2016/047/viirs_af.20160216.tif 1406 2016-02-17 18:56:24 ** delete **
+ojo-d3 viirs_af/2016/047/viirs_af.20160216_thn.jpg 25387 2016-02-17 18:56:24 ** delete **
 ** bucket: ojo-d4
 ** bucket: ojo-d5
 ** bucket: ojo-d6
 ** bucket: ojo-d7
 ** bucket: ojo-d8
+ojo-d8 gpm/2016/041/gpm_1d.20160210.tif 61582 2016-02-17 13:33:37 ** delete **
+ojo-d8 gpm/2016/041/gpm_1d.20160210.topojson.gz 11637 2016-02-17 13:33:37 ** delete **
+ojo-d8 gpm/2016/041/gpm_1d.20160210_thn.jpg 44613 2016-02-17 13:33:37 ** delete **
+ojo-d8 gpm/2016/041/gpm_3d.20160210.tif 61582 2016-02-17 13:33:42 ** delete **
+ojo-d8 gpm/2016/041/gpm_3d.20160210.topojson.gz 11637 2016-02-17 13:33:42 ** delete **
+ojo-d8 gpm/2016/041/gpm_3d.20160210_thn.jpg 44613 2016-02-17 13:33:42 ** delete **
+ojo-d8 gpm/2016/041/gpm_7d.20160210.tif 61582 2016-02-17 13:33:47 ** delete **
+ojo-d8 gpm/2016/041/gpm_7d.20160210.topojson.gz 11637 2016-02-17 13:33:47 ** delete **
+ojo-d8 gpm/2016/041/gpm_7d.20160210_thn.jpg 44613 2016-02-17 13:33:47 ** delete **
+ojo-d8 gpm/2016/042/gpm_1d.20160211.tif 61582 2016-02-17 18:27:20 ** delete **
+ojo-d8 gpm/2016/042/gpm_1d.20160211.topojson.gz 11871 2016-02-17 18:27:20 ** delete **
+ojo-d8 gpm/2016/042/gpm_1d.20160211_thn.jpg 46237 2016-02-17 18:27:19 ** delete **
+ojo-d8 gpm/2016/042/gpm_3d.20160211.tif 61582 2016-02-17 18:27:25 ** delete **
+ojo-d8 gpm/2016/042/gpm_3d.20160211.topojson.gz 11871 2016-02-17 18:27:25 ** delete **
+ojo-d8 gpm/2016/042/gpm_3d.20160211_thn.jpg 46237 2016-02-17 18:27:25 ** delete **
+ojo-d8 gpm/2016/042/gpm_7d.20160211.tif 61582 2016-02-17 18:27:30 ** delete **
+ojo-d8 gpm/2016/042/gpm_7d.20160211.topojson.gz 11871 2016-02-17 18:27:30 ** delete **
+ojo-d8 gpm/2016/042/gpm_7d.20160211_thn.jpg 46237 2016-02-17 18:27:30 ** delete **
+ojo-d8 gpm/2016/044/gpm_1d.20160213.tif 61582 2016-02-17 18:33:18 ** delete **
+ojo-d8 gpm/2016/044/gpm_1d.20160213.topojson.gz 11364 2016-02-17 18:33:17 ** delete **
+ojo-d8 gpm/2016/044/gpm_1d.20160213_thn.jpg 47480 2016-02-17 18:33:17 ** delete **
+ojo-d8 gpm/2016/044/gpm_3d.20160213.tif 61582 2016-02-17 18:33:22 ** delete **
+ojo-d8 gpm/2016/044/gpm_3d.20160213.topojson.gz 11364 2016-02-17 18:33:22 ** delete **
+ojo-d8 gpm/2016/044/gpm_3d.20160213_thn.jpg 47480 2016-02-17 18:33:22 ** delete **
+ojo-d8 gpm/2016/044/gpm_7d.20160213.tif 61582 2016-02-17 18:33:27 ** delete **
+ojo-d8 gpm/2016/044/gpm_7d.20160213.topojson.gz 11364 2016-02-17 18:33:27 ** delete **
+ojo-d8 gpm/2016/044/gpm_7d.20160213_thn.jpg 47480 2016-02-17 18:33:27 ** delete **
+ojo-d8 gpm/2016/045/gpm_1d.20160214.tif 61582 2016-02-17 18:38:00 ** delete **
+ojo-d8 gpm/2016/045/gpm_1d.20160214.topojson.gz 7480 2016-02-17 18:38:00 ** delete **
+ojo-d8 gpm/2016/045/gpm_1d.20160214_thn.jpg 44244 2016-02-17 18:38:00 ** delete **
+ojo-d8 gpm/2016/045/gpm_3d.20160214.tif 61582 2016-02-17 18:38:08 ** delete **
+ojo-d8 gpm/2016/045/gpm_3d.20160214.topojson.gz 7480 2016-02-17 18:38:07 ** delete **
+ojo-d8 gpm/2016/045/gpm_3d.20160214_thn.jpg 44244 2016-02-17 18:38:07 ** delete **
+ojo-d8 gpm/2016/045/gpm_7d.20160214.tif 61582 2016-02-17 18:38:13 ** delete **
+ojo-d8 gpm/2016/045/gpm_7d.20160214.topojson.gz 7480 2016-02-17 18:38:13 ** delete **
+ojo-d8 gpm/2016/045/gpm_7d.20160214_thn.jpg 44244 2016-02-17 18:38:13 ** delete **
+ojo-d8 gpm/2016/046/gpm_1d.20160215.tif 61582 2016-02-17 18:42:30 ** delete **
+ojo-d8 gpm/2016/046/gpm_1d.20160215.topojson.gz 8720 2016-02-17 18:42:30 ** delete **
+ojo-d8 gpm/2016/046/gpm_1d.20160215_thn.jpg 46102 2016-02-17 18:42:30 ** delete **
+ojo-d8 gpm/2016/046/gpm_3d.20160215.tif 61582 2016-02-17 18:42:37 ** delete **
+ojo-d8 gpm/2016/046/gpm_3d.20160215.topojson.gz 8720 2016-02-17 18:42:37 ** delete **
+ojo-d8 gpm/2016/046/gpm_3d.20160215_thn.jpg 46102 2016-02-17 18:42:37 ** delete **
+ojo-d8 gpm/2016/046/gpm_7d.20160215.tif 61582 2016-02-17 18:42:44 ** delete **
+ojo-d8 gpm/2016/046/gpm_7d.20160215.topojson.gz 8720 2016-02-17 18:42:44 ** delete **
+ojo-d8 gpm/2016/046/gpm_7d.20160215_thn.jpg 46102 2016-02-17 18:42:44 ** delete **
+ojo-d8 landslide_nowcast/2016/041/landslide_nowcast.20160210.tif 4395524 2016-02-17 13:39:46 ** delete **
+ojo-d8 landslide_nowcast/2016/041/landslide_nowcast.20160210.topojson.gz 5374 2016-02-17 13:39:45 ** delete **
+ojo-d8 landslide_nowcast/2016/041/landslide_nowcast.20160210_thn.jpg 42800 2016-02-17 13:39:45 ** delete **
+ojo-d8 landslide_nowcast/2016/042/landslide_nowcast.20160211.tif 4395524 2016-02-17 18:28:18 ** delete **
+ojo-d8 landslide_nowcast/2016/042/landslide_nowcast.20160211.topojson.gz 18719 2016-02-17 18:28:18 ** delete **
+ojo-d8 landslide_nowcast/2016/042/landslide_nowcast.20160211_thn.jpg 46179 2016-02-17 18:28:18 ** delete **
+ojo-d8 landslide_nowcast/2016/043/landslide_nowcast.20160212.tif 4395524 2016-02-17 14:39:17 ** delete **
+ojo-d8 landslide_nowcast/2016/043/landslide_nowcast.20160212.topojson.gz 6961 2016-02-17 14:39:17 ** delete **
+ojo-d8 landslide_nowcast/2016/043/landslide_nowcast.20160212_thn.jpg 44052 2016-02-17 14:39:16 ** delete **
+ojo-d8 landslide_nowcast/2016/044/landslide_nowcast.20160213.tif 4395524 2016-02-17 18:34:10 ** delete **
+ojo-d8 landslide_nowcast/2016/044/landslide_nowcast.20160213.topojson.gz 423 2016-02-17 18:34:10 ** delete **
+ojo-d8 landslide_nowcast/2016/044/landslide_nowcast.20160213_thn.jpg 41831 2016-02-17 18:34:09 ** delete **
+ojo-d8 landslide_nowcast/2016/045/landslide_nowcast.20160214.tif 4395524 2016-02-17 18:38:52 ** delete **
+ojo-d8 landslide_nowcast/2016/045/landslide_nowcast.20160214.topojson.gz 1353 2016-02-17 18:38:52 ** delete **
+ojo-d8 landslide_nowcast/2016/045/landslide_nowcast.20160214_thn.jpg 42089 2016-02-17 18:38:52 ** delete **
+ojo-d8 landslide_nowcast/2016/046/landslide_nowcast.20160215.tif 4395524 2016-02-17 18:43:27 ** delete **
+ojo-d8 landslide_nowcast/2016/046/landslide_nowcast.20160215.topojson.gz 1213 2016-02-17 18:43:27 ** delete **
+ojo-d8 landslide_nowcast/2016/046/landslide_nowcast.20160215_thn.jpg 41799 2016-02-17 18:43:27 ** delete **
+ojo-d8 landslide_nowcast/2016/047/landslide_nowcast.20160216.tif 4395524 2016-02-17 18:55:56 ** delete **
+ojo-d8 landslide_nowcast/2016/047/landslide_nowcast.20160216.topojson.gz 588 2016-02-17 18:55:56 ** delete **
+ojo-d8 landslide_nowcast/2016/047/landslide_nowcast.20160216_thn.jpg 41976 2016-02-17 18:55:56 ** delete **
+ojo-d8 landslide_nowcast/2016/048/landslide_nowcast.20160217.tif 4395524 2016-02-17 18:51:58 ** delete **
+ojo-d8 landslide_nowcast/2016/048/landslide_nowcast.20160217.topojson.gz 1312 2016-02-17 18:51:57 ** delete **
+ojo-d8 landslide_nowcast/2016/048/landslide_nowcast.20160217_thn.jpg 41811 2016-02-17 18:51:57 ** delete **
+ojo-d8 modis_af/2016/041/modis_af.20160210.geojson 24754 2016-02-17 13:43:04 ** delete **
+ojo-d8 modis_af/2016/041/modis_af.20160210.geojson.gz 1954 2016-02-17 13:43:05 ** delete **
+ojo-d8 modis_af/2016/041/modis_af.20160210.tif 2204 2016-02-17 13:43:04 ** delete **
+ojo-d8 modis_af/2016/041/modis_af.20160210_thn.jpg 55626 2016-02-17 13:43:05 ** delete **
+ojo-d8 modis_af/2016/042/modis_af.20160211.geojson 24754 2016-02-17 18:28:39 ** delete **
+ojo-d8 modis_af/2016/042/modis_af.20160211.geojson.gz 1954 2016-02-17 18:28:39 ** delete **
+ojo-d8 modis_af/2016/042/modis_af.20160211.tif 2204 2016-02-17 18:28:39 ** delete **
+ojo-d8 modis_af/2016/042/modis_af.20160211_thn.jpg 55633 2016-02-17 18:28:39 ** delete **
+ojo-d8 modis_af/2016/043/modis_af.20160212.geojson 24754 2016-02-17 14:39:40 ** delete **
+ojo-d8 modis_af/2016/043/modis_af.20160212.geojson.gz 1954 2016-02-17 14:39:40 ** delete **
+ojo-d8 modis_af/2016/043/modis_af.20160212.tif 2204 2016-02-17 14:39:40 ** delete **
+ojo-d8 modis_af/2016/043/modis_af.20160212_thn.jpg 55626 2016-02-17 14:39:41 ** delete **
+ojo-d8 modis_af/2016/044/modis_af.20160213.geojson 24754 2016-02-17 18:34:31 ** delete **
+ojo-d8 modis_af/2016/044/modis_af.20160213.geojson.gz 1954 2016-02-17 18:34:31 ** delete **
+ojo-d8 modis_af/2016/044/modis_af.20160213.tif 2204 2016-02-17 18:34:31 ** delete **
+ojo-d8 modis_af/2016/044/modis_af.20160213_thn.jpg 55633 2016-02-17 18:34:32 ** delete **
+ojo-d8 modis_af/2016/045/modis_af.20160214.geojson 24754 2016-02-17 18:39:10 ** delete **
+ojo-d8 modis_af/2016/045/modis_af.20160214.geojson.gz 1954 2016-02-17 18:39:10 ** delete **
+ojo-d8 modis_af/2016/045/modis_af.20160214.tif 2204 2016-02-17 18:39:09 ** delete **
+ojo-d8 modis_af/2016/045/modis_af.20160214_thn.jpg 55633 2016-02-17 18:39:10 ** delete **
+ojo-d8 modis_af/2016/046/modis_af.20160215.geojson 24754 2016-02-17 18:43:46 ** delete **
+ojo-d8 modis_af/2016/046/modis_af.20160215.geojson.gz 1954 2016-02-17 18:43:47 ** delete **
+ojo-d8 modis_af/2016/046/modis_af.20160215.tif 2204 2016-02-17 18:43:46 ** delete **
+ojo-d8 modis_af/2016/046/modis_af.20160215_thn.jpg 55633 2016-02-17 18:43:47 ** delete **
+ojo-d8 modis_af/2016/047/modis_af.20160216.geojson 24754 2016-02-17 18:56:17 ** delete **
+ojo-d8 modis_af/2016/047/modis_af.20160216.geojson.gz 1954 2016-02-17 18:56:17 ** delete **
+ojo-d8 modis_af/2016/047/modis_af.20160216.tif 2204 2016-02-17 18:56:16 ** delete **
+ojo-d8 modis_af/2016/047/modis_af.20160216_thn.jpg 55633 2016-02-17 18:56:17 ** delete **
+ojo-d8 quakes/2016/041/quakes.20160210.geojson 4159 2016-02-17 13:43:25 ** delete **
+ojo-d8 quakes/2016/041/quakes.20160210.geojson.gz 952 2016-02-17 13:43:25 ** delete **
+ojo-d8 quakes/2016/041/quakes.20160210_thn.jpg 40479 2016-02-17 13:43:25 ** delete **
+ojo-d8 quakes/2016/042/quakes.20160211.geojson 4159 2016-02-17 18:29:00 ** delete **
+ojo-d8 quakes/2016/042/quakes.20160211.geojson.gz 953 2016-02-17 18:29:00 ** delete **
+ojo-d8 quakes/2016/042/quakes.20160211_thn.jpg 40478 2016-02-17 18:29:00 ** delete **
+ojo-d8 quakes/2016/043/quakes.20160212.geojson 4159 2016-02-17 14:39:58 ** delete **
+ojo-d8 quakes/2016/043/quakes.20160212.geojson.gz 952 2016-02-17 14:39:58 ** delete **
+ojo-d8 quakes/2016/043/quakes.20160212_thn.jpg 40479 2016-02-17 14:39:59 ** delete **
+ojo-d8 quakes/2016/044/quakes.20160213.geojson 4159 2016-02-17 18:34:49 ** delete **
+ojo-d8 quakes/2016/044/quakes.20160213.geojson.gz 953 2016-02-17 18:34:49 ** delete **
+ojo-d8 quakes/2016/044/quakes.20160213_thn.jpg 40478 2016-02-17 18:34:50 ** delete **
+ojo-d8 quakes/2016/045/quakes.20160214.geojson 4159 2016-02-17 18:39:27 ** delete **
+ojo-d8 quakes/2016/045/quakes.20160214.geojson.gz 953 2016-02-17 18:39:27 ** delete **
+ojo-d8 quakes/2016/045/quakes.20160214_thn.jpg 40478 2016-02-17 18:39:27 ** delete **
+ojo-d8 quakes/2016/046/quakes.20160215.geojson 4159 2016-02-17 18:44:05 ** delete **
+ojo-d8 quakes/2016/046/quakes.20160215.geojson.gz 953 2016-02-17 18:44:05 ** delete **
+ojo-d8 quakes/2016/046/quakes.20160215_thn.jpg 40478 2016-02-17 18:44:05 ** delete **
+ojo-d8 quakes/2016/047/quakes.20160216.geojson 4159 2016-02-17 18:56:36 ** delete **
+ojo-d8 quakes/2016/047/quakes.20160216.geojson.gz 953 2016-02-17 18:56:36 ** delete **
+ojo-d8 quakes/2016/047/quakes.20160216_thn.jpg 40478 2016-02-17 18:56:36 ** delete **
+ojo-d8 trmm_24/2015/346/trmm_24.20151212.tif 10274 2016-02-17 13:39:42 ** delete **
+ojo-d8 trmm_24/2015/346/trmm_24.20151212.topojson.gz 6718 2016-02-17 13:39:42 ** delete **
+ojo-d8 trmm_24/2015/346/trmm_24.20151212_thn.jpg 54525 2016-02-17 13:39:42 ** delete **
+ojo-d8 trmm_24/2015/347/trmm_24.20151213.tif 10274 2016-02-17 13:39:22 ** delete **
+ojo-d8 trmm_24/2015/347/trmm_24.20151213.topojson.gz 3914 2016-02-17 13:39:21 ** delete **
+ojo-d8 trmm_24/2015/347/trmm_24.20151213_thn.jpg 54131 2016-02-17 13:39:21 ** delete **
+ojo-d8 trmm_24/2015/348/trmm_24.20151214.tif 10274 2016-02-17 13:39:02 ** delete **
+ojo-d8 trmm_24/2015/348/trmm_24.20151214.topojson.gz 3352 2016-02-17 13:39:02 ** delete **
+ojo-d8 trmm_24/2015/348/trmm_24.20151214_thn.jpg 54033 2016-02-17 13:39:01 ** delete **
+ojo-d8 trmm_24/2015/349/trmm_24.20151215.tif 10274 2016-02-17 13:38:42 ** delete **
+ojo-d8 trmm_24/2015/349/trmm_24.20151215.topojson.gz 1248 2016-02-17 13:38:42 ** delete **
+ojo-d8 trmm_24/2015/349/trmm_24.20151215_thn.jpg 53793 2016-02-17 13:38:42 ** delete **
+ojo-d8 trmm_24/2015/350/trmm_24.20151216.tif 10274 2016-02-17 13:38:22 ** delete **
+ojo-d8 trmm_24/2015/350/trmm_24.20151216.topojson.gz 111 2016-02-17 13:38:22 ** delete **
+ojo-d8 trmm_24/2015/350/trmm_24.20151216_thn.jpg 53703 2016-02-17 13:38:22 ** delete **
+ojo-d8 trmm_24/2015/351/trmm_24.20151217.tif 10274 2016-02-17 13:38:03 ** delete **
+ojo-d8 trmm_24/2015/351/trmm_24.20151217.topojson.gz 19855 2016-02-17 13:38:03 ** delete **
+ojo-d8 trmm_24/2015/351/trmm_24.20151217_thn.jpg 56286 2016-02-17 13:38:02 ** delete **
+ojo-d8 trmm_24/2015/352/trmm_24.20151218.tif 10274 2016-02-17 13:37:42 ** delete **
+ojo-d8 trmm_24/2015/352/trmm_24.20151218.topojson.gz 15175 2016-02-17 13:37:42 ** delete **
+ojo-d8 trmm_24/2015/352/trmm_24.20151218_thn.jpg 55725 2016-02-17 13:37:42 ** delete **
+ojo-d8 trmm_24/2016/041/trmm_24.20160210.tif 10274 2016-02-17 13:32:42 ** delete **
+ojo-d8 trmm_24/2016/041/trmm_24.20160210.topojson.gz 10037 2016-02-17 13:32:42 ** delete **
+ojo-d8 trmm_24/2016/041/trmm_24.20160210_thn.jpg 54825 2016-02-17 13:32:41 ** delete **
+ojo-d8 trmm_24/2016/042/trmm_24.20160211.tif 10274 2016-02-17 18:26:21 ** delete **
+ojo-d8 trmm_24/2016/042/trmm_24.20160211.topojson.gz 10832 2016-02-17 18:26:21 ** delete **
+ojo-d8 trmm_24/2016/042/trmm_24.20160211_thn.jpg 54946 2016-02-17 18:26:20 ** delete **
+ojo-d8 trmm_24/2016/043/trmm_24.20160212.tif 10274 2016-02-17 14:36:04 ** delete **
+ojo-d8 trmm_24/2016/043/trmm_24.20160212.topojson.gz 3416 2016-02-17 14:36:03 ** delete **
+ojo-d8 trmm_24/2016/043/trmm_24.20160212_thn.jpg 54064 2016-02-17 14:36:03 ** delete **
+ojo-d8 trmm_24/2016/044/trmm_24.20160213.tif 10274 2016-02-17 18:32:14 ** delete **
+ojo-d8 trmm_24/2016/044/trmm_24.20160213.topojson.gz 3842 2016-02-17 18:32:14 ** delete **
+ojo-d8 trmm_24/2016/044/trmm_24.20160213_thn.jpg 54033 2016-02-17 18:32:14 ** delete **
+ojo-d8 trmm_24/2016/045/trmm_24.20160214.tif 10274 2016-02-17 18:36:58 ** delete **
+ojo-d8 trmm_24/2016/045/trmm_24.20160214.topojson.gz 5380 2016-02-17 18:36:58 ** delete **
+ojo-d8 trmm_24/2016/045/trmm_24.20160214_thn.jpg 54203 2016-02-17 18:36:57 ** delete **
+ojo-d8 trmm_24/2016/046/trmm_24.20160215.tif 10274 2016-02-17 18:41:32 ** delete **
+ojo-d8 trmm_24/2016/046/trmm_24.20160215.topojson.gz 716 2016-02-17 18:41:32 ** delete **
+ojo-d8 trmm_24/2016/046/trmm_24.20160215_thn.jpg 53776 2016-02-17 18:41:32 ** delete **
+ojo-d8 trmm_24/2016/047/trmm_24.20160216.tif 10274 2016-02-17 18:54:04 ** delete **
+ojo-d8 trmm_24/2016/047/trmm_24.20160216.topojson.gz 3173 2016-02-17 18:54:04 ** delete **
+ojo-d8 trmm_24/2016/047/trmm_24.20160216_thn.jpg 53991 2016-02-17 18:54:04 ** delete **
+ojo-d8 viirs_af/2016/041/viirs_af.20160210.geojson 82494 2016-02-17 13:43:16 ** delete **
+ojo-d8 viirs_af/2016/041/viirs_af.20160210.geojson.gz 4475 2016-02-17 13:43:16 ** delete **
+ojo-d8 viirs_af/2016/041/viirs_af.20160210.tif 2204 2016-02-17 13:43:15 ** delete **
+ojo-d8 viirs_af/2016/041/viirs_af.20160210_thn.jpg 55626 2016-02-17 13:43:16 ** delete **
+ojo-d8 viirs_af/2016/042/viirs_af.20160211.geojson 82494 2016-02-17 18:28:49 ** delete **
+ojo-d8 viirs_af/2016/042/viirs_af.20160211.geojson.gz 4475 2016-02-17 18:28:50 ** delete **
+ojo-d8 viirs_af/2016/042/viirs_af.20160211.tif 2204 2016-02-17 18:28:49 ** delete **
+ojo-d8 viirs_af/2016/042/viirs_af.20160211_thn.jpg 55633 2016-02-17 18:28:50 ** delete **
+ojo-d8 viirs_af/2016/043/viirs_af.20160212.geojson 82494 2016-02-17 14:39:50 ** delete **
+ojo-d8 viirs_af/2016/043/viirs_af.20160212.geojson.gz 4475 2016-02-17 14:39:51 ** delete **
+ojo-d8 viirs_af/2016/043/viirs_af.20160212.tif 2204 2016-02-17 14:39:50 ** delete **
+ojo-d8 viirs_af/2016/043/viirs_af.20160212_thn.jpg 55626 2016-02-17 14:39:51 ** delete **
+ojo-d8 viirs_af/2016/044/viirs_af.20160213.geojson 82494 2016-02-17 18:34:41 ** delete **
+ojo-d8 viirs_af/2016/044/viirs_af.20160213.geojson.gz 4475 2016-02-17 18:34:41 ** delete **
+ojo-d8 viirs_af/2016/044/viirs_af.20160213.tif 2204 2016-02-17 18:34:41 ** delete **
+ojo-d8 viirs_af/2016/044/viirs_af.20160213_thn.jpg 55633 2016-02-17 18:34:41 ** delete **
+ojo-d8 viirs_af/2016/045/viirs_af.20160214.geojson 82494 2016-02-17 18:39:18 ** delete **
+ojo-d8 viirs_af/2016/045/viirs_af.20160214.geojson.gz 4475 2016-02-17 18:39:19 ** delete **
+ojo-d8 viirs_af/2016/045/viirs_af.20160214.tif 2204 2016-02-17 18:39:18 ** delete **
+ojo-d8 viirs_af/2016/045/viirs_af.20160214_thn.jpg 55633 2016-02-17 18:39:19 ** delete **
+ojo-d8 viirs_af/2016/046/viirs_af.20160215.geojson 82494 2016-02-17 18:43:56 ** delete **
+ojo-d8 viirs_af/2016/046/viirs_af.20160215.geojson.gz 4475 2016-02-17 18:43:56 ** delete **
+ojo-d8 viirs_af/2016/046/viirs_af.20160215.tif 2204 2016-02-17 18:43:56 ** delete **
+ojo-d8 viirs_af/2016/046/viirs_af.20160215_thn.jpg 55633 2016-02-17 18:43:57 ** delete **
+ojo-d8 viirs_af/2016/047/viirs_af.20160216.geojson 82494 2016-02-17 18:56:26 ** delete **
+ojo-d8 viirs_af/2016/047/viirs_af.20160216.geojson.gz 4475 2016-02-17 18:56:27 ** delete **
+ojo-d8 viirs_af/2016/047/viirs_af.20160216.tif 2204 2016-02-17 18:56:26 ** delete **
+ojo-d8 viirs_af/2016/047/viirs_af.20160216_thn.jpg 55633 2016-02-17 18:56:27 ** delete **
 ** bucket: ojo-d9
+ojo-d9 gpm/2016/041/gpm_1d.20160210.tif 47048 2016-02-17 13:33:53 ** delete **
+ojo-d9 gpm/2016/041/gpm_1d.20160210.topojson.gz 36764 2016-02-17 13:33:53 ** delete **
+ojo-d9 gpm/2016/041/gpm_1d.20160210_thn.jpg 42944 2016-02-17 13:33:52 ** delete **
+ojo-d9 gpm/2016/041/gpm_3d.20160210.tif 47048 2016-02-17 13:33:58 ** delete **
+ojo-d9 gpm/2016/041/gpm_3d.20160210.topojson.gz 36764 2016-02-17 13:33:58 ** delete **
+ojo-d9 gpm/2016/041/gpm_3d.20160210_thn.jpg 42944 2016-02-17 13:33:58 ** delete **
+ojo-d9 gpm/2016/041/gpm_7d.20160210.tif 47048 2016-02-17 13:34:03 ** delete **
+ojo-d9 gpm/2016/041/gpm_7d.20160210.topojson.gz 36764 2016-02-17 13:34:03 ** delete **
+ojo-d9 gpm/2016/041/gpm_7d.20160210_thn.jpg 42944 2016-02-17 13:34:03 ** delete **
+ojo-d9 gpm/2016/042/gpm_1d.20160211.tif 47048 2016-02-17 18:27:36 ** delete **
+ojo-d9 gpm/2016/042/gpm_1d.20160211.topojson.gz 35529 2016-02-17 18:27:36 ** delete **
+ojo-d9 gpm/2016/042/gpm_1d.20160211_thn.jpg 41263 2016-02-17 18:27:36 ** delete **
+ojo-d9 gpm/2016/042/gpm_3d.20160211.tif 47048 2016-02-17 18:27:42 ** delete **
+ojo-d9 gpm/2016/042/gpm_3d.20160211.topojson.gz 35529 2016-02-17 18:27:42 ** delete **
+ojo-d9 gpm/2016/042/gpm_3d.20160211_thn.jpg 41263 2016-02-17 18:27:41 ** delete **
+ojo-d9 gpm/2016/042/gpm_7d.20160211.tif 47048 2016-02-17 18:27:48 ** delete **
+ojo-d9 gpm/2016/042/gpm_7d.20160211.topojson.gz 35529 2016-02-17 18:27:48 ** delete **
+ojo-d9 gpm/2016/042/gpm_7d.20160211_thn.jpg 41263 2016-02-17 18:27:47 ** delete **
+ojo-d9 gpm/2016/044/gpm_1d.20160213.tif 47048 2016-02-17 18:33:33 ** delete **
+ojo-d9 gpm/2016/044/gpm_1d.20160213.topojson.gz 13881 2016-02-17 18:33:32 ** delete **
+ojo-d9 gpm/2016/044/gpm_1d.20160213_thn.jpg 30498 2016-02-17 18:33:32 ** delete **
+ojo-d9 gpm/2016/044/gpm_3d.20160213.tif 47048 2016-02-17 18:33:38 ** delete **
+ojo-d9 gpm/2016/044/gpm_3d.20160213.topojson.gz 13881 2016-02-17 18:33:37 ** delete **
+ojo-d9 gpm/2016/044/gpm_3d.20160213_thn.jpg 30498 2016-02-17 18:33:37 ** delete **
+ojo-d9 gpm/2016/044/gpm_7d.20160213.tif 47048 2016-02-17 18:33:42 ** delete **
+ojo-d9 gpm/2016/044/gpm_7d.20160213.topojson.gz 13881 2016-02-17 18:33:42 ** delete **
+ojo-d9 gpm/2016/044/gpm_7d.20160213_thn.jpg 30498 2016-02-17 18:33:42 ** delete **
+ojo-d9 gpm/2016/045/gpm_1d.20160214.tif 47048 2016-02-17 18:38:18 ** delete **
+ojo-d9 gpm/2016/045/gpm_1d.20160214.topojson.gz 10994 2016-02-17 18:38:18 ** delete **
+ojo-d9 gpm/2016/045/gpm_1d.20160214_thn.jpg 28507 2016-02-17 18:38:18 ** delete **
+ojo-d9 gpm/2016/045/gpm_3d.20160214.tif 47048 2016-02-17 18:38:22 ** delete **
+ojo-d9 gpm/2016/045/gpm_3d.20160214.topojson.gz 10994 2016-02-17 18:38:22 ** delete **
+ojo-d9 gpm/2016/045/gpm_3d.20160214_thn.jpg 28507 2016-02-17 18:38:22 ** delete **
+ojo-d9 gpm/2016/045/gpm_7d.20160214.tif 47048 2016-02-17 18:38:27 ** delete **
+ojo-d9 gpm/2016/045/gpm_7d.20160214.topojson.gz 10994 2016-02-17 18:38:27 ** delete **
+ojo-d9 gpm/2016/045/gpm_7d.20160214_thn.jpg 28507 2016-02-17 18:38:26 ** delete **
+ojo-d9 gpm/2016/046/gpm_1d.20160215.tif 47048 2016-02-17 18:42:49 ** delete **
+ojo-d9 gpm/2016/046/gpm_1d.20160215.topojson.gz 10977 2016-02-17 18:42:49 ** delete **
+ojo-d9 gpm/2016/046/gpm_1d.20160215_thn.jpg 30341 2016-02-17 18:42:49 ** delete **
+ojo-d9 gpm/2016/046/gpm_3d.20160215.tif 47048 2016-02-17 18:42:53 ** delete **
+ojo-d9 gpm/2016/046/gpm_3d.20160215.topojson.gz 10977 2016-02-17 18:42:53 ** delete **
+ojo-d9 gpm/2016/046/gpm_3d.20160215_thn.jpg 30341 2016-02-17 18:42:53 ** delete **
+ojo-d9 gpm/2016/046/gpm_7d.20160215.tif 47048 2016-02-17 18:42:58 ** delete **
+ojo-d9 gpm/2016/046/gpm_7d.20160215.topojson.gz 10977 2016-02-17 18:42:58 ** delete **
+ojo-d9 gpm/2016/046/gpm_7d.20160215_thn.jpg 30341 2016-02-17 18:42:58 ** delete **
+ojo-d9 landslide_nowcast/2016/041/landslide_nowcast.20160210.tif 3354986 2016-02-17 13:42:01 ** delete **
+ojo-d9 landslide_nowcast/2016/041/landslide_nowcast.20160210.topojson.gz 87483 2016-02-17 13:42:01 ** delete **
+ojo-d9 landslide_nowcast/2016/041/landslide_nowcast.20160210_thn.jpg 49177 2016-02-17 13:42:01 ** delete **
+ojo-d9 landslide_nowcast/2016/042/landslide_nowcast.20160211.tif 3354986 2016-02-17 18:28:29 ** delete **
+ojo-d9 landslide_nowcast/2016/042/landslide_nowcast.20160211.topojson.gz 159774 2016-02-17 18:28:28 ** delete **
+ojo-d9 landslide_nowcast/2016/042/landslide_nowcast.20160211_thn.jpg 56271 2016-02-17 18:28:28 ** delete **
+ojo-d9 landslide_nowcast/2016/043/landslide_nowcast.20160212.tif 3354986 2016-02-17 14:39:28 ** delete **
+ojo-d9 landslide_nowcast/2016/043/landslide_nowcast.20160212.topojson.gz 166921 2016-02-17 14:39:27 ** delete **
+ojo-d9 landslide_nowcast/2016/043/landslide_nowcast.20160212_thn.jpg 58480 2016-02-17 14:39:27 ** delete **
+ojo-d9 landslide_nowcast/2016/044/landslide_nowcast.20160213.tif 3354986 2016-02-17 18:34:20 ** delete **
+ojo-d9 landslide_nowcast/2016/044/landslide_nowcast.20160213.topojson.gz 128668 2016-02-17 18:34:19 ** delete **
+ojo-d9 landslide_nowcast/2016/044/landslide_nowcast.20160213_thn.jpg 54992 2016-02-17 18:34:19 ** delete **
+ojo-d9 landslide_nowcast/2016/045/landslide_nowcast.20160214.tif 3354986 2016-02-17 18:39:00 ** delete **
+ojo-d9 landslide_nowcast/2016/045/landslide_nowcast.20160214.topojson.gz 49426 2016-02-17 18:39:00 ** delete **
+ojo-d9 landslide_nowcast/2016/045/landslide_nowcast.20160214_thn.jpg 41367 2016-02-17 18:39:00 ** delete **
+ojo-d9 landslide_nowcast/2016/046/landslide_nowcast.20160215.tif 3354986 2016-02-17 18:43:35 ** delete **
+ojo-d9 landslide_nowcast/2016/046/landslide_nowcast.20160215.topojson.gz 37549 2016-02-17 18:43:35 ** delete **
+ojo-d9 landslide_nowcast/2016/046/landslide_nowcast.20160215_thn.jpg 36754 2016-02-17 18:43:35 ** delete **
+ojo-d9 landslide_nowcast/2016/047/landslide_nowcast.20160216.tif 3354986 2016-02-17 18:56:04 ** delete **
+ojo-d9 landslide_nowcast/2016/047/landslide_nowcast.20160216.topojson.gz 46469 2016-02-17 18:56:04 ** delete **
+ojo-d9 landslide_nowcast/2016/047/landslide_nowcast.20160216_thn.jpg 36951 2016-02-17 18:56:04 ** delete **
+ojo-d9 landslide_nowcast/2016/048/landslide_nowcast.20160217.tif 3354986 2016-02-17 18:52:07 ** delete **
+ojo-d9 landslide_nowcast/2016/048/landslide_nowcast.20160217.topojson.gz 142853 2016-02-17 18:52:07 ** delete **
+ojo-d9 landslide_nowcast/2016/048/landslide_nowcast.20160217_thn.jpg 52658 2016-02-17 18:52:07 ** delete **
+ojo-d9 modis_af/2016/041/modis_af.20160210.geojson 1038 2016-02-17 13:43:07 ** delete **
+ojo-d9 modis_af/2016/041/modis_af.20160210.geojson.gz 278 2016-02-17 13:43:07 ** delete **
+ojo-d9 modis_af/2016/041/modis_af.20160210.tif 1678 2016-02-17 13:43:07 ** delete **
+ojo-d9 modis_af/2016/041/modis_af.20160210_thn.jpg 39180 2016-02-17 13:43:07 ** delete **
+ojo-d9 modis_af/2016/042/modis_af.20160211.geojson 1038 2016-02-17 18:28:41 ** delete **
+ojo-d9 modis_af/2016/042/modis_af.20160211.geojson.gz 278 2016-02-17 18:28:42 ** delete **
+ojo-d9 modis_af/2016/042/modis_af.20160211.tif 1682 2016-02-17 18:28:41 ** delete **
+ojo-d9 modis_af/2016/042/modis_af.20160211_thn.jpg 39187 2016-02-17 18:28:42 ** delete **
+ojo-d9 modis_af/2016/043/modis_af.20160212.geojson 1038 2016-02-17 14:39:43 ** delete **
+ojo-d9 modis_af/2016/043/modis_af.20160212.geojson.gz 278 2016-02-17 14:39:43 ** delete **
+ojo-d9 modis_af/2016/043/modis_af.20160212.tif 1678 2016-02-17 14:39:43 ** delete **
+ojo-d9 modis_af/2016/043/modis_af.20160212_thn.jpg 39180 2016-02-17 14:39:43 ** delete **
+ojo-d9 modis_af/2016/044/modis_af.20160213.geojson 1038 2016-02-17 18:34:33 ** delete **
+ojo-d9 modis_af/2016/044/modis_af.20160213.geojson.gz 278 2016-02-17 18:34:34 ** delete **
+ojo-d9 modis_af/2016/044/modis_af.20160213.tif 1682 2016-02-17 18:34:33 ** delete **
+ojo-d9 modis_af/2016/044/modis_af.20160213_thn.jpg 39187 2016-02-17 18:34:34 ** delete **
+ojo-d9 modis_af/2016/045/modis_af.20160214.geojson 1038 2016-02-17 18:39:12 ** delete **
+ojo-d9 modis_af/2016/045/modis_af.20160214.geojson.gz 278 2016-02-17 18:39:12 ** delete **
+ojo-d9 modis_af/2016/045/modis_af.20160214.tif 1682 2016-02-17 18:39:11 ** delete **
+ojo-d9 modis_af/2016/045/modis_af.20160214_thn.jpg 39187 2016-02-17 18:39:12 ** delete **
+ojo-d9 modis_af/2016/046/modis_af.20160215.geojson 1038 2016-02-17 18:43:48 ** delete **
+ojo-d9 modis_af/2016/046/modis_af.20160215.geojson.gz 278 2016-02-17 18:43:49 ** delete **
+ojo-d9 modis_af/2016/046/modis_af.20160215.tif 1682 2016-02-17 18:43:48 ** delete **
+ojo-d9 modis_af/2016/046/modis_af.20160215_thn.jpg 39187 2016-02-17 18:43:49 ** delete **
+ojo-d9 modis_af/2016/047/modis_af.20160216.geojson 1038 2016-02-17 18:56:19 ** delete **
+ojo-d9 modis_af/2016/047/modis_af.20160216.geojson.gz 278 2016-02-17 18:56:19 ** delete **
+ojo-d9 modis_af/2016/047/modis_af.20160216.tif 1682 2016-02-17 18:56:19 ** delete **
+ojo-d9 modis_af/2016/047/modis_af.20160216_thn.jpg 39187 2016-02-17 18:56:20 ** delete **
+ojo-d9 quakes/2016/041/quakes.20160210.geojson 8434 2016-02-17 13:43:26 ** delete **
+ojo-d9 quakes/2016/041/quakes.20160210.geojson.gz 1475 2016-02-17 13:43:27 ** delete **
+ojo-d9 quakes/2016/041/quakes.20160210_thn.jpg 23923 2016-02-17 13:43:27 ** delete **
+ojo-d9 quakes/2016/042/quakes.20160211.geojson 8434 2016-02-17 18:29:01 ** delete **
+ojo-d9 quakes/2016/042/quakes.20160211.geojson.gz 1474 2016-02-17 18:29:01 ** delete **
+ojo-d9 quakes/2016/042/quakes.20160211_thn.jpg 23923 2016-02-17 18:29:02 ** delete **
+ojo-d9 quakes/2016/043/quakes.20160212.geojson 8434 2016-02-17 14:40:00 ** delete **
+ojo-d9 quakes/2016/043/quakes.20160212.geojson.gz 1475 2016-02-17 14:40:00 ** delete **
+ojo-d9 quakes/2016/043/quakes.20160212_thn.jpg 23923 2016-02-17 14:40:00 ** delete **
+ojo-d9 quakes/2016/044/quakes.20160213.geojson 8434 2016-02-17 18:34:51 ** delete **
+ojo-d9 quakes/2016/044/quakes.20160213.geojson.gz 1474 2016-02-17 18:34:51 ** delete **
+ojo-d9 quakes/2016/044/quakes.20160213_thn.jpg 23923 2016-02-17 18:34:51 ** delete **
+ojo-d9 quakes/2016/045/quakes.20160214.geojson 8434 2016-02-17 18:39:28 ** delete **
+ojo-d9 quakes/2016/045/quakes.20160214.geojson.gz 1474 2016-02-17 18:39:29 ** delete **
+ojo-d9 quakes/2016/045/quakes.20160214_thn.jpg 23923 2016-02-17 18:39:29 ** delete **
+ojo-d9 quakes/2016/046/quakes.20160215.geojson 8434 2016-02-17 18:44:06 ** delete **
+ojo-d9 quakes/2016/046/quakes.20160215.geojson.gz 1475 2016-02-17 18:44:06 ** delete **
+ojo-d9 quakes/2016/046/quakes.20160215_thn.jpg 23923 2016-02-17 18:44:06 ** delete **
+ojo-d9 quakes/2016/047/quakes.20160216.geojson 8434 2016-02-17 18:56:37 ** delete **
+ojo-d9 quakes/2016/047/quakes.20160216.geojson.gz 1475 2016-02-17 18:56:38 ** delete **
+ojo-d9 quakes/2016/047/quakes.20160216_thn.jpg 23923 2016-02-17 18:56:38 ** delete **
+ojo-d9 trmm_24/2015/346/trmm_24.20151212.tif 7904 2016-02-17 13:41:57 ** delete **
+ojo-d9 trmm_24/2015/346/trmm_24.20151212.topojson.gz 17839 2016-02-17 13:41:57 ** delete **
+ojo-d9 trmm_24/2015/346/trmm_24.20151212_thn.jpg 37084 2016-02-17 13:41:56 ** delete **
+ojo-d9 trmm_24/2015/347/trmm_24.20151213.tif 7904 2016-02-17 13:41:39 ** delete **
+ojo-d9 trmm_24/2015/347/trmm_24.20151213.topojson.gz 22497 2016-02-17 13:41:39 ** delete **
+ojo-d9 trmm_24/2015/347/trmm_24.20151213_thn.jpg 37735 2016-02-17 13:41:39 ** delete **
+ojo-d9 trmm_24/2015/348/trmm_24.20151214.tif 7904 2016-02-17 13:41:22 ** delete **
+ojo-d9 trmm_24/2015/348/trmm_24.20151214.topojson.gz 39726 2016-02-17 13:41:22 ** delete **
+ojo-d9 trmm_24/2015/348/trmm_24.20151214_thn.jpg 40574 2016-02-17 13:41:22 ** delete **
+ojo-d9 trmm_24/2015/349/trmm_24.20151215.tif 7904 2016-02-17 13:41:02 ** delete **
+ojo-d9 trmm_24/2015/349/trmm_24.20151215.topojson.gz 34653 2016-02-17 13:41:02 ** delete **
+ojo-d9 trmm_24/2015/349/trmm_24.20151215_thn.jpg 40765 2016-02-17 13:41:01 ** delete **
+ojo-d9 trmm_24/2015/350/trmm_24.20151216.tif 7904 2016-02-17 13:40:44 ** delete **
+ojo-d9 trmm_24/2015/350/trmm_24.20151216.topojson.gz 31491 2016-02-17 13:40:43 ** delete **
+ojo-d9 trmm_24/2015/350/trmm_24.20151216_thn.jpg 39817 2016-02-17 13:40:43 ** delete **
+ojo-d9 trmm_24/2015/351/trmm_24.20151217.tif 7904 2016-02-17 13:40:26 ** delete **
+ojo-d9 trmm_24/2015/351/trmm_24.20151217.topojson.gz 35845 2016-02-17 13:40:25 ** delete **
+ojo-d9 trmm_24/2015/351/trmm_24.20151217_thn.jpg 39865 2016-02-17 13:40:25 ** delete **
+ojo-d9 trmm_24/2015/352/trmm_24.20151218.tif 7904 2016-02-17 13:40:08 ** delete **
+ojo-d9 trmm_24/2015/352/trmm_24.20151218.topojson.gz 38916 2016-02-17 13:40:07 ** delete **
+ojo-d9 trmm_24/2015/352/trmm_24.20151218_thn.jpg 39657 2016-02-17 13:40:07 ** delete **
+ojo-d9 trmm_24/2016/041/trmm_24.20160210.tif 7904 2016-02-17 13:33:01 ** delete **
+ojo-d9 trmm_24/2016/041/trmm_24.20160210.topojson.gz 51445 2016-02-17 13:33:01 ** delete **
+ojo-d9 trmm_24/2016/041/trmm_24.20160210_thn.jpg 42306 2016-02-17 13:33:00 ** delete **
+ojo-d9 trmm_24/2016/042/trmm_24.20160211.tif 7904 2016-02-17 18:26:39 ** delete **
+ojo-d9 trmm_24/2016/042/trmm_24.20160211.topojson.gz 45547 2016-02-17 18:26:39 ** delete **
+ojo-d9 trmm_24/2016/042/trmm_24.20160211_thn.jpg 41716 2016-02-17 18:26:39 ** delete **
+ojo-d9 trmm_24/2016/043/trmm_24.20160212.tif 7904 2016-02-17 14:36:22 ** delete **
+ojo-d9 trmm_24/2016/043/trmm_24.20160212.topojson.gz 45848 2016-02-17 14:36:22 ** delete **
+ojo-d9 trmm_24/2016/043/trmm_24.20160212_thn.jpg 41219 2016-02-17 14:36:21 ** delete **
+ojo-d9 trmm_24/2016/044/trmm_24.20160213.tif 7904 2016-02-17 18:32:33 ** delete **
+ojo-d9 trmm_24/2016/044/trmm_24.20160213.topojson.gz 31342 2016-02-17 18:32:33 ** delete **
+ojo-d9 trmm_24/2016/044/trmm_24.20160213_thn.jpg 38478 2016-02-17 18:32:32 ** delete **
+ojo-d9 trmm_24/2016/045/trmm_24.20160214.tif 7904 2016-02-17 18:37:16 ** delete **
+ojo-d9 trmm_24/2016/045/trmm_24.20160214.topojson.gz 19185 2016-02-17 18:37:16 ** delete **
+ojo-d9 trmm_24/2016/045/trmm_24.20160214_thn.jpg 36724 2016-02-17 18:37:16 ** delete **
+ojo-d9 trmm_24/2016/046/trmm_24.20160215.tif 7904 2016-02-17 18:41:51 ** delete **
+ojo-d9 trmm_24/2016/046/trmm_24.20160215.topojson.gz 24311 2016-02-17 18:41:50 ** delete **
+ojo-d9 trmm_24/2016/046/trmm_24.20160215_thn.jpg 37433 2016-02-17 18:41:50 ** delete **
+ojo-d9 trmm_24/2016/047/trmm_24.20160216.tif 7904 2016-02-17 18:54:23 ** delete **
+ojo-d9 trmm_24/2016/047/trmm_24.20160216.topojson.gz 41106 2016-02-17 18:54:23 ** delete **
+ojo-d9 trmm_24/2016/047/trmm_24.20160216_thn.jpg 40781 2016-02-17 18:54:23 ** delete **
+ojo-d9 viirs_af/2016/041/viirs_af.20160210.geojson 645 2016-02-17 13:43:18 ** delete **
+ojo-d9 viirs_af/2016/041/viirs_af.20160210.geojson.gz 228 2016-02-17 13:43:19 ** delete **
+ojo-d9 viirs_af/2016/041/viirs_af.20160210.tif 1678 2016-02-17 13:43:18 ** delete **
+ojo-d9 viirs_af/2016/041/viirs_af.20160210_thn.jpg 39180 2016-02-17 13:43:19 ** delete **
+ojo-d9 viirs_af/2016/042/viirs_af.20160211.geojson 645 2016-02-17 18:28:52 ** delete **
+ojo-d9 viirs_af/2016/042/viirs_af.20160211.geojson.gz 228 2016-02-17 18:28:52 ** delete **
+ojo-d9 viirs_af/2016/042/viirs_af.20160211.tif 1682 2016-02-17 18:28:51 ** delete **
+ojo-d9 viirs_af/2016/042/viirs_af.20160211_thn.jpg 39187 2016-02-17 18:28:52 ** delete **
+ojo-d9 viirs_af/2016/043/viirs_af.20160212.geojson 645 2016-02-17 14:39:52 ** delete **
+ojo-d9 viirs_af/2016/043/viirs_af.20160212.geojson.gz 228 2016-02-17 14:39:52 ** delete **
+ojo-d9 viirs_af/2016/043/viirs_af.20160212.tif 1678 2016-02-17 14:39:52 ** delete **
+ojo-d9 viirs_af/2016/043/viirs_af.20160212_thn.jpg 39180 2016-02-17 14:39:52 ** delete **
+ojo-d9 viirs_af/2016/044/viirs_af.20160213.geojson 645 2016-02-17 18:34:43 ** delete **
+ojo-d9 viirs_af/2016/044/viirs_af.20160213.geojson.gz 228 2016-02-17 18:34:43 ** delete **
+ojo-d9 viirs_af/2016/044/viirs_af.20160213.tif 1682 2016-02-17 18:34:42 ** delete **
+ojo-d9 viirs_af/2016/044/viirs_af.20160213_thn.jpg 39187 2016-02-17 18:34:43 ** delete **
+ojo-d9 viirs_af/2016/045/viirs_af.20160214.geojson 645 2016-02-17 18:39:20 ** delete **
+ojo-d9 viirs_af/2016/045/viirs_af.20160214.geojson.gz 228 2016-02-17 18:39:21 ** delete **
+ojo-d9 viirs_af/2016/045/viirs_af.20160214.tif 1682 2016-02-17 18:39:20 ** delete **
+ojo-d9 viirs_af/2016/045/viirs_af.20160214_thn.jpg 39187 2016-02-17 18:39:21 ** delete **
+ojo-d9 viirs_af/2016/046/viirs_af.20160215.geojson 645 2016-02-17 18:43:58 ** delete **
+ojo-d9 viirs_af/2016/046/viirs_af.20160215.geojson.gz 228 2016-02-17 18:43:58 ** delete **
+ojo-d9 viirs_af/2016/046/viirs_af.20160215.tif 1682 2016-02-17 18:43:58 ** delete **
+ojo-d9 viirs_af/2016/046/viirs_af.20160215_thn.jpg 39187 2016-02-17 18:43:58 ** delete **
+ojo-d9 viirs_af/2016/047/viirs_af.20160216.geojson 645 2016-02-17 18:56:28 ** delete **
+ojo-d9 viirs_af/2016/047/viirs_af.20160216.geojson.gz 228 2016-02-17 18:56:29 ** delete **
+ojo-d9 viirs_af/2016/047/viirs_af.20160216.tif 1682 2016-02-17 18:56:28 ** delete **
+ojo-d9 viirs_af/2016/047/viirs_af.20160216_thn.jpg 39187 2016-02-17 18:56:29 ** delete **
 /Users/patricecappelaere/landslide/data/ojo-d2
 /Users/patricecappelaere/landslide/data/ojo-d3
 /Users/patricecappelaere/landslide/data/ojo-d4
@@ -109,7 +876,7 @@ HEROKU_POSTGRESQL_ORANGE ---backup---> b143
 /Users/patricecappelaere/landslide/data/ojo-d8
 /Users/patricecappelaere/landslide/data/ojo-d9
 Process All Path: process_all.py 
-Processing date: 2016-04-13 2016-04-12 2016-04-11
+Processing date: 2016-04-19 2016-04-18 2016-04-17
 heroku pg:backups capture --app ojo-streamer HEROKU_POSTGRESQL_COPPER_URL 
 cd /Users/patricecappelaere/Development/ojo/ojo-wiki
 heroku pg:backups capture --app ojo-wiki HEROKU_POSTGRESQL_ORANGE_URL 

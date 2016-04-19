@@ -126,6 +126,7 @@
 								<option value='flood_forecast'><%= gettext('products.flood_forecast')%></option>
 								<option value='surface_water'><%= gettext('products.surface_water')%></option>
 								<option value='flood_nowcast'><%= gettext('products.flood_nowcast')%></option>
+								<option value='forecastio'>forecastio</option>
 								<option value='global_landslide_nowcast'><%= gettext('products.global_landslide_nowcast')%></option>
 								<option value='landslide_catalog'><%= gettext('products.landslide_catalog')%></option>
 								<option value='landslide_nowcast'><%= gettext('products.landslide_nowcast')%></option>
@@ -195,6 +196,8 @@
 			<br/>
 		</div>
 
+		<div class="container" id='features' style="display:none"></div>
+		
 		<div class="container" id='results'></div>
 											
 		<br/>
@@ -716,7 +719,10 @@
 			}
 		}
 		
-		if(topojson_url) loadData( topojson_url, displayName, mapinfos );
+		if(topojson_url) {
+			var featureDivId = 'features'
+			loadData( topojson_url, displayName, mapinfos, null, 'features' );
+		}
 	}
 	
 	function handleDrop(event) {

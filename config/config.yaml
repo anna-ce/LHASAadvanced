@@ -14,7 +14,7 @@
             "bbox":         [-180, 60, 180, -60 ],
             "target":       [0, 0],
             "min_zoom":     2,
-            "max_zoom":     12,
+            "max_zoom":     18,
             "map_id":       "cappelaere.map-mx5g2tn3",
             "bucket":       "ojo-global",
             "ojotiler":     "http://ojo-tiler.herokuapp.com",
@@ -177,6 +177,11 @@
                 		
 				{
 					"source": 		"gpm",
+					"href": 		"/opensearch",
+					"checked": 		false
+				},
+				{
+					"source": 		"forecastio",
 					"href": 		"/opensearch",
 					"checked": 		false
 				},

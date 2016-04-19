@@ -260,10 +260,13 @@ def Gen_bbox(lat, lon, zoom, width, height):
 	return ullon, ullat, lrlon, lrlat
 	
 def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, levels, hexColors, _force, _verbose, zoom=4, scale=1, bbox=[]):
+	global force, verbose
+	
 	verbose = _verbose
 	force	= _force
 	
 	assert( len(levels) == len(hexColors))
+	print "MakeBrowseImage verbose", verbose, subset_filename
 	
 	decColors = []
 	for h in hexColors:
@@ -417,7 +420,8 @@ def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_o
 		warpOptions 		= ofStr + bbStr + projectionStr + resStr + overwriteStr + additionalOptions + wh
 		warpCMD 			= 'gdalwarp -q ' + warpOptions + browse_filename + ' ' + subset_filename
 		execute(warpCMD)
-	
+	else:
+		print subset_filename, "exists"
 	
 	# superimpose the suface water over map background
 	#if force or not os.path.isfile(sw_osm_image):	

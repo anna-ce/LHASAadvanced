@@ -17,40 +17,9 @@ LOCAL_DIR_STORAGE			= "/Users/patricecappelaere/Development/ojo/tmp"
 
 NOTE 2: This may not be the best option to run as an enterprise system with multiples instances and load balancing.
 
-## Developer Accounts
-Several developer accounts may be necessary to leverage advanced features
+## Pre-requisites
 
-### USGS Access
-
-[USGS Registration](https://ers.cr.usgs.gov/register/) to access USGS imagery
-
-### Facebook
-
-[Facebook Developer Site/Registration](https://developers.facebook.com/docs/apps/register) to share products
-
-### Twitter
-
-[Twitter Developer Registration](https://dev.twitter.com/) to share products
-
-### Mapbox
-
-[Mapbox Developer Registration](https://www.mapbox.com/developers/) for map bacground
-
-### ForecastIO
-
-[Forecast API registration](https://developer.forecast.io/register) for personal forecast at specific location
-
-
-### Papertrail
-
-[Papertrail Registration](https://papertrailapp.com) For Log aggregation
-
-## Requirements & Installation
-
-npm install
-
-## Set  Env	
-Edit the envs.docker.sh.tmpl file, save it as envs.docker.sh and source it
+Check PREREQUISITES.md
 
 ## Local Docker
 Install docker and start VM
@@ -96,46 +65,3 @@ Clean Docker
 > docker rmi -f $(docker images | grep "<none>" | awk "{print \$3}")
 	
 > docker rmi $(docker images -f "dangling=true" -q)
-
-### Convox
-#### Pre-requisites
-Create an Amazon SQS Queue
-and Update Environment variables
-
-Lambda functions for scheduling python scripts
-
-Postgresql database to host sessions and landslide inventory
-
-Install new rack from GUI (Takes a while)
-
-Enable SSH
-> convox instances keyroll
-
-Check
-> convox instances
-
-Scale Up
-> convox rack scale --type m3.large
-
-> convox scale web --count 1 
-
-> convox scale web --memory 512
-
-> convox scale worker --count 1 
-
-> convox scale worker --memory 512
-
-Create App
-> convox apps create ojo-bot
-
-Check
-> convox apps info
-
-> convox instances
-
-Deploy
-> convox deploy
-
-Check logs
-> convox logs
-

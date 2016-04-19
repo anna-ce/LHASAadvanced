@@ -1,0 +1,18 @@
+sh: flip_raster.py: command not found
+ERROR 4: `/Users/patricecappelaere/landslide/data/geos5/20160419/geos5_precip.20160419.tif' does not exist in the file system,
+and is not recognised as a supported dataset name.
+
+GDALOpen failed - 4
+`/Users/patricecappelaere/landslide/data/geos5/20160419/geos5_precip.20160419.tif' does not exist in the file system,
+and is not recognised as a supported dataset name.
+
+ERROR 4: `/Users/patricecappelaere/landslide/data/geos5/20160419/geos5_precip.20160419.tif' does not exist in the file system,
+and is not recognised as a supported dataset name.
+
+Traceback (most recent call last):
+  File "./geos5.py", line 381, in <module>
+    process_file( mydir, flipped_tif_filename, s3_bucket, s3_folder)
+  File "./geos5.py", line 150, in process_file
+    geotransform		= ds.GetGeoTransform()
+AttributeError: 'NoneType' object has no attribute 'GetGeoTransform'
+process_all.sh Done: Tue Apr 19 11:13:01 EDT 2016

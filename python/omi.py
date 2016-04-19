@@ -1,8 +1,16 @@
+#
+# AURA OMI NO2 
+#
+# http://aura.gsfc.nasa.gov/scinst/omi.html
+#
+
 import sys, os, inspect, math
 import datetime
 from datetime import date
 from dateutil.parser import parse
-import cubehelix
+import urllib
+
+#import cubehelix
 
 from osgeo import gdal
 import numpy
@@ -16,6 +24,8 @@ import argparse
 # http://bl.ocks.org/mbostock/11415064
 # http://www.ifweassume.com/2014/04/cubehelix-colormap-for-python.html
 
+# AVDC website (http://avdc.gsfc.nasa.gov/pub/tmp/OMNO2D_HR/)
+url			= 'http://avdc.gsfc.nasa.gov/pub/tmp/OMNO2D_HR/'
 maxval		= 144
 fibvalues 	= [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144]
 
@@ -35,11 +45,11 @@ def execute( cmd ):
 	os.system(cmd)
 
 # ======================================================================
-#	python geos5.py --date 2015-08-10 -v
+#	python omi.py --date 2016-04-11 -v
 #
 if __name__ == '__main__':
 
-	parser 		= argparse.ArgumentParser(description='GEOS-5 Processing')
+	parser 		= argparse.ArgumentParser(description='OMI Processing')
 	apg_input 	= parser.add_argument_group('Input')
 	apg_input.add_argument("-f", "--force", action='store_true', help="forces new product to be generated")
 	apg_input.add_argument("-v", "--verbose", action='store_true', help="Verbose Flag")
@@ -62,12 +72,28 @@ if __name__ == '__main__':
 	
 	ymd 		= "%d%02d%02d" % (year, month, day)
 
-	mydir 		= os.path.join(config.DATA_DIR, "omi", str(year), doy)
-	filename	= os.path.join(mydir, "%04d_%02d_%02d_NO2TropCS30.hdf5" % (year, month, day))
+	filename	= "%04d_%02d_%02d_NO2TropCS30.hdf5" % (year, month, day)
 
+	mydir 		= os.path.join(config.DATA_DIR, "omi", str(year), doy)
+	# make sure directory exists
+	if not os.path.exists(mydir):
+		os.makedirs(mydir)
+	
+	file_url	= url + str(year)+"/"+filename
+	
+	filename	= os.path.join(mydir, filename)
+	
+	# Get file
+	if not os.path.exists(filename):
+		context				= None
+		print "getting", file_url
+		urllib.urlretrieve(file_url, filename, context=context)
+	
+	
 	dstfilename	= filename.replace(".hdf5", ".tif")
 	rgbfilename	= filename.replace(".hdf5", "_rgb.tif")
-	color_file	= "./cluts/omi_cubehelix_org_144.txt"
+	#color_file	= "./cluts/omi_cubehelix_org_144.txt"
+	color_file	= "./cluts/omi_blue_red.txt"
 	
 	ds 			= gdal.Open(filename)
 	
@@ -90,6 +116,11 @@ if __name__ == '__main__':
 	dst_ds_dataset		= None
 	
 	cmd = "gdaldem color-relief -q -alpha -nearest_color_entry -of GTiff %s %s %s" % ( dstfilename, color_file, rgbfilename)
+	execute(cmd)
+
+	# Flip it since it is bottom up
+	flip_filename		= rgbfilename + ".flipped.tif"
+	cmd = "flip_raster.py -o %s %s" % ( flip_filename, rgbfilename)
 	execute(cmd)
 
 	

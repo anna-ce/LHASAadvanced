@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# GEOS-5 precipitaiton Product
+# Frost Map using GEOS-5 Minimum Surface Air Temperature Product
 # http://gmao.gsfc.nasa.gov/products/documents/GEOS_5_FP_File_Specification_ON4v1_0.pdf
 
 import numpy, sys, os, inspect, glob, shutil
@@ -32,6 +32,20 @@ verbose 	= 0
 force 		= 0
 processes	= multiprocessing.cpu_count()
 
+locations = [
+	{
+		"name":			"Finca Rosa Blanca",
+		"latitude":		10.042227,
+		"longitude":	-84.1542
+	},
+	{
+		"name":			"Finca Rosa Blanca",
+		"latitude":		10.042227,
+		"longitude":	-84.1542
+	},
+	
+	
+]
 def execute( cmd ):
 	if verbose:
 		print cmd
@@ -115,7 +129,9 @@ def get_files_old(year, mydir, files):
 
 	ftp.close()
 		
-def process_file( mydir, filename, s3_bucket, s3_folder):
+def process_file( mydir, filename, s3_bucket, s3_folder, bbox, regionName):
+	global force, verbose
+	
 	print "Processing", filename
 	
 	geojsonDir	= os.path.join(mydir,"geojson")
@@ -126,30 +142,20 @@ def process_file( mydir, filename, s3_bucket, s3_folder):
 	if not os.path.exists(levelsDir):            
 		os.makedirs(levelsDir)
 
-	#shpDir	= os.path.join(mydir,"shp")
-	#if not os.path.exists(shpDir):            
-	#	os.makedirs(shpDir)
-
-	super_subset_file	= os.path.join(mydir, "geos5_precip_super.%s.tif" % ymd)
-	merge_filename 		= os.path.join(geojsonDir, "geos5_precip.%s.geojson" % ymd)
-	topojson_filename 	= os.path.join(geojsonDir, "..", "geos5_precip.%s.topojson" % ymd)
-	browse_filename 	= os.path.join(geojsonDir, "..", "geos5_precip.%s_browse.tif" % ymd)
-	subset_filename 	= os.path.join(geojsonDir, "..", "geos5_precip.%s_small_browse.tif" % ymd)
-	subset_aux_filename	= os.path.join(geojsonDir, "..", "geos5_precip.%s_small_browse.tif.aux.xml" % ymd)
-	osm_bg_image		= os.path.join(mydir, "../..", "osm_bg.png")
-	sw_osm_image		= os.path.join(geojsonDir, "..", "geos5_precip.%s_thn.jpg" % ymd)
-	json_filename		= os.path.join(geojsonDir, "geos5_precip.%s.json" % (ymd))
-	#shp_filename 		= os.path.join(mydir, "geos5_precip.%s.shp.gz" % (ymd))
-	#shp_zip_file		= os.path.join(mydir, "geos5_precip.%s.shp.zip" % (ymd))
-	
-	#if force or not os.path.exists(subset_file):
-	#	cmd = "gdalwarp -overwrite -q -te %f %f %f %f %s %s" % (bbox[0], bbox[1], bbox[2], bbox[3], filename, subset_file)
-	#	execute(cmd)
-	
+	super_subset_file	= os.path.join(mydir, 			"geos5_sat_super.%s.tif" % ymd)
+	merge_filename 		= os.path.join(geojsonDir, 		"geos5_sat.%s.geojson" % ymd)
+	topojson_filename 	= os.path.join(geojsonDir, "..", "geos5_sat.%s.topojson" % ymd)
+	browse_filename 	= os.path.join(geojsonDir, "..", "geos5_sat.%s_browse.tif" % ymd)
+	subset_filename 	= os.path.join(geojsonDir, "..", "geos5_sat.%s_small_browse.tif" % ymd)
+	subset_aux_filename	= os.path.join(geojsonDir, "..", "geos5_sat.%s_small_browse.tif.aux.xml" % ymd)
+	osm_bg_image		= os.path.join(mydir, "..", 	"osm_bg_%s.png" % regionName )
+	sw_osm_image		= os.path.join(geojsonDir, "..", "geos5_sat.%s_thn.jpg" % ymd)
+	json_filename		= os.path.join(geojsonDir, 		"geos5_sat.%s.json" % (ymd))
+		
 	ds 					= gdal.Open( filename )
 	geotransform		= ds.GetGeoTransform()
-	px					= geotransform[1] / 2
-	py					= geotransform[5] / 2
+	px					= geotransform[1] / 10
+	py					= geotransform[5] / 10
 	
 	xorg				= geotransform[0]
 	yorg  				= geotransform[3]
@@ -164,20 +170,11 @@ def process_file( mydir, filename, s3_bucket, s3_folder):
 	# upsample and convolve
 	if force or not os.path.exists(super_subset_file):
 		# we need to have square pixels
-		cmd = "gdalwarp -overwrite -q -r cubicspline -tr %s %s  -co COMPRESS=LZW %s %s" % (str(px), str(px), filename, super_subset_file)
+		cmd = "gdalwarp -overwrite -q -r cubic -tr %s %s  -co COMPRESS=DEFLATE %s %s" % (str(px), str(py), filename, super_subset_file)
 		execute(cmd)
 	
-	levels 				= [377, 233, 144, 89, 55, 34, 21, 13, 8, 5, 3]
-
-	# http://hclwizard.org/hcl-color-scheme/
-	# http://vis4.net/blog/posts/avoid-equidistant-hsv-colors/
-	# from http://tristen.ca/hcl-picker/#/hlc/12/1/241824/55FEFF
-	
-	# This is in inverse order from levels
-	#hexColors 			= [ "#56F6FC","#58DEEE","#5BC6DE","#5EAFCC","#5E99B8","#5D84A3","#596F8D","#535B77","#4A4861","#3F374B","#322737","#241824"]
-	
-	# GPM palette
-	hexColors 			= [ "#f7fcf0","#e0f3db","#ccebc5","#a8ddb5","#7bccc4","#4eb3d3","#2b8cbe","#0868ac","#084081","#810F7C","#4D004A" ]
+	levels 				= [5, 4, 3, 2]
+	hexColors 			= [ "ff9a00", "ff0000", "ff99cc", "cc00cc" ]
 	
 	ds 					= gdal.Open( super_subset_file )
 	band				= ds.GetRasterBand(1)
@@ -186,12 +183,12 @@ def process_file( mydir, filename, s3_bucket, s3_folder):
 	if force or not os.path.exists(topojson_filename+".gz"):
 		for l in levels:
 			fileName 		= os.path.join(levelsDir, ymd+"_level_%d.tif"%l)
-			CreateLevel(l, geojsonDir, fileName, ds, data, "geos5_precip", force, verbose)
+			CreateLevel(l, geojsonDir, fileName, ds, data, "geos5_sat", force, verbose)
 	
 		jsonDict = dict(type='FeatureCollection', features=[])
 	
 		for l in reversed(levels):
-			fileName 		= os.path.join(geojsonDir, "geos5_precip_level_%d.geojson"%l)
+			fileName 		= os.path.join(geojsonDir, "geos5_sat_level_%d.geojson"%l)
 			if os.path.exists(fileName):
 				if verbose:
 					print "merge", fileName
@@ -211,41 +208,31 @@ def process_file( mydir, filename, s3_bucket, s3_folder):
 		if verbose:
 			quiet = " "
 			
-		cmd 	= "topojson -p --bbox --simplify-proportion 0.5 -o "+ topojson_filename + " " + merge_filename + quiet
+		cmd 	= "topojson -p --bbox --simplify-proportion 0.1 -o "+ topojson_filename + " " + merge_filename + quiet
 		execute(cmd)
 
 		cmd 	= "gzip -f "+ topojson_filename
 			
 		execute(cmd)
-	
-	# Create shapefile gz
-	#if force or not os.path.exists(shp_filename):
-	#	# Convert simplified topojson to geojson
-	#	cmd = "topojson-geojson --precision 4 %s -o %s" % (topojson_filename, geojsonDir)
-	#	execute(cmd)
-		
-	#	cmd = "ogr2ogr -f 'ESRI Shapefile' %s %s" % (shpDir, json_filename)
-	#	execute(cmd)
-		
-		#cmd = "cd %s; tar -zcvf %s %s" % (mydir, shp_filename, shpDir)
-	#	cmd 	= "cd %s; zip %s shp/*" %(mydir, shp_zip_file)
-		
-	#	execute(cmd)
 		
 	if not os.path.exists(osm_bg_image):
-		#print "wms", ymax, xorg, yorg, xmax, osm_bg_image
-		wms(90, -180, -90, 180, osm_bg_image)
+		ullat = bbox[3]
+		ullon = bbox[0]
+		lrlat = bbox[1]
+		lrlon = bbox[2]
+		
+		wms(ullat, ullon, lrlat, lrlon, osm_bg_image)
 	
 	if force or not os.path.exists(sw_osm_image):
 		zoom 		= 1
-		scale 		= 1	
+		scale 		= 1
 		rColors 	= list(reversed(hexColors))
 		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, levels, rColors, force, verbose, zoom, scale)
 		
 	ds = None
 	
 	file_list = [ sw_osm_image, topojson_filename+".gz", filename ]
-	CopyToS3( s3_bucket, s3_folder, file_list, 1, 1 )
+	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 	
 	if not verbose: # Cleanup
 		cmd = "rm -rf %s %s %s %s %s %s %s %s" % ( merge_filename, browse_filename, topojson_filename, subset_filename, super_subset_file, subset_aux_filename, geojsonDir, levelsDir)
@@ -273,23 +260,26 @@ def cleanupdir( mydir):
 				shutil.rmtree(l)
 	
 # ======================================================================
-#	python geos5.py --date 2015-08-10 -v
+#	python geos5_sat.py --date 2016-04-01 --region d02 -v
 #
+
 if __name__ == '__main__':
 	version_num = int(gdal.VersionInfo('VERSION_NUM'))
 	if version_num < 1800: # because of GetGeoTransform(can_return_null)
 		print('ERROR: Python bindings of GDAL 1.8.0 or later required')
 		sys.exit(1)
 	
-	parser 		= argparse.ArgumentParser(description='GEOS-5 Processing')
+	parser 		= argparse.ArgumentParser(description='GEOS-5 SAT Processing')
 	apg_input 	= parser.add_argument_group('Input')
 	apg_input.add_argument("-f", "--force", action='store_true', help="forces new product to be generated")
 	apg_input.add_argument("-v", "--verbose", action='store_true', help="Verbose Flag")
 	apg_input.add_argument("-d", "--date", 	help="Date")
+	apg_input.add_argument("-r", "--region", help="Region", required=1)
 	
 	options 	= parser.parse_args()
 	force		= options.force
 	verbose		= options.verbose
+	regionName	= options.region
 	
 	basedir 	= os.path.dirname(os.path.realpath(sys.argv[0]))
 	
@@ -307,7 +297,10 @@ if __name__ == '__main__':
 	ymd 		= "%d%02d%02d" % (year, month, day)
 	ymd1 		= "%d%02d%02d" % (tomorrow.year, tomorrow.month, tomorrow.day)
 	
-	mydir 		= os.path.join(config.GEOS5_DIR, ymd)
+	region		= config.regions[regionName]
+	assert(region)
+	
+	mydir 		= os.path.join(config.GEOS5_SAT_DIR, ymd)
 	if not os.path.exists(mydir):            
 		os.makedirs(mydir)
 	
@@ -316,15 +309,15 @@ if __name__ == '__main__':
 		filename =  "GEOS.fp.fcst.tavg1_2d_flx_Nx.%s_00+%s_%02d30.V01.nc4" %(ymd, ymd, i)
 		#filename =  "GEOS.fp.fcst.tavg1_2d_lnd_Nx.%s_00+%s_%02d30.V01.nc4" %(ymd, ymd, i)
 		files.append(filename)
-
-	#for i in range(0,24,3):	# 0-23
-	#	filename =  "GEOS.fp.fcst.inst3_2d_met_Nx.%s_00+%s_%02d00.V01.nc4" %(ymd, ymd, i)
-	#	files.append(filename)
-
 	
 	color_file				= os.path.join(basedir, "cluts", "geos5_colors.txt")
-	tif_filename			= os.path.join(mydir, "geos5_precip.%s.unflipped.tif" % ymd)
-	flipped_tif_filename	= os.path.join(mydir, "geos5_precip.%s.tif" % ymd)
+	tif_filename			= os.path.join(mydir, "geos5_sat.%s.unflipped.tif" % ymd)
+	flipped_tif_filename	= os.path.join(mydir, "geos5_sat.%s.tif" % ymd)
+	
+	regionDir				= os.path.join(mydir, regionName)
+	if not os.path.exists(regionDir):            
+		os.makedirs(regionDir)
+	subset_tif_filename		= os.path.join(regionDir, "geos5_sat.%s.%s.tif" % (regionName, ymd))
 	
 	if force or not os.path.exists(tif_filename):          
 		if verbose:
@@ -335,50 +328,70 @@ if __name__ == '__main__':
 		ffilename 		= os.path.join(mydir,f)
 		ftif_filename 	= ffilename + ".tif"
 		#if force or not os.path.exists(ftif_filename):          
-		cmd = "export GDAL_NETCDF_BOTTOMUP=NO; gdal_translate -q -b 1 netcdf:%s:PRECTOT %s" % (ffilename, ftif_filename)
+		cmd = "export GDAL_NETCDF_BOTTOMUP=NO; gdal_translate -q -b 1 netcdf:%s:TLML %s" % (ffilename, ftif_filename)
 		execute(cmd)
 				
-	# Now we need to create the 24hr accumulation
-	if force or not os.path.exists(tif_filename):          
+	if force or not os.path.exists(tif_filename):  
+		if verbose:
+			print "Creating ", tif_filename
+			
 		for idx, f in enumerate(files):
 			ffilename 		= os.path.join(mydir,f)
 			ftif_filename 	= ffilename + ".tif"
 			ds 				= gdal.Open( ftif_filename )
 			band			= ds.GetRasterBand(1)
 			data			= band.ReadAsArray(0, 0, ds.RasterXSize, ds.RasterYSize )
-			
-			# data in mm/hour and file is for one hour
-			# data is in kg/m2/s... we want results in mm
-			# 1hr = 3600s
-			
-			data			*= 3600
-		
+			projection  	= ds.GetProjection()
+			geotransform	= ds.GetGeoTransform()
+					
 			if idx==0:
-				total = data
+				minTemp = numpy.array(data)
 			else:
-				total += data
+				minTemp = numpy.minimum(minTemp, data)
+		
+		minTemp[minTemp>288]	= 1 # no frost
+		minTemp[minTemp>270]	= 2 # minor frost
+		minTemp[minTemp>260]	= 3 # moderate frost
+		minTemp[minTemp>250]	= 4 # severe frost
+		minTemp[minTemp>5]		= 5 # very severe frost
 		
 		driver 	= gdal.GetDriverByName("GTiff")
-		out_ds	= driver.CreateCopy( tif_filename, ds, 0)
+		out_ds	= driver.Create( tif_filename, ds.RasterXSize, ds.RasterYSize, 1, gdal.GDT_Byte, [ 'COMPRESS=DEFLATE' ] )
 		band	= out_ds.GetRasterBand(1)
-		band.WriteArray(total, 0, 0)
-			
+		band.WriteArray(minTemp, 0, 0)
+		
+		ct = gdal.ColorTable()
+		ct.SetColorEntry( 0, (255, 255, 255, 255) )
+		ct.SetColorEntry( 1, (0, 255, 0, 255) )
+		ct.SetColorEntry( 2, (255, 154, 0, 255) )
+		ct.SetColorEntry( 3, (255, 0, 0, 255) )
+		ct.SetColorEntry( 4, (255, 153, 204, 255) )
+		ct.SetColorEntry( 5, (204, 0, 204, 255) )
+		band.SetRasterColorTable(ct)
+		
+		out_ds.SetGeoTransform( geotransform )
+		out_ds.SetProjection( projection )
+		
 		out_ds	= None
 		ds		= None
 		
-		# Flip it since it is bottom up
-		cmd = "flip_raster.py -o %s %s" % ( flipped_tif_filename, tif_filename )
-		execute(cmd)
+		print "Saved", tif_filename
 		
-	rgb_tif_filename	= os.path.join(mydir, "geos5_precip.%s.flipped.rgb.tif" % ymd)
-	if force or (verbose and not os.path.exists(rgb_tif_filename)):	
-		cmd = "gdaldem color-relief -q -alpha -of GTiff %s %s %s" % ( flipped_tif_filename, color_file, rgb_tif_filename)
+		# Flip it since it is bottom up
+		cmd = "flip_raster.py -pct -o %s %s" % ( flipped_tif_filename, tif_filename )
+		execute(cmd)
+	else:
+		print "File exists", tif_filename
+			
+	s3_folder	= os.path.join("geos5_sat", str(year), doy)
+	s3_bucket	= region['bucket']
+	
+	bbox		= region['bbox']
+	if force or not os.path.exists(subset_tif_filename):
+		cmd = "gdalwarp -overwrite -q -te %f %f %f %f %s %s" % (bbox[0], bbox[1], bbox[2], bbox[3], flipped_tif_filename, subset_tif_filename)
 		execute(cmd)
 	
-	s3_folder	= os.path.join("geos5", str(year), doy)
-	s3_bucket	= 'ojo-global'
-	
-	process_file( mydir, flipped_tif_filename, s3_bucket, s3_folder)
+	process_file( regionDir, subset_tif_filename, s3_bucket, s3_folder, bbox, regionName)
 		
 	if not verbose:
 		for f in files:
@@ -386,6 +399,7 @@ if __name__ == '__main__':
 			ftif_filename 	= ffilename + ".tif"
 			cmd = "rm %s %s" %(ffilename, ftif_filename)
 			execute(cmd)
-			cmd = "rm %s %s" %(tif_filename, rgb_tif_filename)
+			cmd = "rm %s %s" %(tif_filename, flipped_tif_filename)
+			execute(cmd)
 
-	cleanupdir(config.GEOS5_DIR)
+	cleanupdir(config.GEOS5_SAT_DIR)
