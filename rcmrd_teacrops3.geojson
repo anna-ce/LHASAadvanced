@@ -1,0 +1,1832 @@
+{
+	"type": "FeatureCollection",
+	"generator": "overpass-turbo",
+	"copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+	"timestamp": "2016-04-15T15:34:02Z",
+	"features": [
+		{
+			"type": "Feature",
+			"id": "relation/5588331",
+			"properties": {
+				"@id": "relation/5588331",
+				"crop": "tea",
+				"landuse": "farmland",
+				"type": "multipolygon",
+				"what3words": "washike.magumu.vikavu"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.32423663187502,
+					0.6341478668750002
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/170279683",
+			"properties": {
+				"@id": "way/170279683",
+				"crop": "tea",
+				"landuse": "farm",
+				"source": "Bing",
+				"what3words": "timiza.tunalia.huvunja"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.314699910344828,
+					0.5660291241379309
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/259827953",
+			"properties": {
+				"@id": "way/259827953",
+				"crop": "tea",
+				"landuse": "farm",
+				"source": "bing",
+				"what3words": "aliimba.chaguo.itakuwa"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.111749879999994,
+					-0.37977219999999995
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/260168894",
+			"properties": {
+				"@id": "way/260168894",
+				"crop": "tea",
+				"landuse": "farmland",
+				"source": "bing",
+				"what3words": "kaliwa.choshwa.kujuana"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.110955209374996,
+					-0.38941521875
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/260168898",
+			"properties": {
+				"@id": "way/260168898",
+				"crop": "tea",
+				"landuse": "farmland",
+				"source": "bing",
+				"what3words": "zilipangwa.ishinde.balehe"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.110480806451612,
+					-0.3971194365591395
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/260170924",
+			"properties": {
+				"@id": "way/260170924",
+				"crop": "tea",
+				"landuse": "farmland",
+				"source": "bing",
+				"what3words": "wachumi.kutokata.shindia"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.095859797798756,
+					-0.415059488993711
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/260174351",
+			"properties": {
+				"@id": "way/260174351",
+				"crop": "tea",
+				"landuse": "farmland",
+				"source": "bing",
+				"what3words": "kupendekeza.fulana.chemsha"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.106627078260864,
+					-0.4187728260869566
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/260174352",
+			"properties": {
+				"@id": "way/260174352",
+				"crop": "tea",
+				"landuse": "farmland",
+				"source": "bing",
+				"what3words": "imepata.uliacha.zilizopata"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.10765154634145,
+					-0.4110605560975609
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/260174353",
+			"properties": {
+				"@id": "way/260174353",
+				"crop": "tea",
+				"landuse": "farmland",
+				"source": "bing",
+				"what3words": "watokea.kufahamu.utarudi"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.11018668039214,
+					-0.40986070784313744
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/260174354",
+			"properties": {
+				"@id": "way/260174354",
+				"crop": "tea",
+				"landuse": "farmland",
+				"source": "bing",
+				"what3words": "makazi.kutandika.bandikwa"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.113354458,
+					-0.4060470420000001
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/315194697",
+			"properties": {
+				"@id": "way/315194697",
+				"crop": "tea",
+				"landuse": "farm",
+				"name": "Tea farm",
+				"what3words": "kupitia.fikisha.akinipa"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					32.7894955,
+					0.21248428000000003
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364554905",
+			"properties": {
+				"@id": "way/364554905",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "ifikie.oanisha.kuwatii"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.26626196923076,
+					-0.38424356282051286
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364554906",
+			"properties": {
+				"@id": "way/364554906",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "utokanao.viganja.kisera"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.24537694314721,
+					-0.3968974269035531
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364555752",
+			"properties": {
+				"@id": "way/364555752",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "matibabu.tafutwa.kurukia"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.30875023783784,
+					-0.36316740000000003
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364607980",
+			"properties": {
+				"@id": "way/364607980",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "kutendewa.kuwafaa.tazamio"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.25933278291318,
+					-0.41170722801120463
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364607981",
+			"properties": {
+				"@id": "way/364607981",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "kulirudia.hadhiri.imetiwa"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.257053795283035,
+					-0.399335174528302
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364609836",
+			"properties": {
+				"@id": "way/364609836",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "kemia.yakienda.inuliwa"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.29906352666667,
+					-0.3793315933333333
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364609837",
+			"properties": {
+				"@id": "way/364609837",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "kimaana.kilugha.hitaji"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.28448561983469,
+					-0.39260340743801664
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364609847",
+			"properties": {
+				"@id": "way/364609847",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "mwanaume.ikiwapo.mipangilio"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.29912854520548,
+					-0.3936603582191781
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364619127",
+			"properties": {
+				"@id": "way/364619127",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "kuigwa.fahari.wafanyao"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.3150530125874,
+					-0.3840854832167832
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364619132",
+			"properties": {
+				"@id": "way/364619132",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "ziende.kukisafisha.ikipewa"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.31366882199999,
+					-0.37497971999999996
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364619136",
+			"properties": {
+				"@id": "way/364619136",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "unavuta.kikaanza.tunajua"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.3350684372549,
+					-0.37542458235294107
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364805904",
+			"properties": {
+				"@id": "way/364805904",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "kitalu.atamani.aketiye"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.16555329836066,
+					-0.46595549016393445
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364805907",
+			"properties": {
+				"@id": "way/364805907",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "swali.waliona.nikitambua"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.1833504271523,
+					-0.47648852913907286
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364896700",
+			"properties": {
+				"@id": "way/364896700",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "starehe.kukusanyika.wajenge"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.261125526804136,
+					-0.5061011721649485
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364896702",
+			"properties": {
+				"@id": "way/364896702",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "amepona.unakuwa.kuimiliki"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.2789830025641,
+					-0.5146061512820514
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364896704",
+			"properties": {
+				"@id": "way/364896704",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "furahini.mdaiwa.akili"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.27336989708738,
+					-0.5192883475728154
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364896706",
+			"properties": {
+				"@id": "way/364896706",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "filimbi.mawingu.mnaanza"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.28433052727273,
+					-0.5087442109090908
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364909775",
+			"properties": {
+				"@id": "way/364909775",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "iendane.hawatoi.nitake"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.58411063333333,
+					-0.6165448466666665
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364909776",
+			"properties": {
+				"@id": "way/364909776",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "kizuri.akaanza.msafiri"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.55798006250001,
+					-0.59661234375
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364909778",
+			"properties": {
+				"@id": "way/364909778",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "ilitokana.miafaka.nifunge"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.58867082380952,
+					-0.6131523428571428
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364909779",
+			"properties": {
+				"@id": "way/364909779",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "karatasi.kuupiga.mkijua"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.57524938100559,
+					-0.6037543581005583
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364947332",
+			"properties": {
+				"@id": "way/364947332",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "awaokoe.inyeshe.huongoza"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.35257238507464,
+					-0.3584141641791044
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364947339",
+			"properties": {
+				"@id": "way/364947339",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "ilijitahidi.angusha.presha"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.34005512715231,
+					-0.3682441039735098
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364947341",
+			"properties": {
+				"@id": "way/364947341",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "ikaitwa.huwekwa.kuwafuatilia"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.351914798437505,
+					-0.3511283609375001
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/364947343",
+			"properties": {
+				"@id": "way/364947343",
+				"crop": "tea",
+				"landuse": "farm",
+				"what3words": "wamebaki.mashamba.akaruka"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.37830580518518,
+					-0.32784561407407414
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/366038532",
+			"properties": {
+				"@id": "way/366038532",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "kuuokoa.inachangia.kitendo"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.241132900000004,
+					-0.4577624
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/366038540",
+			"properties": {
+				"@id": "way/366038540",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "anayoona.imekiri.uhakiki"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.28367589130435,
+					-0.4838967608695652
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/366038546",
+			"properties": {
+				"@id": "way/366038546",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "kumtetea.alibeba.kuzoeleka"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.25215856500001,
+					-0.47354256499999997
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/366038549",
+			"properties": {
+				"@id": "way/366038549",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "wakazaa.yanapita.ukijibu"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.263015158333324,
+					-0.47832165000000004
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/366038552",
+			"properties": {
+				"@id": "way/366038552",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "siogopi.mema.ondoa"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.251270821126774,
+					-0.46509976338028153
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/366038557",
+			"properties": {
+				"@id": "way/366038557",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "umuhimu.uwepesi.nilitoa"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.25696406666666,
+					-0.45521847460317444
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/366038563",
+			"properties": {
+				"@id": "way/366038563",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "akainua.kimeandaa.usukani"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.2668967090909,
+					-0.4784642318181818
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/366038567",
+			"properties": {
+				"@id": "way/366038567",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "amebaki.uachwe.walimo"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.23301650910815,
+					-0.4503036574952562
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/366038619",
+			"properties": {
+				"@id": "way/366038619",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "kutawala.kuogea.unarudi"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.2661925675,
+					-0.4707899875000002
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/366040221",
+			"properties": {
+				"@id": "way/366040221",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "mabegi.madarasa.nilitoa"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.229852802531646,
+					-0.4759064367088608
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/366040224",
+			"properties": {
+				"@id": "way/366040224",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "unaumwa.kukijua.wahoji"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.24597083406593,
+					-0.482741532967033
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/366469136",
+			"properties": {
+				"@id": "way/366469136",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "yapo.bainika.shimoni"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.21054806955225,
+					-0.4973002904477605
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/366672621",
+			"properties": {
+				"@id": "way/366672621",
+				"crop": "tea",
+				"landuse": "farm",
+				"what3words": "vitoto.makopo.alimtoa"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.35404842578511,
+					-0.32010605504132256
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/366978906",
+			"properties": {
+				"@id": "way/366978906",
+				"crop": "tea",
+				"landuse": "farm",
+				"what3words": "kuipata.angekua.mtafiti"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.27581630303031,
+					-0.4693780393939393
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/366978907",
+			"properties": {
+				"@id": "way/366978907",
+				"crop": "tea",
+				"landuse": "farm",
+				"what3words": "akiapa.hakipo.kuzipata"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.259430213207544,
+					-0.4612473377358491
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/366978908",
+			"properties": {
+				"@id": "way/366978908",
+				"crop": "tea",
+				"landuse": "farm",
+				"what3words": "bandika.kukidhi.uulize"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.279361605691044,
+					-0.45855147642276406
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/367479305",
+			"properties": {
+				"@id": "way/367479305",
+				"crop": "tea",
+				"landuse": "farm",
+				"what3words": "kutanua.linatakiwa.itaisha"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.28656319543378,
+					-0.4416142552511415
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/369934891",
+			"properties": {
+				"@id": "way/369934891",
+				"crop": "tea",
+				"landuse": "farmland",
+				"name": "tea plantation",
+				"what3words": "mafundi.amevuka.twataka"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.25408049375,
+					-0.42628626718749996
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/373863831",
+			"properties": {
+				"@id": "way/373863831",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "kuminya.zinafanana.napinga"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					35.270536781249994,
+					-0.42299437187499994
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375441550",
+			"properties": {
+				"@id": "way/375441550",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "kuagwa.ukiacha.iliona"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.37174992727272,
+					0.6159796181818182
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375441566",
+			"properties": {
+				"@id": "way/375441566",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "kulichangia.hajaona.sili"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.38047282978724,
+					0.6223191212765957
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375453709",
+			"properties": {
+				"@id": "way/375453709",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "tulete.nikaja.epukika"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.370717846428573,
+					0.6212620464285715
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375453735",
+			"properties": {
+				"@id": "way/375453735",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "alirudi.amwombe.hujifunza"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.369346833333335,
+					0.6221793916666666
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375453742",
+			"properties": {
+				"@id": "way/375453742",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "salimu.aliodai.kuzitaja"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.375562876666667,
+					0.6253455366666667
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375453768",
+			"properties": {
+				"@id": "way/375453768",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "akafika.limejitokeza.kuipasua"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.374852779104472,
+					0.6270811268656716
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375469530",
+			"properties": {
+				"@id": "way/375469530",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "mioyo.kwenda.ingekua"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.380034786666666,
+					0.6470970199999999
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375472673",
+			"properties": {
+				"@id": "way/375472673",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "vijana.pendeza.kuwanyanyua"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.372890453846157,
+					0.6516069846153847
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375472675",
+			"properties": {
+				"@id": "way/375472675",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "mweleze.vitupu.ametaja"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.374104823076923,
+					0.6499217923076923
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375472676",
+			"properties": {
+				"@id": "way/375472676",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "hujaoa.kutengua.anatoka"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.373294609523803,
+					0.6491605476190476
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375472677",
+			"properties": {
+				"@id": "way/375472677",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "naliona.awaone.shamiri"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.373861687500003,
+					0.6484798
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375472680",
+			"properties": {
+				"@id": "way/375472680",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "idumuyo.kuvipa.ipeleke"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.37373108813559,
+					0.6457936203389832
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375472700",
+			"properties": {
+				"@id": "way/375472700",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "imezidi.yetu.kukiendesha"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.372352858064513,
+					0.6493643032258064
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375472701",
+			"properties": {
+				"@id": "way/375472701",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "jiji.makavu.kumfutia"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.370477249019608,
+					0.6470708098039216
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375476664",
+			"properties": {
+				"@id": "way/375476664",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "kulipa.mikuu.matoleo"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.32301138064516,
+					0.637696570967742
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375488038",
+			"properties": {
+				"@id": "way/375488038",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "ameunda.utiifu.wamwone"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.326946078787884,
+					0.6398140181818182
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375488039",
+			"properties": {
+				"@id": "way/375488039",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "uchimbaji.ukitoka.ukikosa"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.32442564090909,
+					0.6400537681818183
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375490268",
+			"properties": {
+				"@id": "way/375490268",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "wawekwe.mapande.shangazi"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.321828049999993,
+					0.6342849642857142
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375490270",
+			"properties": {
+				"@id": "way/375490270",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "yatoka.angetoa.mwambie"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.321125588888883,
+					0.6352572277777777
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375490272",
+			"properties": {
+				"@id": "way/375490272",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "kiulinzi.lingana.hausemi"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.321694357142853,
+					0.6363783714285715
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375490276",
+			"properties": {
+				"@id": "way/375490276",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "hujibu.kuutia.iliyoje"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.32182224117647,
+					0.6395879196078433
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375490277",
+			"properties": {
+				"@id": "way/375490277",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "hupewa.kumechangiwa.anakupa"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.323721789655178,
+					0.6330497741379313
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375490283",
+			"properties": {
+				"@id": "way/375490283",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "hupenya.endana.wawekezaji"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.325154513422817,
+					0.6296625610738257
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375490287",
+			"properties": {
+				"@id": "way/375490287",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "tukasema.mnakaa.kuisema"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.327908193421056,
+					0.6275259710526314
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375682641",
+			"properties": {
+				"@id": "way/375682641",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "rufaa.tuogope.nianze"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.321866459259248,
+					0.6342769333333332
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375682643",
+			"properties": {
+				"@id": "way/375682643",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "tunavaa.egemea.inamfanya"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.321108352631576,
+					0.6352231631578947
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375682647",
+			"properties": {
+				"@id": "way/375682647",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "muishi.kututoa.mvulana"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.321722373333333,
+					0.6364223733333334
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/375682654",
+			"properties": {
+				"@id": "way/375682654",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "nitajua.natokea.ikaitwa"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.3236538,
+					0.63297031
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/378920314",
+			"properties": {
+				"@id": "way/378920314",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "mwanafamilia.itasemwa.kupinda"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.33468004181818,
+					0.5002382545454546
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/379539504",
+			"properties": {
+				"@id": "way/379539504",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "hariri.kuikiri.iangaze"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.377716731249997,
+					0.63627876875
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/379541505",
+			"properties": {
+				"@id": "way/379541505",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "aulize.kutokea.awalaze"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.37837594761904,
+					0.6329510571428569
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/379543117",
+			"properties": {
+				"@id": "way/379543117",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "mikataba.hautoki.shikamoo"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.374198039622637,
+					0.6311483320754717
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/379543132",
+			"properties": {
+				"@id": "way/379543132",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "vyuma.kihivyo.ikubali"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.37160275625,
+					0.6262574750000001
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/379544867",
+			"properties": {
+				"@id": "way/379544867",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "kinafaa.kukitumikia.kutumai"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.367232859459463,
+					0.626190562162162
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/379544877",
+			"properties": {
+				"@id": "way/379544877",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "kukumbatiwa.anatoa.kirahisi"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.36006317826087,
+					0.6396347782608697
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/379556306",
+			"properties": {
+				"@id": "way/379556306",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "mlipata.vazi.tuingie"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.371868428571442,
+					0.6381124879120879
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/379556307",
+			"properties": {
+				"@id": "way/379556307",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "mvutano.kufikiwa.ataamua"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.36306530307692,
+					0.6261327892307693
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/379558860",
+			"properties": {
+				"@id": "way/379558860",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "kuwafariji.anaujua.alokuwa"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.359862850000006,
+					0.62518485
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/379558865",
+			"properties": {
+				"@id": "way/379558865",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "matamko.inaisha.kutoona"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.35761268205128,
+					0.627603569230769
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/383465904",
+			"properties": {
+				"@id": "way/383465904",
+				"crop": "tea",
+				"landuse": "farmland",
+				"source": "bing",
+				"what3words": "kuajiri.mashule.maelezo"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.109668557142857,
+					-0.4133902857142857
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/383465908",
+			"properties": {
+				"@id": "way/383465908",
+				"crop": "tea",
+				"landuse": "farmland",
+				"source": "Bing Sat",
+				"what3words": "nalala.kupokea.daladala"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.096929565,
+					-0.428453325
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/383465909",
+			"properties": {
+				"@id": "way/383465909",
+				"crop": "tea",
+				"landuse": "farmland",
+				"source": "bing",
+				"what3words": "kujikuna.kutoka.kuwabeza"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.110948245454548,
+					-0.41619194090909095
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/383465910",
+			"properties": {
+				"@id": "way/383465910",
+				"crop": "tea",
+				"landuse": "farmland",
+				"source": "bing",
+				"what3words": "mvaaji.zimejikuta.ufurahie"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.11269724782609,
+					-0.40114346086956515
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/383465914",
+			"properties": {
+				"@id": "way/383465914",
+				"crop": "tea",
+				"landuse": "farmland",
+				"source": "Bing Sat, GPS",
+				"what3words": "hudhani.fuateni.kato"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.110515173333333,
+					-0.42329763333333326
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/383465915",
+			"properties": {
+				"@id": "way/383465915",
+				"crop": "tea",
+				"landuse": "farmland",
+				"source": "Bing Sat",
+				"what3words": "heshima.huibuka.kupevuka"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.10321824571428,
+					-0.4226146914285714
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/383465917",
+			"properties": {
+				"@id": "way/383465917",
+				"crop": "tea",
+				"landuse": "farmland",
+				"source": "Bing Sat",
+				"what3words": "zalisha.daka.itakupa"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.091357956363627,
+					-0.42952904
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/383465918",
+			"properties": {
+				"@id": "way/383465918",
+				"crop": "tea",
+				"landuse": "farmland",
+				"source": "Bing Sat, GPS",
+				"what3words": "unijibu.dhaniwa.asemacho"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.109171429761908,
+					-0.43230124880952353
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/383465919",
+			"properties": {
+				"@id": "way/383465919",
+				"crop": "tea",
+				"landuse": "farmland",
+				"source": "Bing Sat",
+				"what3words": "kuambiwa.chimba.usifike"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					30.10228523854164,
+					-0.42742849270833344
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/401964560",
+			"properties": {
+				"@id": "way/401964560",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "kigeni.ameonya.karani"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					29.517654682134566,
+					-2.9408884786542924
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/401964561",
+			"properties": {
+				"@id": "way/401964561",
+				"crop": "tea",
+				"landuse": "farmland",
+				"type": "multipolygon",
+				"what3words": "akaitwa.mtumaji.fadhila"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					29.512089724894512,
+					-2.9108171223628703
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/401964562",
+			"properties": {
+				"@id": "way/401964562",
+				"crop": "tea",
+				"landuse": "farmland",
+				"what3words": "kalala.chema.ukaanza"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					29.50634394117648,
+					-2.8990305568627446
+				]
+			}
+		}
+	]
+}

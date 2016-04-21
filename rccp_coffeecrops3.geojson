@@ -1,0 +1,614 @@
+{
+	"type": "FeatureCollection",
+	"generator": "overpass-turbo",
+	"copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+	"timestamp": "2016-04-15T13:55:02Z",
+	"features": [
+		{
+			"type": "Feature",
+			"id": "way/69707588",
+			"properties": {
+				"@id": "way/69707588",
+				"crop": "coffee",
+				"landuse": "orchard",
+				"name": "Cafetal",
+				"trees": "coffea_plants",
+				"what3words": "roba.tuyos.filtros"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-84.2052137923077,
+					10.010538023076922
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/122848270",
+			"properties": {
+				"@id": "way/122848270",
+				"crop": "coffee",
+				"landuse": "orchard",
+				"name": "Finca Cafetalera Santa Inés",
+				"what3words": "barato.pase.emplea"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-84.13084699666666,
+					10.003693850000001
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/132763328",
+			"properties": {
+				"@id": "way/132763328",
+				"crop": "coffee",
+				"landuse": "orchard",
+				"what3words": "nítido.ricos.criador"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-84.176278,
+					10.047875536000003
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/135195244",
+			"properties": {
+				"@id": "way/135195244",
+				"crop": "coffee",
+				"landuse": "orchard",
+				"what3words": "vuela.llamar.tapia"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-84.139176603125,
+					10.020569598437502
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/142422451",
+			"properties": {
+				"@id": "way/142422451",
+				"crop": "coffee",
+				"landuse": "orchard",
+				"what3words": "derribo.sudar.aventura"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-84.03160327384614,
+					9.926866803076924
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/156973037",
+			"properties": {
+				"@id": "way/156973037",
+				"crop": "coffee",
+				"genus": "Coffea",
+				"landuse": "orchard",
+				"name": "Cafetal",
+				"trees": "coffea_plants",
+				"what3words": "abrirá.actuó.turno"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-84.14441008461539,
+					9.975119403846152
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/161484195",
+			"properties": {
+				"@id": "way/161484195",
+				"crop": "coffee",
+				"landuse": "orchard",
+				"what3words": "convoca.lidera.donar"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-83.99213617999997,
+					9.915902251428571
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/169632581",
+			"properties": {
+				"@id": "way/169632581",
+				"addr:city": "Heredia",
+				"crop": "coffee",
+				"landuse": "orchard",
+				"trees": "coffea_plants",
+				"what3words": "pedales.suyas.corte"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-84.10724596666667,
+					9.992329199999999
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/185391010",
+			"properties": {
+				"@id": "way/185391010",
+				"crop": "coffee",
+				"landuse": "orchard",
+				"what3words": "subieron.palidecido.posee"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-84.11587091851852,
+					10.016710111111111
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/185723743",
+			"properties": {
+				"@id": "way/185723743",
+				"addr:city": "Heredia",
+				"crop": "coffee",
+				"landuse": "orchard",
+				"trees": "coffea_plants",
+				"what3words": "aconseja.reiterativo.helar"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-84.11157065263158,
+					9.986646168421052
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/185723745",
+			"properties": {
+				"@id": "way/185723745",
+				"addr:city": "Heredia",
+				"crop": "coffee",
+				"landuse": "orchard",
+				"trees": "coffea_plants",
+				"what3words": "pasa.animan.marcas"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-84.11431360526316,
+					9.987985036842106
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/187819574",
+			"properties": {
+				"@id": "way/187819574",
+				"crop": "coffee",
+				"landuse": "meadow",
+				"what3words": "pernos.manivela.quedaron"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-84.11481355882353,
+					10.00628165294118
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/190492481",
+			"properties": {
+				"@id": "way/190492481",
+				"crop": "coffee",
+				"landuse": "orchard",
+				"what3words": "bastó.empleó.ubicar"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-84.13300013703703,
+					10.0260271037037
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/194474347",
+			"properties": {
+				"@id": "way/194474347",
+				"crop": "coffee",
+				"landuse": "orchard",
+				"trees": "coffea_plants",
+				"what3words": "abultar.bonitos.desandar"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-84.1055548,
+					9.987987758333334
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/196441045",
+			"properties": {
+				"@id": "way/196441045",
+				"crop": "coffee",
+				"landuse": "orchard",
+				"what3words": "frutas.energías.decorado"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-84.13448049444445,
+					9.983767544444445
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/198664843",
+			"properties": {
+				"@id": "way/198664843",
+				"crop": "coffee",
+				"landuse": "orchard",
+				"what3words": "desplumar.regalos.banderas"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-84.11481892500001,
+					10.0171309
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/201514402",
+			"properties": {
+				"@id": "way/201514402",
+				"crop": "coffee",
+				"landuse": "orchard",
+				"what3words": "negarse.solamente.fogón"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-84.114457675,
+					10.00903385
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/232724441",
+			"properties": {
+				"@id": "way/232724441",
+				"crop": "coffee",
+				"landuse": "orchard",
+				"trees": "coffea_plants",
+				"what3words": "madera.lisa.orquesta"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-84.14582368,
+					9.983649869999999
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/232952620",
+			"properties": {
+				"@id": "way/232952620",
+				"crop": "coffee",
+				"landuse": "orchard",
+				"trees": "coffea_plants",
+				"what3words": "meter.bocaza.posee"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-84.14507688636364,
+					9.986734331818182
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/233460617",
+			"properties": {
+				"@id": "way/233460617",
+				"crop": "coffee",
+				"landuse": "commercial",
+				"name": "Torres de Heredia",
+				"trees": "coffea_plants",
+				"what3words": "calor.objetivo.maridos"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-84.14724977857144,
+					9.977464450000001
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/233880345",
+			"properties": {
+				"@id": "way/233880345",
+				"crop": "coffee",
+				"genus": "Coffea",
+				"landuse": "orchard",
+				"name": "Cafetal",
+				"trees": "coffea_plants",
+				"what3words": "instructivo.olmo.blando"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-84.14367612,
+					9.97908472
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/233897656",
+			"properties": {
+				"@id": "way/233897656",
+				"crop": "coffee",
+				"landuse": "orchard",
+				"what3words": "ramas.ruido.fiera"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-84.12703651578948,
+					10.038548210526319
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/261246466",
+			"properties": {
+				"@id": "way/261246466",
+				"crop": "coffee",
+				"landuse": "orchard",
+				"what3words": "entraron.emite.tutor"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-84.1108154095238,
+					10.055019619047616
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/283874425",
+			"properties": {
+				"@id": "way/283874425",
+				"crop": "coffee",
+				"landuse": "farmland",
+				"name": "Tablon 1",
+				"what3words": "dedito.superar.queramos"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-89.69991763529413,
+					13.83838506470588
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/283874613",
+			"properties": {
+				"@id": "way/283874613",
+				"crop": "coffee",
+				"landuse": "farmland",
+				"name": "Tablon 2",
+				"what3words": "ahorrado.guión.pensaron"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-89.70022535833334,
+					13.836166891666666
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/302428559",
+			"properties": {
+				"@id": "way/302428559",
+				"crop": "coffee",
+				"landuse": "orchard",
+				"what3words": "puente.renovaciones.mismas"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-84.147902144,
+					10.018780955999999
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/358720687",
+			"properties": {
+				"@id": "way/358720687",
+				"crop": "coffee",
+				"landuse": "farmyard",
+				"name": "El Trapiche de Nolo",
+				"what3words": "alta.husmear.dotada"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-84.45001114634144,
+					9.945501719512194
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/387702997",
+			"properties": {
+				"@id": "way/387702997",
+				"crop": "coffee",
+				"landuse": "farmland",
+				"what3words": "sufra.traerá.bienvenidos"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-90.74495840666667,
+					14.56923896333333
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/390931534",
+			"properties": {
+				"@id": "way/390931534",
+				"crop": "coffee",
+				"landuse": "farmyard",
+				"name": "Beneficio Tazumal",
+				"what3words": "apuntes.lunas.agotar"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-89.68197848684211,
+					13.977260594736837
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/390931535",
+			"properties": {
+				"@id": "way/390931535",
+				"crop": "coffee",
+				"landuse": "farmyard",
+				"name": "Beneficio INCAFE",
+				"what3words": "tapón.helar.naranja"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-89.67300276363635,
+					13.994976618181818
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/394447388",
+			"properties": {
+				"@id": "way/394447388",
+				"crop": "coffee",
+				"landuse": "farmland",
+				"what3words": "tras.buses.creará"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-90.71490415714287,
+					14.548573457142856
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "way/402046055",
+			"properties": {
+				"@id": "way/402046055",
+				"crop": "coffee",
+				"landuse": "orchard",
+				"what3words": "tensos.rápidas.rentista"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-83.80913348666667,
+					9.828877146666667
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "node/4041253432",
+			"properties": {
+				"@id": "node/4041253432",
+				"agricultural": "yes",
+				"crop": "coffee",
+				"name": "Finca San Jose Ruffati",
+				"place": "farm",
+				"what3words": "sugiero.mantengan.vendrán"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-89.6770181,
+					13.8585569
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "node/4053997434",
+			"properties": {
+				"@id": "node/4053997434",
+				"crop": "coffee",
+				"name": "Beneficio La China",
+				"place": "farm",
+				"what3words": "pulsa.tintas.ofensas"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					-89.5382594,
+					14.0039919
+				]
+			}
+		}
+	]
+}

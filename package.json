@@ -28,6 +28,7 @@
     "fbgraph": "~0.2.9",
     "filesize": "2.0.3",
     "forecast.io": "0.0.9",
+    "geo.what3words": "^0.2.0",
     "geopix": "git://github.com/cappelaere/geopix.git",
     "github": "0.1.15",
     "glob": "~3.2.8",

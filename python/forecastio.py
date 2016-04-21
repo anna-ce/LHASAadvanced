@@ -90,7 +90,7 @@ if __name__ == '__main__':
 	units = 'us'
 	
 	if regionName == 'd02':
-		with open('../rccp_coffeecrops2.geojson') as data_file:    
+		with open('../rccp_coffeecrops3.geojson') as data_file:    
 			data = json.load(data_file)
 
 	if regionName == 'd05':
@@ -134,6 +134,7 @@ if __name__ == '__main__':
 						'coordinates': [ longitude, latitude ]
 					},
 					"properties": {
+						'@id': 							f['properties']['@id'],
 						'dewPoint': 					data['dewPoint'],
 						'apparentTemperatureMax':		data['apparentTemperatureMax'],
 						'apparentTemperatureMaxTime': 	datetime.datetime.utcfromtimestamp(data['apparentTemperatureMaxTime']).isoformat()+'Z',
@@ -150,6 +151,7 @@ if __name__ == '__main__':
 						'temperatureMaxTime': 			datetime.datetime.utcfromtimestamp(data['temperatureMaxTime']).isoformat()+'Z',
 						'temperatureMin': 				data['temperatureMin'],
 						'temperatureMinTime': 			datetime.datetime.utcfromtimestamp(data['temperatureMinTime']).isoformat()+'Z',
+						'what3words': 					f['properties']['what3words'],
 						'windSpeed': 					data['windSpeed'],
 						'windBearing': 					data['windBearing']
 					}

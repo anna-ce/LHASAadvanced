@@ -16,22 +16,34 @@ out body;
 out skel qt;
 */
 
-var turf 	= require('turf')
-var fs		= require('fs')
+var turf 			= require('turf')
+var fs				= require('fs')
+var What3Words 		= require('geo.what3words')
+var async			= require('async')
 
-var fname		= process.argv[2]
-var outname		= process.argv[3]
+var fname			= process.argv[2]
+var outname			= process.argv[3]
+var lang			= process.argv[4]
+
+var WHAT3WORDSKEY	= process.env.WHAT3WORDSKEY
 
 console.log("infile", fname)
 console.log("outfile", outname)
+console.log("lang", lang)
 
 if (!fs.existsSync(fname) ) {
 	console.log("Invalid input file")
 	process.exit(-1)
 }
+
+var w3w = new What3Words(WHAT3WORDSKEY, {
+	language: lang,
+	userAgent: 'OJO'
+});
 	
-var collection	=  JSON.parse(fs.readFileSync(fname, 'utf8'));
-var features = []
+var collection	= JSON.parse(fs.readFileSync(fname, 'utf8'));
+var features 		= []
+var features_words 	= []
 
 for( var f in collection.features ) {
 	var feature = collection.features[f]
@@ -43,7 +55,29 @@ for( var f in collection.features ) {
 	
 	features.push(feature)
 }
-collection.features = features	
-console.log("writing features:", features.length)
-fs.writeFileSync(outname, JSON.stringify(collection,null,'\t'), 'utf8')
-console.log("Done")
+
+function words(feature) {
+	var coords 		= feature.geometry.coordinates
+	var lat			= coords[1]
+	var lng			= coords[0]
+	var position	= lat + ", "+lng
+	
+	return w3w.positionToWords({
+		position: position
+	}).then(function(response) {
+		console.log(response); //prom.cape.pump
+		feature.properties.what3words = response
+	});
+}
+
+var promises = features.map(words)
+
+Promise.all(promises).then(function(values) {
+	collection.features = features	
+	console.log("writing features:", features.length)
+	fs.writeFileSync(outname, JSON.stringify(collection,null,'\t'), 'utf8')	
+	console.log("Done")
+}, function(reason) {
+	console.log("Reject Reason", reason)
+})
+
