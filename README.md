@@ -37,14 +37,11 @@ Docker version 1.11.0
 > docker images
 
 Start shell in development mode... you can start processing python scripts
-> docker run -i -p 8080:8080 -t ojobot_development /bin/bash
+> docker run -i -p 7465:7465 -t ojobot_development /bin/bash
 
-
-> docker-compose run development		!Note: does not work since there is no port mapping
-> docker-compose up development			!Note: postgres connection problem
-
-> docker run -i -p 8080:8080 -t ojobot_development /bin/bash	!Note: Seems to work with curl -i 192.168.99.100:8080
-
+### Connecting to service
+Start Chrome and use IP address of VM returned by docker-machine env default
+> http://192.168.99.100:7465/
 
 ### Checking/Cleaning docker images
 > docker images

@@ -1,18 +1,13 @@
 #
-# ojo-bot production stack for Heroku
+# ojo-bot production stack
 #
 # Pat Cappelaere Vightel
 # pat@cappelaere.com
 #
-# This used to buld a heroku slug using herok docker:release and building: web form docker-compose
-
 FROM cappelaere/ojo_publisher_base_stack:v1
 
 MAINTAINER Pat Cappelaere <pat@cappelaere.com>
 
-#
-# Data directory is mapped to /app/tmp in docker-compose
-#
 
 COPY app 			/app/user/app
 COPY config			/app/user/config
@@ -21,6 +16,8 @@ COPY locale			/app/user/locale
 COPY models			/app/user/models
 COPY public			/app/user/public
 COPY python			/app/user/python
+
+COPY data			/app/user/tmp
 
 COPY server.js		/app/user/server.js
 COPY qserver.js		/app/user/qserver.js
@@ -35,5 +32,14 @@ RUN echo 'source /app/user/envs.docker.sh' >> ~/.bashrc
 COPY envs.docker.sh /etc/profile.d
 
 WORKDIR /app/user
-RUN npm install
+
+#RUN npm install
+
+# Alternate npm install when very poor connection
+RUN npm config set registry http://registry.npmjs.org/
+RUN npm config set strict-ssl=false
+RUN npm install --loglevel=verbose 
+
+# make vim available to change files right in vm environment
+RUN apt-get install -y vim 
 

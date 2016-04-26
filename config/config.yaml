@@ -27,7 +27,7 @@
             "min_zoom":     7,
             "max_zoom":     18,
             "map_id":       "cappelaere.map-mx5g2tn3",
-            "bucket":       "ojo-d2",
+            "bucket":       "s3rccp",
             "ojotiler":     "http://ojo-tiler.herokuapp.com",
             "ojotiler-dev": "http://localhost:8888",
             "susmap":       "cappelaere.tbtvpyns"

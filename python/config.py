@@ -16,7 +16,7 @@ data_dir					= DATA_DIR
 USING_AWS_S3_FOR_STORAGE	= 1
 
 # This would be an alternate way to store process data (but may not scale well)
-USING_LOCAL_DIR_FOR_STORAGE	= 1
+USING_LOCAL_DIR_FOR_STORAGE	= 0
 LOCAL_DIR_STORAGE			= "/Users/patricecappelaere/Development/ojo/tmp"
 
 # Set to get emails during processing... You will have to set some additional envs
@@ -119,7 +119,7 @@ regions		= {
 		'thn_width':	389,
 		'thn_height':	298,
 		'thn_zoom': 	5,
-		'bucket':		"ojo-d2",
+		'bucket':		"s3rccp",
 		'modis_tiles':  [
 			"100W020N",
 			"090W020N",

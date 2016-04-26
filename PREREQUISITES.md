@@ -54,7 +54,7 @@ We will use CONVOX as our Platform as a Service (PaaS) provider to orchestrate a
 
 #### Create a CONVOX AWS IAM user
 
-Follow instructions from here: http://convox.github.io/docs/creating-an-iam-user/
+Follow instructions from here: http://console.convox.com/docs/creating-an-iam-user/
 
 Make sure to download the credentials
 
