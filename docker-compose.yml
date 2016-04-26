@@ -38,6 +38,8 @@ development:
     - NODE_ENV=development
     - PORT=7465
     - PYTHONPATH=/app/user/python:$PYTHONPATH
+  volumes:
+    - /tmp:/app/user/tmp
   ports:
     - '7465:7465'
     - '7464:7464'
