@@ -668,8 +668,9 @@ if __name__ == '__main__':
 	if not os.path.exists(gpm_dir):
 	    os.makedirs(gpm_dir)
 		
+	region				= config.regions['global']
 	s3_folder			= os.path.join(product_name, str(year), doy)
-	s3_bucket			= 'ojo-global'
+	s3_bucket			= region['bucket']
 	
 	gis_file_day		= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.1day.tif"%(year, month, day)
 	gis_file_day_tfw 	= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.1day.tfw"%(year, month, day)

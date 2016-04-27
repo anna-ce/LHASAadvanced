@@ -376,7 +376,8 @@ if __name__ == '__main__':
 		execute(cmd)
 	
 	s3_folder	= os.path.join("geos5", str(year), doy)
-	s3_bucket	= 'ojo-global'
+	region		= config.regions['global']
+	s3_bucket	= region['bucket']
 	
 	process_file( mydir, flipped_tif_filename, s3_bucket, s3_folder)
 		

@@ -381,8 +381,9 @@ if __name__ == '__main__':
 	doy			= today.strftime('%j')
 	ymd 		= "%d%02d%02d" % (year, month, day)		
 		
+	region		= config.regions['global']
 	s3_folder	= os.path.join("trmm_24", str(year), doy)
-	s3_bucket	= 'ojo-global'
+	s3_bucket	= region['bucket']
 	
 	app 		= TRMM( dt, force, verbose)
 	

@@ -448,7 +448,9 @@ if __name__ == '__main__':
 	doy				= today.strftime('%j')
 	product_name	= "global_landslide_nowcast"
 	s3_folder		= os.path.join(product_name, str(year), doy)
-	s3_bucket		= 'ojo-global'
+	
+	region			= config.regions['global']
+	s3_bucket		= region.bucket
 
 	_dir	= os.path.join(config.data_dir, product_name, ymd)
 	if not os.path.exists(_dir):

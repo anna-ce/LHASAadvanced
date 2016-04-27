@@ -101,7 +101,7 @@ regions		= {
 	'global': {
 		'global':		"World",
 		'bbox': 		[-180, -50, 180, 50 ],
-		'bucket':		"ojo-global",
+		'bucket':		"s3rccp",
 		'pixelsize':	0.008333333333330,
 		'thn_width':	720,
 		'thn_height':	240,

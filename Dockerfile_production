@@ -24,6 +24,9 @@ COPY qserver.js		/app/user/qserver.js
 COPY settings.js	/app/user/settings.js
 COPY package.json	/app/user/package.json
 COPY README.md		/app/user/README.md
+COPY rccp_coffeecrops3.geojson /app/user/rccp_coffeecrops3.geojson
+COPY rcmrd_teacrops3.geojson /app/user/rcmrd_teacrops3.geojson
+
 #COPY Procfile		/app/user
 
 COPY envs.docker.sh /app/user/envs.docker.sh
