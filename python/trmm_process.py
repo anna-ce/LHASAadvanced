@@ -427,10 +427,11 @@ class TRMM:
 		if not os.path.exists(self.trmm_dir):
 		    os.makedirs(self.trmm_dir)
 
-	def cleanupdir( self, mydir):
-		print "cleaning up", mydir
-		today 		= datetime.date.today()
-		delta		= timedelta(days=config.DAYS_KEEP)
+	def cleanupdir( self, mydir, today):
+		if verbose:
+			print "cleaning up", mydir
+		
+		delta		= timedelta(days=config.DAYS_KEEP-1)
 		dl			= today - delta
 		lst 		= glob.glob(mydir+'/[0-9]*')
 	
@@ -443,21 +444,21 @@ class TRMM:
 				dt		= datetime.date(year,month,day)
 		
 				if dt < dl:
-					msg = "** delete "+l
+					msg = "** delete "+l, ", basename:"+ basename
 					if verbose:
 						print msg
 					shutil.rmtree(l)
 
 		
-	def cleanup(self, dx):
+	def cleanup(self, dx, dt):
 		_dir			=  os.path.join(config.data_dir,"trmm")
-		self.cleanupdir(_dir)
+		self.cleanupdir(_dir, dt)
 		
 		_dir			=  os.path.join(config.data_dir,"trmm", "3B42RT")
-		self.cleanupdir(_dir)
+		self.cleanupdir(_dir, dt)
 		
 		regiondir =  os.path.join(config.data_dir,"trmm", dx)
-		self.cleanupdir(regiondir)
+		self.cleanupdir(regiondir, dt)
 		
 	
 	
@@ -494,7 +495,8 @@ if __name__ == '__main__':
 	app.get_daily_trmm_files()
 	app.process_trmm_files(region)
 	
-	app.cleanup(region)
+	dt = parse(d)
+	app.cleanup(region, datetime.date(dt.year, dt.month, dt.day))
 	
 	if verbose:
 		print "Done."
