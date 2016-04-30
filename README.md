@@ -39,6 +39,13 @@ Docker version 1.11.0
 Start shell in development mode... you can start processing python scripts
 > docker run -i -p 7465:7465 -t ojobot_development /bin/bash
 
+To test python scripts using shared folder
+> docker run -i -p 7465:7465 -v /Users/patrice/data:/app/user/data2 -v /Users/patrice/Development/ojo/ojo-bot/python:/app/user/pydev -t ojobot_development  /bin/bash
+
+To stop a docker process
+> docker ps
+> docker stop CONTAINER_ID
+
 ### Connecting to service
 Start Chrome and use IP address of VM returned by docker-machine env default
 > http://192.168.99.100:7465/

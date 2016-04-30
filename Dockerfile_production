@@ -39,10 +39,10 @@ WORKDIR /app/user
 #RUN npm install
 
 # Alternate npm install when very poor connection
-RUN npm config set registry http://registry.npmjs.org/
-RUN npm config set strict-ssl=false
-RUN npm install --loglevel=verbose 
+#RUN npm config set registry http://registry.npmjs.org/
+#RUN npm config set strict-ssl=false
+#RUN npm install --loglevel=verbose 
 
 # make vim available to change files right in vm environment
-RUN apt-get install -y vim 
+#RUN apt-get install -y vim 
 
