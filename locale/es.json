@@ -52,7 +52,17 @@
         "drought": "Sequía",
         "vhi": "Índice de Vegetación Helath",
         "algal_bloom": "Floraciones de Algas",
-        "burned_areas": "Zona Quemada"
+        "burned_areas": "Zona Quemada",
+        "precip_1d": "1day Accumulated Rainfall",
+        "precip_30mn": "30mn Accumulated Rainfall",
+        "precip_3hrs": "3hr Accumulated Rainfall",
+        "precip_3d": "3day Accumulated Rainfall",
+        "precip_7d": "7day Accumulated Rainfall",
+        "precip_1d_forecast": "1-d Accumulated Rainfall Forecast",
+        "precip_2d_forecast": "2-d Accumulated Rainfall Forecast",
+        "precip_3d_forecast": "3-d Accumulated Rainfall Forecast",
+        "forecastio": "Location Forecast",
+        "precip_movie": "30mn Rainfall Movie"
     },
     "query": {
         "query_title": "Consulta",
@@ -724,7 +734,10 @@
         "gsfc": "NASA GSFC",
         "umd": "Universidad de Maryland Departamento Geográfico",
         "chirps": "CHIRPS",
-        "gfms": "UMD Global Flood Monitoring System"
+        "gfms": "UMD Global Flood Monitoring System",
+        "geos5": "GSFC Global Modeling and Assimilation Office",
+        "viirs": "NASA/NOAA VIIRS",
+        "wrf": "WRF Model"
     },
     "sensors": {
         "sar": "SAR",
@@ -741,7 +754,9 @@
         "usgs": "USGS",
         "avhrr": "AVHRR",
         "viirs": "VIIRS",
-        "gfms": "NASA TMPA"
+        "gfms": "NASA TMPA",
+        "geos5": "GEOS-5 Model",
+        "wrf": "WRF Model"
     },
     "duration": {
         "hours": "%{hours} horas",
@@ -982,6 +997,33 @@
                 "144mm": "144mm",
                 "233mm": "233mm",
                 "377mm": "377mm"
+            }
+        },
+        "precipitation_wrf_30km": {
+            "title": "Precipitation Forecast",
+            "credits": "WRF MARN, San Salvador",
+            "source": {
+                "label": "Source",
+                "source": "WRF MARN"
+            },
+            "fct_precip_1d": "1-d Rainfall Accum. (WRF)",
+            "fct_precip_2d": "2-d Rainfall Accum. (WRF)",
+            "fct_precip_3d": "3-d Rainfall Accum. (WRF)",
+            "legend": {
+                "1": "1mm",
+                "2": "2mm",
+                "3": "3mm",
+                "5": "5mm",
+                "8": "8mm",
+                "13": "13mm",
+                "21": "21mm",
+                "34": "34mm",
+                "55": "55mm",
+                "89": "89mm",
+                "144": "144mm",
+                "233": "233mm",
+                "377": "377mm",
+                "610": "610mm"
             }
         },
         "stream_flow": {

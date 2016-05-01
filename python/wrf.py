@@ -6,6 +6,8 @@
 import numpy, os, sys, inspect
 from osgeo import osr, gdal
 from datetime import date
+from dateutil.parser import parse
+
 import warnings
 from gzip import GzipFile
 import pygrib
@@ -30,14 +32,11 @@ def execute(cmd):
 	os.system(cmd)
 
 
-def process_file(filename, product, variable, wrf_mode, dt, region, hours):
+def process_file(filename, product, variable, wrf_mode, dt, region, hours, s3_bucket, s3_folder):
 	if verbose:
 		print "processing: "+filename+ " product:", product, " variable:"+variable
 	
-	s3_bucket 		= region['bucket']
-	s3_folder		= wrf_mode + "/" + product
 	zoom 			= region['thn_zoom']
-	
 	fpathname 		= os.path.dirname(filename)
 	fdir			= os.path.join( fpathname, dt, product)
 	
@@ -59,12 +58,12 @@ def process_file(filename, product, variable, wrf_mode, dt, region, hours):
 	levels				= [ 377, 		233, 		144, 		89, 		55, 		34, 		21, 		13, 		8, 			5,			3]
 	colors 				= ["#4D004A",	"#810F7C",	"#084081",	"#0868ac",	"#2b8cbe",	"#4eb3d3",	"#7bccc4",	"#a8ddb5",	"#ccebc5",	"#e0f3db", "#f7fcf0"]
 	
-	output_file			= os.path.join( fdir, dt+".tif")
-	flipped_file		= os.path.join( fdir, dt+"_flipped.tif")
-	supersamp_file		= os.path.join( fdir, dt+"_flipped_100.tif")
+	output_file			= os.path.join( fdir, "%s.%s_MERC.tif" % (product,dt))
+	flipped_file		= os.path.join( fdir, "%s.%s_MERC_flipped.tif" % (product,dt))
+	supersamp_file		= os.path.join( fdir, "%s.%s_MERC_flipped_100.tif" % (product,dt))
 	
-	reproj_file			= os.path.join( fdir, dt+"_4326.tif")
-	reproj_rgb_file		= os.path.join( fdir, dt+"_4326_rgb.tif")
+	reproj_file			= os.path.join( fdir, "%s.%s.tif" % (product,dt))
+	reproj_rgb_file		= os.path.join( fdir, "%s.%s_rgb.tif" % (product,dt))
 	color_file 			= os.path.join("cluts", "wrf_colors.txt")
 
 	merge_filename 		= os.path.join(geojsonDir, "%s.%s.geojson" % (product,dt))
@@ -236,15 +235,25 @@ if __name__ == '__main__':
 	force		= options.force
 	verbose		= options.verbose
 
-	filename 	= "/app/user/data2/wrf/201604241200_arw_wrfout_d01.grb2"
-	
+	region		= config.regions['d02']	
+	today		= parse("2016-04-24")
+	year		= today.year
+	month		= today.month
+	day			= today.day
+	doy			= today.strftime('%j')
+
 	variable	= "Total Precipitation"
 	
 	# To differentiate from then 5km product
 	wrf_mode	= 'wrf_30km'
 	
 	product		= 'fct_precip_1d'
-	region		= config.regions['d02']	
+
+	s3_bucket 	= region['bucket']	
+	s3_folder	= os.path.join(wrf_mode, str(year), doy)
+
+	#filename 	= "/app/user/data2/wrf/201604241200_arw_wrfout_d01.grb2"	
+	filename 	= "/Users/patricecappelaere/landslide/data/wrf_marn/20160424/201604241200_arw_wrfout_d01.grb2"	
 
 	arr	 		= os.path.basename(filename).split('_')
 	
@@ -258,4 +267,5 @@ if __name__ == '__main__':
 	if product == 'fct_precip_3d':
 		hours = 72
 	
-	process_file(filename, product, variable, wrf_mode, dt, region, hours)
+	#print(filename, product, variable, wrf_mode, dt, region, hours, s3_bucket, s3_folder)
+	process_file(filename, product, variable, wrf_mode, dt, region, hours, s3_bucket, s3_folder)

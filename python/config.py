@@ -101,7 +101,7 @@ regions		= {
 	'global': {
 		'global':		"World",
 		'bbox': 		[-180, -50, 180, 50 ],
-		'bucket':		"s3rccp",
+		'bucket':		"ojo-global",
 		'pixelsize':	0.008333333333330,
 		'thn_width':	720,
 		'thn_height':	240,
@@ -119,7 +119,7 @@ regions		= {
 		'thn_width':	389,
 		'thn_height':	298,
 		'thn_zoom': 	5,
-		'bucket':		"s3rccp",
+		'bucket':		"ojo-d2",
 		'modis_tiles':  [
 			"100W020N",
 			"090W020N",

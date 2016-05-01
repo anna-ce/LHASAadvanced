@@ -27,7 +27,7 @@
             "min_zoom":     7,
             "max_zoom":     18,
             "map_id":       "cappelaere.map-mx5g2tn3",
-            "bucket":       "s3rccp",
+            "bucket":       "ojo-d2",
             "ojotiler":     "http://ojo-tiler.herokuapp.com",
             "ojotiler-dev": "http://localhost:8888",
             "susmap":       "cappelaere.tbtvpyns"
@@ -245,12 +245,18 @@
 	              "href": 		"/opensearch",
 	              "checked": 		false
 	          },
-			{
-				"source": 		"viirs",
-				"href": 		"/opensearch",
-				"checked": 		false,
-				"selected":   false
-			}
+              {
+                  "source": 		"viirs",
+                  "href": 		"/opensearch",
+                  "checked": 		false,
+                  "selected":   false
+              },
+              {
+                  "source": 		"wrf_30km",
+                  "href": 		"/opensearch",
+                  "checked": 		false,
+                  "selected":   false
+              }
 		]
 }
 
