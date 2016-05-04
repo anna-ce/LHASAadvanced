@@ -152,6 +152,7 @@ def save_tif(fname, data, ds, type, ct):
 			ct.SetColorEntry( 0, (0, 0, 0, 0) )
 			ct.SetColorEntry( 1, (255, 255, 0, 255) )
 			ct.SetColorEntry( 2, (255, 0, 0, 255) )
+			ct.SetColorEntry( 3, (255, 0, 255, 0) )
 			band.SetRasterColorTable(ct)
 	
 		band.WriteArray( data )
@@ -247,16 +248,20 @@ def process(_dir, files, ymd):
 	
 	ds_90 	= gdal.Open( ARI90 )
 	band_90	= ds_90.GetRasterBand(1)
-	data_90	= band_90.ReadAsArray(0, 0, ds_90.RasterXSize, ds_90.RasterYSize )
-
+	ndata	= band_90.GetNoDataValue()
+	
+	print ndata
+	
+	data_90	= band_90.ReadAsArray(0, 0, ds_90.RasterXSize, ds_90.RasterYSize ).astype(numpy.float)
+	
 	ds_95 	= gdal.Open( ARI95 )
 	band_95	= ds_95.GetRasterBand(1)
-	data_95	= band_95.ReadAsArray(0, 0, ds_95.RasterXSize, ds_95.RasterYSize )
+	data_95	= band_95.ReadAsArray(0, 0, ds_95.RasterXSize, ds_95.RasterYSize ).astype(numpy.float)
 	
-	total[data_90==0]		= 0
 	total[total<=data_90] 	= 0
 	total[total>data_95] 	= 2
 	total[total>data_90] 	= 1
+	total[data_90 < 0]		= 0
 
 	fname 		= os.path.join(_dir, "total.tif")
 	
@@ -266,7 +271,7 @@ def process(_dir, files, ymd):
 	dst_ds 		= None
 	ds_90		= None
 	ds_95		= None
-
+	
 	# Get susmap
 	susmap 		= os.path.join(config.data_dir, "susmap.2", "global.tif")
 	ds2			= gdal.Open( susmap )
@@ -450,7 +455,7 @@ if __name__ == '__main__':
 	s3_folder		= os.path.join(product_name, str(year), doy)
 	
 	region			= config.regions['global']
-	s3_bucket		= region.bucket
+	s3_bucket		= region['bucket']
 
 	_dir	= os.path.join(config.data_dir, product_name, ymd)
 	if not os.path.exists(_dir):

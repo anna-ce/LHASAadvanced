@@ -5,6 +5,9 @@
 # Processes VHI Data for a specific region
 # Notes: Data only comes once a week.  FTP is more likely to fail
 #
+# This retrieves the VHI product
+# Also available: SMN Smoothed NDVI, SMT (Smoothed Temp), TCI (Temperature Condition Index), VCI (Vegetation Condition Index)
+# VIIRS Data 4km SMN, SMT,TCI, VCI, VHI can be found at: ftp://ftp.star.nesdis.noaa.gov/pub/corp/scsb/wguo/data/VIIRS_VH_4km/geo_TIFF/
 
 import os, inspect, sys, math, urllib
 import argparse

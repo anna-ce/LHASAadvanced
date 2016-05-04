@@ -18,7 +18,7 @@ import argparse
 force		= 0
 verbose		= 0
 
-buckets = ["ojo-d2", "ojo-d3", "ojo-d4", "ojo-d5", "ojo-d6", "ojo-d7", "ojo-d8", "ojo-d9"]
+buckets = ["ojo-d2", "ojo-d3", "ojo-d4", "ojo-d5", "ojo-d6", "ojo-d7", "ojo-d8", "ojo-d9", "ojo-d10"]
 
 dirs2	= ["trmm"]
 
@@ -27,6 +27,7 @@ dirs	= [	"ant_r/d02",
 			"ant_r/d07",
 			"ant_r/d08",
 			"ant_r/d09",
+			"ant_r/d10",
 			"geos5",
 			"gfms",
 			"gpm",

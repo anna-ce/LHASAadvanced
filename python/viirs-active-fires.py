@@ -32,13 +32,13 @@ from s3 import CopyToS3
 
 # 24hr fires
 active_fires_urls = {
-	"d02": "https://firms.modaps.eosdis.nasa.gov/active_fire/viirs/text/VNP14IMGT_NRT_Central_America_24h.csv",
-	"d03": "https://firms.modaps.eosdis.nasa.gov/active_fire/viirs/text/VNP14IMGT_NRT_Central_America_24h.csv",
-	"d09": "https://firms.modaps.eosdis.nasa.gov/active_fire/viirs/text/VNP14IMGT_NRT_South_America_24h.csv",
-	"d10": "https://firms.modaps.eosdis.nasa.gov/active_fire/viirs/text/VNP14IMGT_NRT_South_America_24h.csv",
-	"d04": "https://firms.modaps.eosdis.nasa.gov/active_fire/viirs/text/VNP14IMGT_NRT_Southern_Africa_24h.csv",
-	"d07": "https://firms.modaps.eosdis.nasa.gov/active_fire/viirs/text/VNP14IMGT_NRT_South_Asia_24h.csv",
-	"d08": "https://firms.modaps.eosdis.nasa.gov/active_fire/viirs/text/VNP14IMGT_NRT_South_Asia_24h.csv"
+	"d02": "https://firms.modaps.eosdis.nasa.gov/active_fire/viirs/text/VNP14IMGTDL_NRT_Central_America_24h.csv",
+	"d03": "https://firms.modaps.eosdis.nasa.gov/active_fire/viirs/text/VNP14IMGTDL_NRT_Central_America_24h.csv",
+	"d09": "https://firms.modaps.eosdis.nasa.gov/active_fire/viirs/text/VNP14IMGTDL_NRT_South_America_24h.csv",
+	"d10": "https://firms.modaps.eosdis.nasa.gov/active_fire/viirs/text/VNP14IMGTDL_NRT_South_America_24h.csv",
+	"d04": "https://firms.modaps.eosdis.nasa.gov/active_fire/viirs/text/VNP14IMGTDL_NRT_Southern_Africa_24h.csv",
+	"d07": "https://firms.modaps.eosdis.nasa.gov/active_fire/viirs/text/VNP14IMGTDL_NRT_South_Asia_24h.csv",
+	"d08": "https://firms.modaps.eosdis.nasa.gov/active_fire/viirs/text/VNP14IMGTDL_NRT_South_Asia_24h.csv"
 }
 
 def execute( cmd ):
