@@ -249,9 +249,7 @@ def process(_dir, files, ymd):
 	ds_90 	= gdal.Open( ARI90 )
 	band_90	= ds_90.GetRasterBand(1)
 	ndata	= band_90.GetNoDataValue()
-	
-	print ndata
-	
+		
 	data_90	= band_90.ReadAsArray(0, 0, ds_90.RasterXSize, ds_90.RasterYSize ).astype(numpy.float)
 	
 	ds_95 	= gdal.Open( ARI95 )

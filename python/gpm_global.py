@@ -271,7 +271,7 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 	if not os.path.exists(region_dir):            
 		os.makedirs(region_dir)
 	
-	origFileName 		= os.path.join(gpm_dir,gis_file_day)
+	origFileName 			= os.path.join(gpm_dir,gis_file_day)
 	
 	if not os.path.exists(origFileName):
 		print "File does not exist", origFileName
@@ -457,14 +457,19 @@ def process_30mn_files(gpm_dir, startTime):
 		#gis_file_3hr 		= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S%02d%02d00-E%02d%d59.%04d.V03E.3hr.tif"%(year, month, day,sh,sm,sh,em,minute)
 		#gis_file_3hr_tfw 	= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S%02d%02d00-E%02d%d59.%04d.V03E.3hr.tfw"%(year, month, day,sh,sm,sh,em,minute)
 
-		gis_file_30mn 		= "3B-HHR-E.MS.MRG.3IMERG.%d%02d%02d-S%02d%02d00-E%02d%d59.%04d.V03E.30min.tif"%(year, month, day,sh,sm,sh,em,minute)
-		gis_file_30mn_tfw 	= "3B-HHR-E.MS.MRG.3IMERG.%d%02d%02d-S%02d%02d00-E%02d%d59.%04d.V03E.30min.tfw"%(year, month, day,sh,sm,sh,em,minute)
+		gis_file_30mn 			= "3B-HHR-E.MS.MRG.3IMERG.%d%02d%02d-S%02d%02d00-E%02d%d59.%04d.V03E.30min.tif"%(year, month, day,sh,sm,sh,em,minute)
+		gis_file_30mn_tfw 		= "3B-HHR-E.MS.MRG.3IMERG.%d%02d%02d-S%02d%02d00-E%02d%d59.%04d.V03E.30min.tfw"%(year, month, day,sh,sm,sh,em,minute)
+
+		gis_file_30mn_1d 		= "3B-HHR-E.MS.MRG.3IMERG.%d%02d%02d-S%02d%02d00-E%02d%d59.%04d.V03E.1day.tif"%(year, month, day,sh,sm,sh,em,minute)
+		gis_file_30mn_1d_tfw 	= "3B-HHR-E.MS.MRG.3IMERG.%d%02d%02d-S%02d%02d00-E%02d%d59.%04d.V03E.1day.tfw"%(year, month, day,sh,sm,sh,em,minute)
 		
 		if verbose:
-			print gis_file_30mn
+			print gis_file_30mn, gis_file_30mn_1d
 
 		files.append(gis_file_30mn)
 		files.append(gis_file_30mn_tfw)
+		files.append(gis_file_30mn_1d)
+		files.append(gis_file_30mn_1d_tfw)
 		
 		minute += 30
 		startTime += datetime.timedelta(minutes=30)

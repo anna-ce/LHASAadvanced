@@ -213,7 +213,7 @@ def cleanup():
 # ===============================
 # Main
 #
-# python gpm_24.py --region d03 --date 2015-04-07 -v -f
+# python gpm_process.py --region d03 --date 2015-04-07 -v -f
 
 if __name__ == '__main__':
 

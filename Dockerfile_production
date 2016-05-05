@@ -36,7 +36,7 @@ COPY envs.docker.sh /etc/profile.d
 
 WORKDIR /app/user
 
-#RUN npm install
+RUN npm install
 
 # Alternate npm install when very poor connection
 #RUN npm config set registry http://registry.npmjs.org/

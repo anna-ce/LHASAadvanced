@@ -100,7 +100,7 @@ rainfall_yellow_limit	= 35
 regions		= {
 	'global': {
 		'global':		"World",
-		'bbox': 		[-180, -50, 180, 50 ],
+		'bbox': 		[-180, -90, 180, 90 ],
 		'bucket':		"ojo-global",
 		'pixelsize':	0.008333333333330,
 		'thn_width':	720,
