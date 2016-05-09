@@ -102,7 +102,7 @@ function loadMapObject( mapObject, cb ) {
 	
 	var id 		= mapObject['@id'];
 	var name 	= mapObject.displayName;
-	var url		=  mapObject.url
+	var url		= mapObject.url
 	
 	//console.log("loadMapObject", id, url)
 	
@@ -112,7 +112,7 @@ function loadMapObject( mapObject, cb ) {
 		//dataType: mapObject.mediaType
 	})
 	.done( function(data) {
-		//console.log("success:"+id, name)
+		console.log("success:"+id)
 		
 		switch(id) {
 			case "style":
@@ -123,9 +123,11 @@ function loadMapObject( mapObject, cb ) {
 				// add it to the legend div
 				var product = mapObject.id
 				if( ! ( product in legends) ) {
-					//console.log("Product not in legend", product)
+					console.log("Product not in legend", JSON.stringify(mapObject))
 					$('#legends').append(data)
 					legends[product] = {legend: product+"_legend", display: true}
+				} else {
+					console.log("Product  in legend", product)					
 				}
 				break;
 			case "credits":
@@ -191,7 +193,7 @@ function loadData( topojsonUrl, displayName, mapinfos, value_url, featuresId ) {
 			var id		= map_el['@id'];
 			var url		= map_el.url;
 			var hc		= hashCode(url)
-			
+							
 			switch( id ) {
 				case "legend":
 					legendObject 			= map_el;
@@ -237,7 +239,7 @@ function loadData( topojsonUrl, displayName, mapinfos, value_url, featuresId ) {
 	function ShowFeatureCount(id, count) {
 		var html = "<b>Features Loaded:</b>&nbsp;"+count
 		html += "<br/>"
-		console.log(html, id)
+		//console.log(html, id)
 		
 		$('#'+id).html(html)
 		$('#'+id).show()
@@ -384,7 +386,7 @@ function loadData( topojsonUrl, displayName, mapinfos, value_url, featuresId ) {
 				// Remember the layer to legend mapping if we have one
 				if( legendObject ) {
 					legends[layerName] = { legend: legendObject.id, display: true };
-					//console.log("adding legend mapping as", layerName)
+					console.log("adding legend mapping as", layerName, legendObject.id)
 				}
 				
 				if( geoJsonLayer ) {

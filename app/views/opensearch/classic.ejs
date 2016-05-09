@@ -134,15 +134,16 @@
 								<option value='precip_1d'><%= gettext('products.precip_1d')%></option>
 								<option value='precip_3d'><%= gettext('products.precip_3d')%></option>
 								<option value='precip_7d'><%= gettext('products.precip_7d')%></option>
+								<option value='precip_30mn' selected ><%= gettext('products.precip_30mn')%></option>
+								<option value='precip_30mn_3hr'><%= gettext('products.precip_30mn_3hr')%></option>
+								<option value='precip_30mn_1d'><%= gettext('products.precip_30mn_1d')%></option>
 
 								<option value='precip_1d_forecast'><%= gettext('products.precip_1d_forecast')%></option>
 								<option value='precip_2d_forecast'><%= gettext('products.precip_2d_forecast')%></option>
 								<option value='precip_3d_forecast'><%= gettext('products.precip_3d_forecast')%></option>
-								<option value='precip_30mn'><%= gettext('products.precip_30mn')%></option>
-								<option value='precip_3hrs'><%= gettext('products.precip_3hrs')%></option>
 								<option value='precip_movie'><%= gettext('products.precip_movie')%></option>
 								<option value='population_count'><%= gettext('products.population_count')%></option>
-								<option value='rgb_composite' checked=true><%= gettext('products.rgb_composite')%></option>
+								<option value='rgb_composite'><%= gettext('products.rgb_composite')%></option>
 								<option value='snow_water_equivalent'><%= gettext('products.snow_water_equivalent')%></option>
 								<option value='soil_moisture'><%= gettext('products.soil_moisture')%></option>
 								<option value='stream_flow'><%= gettext('products.stream_flow')%></option>
@@ -695,7 +696,7 @@
 		var id				= result['@id']
 		var displayName		= result['displayName']
 		
-		console.log("processDroppedResult", id)
+		//console.log("processDroppedResult", id)
 		
 		for (var a in actions ) {
 			var action = actions[a]

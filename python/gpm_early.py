@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
-# Processes GPM Daily Products using Late Data
-#	It will acquire the 1-d, 3-d and 7-d products for IMERG Late GIS
+# Processes GPM Early Products using Early Data
+#	It will acquire the 30mn, 3-hr and 1-d products for IMERG early GIS
 #	It will generate regional products as requested
 
 import os, inspect, sys, math, urllib, glob, shutil
@@ -25,14 +25,14 @@ verbose 		= 0
 force 			= 0
 ftp_site 		= "jsimpson.pps.eosdis.nasa.gov"
 
-late_gis_path	= "/data/imerg/gis/"
+early_gis_path 	= "/data/imerg/gis/early"
 	
 def execute( cmd ):
 	if verbose:
 		print cmd
 	os.system(cmd)
 
-def get_late_gpm_files(gis_files, product_name):
+def get_early_gpm_files(gis_files, product_name):
 	global force, verbose
 	downloaded_files = []
 		
@@ -57,7 +57,7 @@ def get_late_gpm_files(gis_files, product_name):
 		if not os.path.exists(mydir):
 		    os.makedirs(mydir)
 			
-		filepath = late_gis_path+ "%s" % ( month)
+		filepath = early_gis_path
 		
 		ftp.cwd(filepath)
 		local_filename = os.path.join(mydir, f)
@@ -78,7 +78,7 @@ def get_late_gpm_files(gis_files, product_name):
 				print "no downloading", local_filename
 
 	ftp.close()
-	return gis_files
+	return downloaded_files
 	
 def ValidateRegions(regions):
 	for r in regions:
@@ -221,8 +221,8 @@ def process(gpm_dir, name, gis_file, ymd, regionName, s3_bucket, s3_folder, leve
 	bbox					= region['bbox']
 	
 	subset_file				= os.path.join(region_dir, "%s.%s_ss.tif" % (name,ymd))
-	geojsonDir				= os.path.join(region_dir,"geojson_%s" % (name))
-	levelsDir				= os.path.join(region_dir,"levels_%s" % (name))
+	geojsonDir				= os.path.join(region_dir,"geojson_%s.%s" % (name,ymd))
+	levelsDir				= os.path.join(region_dir,"levels_%s.%s" % (name,ymd))
 
 	origFileName_tfw		= origFileName.replace(".tif", ".tfw")
 	
@@ -332,8 +332,8 @@ def process(gpm_dir, name, gis_file, ymd, regionName, s3_bucket, s3_folder, leve
 		execute(cmd)	
 	
 	if not os.path.exists(osm_bg_image):
-		#if verbose:
-		print "calling wms", regionName, ymax, xorg, yorg, xmax, osm_bg_image
+		if verbose:
+			print "wms", ymax, xorg, yorg, xmax, osm_bg_image
 		wms(yorg, xorg, ymax, xmax, osm_bg_image)
 
 	def scale(x): return x*10
@@ -353,19 +353,108 @@ def process(gpm_dir, name, gis_file, ymd, regionName, s3_bucket, s3_folder, leve
 	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 	
 	if not verbose: # Cleanup
-		cmd = "rm -rf %s %s %s %s %s %s %s %s %s %s" % (origFileName, origFileName_tfw, supersampled_file, merge_filename, topojson_filename, subset_aux_filename, browse_filename, subset_filename, geojsonDir, levelsDir)
+		cmd = "rm -rf %s %s %s %s %s %s %s %s %s %s %s" % (origFileName, origFileName_tfw, supersampled_file, merge_filename, topojson_filename, subset_file, subset_aux_filename, browse_filename, subset_filename, geojsonDir, levelsDir)
 		execute(cmd)
+
+def process_files(str_file, str_file_tfw, gpm_dir, startTime, product_name, regionName, s3_bucket, s3_folder, levels, hexColors):
+	hour 		= startTime.hour
+
+	# we need to start at the next 3hr increment
+	hour 		= int(math.ceil(hour/3)*3)
+	
+	if hour > 24:
+		startTime = datetime.datetime(today.year, today.month, today.day, 0, 0, 0)
+		hour = 0
+		
+	startTime	= datetime.datetime(startTime.year, startTime.month, startTime.day, hour, 0, 0)
+	endTime		= datetime.datetime(startTime.year, startTime.month, startTime.day, 23, 59, 59)
+		
+	minute 		= hour*60
+	files		= []
+	today		= datetime.datetime.utcnow()
+	dt			= startTime
+	
+	if today < endTime:
+		endTime = today
+		
+	print startTime, endTime
+	
+	while startTime < endTime:
+		year	= startTime.year
+		month	= startTime.month
+		day		= startTime.day
+		sh 		= startTime.hour
+		sm		= startTime.minute
+		ss		= startTime.second
+		em		= sm + 29
+		
+		dt					= datetime.datetime(year, month, day, sh,em,0)
+
+		gis_file 			=  str_file % (year, month, day,sh,sm,sh,em,minute)
+		gis_file_tfw 		=  str_file_tfw % (year, month, day,sh,sm,sh,em,minute)
+
+		
+		if verbose:
+			print gis_file
+
+		files.append(gis_file)
+		files.append(gis_file_tfw)
+		
+		minute += 30
+		startTime += datetime.timedelta(minutes=30)
+
+		if	minute >= 1440:
+			minute = 0
+	
+	if verbose:
+		print "Get 30mn files...."
+
+	downloaded_files = get_early_gpm_files(files, product_name)
+	
+	# Process them
+	for f in downloaded_files:
+		try:
+			if f.index(".tif"):
+				arr 	= f.split("-")
+				arr2	= arr[2].split(".")
+				arr3	= arr[4].split(".")
+				
+				ymd		= arr2[4]
+				gpm_dir	= os.path.join(config.data_dir, product_name, ymd)
+					
+				print gpm_dir, ymd+"."+arr3[0][1:]
+				process(gpm_dir, product_name, f, ymd+"."+arr3[0][1:], regionName, s3_bucket, s3_folder, levels, hexColors)
+				
+		except ValueError:
+			pass
+			
+def process_30mn_files(gpm_dir, startTime, product_name, regionName, s3_bucket, s3_folder, levels, hexColors):
+	str_file 		= "3B-HHR-E.MS.MRG.3IMERG.%d%02d%02d-S%02d%02d00-E%02d%d59.%04d.V03E.30min.tif"
+	str_file_tfw 	= "3B-HHR-E.MS.MRG.3IMERG.%d%02d%02d-S%02d%02d00-E%02d%d59.%04d.V03E.30min.tfw"
+	process_files(str_file, str_file_tfw, gpm_dir, startTime, product_name, regionName, s3_bucket, s3_folder, levels, hexColors)
+
+def process_30mn_1d_files(gpm_dir, startTime, product_name, regionName, s3_bucket, s3_folder, levels, hexColors):
+	str_file 		= "3B-HHR-E.MS.MRG.3IMERG.%d%02d%02d-S%02d%02d00-E%02d%d59.%04d.V03E.1day.tif"
+	str_file_tfw 	= "3B-HHR-E.MS.MRG.3IMERG.%d%02d%02d-S%02d%02d00-E%02d%d59.%04d.V03E.1day.tfw"
+	process_files(str_file, str_file_tfw, gpm_dir, startTime, product_name, regionName, s3_bucket, s3_folder, levels, hexColors)
+
+def process_30mn_3h_files(gpm_dir, startTime, product_name, regionName, s3_bucket, s3_folder, levels, hexColors):
+	str_file 		= "3B-HHR-E.MS.MRG.3IMERG.%d%02d%02d-S%02d%02d00-E%02d%d59.%04d.V03E.3hr.tif"
+	str_file_tfw 	= "3B-HHR-E.MS.MRG.3IMERG.%d%02d%02d-S%02d%02d00-E%02d%d59.%04d.V03E.3hr.tfw"
+	process_files(str_file, str_file_tfw, gpm_dir, startTime, product_name, regionName, s3_bucket, s3_folder, levels, hexColors)
+
 
 #	
 # ===============================
 # Main
 #
-# python gpm_daily.py --date 2016-05-01 --regions 'global,d02' -v -f
+# python gpm_early.py --date 2016-05-01 --regions 'global,d02' -v -f
 
 if __name__ == '__main__':
 	
 	aws_access_key 			= os.environ.get('AWS_ACCESSKEYID')
 	aws_secret_access_key 	= os.environ.get('AWS_SECRETACCESSKEY')
+
 	assert(aws_access_key)
 	assert(aws_secret_access_key)
 	
@@ -395,16 +484,7 @@ if __name__ == '__main__':
 	day					= today.day
 	doy					= today.strftime('%j')
 	ymd 				= "%d%02d%02d" % (year, month, day)		
-	
-	gis_file_day		= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.1day.tif"%(year, month, day)
-	gis_file_day_tfw 	= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.1day.tfw"%(year, month, day)
-
-	gis_file_3day		= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.3day.tif"%(year, month, day)
-	gis_file_3day_tfw 	= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.3day.tfw"%(year, month, day)
-
-	gis_file_7day		= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.7day.tif"%(year, month, day)
-	gis_file_7day_tfw 	= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.7day.tfw"%(year, month, day)
-	
+		
 	
 	#
 	# 12 colors - do not change for products (only levels may change)
@@ -417,39 +497,32 @@ if __name__ == '__main__':
 		s3_bucket			= region['bucket']
 		
 		if 1:
-			product_name		= 'gpm_1d'
+			product_name		= 'gpm_30mn'
 			levels 				= [ 1,2,3,5,8,13,21,34,55,89,144,233]		# in mm
-	
+
 			s3_folder			= os.path.join(product_name, str(year), doy)
-	
+
 			gpm_dir				= os.path.join(config.data_dir, product_name, ymd)
 			if not os.path.exists(gpm_dir):
 			    os.makedirs(gpm_dir)
-	
-			get_late_gpm_files([gis_file_day, gis_file_day_tfw], product_name)
-			process(gpm_dir, product_name, gis_file_day, ymd, r, s3_bucket, s3_folder, levels, hexColors)
 
-		#
-		# gpm_3d
-		#
+			process_30mn_files(gpm_dir, today, product_name, r, s3_bucket, s3_folder, levels, hexColors)
+
+
 		if 1:
-			product_name		= 'gpm_3d'
+			product_name		= 'gpm_30mn_1d'
 			levels 				= [ 1,2,3,5,8,13,21,34,55,89,144,233]		# in mm
-		
+
 			s3_folder			= os.path.join(product_name, str(year), doy)
-		
+
 			gpm_dir				= os.path.join(config.data_dir, product_name, ymd)
 			if not os.path.exists(gpm_dir):
 			    os.makedirs(gpm_dir)
 		
-			get_late_gpm_files([gis_file_3day, gis_file_3day_tfw], product_name)
-			process(gpm_dir, product_name, gis_file_3day, ymd, r, s3_bucket, s3_folder, levels, hexColors)
-	
-		#
-		# gpm_7d
-		#
+			process_30mn_1d_files(gpm_dir, today, product_name, r, s3_bucket, s3_folder, levels, hexColors)
+		
 		if 1:
-			product_name		= 'gpm_7d'
+			product_name		= 'gpm_30mn_3hr'
 			levels 				= [ 1,2,3,5,8,13,21,34,55,89,144,233]		# in mm
 
 			s3_folder			= os.path.join(product_name, str(year), doy)
@@ -457,8 +530,7 @@ if __name__ == '__main__':
 			gpm_dir				= os.path.join(config.data_dir, product_name, ymd)
 			if not os.path.exists(gpm_dir):
 			    os.makedirs(gpm_dir)
+			process_30mn_3h_files(gpm_dir, today, product_name, r, s3_bucket, s3_folder, levels, hexColors)
+	
 
-			get_late_gpm_files([gis_file_7day, gis_file_7day_tfw], product_name)
-			process(gpm_dir, product_name, gis_file_7day, ymd, r, s3_bucket, s3_folder, levels, hexColors)
-		
 		

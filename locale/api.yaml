@@ -135,10 +135,18 @@ en:
     algal_bloom: Algal Bloom
     burned_areas: Burned Areas
     precip_30mn: 30-min Accumulated Rainfall
+    precip_30mn_3hr: 3-hr Accumulated Rainfall Every 30mn
+    precip_30mn_1d: 1-d Accumulated Rainfall Every 30mn
     precip_3hrs: 3-hrs Accumulated Rainfall
     precip_1d: 1-d Accumulated Rainfall
     precip_3d: 3-d Accumulated Rainfall
     precip_7d: 7-d Accumulated Rainfall
+    precip_1d_forecast: 1-d Accumulated Rainfall Forecast
+    precip_2d_forecast: 2-d Accumulated Rainfall Forecast
+    precip_3d_forecast: 3-d Accumulated Rainfall Forecast
+    forecastio:         Location Forecast
+    precip_movie:       30mn Rainfall Movie
+    
 
   filesize:
     B: B
@@ -311,16 +319,13 @@ en:
         3400: 3400
         5500: 5500
 
-    precipitation:
+    precipitation_trmm:
       title: Precipitation
       credits: NASA GPM/TRMM
       source: 
         label: Source
         source: NASA GSFC GPM/TRMM
       trmm_24: 1-d Rainfall Accumulation (TRMM)
-      gpm_1d: 1-d Rainfall Accumulation (GPM)
-      gpm_3d: 3-d Rainfall Accumulation (GPM)
-      gpm_7d: 7-d Rainfall Accumulation (GPM)
       legend:         
         1mm: 1mm
         2mm: 2mm
@@ -335,6 +340,33 @@ en:
         144mm: 144mm
         233mm: 233mm
         377mm: 377mm
+ 
+    precipitation_gpm:
+      title: Precipitation
+      credits: NASA IMERG
+      source: 
+        label: Source
+        source: NASA GSFC IMERG
+      gpm_1d: 1-d Rainfall Accumulation (IMERG)
+      gpm_3d: 3-d Rainfall Accumulation (IMERG)
+      gpm_7d: 7-d Rainfall Accumulation (IMERG)
+      gpm_30mn: 30mn Rainfall Accumulation (IMERG)
+      gpm_30mn_3hr: 3hr Rainfall Accumulation Every 30mn(IMERG)
+      gpm_30mn_1d: 1-d Rainfall Accumulation Every 30mn (IMERG)  
+      legend:         
+        1: 1mm
+        2: 2mm
+        3: 3mm
+        5: 5mm
+        8: 8mm
+        13: 13mm
+        21: 21mm
+        34: 34mm
+        55: 55mm
+        89: 89mm
+        144: 144mm
+        233: 233mm
+        377: 377mm
         
     precipitation_forecasst:
       title: Precipitation
@@ -384,7 +416,15 @@ en:
       legend:         
         level_1: yellow
         level_2: red
-  
+    global_landslide_nowcast:
+      title: Global Landslide Nowcast
+      credits: NASA GSFC
+      source: 
+        label: Source
+        source: NASA GSFC
+      legend:
+        level_1: moderate,
+        level_2: high
     soil_moisture:
       title: Soil Moisture
       credits: University of Oklahoma

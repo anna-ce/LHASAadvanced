@@ -178,7 +178,7 @@
 				{
 					"source": 		"gpm",
 					"href": 		"/opensearch",
-					"checked": 		false
+					"checked": 		true
 				},
 				{
 					"source": 		"forecastio",
@@ -208,7 +208,7 @@
 	          {
 	          	"source": 		"modis",
 	          	"href": 		"/opensearch",
-	          	"checked":  	true
+	          	"checked":  	false
 	          },
 	          {
 	            "source": 		"modis_lst",

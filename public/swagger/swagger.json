@@ -446,6 +446,170 @@
                 ]
             }
         },
+        "/opensearch/precip_gpm_30mn_3hr": {
+            "get": {
+                "description": "OpenSearch for Golbal 3hr Accumulated Rainfall every 30mn(GPM)",
+                "operationId": "opensearch",
+                "parameters": [
+                    {
+                        "default": "precip_30mn_3hr",
+                        "description": "Product query",
+                        "in": "query",
+                        "name": "q",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": 0,
+                        "description": "Latitude",
+                        "in": "query",
+                        "maximum": 90.0,
+                        "minimum": -90.0,
+                        "name": "lat",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": 0,
+                        "description": "Longitude",
+                        "in": "query",
+                        "maximum": 180.0,
+                        "minimum": -180.0,
+                        "name": "lon",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": 10,
+                        "description": "Limit number of responses",
+                        "in": "query",
+                        "maximum": 1000,
+                        "minimum": 1,
+                        "name": "limit",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "default": "gpm",
+                        "description": "Product sources",
+                        "in": "query",
+                        "name": "sources",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "description": "Start Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "startTime",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "description": "End Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "endTime",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "summary": "OpenSearch for Global 3hr Accumulated Rainfall Product (GPM) every 30mn",
+                "tags": [
+                    "opensearch"
+                ]
+            }
+        },
+        "/opensearch/precip_gpm_30mn_1d": {
+            "get": {
+                "description": "OpenSearch for Golbal 1-day Accumulated Rainfall (GPM) every 30mn",
+                "operationId": "opensearch",
+                "parameters": [
+                    {
+                        "default": "precip_30mn_1d",
+                        "description": "Product query",
+                        "in": "query",
+                        "name": "q",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": 0,
+                        "description": "Latitude",
+                        "in": "query",
+                        "maximum": 90.0,
+                        "minimum": -90.0,
+                        "name": "lat",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": 0,
+                        "description": "Longitude",
+                        "in": "query",
+                        "maximum": 180.0,
+                        "minimum": -180.0,
+                        "name": "lon",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "default": 10,
+                        "description": "Limit number of responses",
+                        "in": "query",
+                        "maximum": 1000,
+                        "minimum": 1,
+                        "name": "limit",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "default": "gpm",
+                        "description": "Product sources",
+                        "in": "query",
+                        "name": "sources",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "description": "Start Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "startTime",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "description": "End Time",
+                        "format": "date",
+                        "in": "query",
+                        "name": "endTime",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "summary": "OpenSearch for Global 1-day Accumulated Rainfall Product (GPM) every 30mn",
+                "tags": [
+                    "opensearch"
+                ]
+            }
+        },
         "/opensearch/precip_gpm_3hrs": {
             "get": {
                 "description": "OpenSearch for Global 3hrs Accumulated Rainfall (GPM)",

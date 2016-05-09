@@ -33,7 +33,7 @@ var express 		= require('express'),
 	var mapinfo_pop				= require('./lib/mapinfo_pop');
 	var	products_pop			= require('./lib/products_pop');
 
-	var	tprod					= require('./lib/s3queries/query_gpm_1d');
+	//var	tprod					= require('./lib/s3queries/query_gpm_30mn_3hr');
 	
 	var s3_products = {}
 	

@@ -52,7 +52,16 @@ dirs	= [	"ant_r/d02",
 			"trmm/d03",
 			"viirs_chla"
 		]
-	
+
+#
+# Only keep one day of these folders
+#
+daily_dirs = [
+	"gpm_30mn",
+	"gpm_30mn_1d",
+	"gpm_30mn_3hr"
+]
+
 def manage_buckets(conn, dl):
 	for b in buckets:
 		print "** bucket:", b
@@ -94,6 +103,14 @@ def manage_local_dirs(dl, data_dir):
 		lst 	= glob.glob(folder+'/[0-9]*')
 		for l in lst:
 			manage_folder(l, dl)
+
+def manage_daily_dirs(dl, data_dir):
+	for d in daily_dirs:
+		folder 	= os.path.join(data_dir, d)
+		print folder
+		lst 	= glob.glob(folder+'/[0-9]*')
+		for l in lst:
+			manage_folder(l, dl)
 		
 #
 # ======================================================================
@@ -126,4 +143,5 @@ if __name__ == '__main__':
 		manage_buckets(conn, dl)
 
 	manage_local_dirs(dl, config.DATA_DIR )
+	#manage_daily_dirs(today - timedelta(days= 1), config.DATA_DIR )
 	
