@@ -418,7 +418,7 @@ if __name__ == '__main__':
 		
 		if 1:
 			product_name		= 'gpm_1d'
-			levels 				= [ 1,2,3,5,8,13,21,34,55,89,144,233]		# in mm
+			levels 				= [ 5,8,13,21,34,55,89,144,233,377,610,987]				# in 0.1 mm
 	
 			s3_folder			= os.path.join(product_name, str(year), doy)
 	
@@ -434,7 +434,7 @@ if __name__ == '__main__':
 		#
 		if 0:
 			product_name		= 'gpm_3d'
-			levels 				= [ 1,2,3,5,8,13,21,34,55,89,144,233]		# in mm
+			levels 				= [ 13,21,34,55,89,144,233,377,610,987,1597,2584 ]		# in 0.1 mm
 		
 			s3_folder			= os.path.join(product_name, str(year), doy)
 		
@@ -450,7 +450,7 @@ if __name__ == '__main__':
 		#
 		if 0:
 			product_name		= 'gpm_7d'
-			levels 				= [ 1,2,3,5,8,13,21,34,55,89,144,233]		# in mm
+			levels 				= [ 13,21,34,55,89,144,233,377,610,987,1597,2584]		# in mm
 
 			s3_folder			= os.path.join(product_name, str(year), doy)
 
