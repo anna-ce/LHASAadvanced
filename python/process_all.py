@@ -208,8 +208,8 @@ if __name__ == '__main__':
 	
 		#get_modis_floodmap()
 		
-		#backup_ojo_streamer()
-		#backup_ojo_wiki()
+		backup_ojo_streamer()
+		backup_ojo_wiki()
 
 	cleanup()
 	emailFile( logfile, "Success processing python scripts!" )

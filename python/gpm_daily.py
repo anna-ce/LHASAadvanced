@@ -341,7 +341,7 @@ def process(gpm_dir, name, gis_file, ymd, regionName, s3_bucket, s3_folder, leve
 
 	zoom = 2
 	if force or not os.path.exists(sw_osm_image):
-		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, adjusted_levels, hexColors, force, verbose, zoom)
+		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, list(reversed(adjusted_levels)), hexColors, force, verbose, zoom)
 
 	if force or not os.path.exists(tif_image):
 		cmd 				= "gdalwarp -overwrite -q -co COMPRESS=LZW %s %s"%( subset_file, tif_image)
@@ -432,7 +432,7 @@ if __name__ == '__main__':
 		#
 		# gpm_3d
 		#
-		if 1:
+		if 0:
 			product_name		= 'gpm_3d'
 			levels 				= [ 1,2,3,5,8,13,21,34,55,89,144,233]		# in mm
 		
@@ -448,7 +448,7 @@ if __name__ == '__main__':
 		#
 		# gpm_7d
 		#
-		if 1:
+		if 0:
 			product_name		= 'gpm_7d'
 			levels 				= [ 1,2,3,5,8,13,21,34,55,89,144,233]		# in mm
 

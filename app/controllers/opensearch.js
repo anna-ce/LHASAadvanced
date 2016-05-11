@@ -24,13 +24,13 @@ var fs 			 				= require('fs'),
 	// query_pop					= require("../../lib/query_pop");
 
 var productQueries = {
-		"dfo": 					[query_dfo.QueryDFO],
-		"digiglobe":			[query_digiglobe.QueryDigiglobe],
-		"eo1_ali": 				[query_eo1.QueryEO1],
-		"landsat_8": 			[query_l8.QueryLandsat8],
+	//	"dfo": 					[query_dfo.QueryDFO],
+	//	"digiglobe":			[query_digiglobe.QueryDigiglobe],
+	//	"eo1_ali": 				[query_eo1.QueryEO1],
+	//	"landsat_8": 			[query_l8.QueryLandsat8],
 	//	"landscan": 			[query_pop.QueryAll],
-		"ojo": 					[query_locationcast.QueryAll],
-		"radarsat_2": 			[query_radarsat2.QueryRadarsat2]
+	//	"ojo": 					[query_locationcast.QueryAll],
+	//	"radarsat_2": 			[query_radarsat2.QueryRadarsat2]
 	}
 	
 	// Add Product Queries from s3queries directory

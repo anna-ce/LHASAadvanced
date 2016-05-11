@@ -101,6 +101,12 @@ def process(mydir, gis_file, regionName, region, subfolder, s3_bucket, s3_folder
 	ds 					= gdal.Open( subset_file )
 	band				= ds.GetRasterBand(1)
 	data				= band.ReadAsArray(0, 0, ds.RasterXSize, ds.RasterYSize )
+	geotransform 		= ds.GetGeoTransform()
+	xorg				= geotransform[0]
+	yorg  				= geotransform[3]
+	pres				= geotransform[1]
+	xmax				= xorg + geotransform[1]* ds.RasterXSize
+	ymax				= yorg - geotransform[1]* ds.RasterYSize
 	
 	if force or not os.path.exists(topojson_filename+".gz"):
 		for l in levels:
@@ -131,6 +137,13 @@ def process(mydir, gis_file, regionName, region, subfolder, s3_bucket, s3_folder
 		cmd 	= "gzip --keep "+ topojson_filename
 		execute(cmd)
 		
+	if not os.path.exists(osm_bg_image):
+		ullat = yorg
+		ullon = xorg
+		lrlat = ymax
+		lrlon = xmax
+		wms(ullat, ullon, lrlat, lrlon, osm_bg_image)
+	
 	if force or not os.path.exists(sw_osm_image):	
 		zoom = region['thn_zoom']	
 		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, levels, hexColors, force, verbose, zoom)
