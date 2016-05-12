@@ -395,6 +395,15 @@
             },
             "legend": "7d Quakes"
         },
+        "forecastio": {
+            "title": "Location Forecast",
+            "credits": "forecast.io",
+            "source": {
+                "label": "Source",
+                "source": "forecastio"
+            },
+            "legend": "Location Forecast"
+        },
         "flood_forecast": {
             "title": "Flood Forecast",
             "credits": "University of Oklahoma",
