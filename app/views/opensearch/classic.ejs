@@ -125,7 +125,7 @@
 								<option value='quakes'><%= gettext('products.quakes')%></option>
 								<option value='flood_forecast'><%= gettext('products.flood_forecast')%></option>
 								<option value='surface_water'><%= gettext('products.surface_water')%></option>
-								<option value='flood_nowcast'><%= gettext('products.flood_nowcast')%></option>
+								<option selected value='flood_nowcast'><%= gettext('products.flood_nowcast')%></option>
 								<option value='forecastio'><%= gettext('products.forecastio')%></option>
 								<option value='global_landslide_nowcast'><%= gettext('products.global_landslide_nowcast')%></option>
 								<option value='landslide_catalog'><%= gettext('products.landslide_catalog')%></option>
@@ -134,7 +134,7 @@
 								<option value='precip_1d'><%= gettext('products.precip_1d')%></option>
 								<option value='precip_3d'><%= gettext('products.precip_3d')%></option>
 								<option value='precip_7d'><%= gettext('products.precip_7d')%></option>
-								<option value='precip_30mn' selected ><%= gettext('products.precip_30mn')%></option>
+								<option value='precip_30mn'><%= gettext('products.precip_30mn')%></option>
 								<option value='precip_30mn_3hr'><%= gettext('products.precip_30mn_3hr')%></option>
 								<option value='precip_30mn_1d'><%= gettext('products.precip_30mn_1d')%></option>
 
@@ -367,7 +367,7 @@
 	}
 
 	function MapIt( id ) {
-		console.log( "MapIt: " + id);
+		//console.log( "MapIt: " + id);
 		var result 	= query_results[id];
 		processDroppedResult(id, result)
 	}
@@ -545,7 +545,7 @@
 		footprints		= [];
 		
 		//$('#results').html("")
-		console.log("GET", url);
+		//console.log("GET", url);
 		$('#results').html("Checking sources...Please wait...")
 		$.ajax({
 			dataType: "json",
@@ -586,7 +586,7 @@
   
     // install click event
   	map.on('click', function(e) {
-		console.log("map click")
+		//console.log("map click")
 		var latlng 	= e.latlng;
 		var lat 	= parseFloat(latlng.lat.toFixed(2));
 		var lng		= parseFloat(latlng.lng.toFixed(2));
@@ -607,7 +607,7 @@
 			 L.latLng(minlat, maxlon),
 			 L.latLng(minlat, minlon)
 		];
-		console.log("query bbox", lat, lng, delta, minlat, minlon, maxlat, maxlon)
+		//console.log("query bbox", lat, lng, delta, minlat, minlon, maxlat, maxlon)
 		newqueryLayer.setLatLngs(latlon_poly)
   	})
  
@@ -649,13 +649,13 @@
 	function addThumbnailToMap(result, id) {
 		var bbox = fromPolygon(result.geometry.coordinates[0])
 		
-		console.log(bbox)
+		//console.log(bbox)
 			
 		var imageBounds = L.latLngBounds(bbox)
 		var image 		= result.image[0]
 		var url 		= image.url
 			
-		console.log("Add to map", url, JSON.stringify(imageBounds))
+		//console.log("Add to map", url, JSON.stringify(imageBounds))
 		var options 	= {opacity: 0.8, attribution: result.properties.source["@value"]}
 		
 		var newLayer 	= L.imageOverlay(url, imageBounds, options).addTo(map);
@@ -704,13 +704,13 @@
 				var using = action['using']
 				for( var u in using ) {
 					var use = using[u]
-					console.log( use['mediaType'], use['url'])
+					//console.log( use['mediaType'], use['url'])
 					if( use['mediaType'] == 'application/json' ) {
 						var topojson_url = use['url']
-						console.log("json", topojson_url)
+						//console.log("json", topojson_url)
 					} else if( (use['mediaType'] == 'application/x-gzip') && (use['url'].indexOf("json.gz") > 0) ) {
 						var topojson_url = use['url']
-						console.log("use ...json.gz", topojson_url)
+						//console.log("use ...json.gz", topojson_url)
 						break;
 					} else if( use['mediaType'] == 'image/tiff') {
 						addThumbnailToMap(result, id) 

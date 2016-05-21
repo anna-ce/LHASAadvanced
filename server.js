@@ -33,29 +33,11 @@ var express 		= require('express'),
 	var mapinfo_pop				= require('./lib/mapinfo_pop');
 	var	products_pop			= require('./lib/products_pop');
 
-	//var	tprod					= require('./lib/s3queries/query_gpm_30mn_3hr');
+	//var	tprod				= require('./lib/s3queries/query_geos5');
 	
 	var s3_products = {}
 	
-	//
-	// Add all s3 queries from 
-	//
-	var s3dir = path.join(process.cwd(),"lib","s3queries","*.js")	
-	glob(s3dir, function(err, files){
-		try {
-			for( f in files ) {
-				var fname 	= files[f]
-				if( fname.indexOf("query_s3.js") < 0 )  {
-					var rq 			= require(fname).query
-					var subfolder	= rq.options.subfolder
-					debug("loading product", subfolder)
-					s3_products[subfolder] = rq
-				}
-			}
-		} catch(e) {
-			logger.error("Error reading ", fname, e)
-		}
-	})
+
 	
 global.app 			= express();
 app.root 			= process.cwd();
@@ -68,6 +50,26 @@ require(supportEnv)
 
 // load settings
 require('./settings').boot(app)  
+
+//
+// Add all s3 queries now that we have loaded the config file into app global variable 
+//
+var s3dir = path.join(process.cwd(),"lib","s3queries","*.js")	
+glob(s3dir, function(err, files){
+	try {
+		for( f in files ) {
+			var fname 	= files[f]
+			if( fname.indexOf("query_s3.js") < 0 )  {
+				var rq 			= require(fname).query
+				var subfolder	= rq.options.subfolder
+				debug("loading product", subfolder)
+				s3_products[subfolder] = rq
+			}
+		}
+	} catch(e) {
+		logger.error("Error reading ", fname, e)
+	}
+})
 
 var planetlabs_dir 		= path.join(app.get("tmp_dir"),"planet-labs");
 if( !fs.existsSync(planetlabs_dir)) {

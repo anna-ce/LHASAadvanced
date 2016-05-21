@@ -34,7 +34,7 @@ var products	= {};
 var hide_legends = 1;
 
 function ToggleLegend() {
-	console.log("TG "+ hide_legends)
+	//console.log("TG "+ hide_legends)
 	if( hide_legends == 1 ) {	// turn it on
 		hide_legends = 0;
 		for( var i in legends ) {
@@ -112,7 +112,7 @@ function loadMapObject( mapObject, cb ) {
 		//dataType: mapObject.mediaType
 	})
 	.done( function(data) {
-		console.log("success:"+id)
+		//console.log("success:"+id)
 		
 		switch(id) {
 			case "style":
@@ -123,11 +123,11 @@ function loadMapObject( mapObject, cb ) {
 				// add it to the legend div
 				var product = mapObject.id
 				if( ! ( product in legends) ) {
-					console.log("Product not in legend", JSON.stringify(mapObject))
+					//console.log("Product not in legend", JSON.stringify(mapObject))
 					$('#legends').append(data)
 					legends[product] = {legend: product+"_legend", display: true}
 				} else {
-					console.log("Product  in legend", product)					
+					//console.log("Product  in legend", product)					
 				}
 				break;
 			case "credits":
@@ -253,7 +253,7 @@ function loadData( topojsonUrl, displayName, mapinfos, value_url, featuresId ) {
 	    .await(function(error, data, styleData, legendData, creditsData) { 
 			//console.log("styledata", JSON.stringify(styleData))
 			function loadGeoJson( geojson, key_name ) {
-				console.log("loadGeoJson", key_name)
+				//console.log("loadGeoJson", key_name)
 				styleData = styles[styleId]
 				var attribution=""
 				if( creditsData ) {
@@ -267,7 +267,7 @@ function loadData( topojsonUrl, displayName, mapinfos, value_url, featuresId ) {
 					
 					pointToLayer: function (feature, latlng) {
 						var styleOptions = styleData['true'];
-						console.log("styleOptions", JSON.stringify(styleOptions))
+						//console.log("styleOptions", JSON.stringify(styleOptions))
 						if( styleOptions['marker-symbol']) {
 							var color	= styleOptions['marker-color']
 							if( typeof color != 'number') {	// it is an array of color
@@ -336,7 +336,7 @@ function loadData( topojsonUrl, displayName, mapinfos, value_url, featuresId ) {
 				var geoJsonLayer;
 				
 				if( geojson.features ) {
-					console.log("loading", geojson.features.length)
+					//console.log("loading", geojson.features.length)
 					geoJsonLayer = L.geoJson(geojson, options)
 				} else {
 					return 0
@@ -376,7 +376,7 @@ function loadData( topojsonUrl, displayName, mapinfos, value_url, featuresId ) {
 				}
 				// Add to map
 				if( geoJsonLayer ) {
-					console.log("Add to map...")
+					//console.log("Add to map...")
 					geoJsonLayer.addTo(map)		
 				}
 			
@@ -386,7 +386,7 @@ function loadData( topojsonUrl, displayName, mapinfos, value_url, featuresId ) {
 				// Remember the layer to legend mapping if we have one
 				if( legendObject ) {
 					legends[layerName] = { legend: legendObject.id, display: true };
-					console.log("adding legend mapping as", layerName, legendObject.id)
+					//console.log("adding legend mapping as", layerName, legendObject.id)
 				}
 				
 				if( geoJsonLayer ) {

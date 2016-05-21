@@ -1,262 +1,335 @@
 {
-    "application":          "OJO-Bot",
-    "copyright":            "&copy; Vightel, 2013",
-    "contact":              "Pat Cappelaere",
-    "contact_mail":         "pat@cappelaere.com",
-    "HOSTBASEURL":          "http://ojo-bot.herokuapp.com",
-    "PORT":				    80,
-    "worldmapid":           "cappelaere.map-1d8e1acq",
-    "send_email": 		        1,
+    "application": "OJO-Bot",
+    "copyright": "&copy; Vightel, 2013",
+    "contact": "Pat Cappelaere",
+    "contact_mail": "pat@cappelaere.com",
+    "HOSTBASEURL": "http://ojo-bot.herokuapp.com",
+    "PORT": 80,
+    "worldmapid": "cappelaere.map-1d8e1acq",
+    "send_email": 1,
     "using_aws_s3_for_storage": 1,
-    "regions" : {
+    "regions": {
         "Global": {
-			"name": 		"Global",
-            "bbox":         [-180, 60, 180, -60 ],
-            "target":       [0, 0],
-            "min_zoom":     2,
-            "max_zoom":     18,
-            "map_id":       "cappelaere.map-mx5g2tn3",
-            "bucket":       "ojo-global",
-            "ojotiler":     "http://ojo-tiler.herokuapp.com",
+            "name": "Global",
+            "bbox": [
+                -180,
+                60,
+                180,
+                -60
+            ],
+            "target": [
+                0,
+                0
+            ],
+            "min_zoom": 2,
+            "max_zoom": 18,
+            "map_id": "cappelaere.map-mx5g2tn3",
+            "bucket": "ojo-global",
+            "ojotiler": "http://ojo-tiler.herokuapp.com",
             "ojotiler-dev": "http://localhost:8888"
         },
         "d02": {
-            "name":		      "Central America",
-            "bbox":         [-92.68, 6.17, -75.85, 19.08 ],
-            "target":       [-84.14, 9.84],
-            "min_zoom":     7,
-            "max_zoom":     18,
-            "map_id":       "cappelaere.map-mx5g2tn3",
-            "bucket":       "ojo-d2",
-            "ojotiler":     "http://ojo-tiler.herokuapp.com",
+            "name": "Central America",
+            "bbox": [
+                -92.68,
+                6.17,
+                -75.85,
+                19.08
+            ],
+            "target": [
+                -84.14,
+                9.84
+            ],
+            "min_zoom": 7,
+            "max_zoom": 18,
+            "map_id": "cappelaere.map-mx5g2tn3",
+            "bucket": "ojo-d2",
+            "ojotiler": "http://ojo-tiler.herokuapp.com",
             "ojotiler-dev": "http://localhost:8888",
-            "susmap":       "cappelaere.tbtvpyns"
+            "susmap": "cappelaere.tbtvpyns"
         },
         "d03": {
-            "name":		      "Hispaniola",
-            "bbox":         [-74.94, 16.35, -64.98, 21.42 ],
-            "target":       [-69.96, 18.89],
-            "min_zoom":     7,
-            "max_zoom":	    18,
-            "map_id":       "cappelaere.map-q4hdwmh3",
-            "bucket":       "ojo-d3",
-            "ojotiler":     "http://ojo-tiler.herokuapp.com",
+            "name": "Hispaniola",
+            "bbox": [
+                -74.94,
+                16.35,
+                -64.98,
+                21.42
+            ],
+            "target": [
+                -69.96,
+                18.89
+            ],
+            "min_zoom": 7,
+            "max_zoom": 18,
+            "map_id": "cappelaere.map-q4hdwmh3",
+            "bucket": "ojo-d3",
+            "ojotiler": "http://ojo-tiler.herokuapp.com",
             "ojotiler-dev": "http://localhost:8888",
-            "susmap":       "cappelaere.3uf4a15n"
+            "susmap": "cappelaere.3uf4a15n"
         },
         "d04": {
-            "name":		      "Namibia",
-            "bbox":         [18, -21, 26, -17 ],
-            "target":       [21.65,-18.12],
-            "min_zoom":     6,
-            "max_zoom":	    18,
-            "map_id":       "cappelaere.map-q4hdwmh3",
-            "bucket":       "ojo-d4",
-            "ojotiler":     "http://ojo-tiler.herokuapp.com",
+            "name": "Namibia",
+            "bbox": [
+                18,
+                -21,
+                26,
+                -17
+            ],
+            "target": [
+                21.65,
+                -18.12
+            ],
+            "min_zoom": 6,
+            "max_zoom": 18,
+            "map_id": "cappelaere.map-q4hdwmh3",
+            "bucket": "ojo-d4",
+            "ojotiler": "http://ojo-tiler.herokuapp.com",
             "ojotiler-dev": "http://localhost:8888",
-            "susmap":       "cappelaere.3uf4a15n"
+            "susmap": "cappelaere.3uf4a15n"
         },
         "d05": {
-            "name":		      "Malawi",
-            "bbox":         [-74.94, 16.35, -64.98, 21.42 ],
-            "target":       [-70.08, 20.22],
-            "min_zoom":     7,
-            "max_zoom":	    18,
-            "map_id":       "cappelaere.map-q4hdwmh3",
-            "bucket":       "ojo-d5",
-            "ojotiler":     "http://ojo-tiler.herokuapp.com",
+            "name": "Malawi",
+            "bbox": [
+                -74.94,
+                16.35,
+                -64.98,
+                21.42
+            ],
+            "target": [
+                -70.08,
+                20.22
+            ],
+            "min_zoom": 7,
+            "max_zoom": 18,
+            "map_id": "cappelaere.map-q4hdwmh3",
+            "bucket": "ojo-d5",
+            "ojotiler": "http://ojo-tiler.herokuapp.com",
             "ojotiler-dev": "http://localhost:8888",
-            "susmap":       "cappelaere.3uf4a15n"
+            "susmap": "cappelaere.3uf4a15n"
         },
         "d06": {
-            "name":		      "Pakistan",
-            "bbox":         [60, 20, 80, 40 ],
-            "target":       [70, 30],
-            "min_zoom":     5,
-            "max_zoom":	    18,
-            "map_id":       "cappelaere.map-q4hdwmh3",
-            "bucket":       "ojo-d6",
-            "ojotiler":     "http://ojo-tiler.herokuapp.com",
+            "name": "Pakistan",
+            "bbox": [
+                60,
+                20,
+                80,
+                40
+            ],
+            "target": [
+                70,
+                30
+            ],
+            "min_zoom": 5,
+            "max_zoom": 18,
+            "map_id": "cappelaere.map-q4hdwmh3",
+            "bucket": "ojo-d6",
+            "ojotiler": "http://ojo-tiler.herokuapp.com",
             "ojotiler-dev": "http://localhost:8888",
-            "susmap":       "cappelaere.ddfjq0k9"
+            "susmap": "cappelaere.ddfjq0k9"
         },
         "d08": {
-            "name":		    "Nepal",
-            "bbox":         [72.9998988,  25.9916923, 97.3832321,  38.4750256],
-            "target":       [85.1915655, 32.2333589],
-            "min_zoom":     5,
-            "max_zoom":	    18,
-            "map_id":       "cappelaere.map-q4hdwmh3",
-            "bucket":       "ojo-d8",
-            "ojotiler":     "http://ojo-tiler.herokuapp.com",
+            "name": "Nepal",
+            "bbox": [
+                72.9998988,
+                25.9916923,
+                97.3832321,
+                38.4750256
+            ],
+            "target": [
+                85.1915655,
+                32.2333589
+            ],
+            "min_zoom": 5,
+            "max_zoom": 18,
+            "map_id": "cappelaere.map-q4hdwmh3",
+            "bucket": "ojo-d8",
+            "ojotiler": "http://ojo-tiler.herokuapp.com",
             "ojotiler-dev": "http://localhost:8888",
-            "susmap":       "cappelaere.5enw2e0e"
+            "susmap": "cappelaere.5enw2e0e"
         },
         "d09": {
-            "name":		    "Peru",
-            "bbox":         [-81.3551483, -18.3485451, -68.6718150,  -0.0402117],
-            "target":       [-75.0134816,-9.1943784],
-            "min_zoom":     5,
-            "max_zoom":	    18,
-            "map_id":       "cappelaere.map-q4hdwmh3",
-            "bucket":       "ojo-d9",
-            "ojotiler":     "http://ojo-tiler.herokuapp.com",
-            "ojobot":       "http://ojo-bot.herokuapp.com",
-            "ojobot-dev":   "http://localhost:7465",
-            "susmap":       "cappelaere.kj6mvx6r"
+            "name": "Peru",
+            "bbox": [
+                -81.3551483,
+                -18.3485451,
+                -68.671815,
+                -0.0402117
+            ],
+            "target": [
+                -75.0134816,
+                -9.1943784
+            ],
+            "min_zoom": 5,
+            "max_zoom": 18,
+            "map_id": "cappelaere.map-q4hdwmh3",
+            "bucket": "ojo-d9",
+            "ojotiler": "http://ojo-tiler.herokuapp.com",
+            "ojobot": "http://ojo-bot.herokuapp.com",
+            "ojobot-dev": "http://localhost:7465",
+            "susmap": "cappelaere.kj6mvx6r"
         },
         "d10": {
-            "name":		    "Rio2016",
-            "bbox":         [-45.0, -23.37494, -39,  -17.8916067],
-            "target":       [-42,-20.6332733],
-            "min_zoom":     8,
-            "max_zoom":	    12,
-            "map_id":       "cappelaere.map-q4hdwmh3",
-            "bucket":       "ojo-d10",
-            "ojotiler":     "http://ojo-tiler.herokuapp.com",
-            "ojobot":       "http://ojo-bot.herokuapp.com",
-            "ojobot-dev":   "http://localhost:7465",
-            "susmap":       "cappelaere.6tl0kfef"
+            "name": "Rio2016",
+            "bbox": [
+                -45.0,
+                -23.37494,
+                -39,
+                -17.8916067
+            ],
+            "target": [
+                -42,
+                -20.6332733
+            ],
+            "min_zoom": 8,
+            "max_zoom": 12,
+            "map_id": "cappelaere.map-q4hdwmh3",
+            "bucket": "ojo-d10",
+            "ojotiler": "http://ojo-tiler.herokuapp.com",
+            "ojobot": "http://ojo-bot.herokuapp.com",
+            "ojobot-dev": "http://localhost:7465",
+            "susmap": "cappelaere.6tl0kfef"
         }
     },
-	
-    "admins":   		[ "pat@cappelaere.com", "cappelaere@gmail.com" ],
-    "support_email": 	["dalia.b.kirschbaum@nasa.gov","pat@geobliki.com"],
-	
-    "github":	{
-      "user":				"vightel",
-      "floods":			"gfc",
-      "landslides":		"glc"
-	},
-	
-	"nodes": [
-    			{
-    				"source": 		"chirps",
-    				"href": 		"/opensearch",
-    				"checked": 		false,
-    				"selected":   false
-    			},
-				{
-					"source": 		"dk",
-					"href": 		"/opensearch",
-					"checked":  	false
-				},
-				{
-					"source": 		"dfo",
-					"href": 		"/opensearch",
-					"checked":  	false
-				},
-	        	{
-	        		"source": 		"digiglobe",
-	        		"href": 		"/opensearch",
-	        		"checked":  	false
-	        	},
-	        	{
-	        		"source": 		"ef5",
-	        		"href": 		"/opensearch",
-	        		"checked":  	false,
-					"selected":   false
-	        	},
-	        	{
-	        		"source": 		"eo1_ali",
-	        		"href": 		"/opensearch",
-	        		"checked":  	false
-	        	},
-    			{
-    				"source": 		"geos5",
-    				"href": 		"/opensearch",
-    				"checked": 		false,
-    				"selected":   false
-    			},
-    			{
-    				"source": 		"gfms",
-    				"href": 		"/opensearch",
-    				"checked": 		false,
-    				"selected":   false
-    			},
-                		
-				{
-					"source": 		"gpm",
-					"href": 		"/opensearch",
-					"checked": 		true
-				},
-				{
-					"source": 		"forecastio",
-					"href": 		"/opensearch",
-					"checked": 		false
-				},
-	          {
-	            "source": 		"landsat_8",
-	            "href": 		"/opensearch",
-	            "checked":  	false
-	          },
-	          {
-	            "source": 		"landscan",
-	            "href": 		"/opensearch",
-	            "checked":  	false
-	          },
-	          {
-	            "source": 		"landslide_model",
-	            "href": 		"/opensearch",
-	            "checked":  	false
-	          },
-  	          {
-  	            "source": 		"global_landslide_model",
-  	            "href": 		"/opensearch",
-  	            "checked":  	false
-  	            },
-	          {
-	          	"source": 		"modis",
-	          	"href": 		"/opensearch",
-	          	"checked":  	false
-	          },
-	          {
-	            "source": 		"modis_lst",
-	            "href": 		"/opensearch",
-	            "checked":  	false
-	          },
-	          {
-	              "source": 	"noaa",
-	              "href": 		"/opensearch",
-	              "checked": 		false
-	          },
-	          {
-	            "source": 		"ojo",
-	            "href": 		"/opensearch",
-	            "checked":  	false
-	          },
-	          {
-	            "source": 		"planet_labs",
-	            "href": 		"/opensearch",
-	            "checked":  	false
-	          },
-	        	{
-	              "source": 	"radarsat_2",
-	              "href": 		"/opensearch",
-	              "checked":  	false
-	          },
-	          {
-	              "source": 	"trmm",
-	              "href": 		"/opensearch",
-	              "checked": 		false
-	          },
-	          {
-	              "source": 	"usgs",
-	              "href": 		"/opensearch",
-	              "checked": 		false
-	          },
-              {
-                  "source": 		"viirs",
-                  "href": 		"/opensearch",
-                  "checked": 		false,
-                  "selected":   false
-              },
-              {
-                  "source": 		"wrf_30km",
-                  "href": 		"/opensearch",
-                  "checked": 		false,
-                  "selected":   false
-              }
-		]
+    "admins": [
+        "pat@cappelaere.com",
+        "cappelaere@gmail.com"
+    ],
+    "support_email": [
+        "dalia.b.kirschbaum@nasa.gov",
+        "pat@geobliki.com"
+    ],
+    "github": {
+        "user": "vightel",
+        "floods": "gfc",
+        "landslides": "glc"
+    },
+    "nodes": [
+        {
+            "source": "chirps",
+            "href": "/opensearch",
+            "checked": false,
+            "selected": false
+        },
+        {
+            "source": "dk",
+            "href": "/opensearch",
+            "checked": false
+        },
+        {
+            "source": "dfo",
+            "href": "/opensearch",
+            "checked": false
+        },
+        {
+            "source": "digiglobe",
+            "href": "/opensearch",
+            "checked": false
+        },
+        {
+            "source": "ef5",
+            "href": "/opensearch",
+            "checked": false,
+            "selected": false
+        },
+        {
+            "source": "eo1_ali",
+            "href": "/opensearch",
+            "checked": false
+        },
+        {
+            "source": "geos5",
+            "href": "/opensearch",
+            "checked": false,
+            "selected": false
+        },
+        {
+            "source": "gfms",
+            "href": "/opensearch",
+            "checked": true,
+            "selected": false
+        },
+        {
+            "source": "gpm",
+            "href": "/opensearch",
+            "checked": false
+        },
+        {
+            "source": "forecastio",
+            "href": "/opensearch",
+            "checked": false
+        },
+        {
+            "source": "landsat_8",
+            "href": "/opensearch",
+            "checked": false
+        },
+        {
+            "source": "landscan",
+            "href": "/opensearch",
+            "checked": false
+        },
+        {
+            "source": "landslide_model",
+            "href": "/opensearch",
+            "checked": false
+        },
+        {
+            "source": "global_landslide_model",
+            "href": "/opensearch",
+            "checked": false
+        },
+        {
+            "source": "modis",
+            "href": "/opensearch",
+            "checked": false
+        },
+        {
+            "source": "modis_lst",
+            "href": "/opensearch",
+            "checked": false
+        },
+        {
+            "source": "noaa",
+            "href": "/opensearch",
+            "checked": false
+        },
+        {
+            "source": "ojo",
+            "href": "/opensearch",
+            "checked": false
+        },
+        {
+            "source": "planet_labs",
+            "href": "/opensearch",
+            "checked": false
+        },
+        {
+            "source": "radarsat_2",
+            "href": "/opensearch",
+            "checked": false
+        },
+        {
+            "source": "trmm",
+            "href": "/opensearch",
+            "checked": false
+        },
+        {
+            "source": "usgs",
+            "href": "/opensearch",
+            "checked": false
+        },
+        {
+            "source": "viirs",
+            "href": "/opensearch",
+            "checked": false,
+            "selected": false
+        },
+        {
+            "source": "wrf_30km",
+            "href": "/opensearch",
+            "checked": false,
+            "selected": false
+        }
+    ]
 }
-
