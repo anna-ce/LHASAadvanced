@@ -62,7 +62,7 @@ var express 		= require('express'),
 				cache_dir: 			app.get('tmp_dir')
 			}
 	
-			//console.log(process.env)
+			console.log("AWS config", app.s3_config)
 	
 			assert( app.s3_config.accessKeyId, "Missing S3 accessKeyID env" )
 			assert( app.s3_config.secretAccessKey, "Missing S3 secretAccessKey env")
