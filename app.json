@@ -2,5 +2,10 @@
   "name": "OJO-BOT Publisher",
   "description": "An experimental publisher using docker",
   "image": "cappelaere/ojo_publisher_base_stack",
-  "addons": []
+  "addons": [],
+  "buildpacks": [
+      {
+        "url": "https://github.com/mojodna/heroku-buildpack-gdal.git"
+      }
+  ]
 }
