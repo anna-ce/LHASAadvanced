@@ -1,6 +1,6 @@
 from datetime import date
 import os
-
+import yaml
 #
 # Configuration Parameters
 #
@@ -244,3 +244,14 @@ db_csv 		= "db2.csv"
 db_xml 		= "db2.xml"
 db_osm		= "db2.osm"
 db_geojson	= "db2.geojson"
+
+#
+# Add new IMERG regions for global/regional processing
+#
+with open('../imerg_regions.yaml', 'r') as ymlfile:
+	imerg_regions = yaml.load(ymlfile)
+imerg_regions = imerg_regions['regions']
+
+# Add these imerg regions to config
+for r in imerg_regions:
+	regions[r] = imerg_regions[r]

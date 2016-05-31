@@ -232,7 +232,7 @@ def process(_dir, files, ymd):
 				
 			# data in 10 * mm
 			if i == 0:
-				total = data
+				total = data.astype(float)
 				total /= 10.0
 			else:
 				total += data * weights[i] / 10.0
@@ -241,6 +241,7 @@ def process(_dir, files, ymd):
 			ds 		= None
 			
 	total /= sum
+	fSumPrecipName 		= os.path.join(_dir, "totalsum.tif")
 	
 	# Get ARI files
 	ARI90 	= os.path.join(config.data_dir, "ant_r", "ARI90.tif")
@@ -249,6 +250,9 @@ def process(_dir, files, ymd):
 	ds_90 	= gdal.Open( ARI90 )
 	band_90	= ds_90.GetRasterBand(1)
 	ndata	= band_90.GetNoDataValue()
+
+	if verbose:
+		save_tif(fSumPrecipName, total, ds_90, gdal.GDT_Float32, 0)
 		
 	data_90	= band_90.ReadAsArray(0, 0, ds_90.RasterXSize, ds_90.RasterYSize ).astype(numpy.float)
 	
@@ -296,7 +300,7 @@ def process(_dir, files, ymd):
 	band_1				= ds1.GetRasterBand(1)
 	data_1				= band_1.ReadAsArray(0, 0, ds1.RasterXSize, ds1.RasterYSize )
 
-	data_1[data_2<2] 	= 0
+	data_1[data_2<3] 	= 0
 	
 	fname_1km_final 	= os.path.join(_dir, "global_landslide_nowcast_%s.tif"%ymd)
 	

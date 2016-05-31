@@ -29,8 +29,10 @@ var util	= require('util'),
 	}
 	
 	function findRegion(lat, lon) {
-		if( InBBOX(lat, lon, app.config.regions.d02.bbox)) return app.config.regions.d02
-		if( InBBOX(lat, lon, app.config.regions.d03.bbox)) return app.config.regions.d03
+		for( var r in app.config.regions) {
+			var region = app.config.regions[r]
+			if( InBBOX(lat, lon, region.bbox)) return region
+		}
 		return undefined
 	}
 	
@@ -878,17 +880,20 @@ module.exports = {
 		var host 	= req.protocol + "://"+ req.get('Host')
 		var url		= host + "/products/"+reg_id+"/"+ymd+"/"+id+"."+fmt
 		
-		var region;
-		
-		switch(reg_id) {
-			case 'd02':
-				region = app.config.regions.d02
-				break;
-			case 'd03':
-				region = app.config.regions.d03
-				break;
-			default:
-				return res.send("Invalid Region", 401)
+			//var region;
+			//switch(reg_id) {
+			//case 'd02':
+			//	region = app.config.regions.d02
+			//	break;
+			//case 'd03':
+			//	region = app.config.regions.d03
+			//	break;
+			//default:
+			//	return res.send("Invalid Region", 401)
+			//}
+		var region = app.config.regions[reg_id]
+		if( region == undefined) {
+			return res.send("Invalid Region:"+reg_id, 401)
 		}
 		
 		//console.log("Headers", req.headers)
@@ -1163,16 +1168,9 @@ module.exports = {
 		var user	= req.session.user
 			
 		console.log("landslide_nowcast_list", reg_id)
-		switch(reg_id) {
-			case 'd02':
-				region = app.config.regions.d02
-				break;
-			case 'd03':
-				region = app.config.regions.d03
-				break;
-			default:
-				return res.send("Invalid Region", 401)
-		}
+	
+		var region = app.config.regions[reg_id]
+		if( region == undefined ) return res.send("Invalid Region:"+reg_id, 401)
 		
 		var dirName	= tmp_dir+"/"+region.bucket+"/*"
 		var ymds 	= []

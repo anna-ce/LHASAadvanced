@@ -341,7 +341,7 @@ def process(gpm_dir, name, gis_file, ymd, regionName, s3_bucket, s3_folder, leve
 
 	zoom = 2
 	if force or not os.path.exists(sw_osm_image):
-		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, list(reversed(adjusted_levels)), hexColors, force, verbose, zoom)
+		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, list(reversed(adjusted_levels)), list(reversed(hexColors)), force, verbose, zoom)
 
 	if force or not os.path.exists(tif_image):
 		cmd 				= "gdalwarp -overwrite -q -co COMPRESS=LZW %s %s"%( subset_file, tif_image)
@@ -353,7 +353,7 @@ def process(gpm_dir, name, gis_file, ymd, regionName, s3_bucket, s3_folder, leve
 	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 	
 	if not verbose: # Cleanup
-		cmd = "rm -rf %s %s %s %s %s %s %s %s %s %s" % (origFileName, origFileName_tfw, supersampled_file, merge_filename, topojson_filename, subset_aux_filename, browse_filename, subset_filename, geojsonDir, levelsDir)
+		cmd = "rm -rf %s %s %s %s %s %s %s %s %s %s %s %s" % (origFileName, origFileName_tfw, supersampled_file, merge_filename, topojson_filename, subset_aux_filename, browse_filename, subset_filename, subset_file, rgb_tif_image, geojsonDir, levelsDir)
 		execute(cmd)
 
 #	
@@ -410,15 +410,15 @@ if __name__ == '__main__':
 	# 12 colors - do not change for products (only levels may change)
 	#   from low intensity to high intensity Green to Red
 	#
-	hexColors     			= [ "#c0c0c0", "#018414","#018c4e","#02b331","#57d005","#b5e700","#f9f602","#fbc500","#FF9400","#FE0000","#C80000","#8F0000"]	
+	hexColors     				= [ "#c0c0c0", "#018414","#018c4e","#02b331","#57d005","#b5e700","#f9f602","#fbc500","#FF9400","#FE0000","#C80000","#8F0000"]	
 
 	for r in regions:
-		region				= config.regions[r]
-		s3_bucket			= region['bucket']
+		region					= config.regions[r]
+		s3_bucket				= region['bucket']
 		
 		if 1:
 			product_name		= 'gpm_1d'
-			levels 				= [ 5,8,13,21,34,55,89,144,233,377,610,987]				# in 0.1 mm
+			levels 				= [ 1,2,3,5,10,20,40,70,120,200,350,600]
 	
 			s3_folder			= os.path.join(product_name, str(year), doy)
 	
@@ -432,9 +432,9 @@ if __name__ == '__main__':
 		#
 		# gpm_3d
 		#
-		if 0:
+		if 1:
 			product_name		= 'gpm_3d'
-			levels 				= [ 13,21,34,55,89,144,233,377,610,987,1597,2584 ]		# in 0.1 mm
+			levels 				= [ 1,2,3,5,10,20,40,70,120,200,350,600]
 		
 			s3_folder			= os.path.join(product_name, str(year), doy)
 		
@@ -448,10 +448,9 @@ if __name__ == '__main__':
 		#
 		# gpm_7d
 		#
-		if 0:
+		if 1:
 			product_name		= 'gpm_7d'
-			levels 				= [ 13,21,34,55,89,144,233,377,610,987,1597,2584]		# in mm
-
+			levels 				= [ 1,2,3,5,10,20,40,70,120,200,350,600]
 			s3_folder			= os.path.join(product_name, str(year), doy)
 
 			gpm_dir				= os.path.join(config.data_dir, product_name, ymd)

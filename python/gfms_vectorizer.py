@@ -81,7 +81,6 @@ class GFMS:
 	def process_highres_region(self, dx, dt):
 		region 		= config.regions[dx]
 		bbox		= region['bbox']
-		tzoom		= region['tiles-zoom']
 		pxsize		= region['pixelsize']
 		thn_width   = region['thn_width']
 		thn_height  = region['thn_height']
@@ -106,9 +105,6 @@ class GFMS:
 		thumbnail_file 			= os.path.join(config.data_dir,"gfms", dx, ymd, "gfms_24_%s_%s.thn.png" % (dx,ymd))
 		
 		static_file 			= os.path.join(config.data_dir,"gfms", dx, "%s_static.tiff" % (dx))
-		
-		#mbtiles_dir 		= os.path.join(config.data_dir,"mbtiles", "gfms_highres_%s_%s" % (dt, dx))
-		#mbtiles_fname 		= mbtiles_dir+".mbtiles"
 		
 		# subset it to our BBOX
 		# use ullr

@@ -341,7 +341,7 @@ def process(gpm_dir, name, gis_file, ymd, regionName, s3_bucket, s3_folder, leve
 
 	zoom = 2
 	if force or not os.path.exists(sw_osm_image):
-		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, list(reversed(adjusted_levels)), hexColors, force, verbose, zoom)
+		MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, list(reversed(adjusted_levels)), list(reversed(hexColors)), force, verbose, zoom)
 
 	if force or not os.path.exists(tif_image):
 		cmd 				= "gdalwarp -overwrite -q -co COMPRESS=LZW %s %s"%( subset_file, tif_image)
@@ -354,8 +354,9 @@ def process(gpm_dir, name, gis_file, ymd, regionName, s3_bucket, s3_folder, leve
 	
 	if not verbose: # Cleanup
 		cmd = "rm -rf %s %s %s %s %s %s %s %s %s %s %s" % (origFileName, origFileName_tfw, supersampled_file, merge_filename, topojson_filename, subset_file, subset_aux_filename, browse_filename, subset_filename, geojsonDir, levelsDir)
+		print cmd
 		execute(cmd)
-
+		
 def process_files(str_file, str_file_tfw, gpm_dir, startTime, product_name, regionName, s3_bucket, s3_folder, levels, hexColors):
 	hour 		= startTime.hour
 
@@ -364,7 +365,7 @@ def process_files(str_file, str_file_tfw, gpm_dir, startTime, product_name, regi
 	
 	if hour > 24:
 		startTime = datetime.datetime(today.year, today.month, today.day, 0, 0, 0)
-		hour = 0
+		hour 	= 0
 		
 	startTime	= datetime.datetime(startTime.year, startTime.month, startTime.day, hour, 0, 0)
 	endTime		= datetime.datetime(startTime.year, startTime.month, startTime.day, 23, 59, 59)
@@ -377,7 +378,8 @@ def process_files(str_file, str_file_tfw, gpm_dir, startTime, product_name, regi
 	if today < endTime:
 		endTime = today
 		
-	print startTime, endTime
+	if verbose:
+		print "processing from", startTime, endTime
 	
 	while startTime < endTime:
 		year	= startTime.year
@@ -422,7 +424,9 @@ def process_files(str_file, str_file_tfw, gpm_dir, startTime, product_name, regi
 				ymd		= arr2[4]
 				gpm_dir	= os.path.join(config.data_dir, product_name, ymd)
 					
-				print gpm_dir, ymd+"."+arr3[0][1:]
+				if verbose:
+					print gpm_dir, ymd+"."+arr3[0][1:]
+				
 				process(gpm_dir, product_name, f, ymd+"."+arr3[0][1:], regionName, s3_bucket, s3_folder, levels, hexColors)
 				
 		except ValueError:
@@ -498,7 +502,7 @@ if __name__ == '__main__':
 		
 		if 1:
 			product_name		= 'gpm_30mn'
-			levels 				= [ 1,2,3,5,8,13,21,34,55,89,144,233]		# in mm
+			levels 				= [ 1,2,3,5,10,20,40,70,120,200,350,600]		# in mm
 
 			s3_folder			= os.path.join(product_name, str(year), doy)
 
@@ -511,7 +515,7 @@ if __name__ == '__main__':
 
 		if 1:
 			product_name		= 'gpm_30mn_1d'
-			levels 				= [ 1,2,3,5,8,13,21,34,55,89,144,233]		# in mm
+			levels 				= [ 1,2,3,5,10,20,40,70,120,200,350,600]		# in mm
 
 			s3_folder			= os.path.join(product_name, str(year), doy)
 
@@ -523,7 +527,7 @@ if __name__ == '__main__':
 		
 		if 1:
 			product_name		= 'gpm_30mn_3hr'
-			levels 				= [ 1,2,3,5,8,13,21,34,55,89,144,233]		# in mm
+			levels 				= [ 1,2,3,5,10,20,40,70,120,200,350,600]		# in mm
 
 			s3_folder			= os.path.join(product_name, str(year), doy)
 

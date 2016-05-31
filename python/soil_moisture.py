@@ -126,7 +126,6 @@ def process_smos_region_cleanup(dx, ymd):
 def process_regional_file(dx, fname):
 	region 		= config.regions[dx]
 	bbox		= region['bbox']
-	tzoom   	= region['tiles-zoom']
 	pixelsize   = region['pixelsize']
 	thn_width   = region['thn_width']
 	thn_height  = region['thn_height']

@@ -56,7 +56,6 @@ def save_tiff(dx, data, fname, ds):
 def build_tif(dx, region, dir, date):
 	region 		= config.regions[dx]
 	bbox		= region['bbox']
-	tzoom   	= region['tiles-zoom']
 	pixelsize   = region['pixelsize']
 	thn_width   = region['thn_width']
 	thn_height  = region['thn_height']

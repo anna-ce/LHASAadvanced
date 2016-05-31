@@ -1,0 +1,64 @@
+{
+    "regions": {
+        "r01": {
+            "id":   1,
+            "name": "North America",
+            "bbox": [ -180, 20, -30, 60 ],
+            "bucket": "ojo-r01"
+        },
+        "r02": {
+            "id":   2,
+            "name": "Central America",
+            "bbox": [ -180, 0, -30, 30],
+            "bucket": "ojo-r02"
+        },
+        "r03": {
+            "id":   3,
+            "name": "South America",
+            "bbox": [ -180, -60, -30, 10 ],
+            "bucket": "ojo-r03"
+        },
+       "r04": {
+           "id":   4,
+           "name": "Europe",
+           "bbox": [ -30, 30, 50, 60 ],
+           "bucket": "ojo-r04"
+       },
+      "r05": {
+          "id":   5,
+          "name": "Africa",
+          "bbox": [ -30, -60, 50, 40 ],
+          "bucket": "ojo-r05"
+      },
+      "r07": {
+          "id":   7,
+          "name": "India",
+          "bbox": [ 60, 0, 100, 40 ],
+          "bucket": "ojo-r07"
+      }, 
+      "r06": {
+          "id":   6,
+          "name": "Middle East",
+          "bbox": [ 20, 10, 90, 60 ],
+          "bucket": "ojo-r06"
+      },
+      "r08": {
+          "id":   8,
+          "name": "Australia",
+          "bbox": [ 100, -60, 180, 10 ],
+          "bucket": "ojo-r08"
+      },
+      "r09": {
+          "id":   10,
+          "name": "China",
+          "bbox": [ 90, 10, 180, 60 ],
+          "bucket": "ojo-r09"
+      },
+      "r10": {
+          "id":   10,
+          "name": "Indian Ocean",
+          "bbox": [ 40, -60, 115, 10 ],
+          "bucket": "ojo-r10"
+      }
+    }
+}

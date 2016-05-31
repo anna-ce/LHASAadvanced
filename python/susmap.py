@@ -51,7 +51,6 @@ def generate_map( dx ):
 	xres	 		= ncols * 10
 	
 	region			= config.regions[dx]
-	tzoom			= region['tiles-zoom']
 
 	# Modified to accomodate issues with ojo-tiler -> Mapbox
 	
@@ -65,24 +64,6 @@ def generate_map( dx ):
 	#	cmd = "gdaldem color-relief -alpha -of GTiff "+input_file_warped+" " + color_file + " " + rgb_warped_file
 	#	execute(cmd)
 
-	# generate mbtiles
-	#if force or not os.path.exists(mbtiles_fname):		
-	#	cmd = "./gdal2tiles.py -z "+ tzoom + " " + rgb_output_file  + " " + mbtiles_dir
-	#	execute(cmd)
-
-	#	cmd = "./mb-util " + mbtiles_dir  + " " + mbtiles_fname
-	#	execute(cmd)
-
-	# copy mbtiles to S3
-	#if force or not os.path.exists(mbtiles_fname):
-	#	bucketName = region['bucket']
-	#	cmd = "aws-copy.py --bucket "+bucketName+ " --file " + mbtiles_fname
-	#	if verbose:
-	#		cmd += " --verbose "
-	#	execute(cmd)
-
-	#	cmd = "rm -rf "+ mbtiles_dir
-	#	execute(cmd)
 		
 	# Modification: Just recolor initial raster at 1km
 	# colorize interpolated raster

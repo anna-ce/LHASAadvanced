@@ -4,6 +4,7 @@ node_modules/*
 python/*.pyc
 python/errorlog.txt
 python/errorpgc.txt
+python/errpgc.txt
 tmp/*
 .monitor
 transifex.auth

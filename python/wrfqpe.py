@@ -101,7 +101,6 @@ def process_wrf_file(dx, file_name):
 	
 	region		= config.regions[dx]	
 	pxsize		= region['pixelsize']
-	tzoom       = region['tiles-zoom']
 	bbox		= region['bbox']
 	thn_width   = region['thn_width']
 	thn_height  = region['thn_height']

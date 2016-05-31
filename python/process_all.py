@@ -182,7 +182,7 @@ if __name__ == '__main__':
 		#process_global_script('gpm_global.py --timespan 3day', 		ydt2)		
 		#process_global_script('gpm_global.py --timespan 7day', 		ydt2)		
 		
-		cmd = "python gpm_daily.py --regions 'global,d02,d03,d08,d09,d10' --date " + ydt
+		cmd = "python gpm_daily.py --regions 'global,d02,d03,d08,d09,d10,r01,r02,r03,r04,r05,r06,r07,r08,r09,r10' --date " + ydt
 		execute(cmd)
 		
 		process_script('landslide_nowcast.py', 	dt, regions)

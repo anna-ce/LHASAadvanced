@@ -62,7 +62,7 @@ var express 		= require('express'),
 				cache_dir: 			app.get('tmp_dir')
 			}
 	
-			console.log("AWS config", app.s3_config)
+			//console.log("AWS config", app.s3_config)
 	
 			assert( app.s3_config.accessKeyId, "Missing S3 accessKeyID env" )
 			assert( app.s3_config.secretAccessKey, "Missing S3 secretAccessKey env")
@@ -141,7 +141,16 @@ var express 		= require('express'),
 		debug("app_port:"+app_port)
 		
 		// load config
-		app.config 	= JSON.parse(fs.readFileSync("./config/config.yaml"));
+		app.config 			= JSON.parse(fs.readFileSync("./config/config.yaml"));
+		
+		// overload regions for GPM App
+		//
+		var global_region		= app.config.regions.Global
+		var regions				= JSON.parse(fs.readFileSync("imerg_regions.yaml"))
+		regions.regions.Global	= global_region
+		app.config.regions		= regions.regions
+		
+		// console.log(app.config.regions)
 		
 		bootApplication(app)
 		

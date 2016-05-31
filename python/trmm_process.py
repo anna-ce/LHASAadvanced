@@ -314,7 +314,6 @@ class TRMM:
 	def process_trmm_region( self, dx ):
 		region 		= config.regions[dx]
 		bbox		= region['bbox']
-		tzoom   	= region['tiles-zoom']
 		pixelsize   = region['pixelsize']
 		thn_width   = region['thn_width']
 		thn_height  = region['thn_height']
