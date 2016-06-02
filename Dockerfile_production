@@ -26,6 +26,7 @@ COPY package.json	/app/user/package.json
 COPY README.md		/app/user/README.md
 COPY rccp_coffeecrops3.geojson /app/user/rccp_coffeecrops3.geojson
 COPY rcmrd_teacrops3.geojson /app/user/rcmrd_teacrops3.geojson
+COPY imerg_regions.yaml	/app/user/imerg_regions.yaml
 
 #COPY Procfile		/app/user
 
