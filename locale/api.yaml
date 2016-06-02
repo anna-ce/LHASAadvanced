@@ -359,14 +359,22 @@ en:
         3: 3mm
         5: 5mm
         8: 8mm
+        10: 10mm
         13: 13mm
+        20: 20mm
         21: 21mm
         34: 34mm
+        40: 40mm
         55: 55mm
+        70: 70mm
         89: 89mm
+        120: 120mm
         144: 144mm
+        200: 200mm
         233: 233mm
+        350: 350mm
         377: 377mm
+        600: 600mm
         
     precipitation_forecasst:
       title: Precipitation
