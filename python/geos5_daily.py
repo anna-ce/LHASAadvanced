@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #
-# GEOS-5 precipitaiton Product
+# GEOS-5 Daily Precipitation Forecast Product
+#
 # http://gmao.gsfc.nasa.gov/products/documents/GEOS_5_FP_File_Specification_ON4v1_0.pdf
 
 import numpy, sys, os, inspect, glob, shutil
@@ -30,7 +31,7 @@ from level import CreateLevel
 
 verbose 	= 0
 force 		= 0
-processes	= multiprocessing.cpu_count()
+processes	= 4 #multiprocessing.cpu_count()
 
 def execute( cmd ):
 	if verbose:
@@ -38,7 +39,8 @@ def execute( cmd ):
 	os.system(cmd)
 
 def multiprocessing_download(filepath, local_filename):
-	print "multiprocessing_download ", filepath, filename
+	if verbose:
+		print "multiprocessing_download ", filepath, local_filename
 
 	try:
 		ftp_site 	= "ftp.nccs.nasa.gov"
@@ -60,7 +62,9 @@ def multiprocessing_download(filepath, local_filename):
 				ftp.close();
 				sys.exit(-2)
 		else:
-			print "file exists", local_filename
+			if verbose:
+				print "file exists", local_filename
+				
 	except Exception as e:
 		print "multiprocessing exception:", sys.exc_info()[0], e
 		

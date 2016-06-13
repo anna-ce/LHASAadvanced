@@ -264,7 +264,7 @@ def Gen_bbox(lat, lon, zoom, width, height):
 #
 # browse_filename is a tiff with color scheme derived from ds with colors
 #
-def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, levels, hexColors, _force, _verbose, zoom=4, scale=1, bbox=[]):
+def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, levels, hexColors, _force, _verbose, zoom=4, scale=1, bbox=[], nodata=None):
 	global force, verbose
 	
 	verbose = _verbose
@@ -284,6 +284,9 @@ def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_o
 	band				= src_ds.GetRasterBand(1)
 	data				= band.ReadAsArray(0, 0, src_ds.RasterXSize, src_ds.RasterYSize )
 	
+	if nodata:
+		data[data==nodata] = 0
+		
 	if scale != 1:
 		if verbose:
 			print "rescale for browse", scale
@@ -306,7 +309,7 @@ def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_o
 	driver 				= gdal.GetDriverByName( "GTiff" )
 	
 	if force or not os.path.isfile(browse_filename):	
-		dst_ds_dataset	= driver.Create( browse_filename, src_ds.RasterXSize, src_ds.RasterYSize, 2, gdal.GDT_Byte, [ 'COMPRESS=DEFLATE', 'ALPHA=YES' ] )
+		dst_ds_dataset	= driver.Create( browse_filename, src_ds.RasterXSize, src_ds.RasterYSize, 2, gdal.GDT_Byte, [ 'COMPRESS=DEFLATE', 'PHOTOMETRIC=MINISBLACK','ALPHA=YES' ] )
 
 		# Levels are in reverse order, higher first
 		# so let's reverse this
@@ -357,13 +360,18 @@ def	MakeBrowseImage(src_ds, browse_filename, subset_filename, osm_bg_image, sw_o
 			if verbose:
 				print "Set BrowseImage ColorEntry", idx+1, decColors[idx]
 	
-		o_band.SetRasterColorTable(ct)	# Causes a TIFF ERROR  Cannot modify tag "PhotometricInterpretation" while writing
+		#try:
+		o_band.SetRasterColorTable(ct)	# Seems to cause a TIFF ERROR  Cannot modify tag "PhotometricInterpretation" while writing
+			
 		o_band.SetNoDataValue(0)
 	
 		dst_ds_dataset.SetGeoTransform( geotransform )
 		dst_ds_dataset.SetProjection( projection )
 		
 		dst_ds_dataset 	= None
+		#except Exception as e:
+		#	print "*** caught", e
+		#	pass
 
 		if verbose:
 			print "Created Browse Image:", browse_filename

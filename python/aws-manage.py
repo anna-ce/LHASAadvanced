@@ -5,7 +5,8 @@
 import sys, os, inspect, math
 
 # Amazon S3
-import boto
+# import boto
+import boto3
 import uuid
 import os, datetime, glob, shutil
 from boto.s3.connection import S3Connection
@@ -15,12 +16,13 @@ from datetime import timedelta
 import config
 import argparse
 
-force		= 0
-verbose		= 0
+force			= 0
+verbose			= 0
 
-buckets = ["ojo-d2", "ojo-d3", "ojo-d4", "ojo-d5", "ojo-d6", "ojo-d7", "ojo-d8", "ojo-d9", "ojo-d10"]
+all_buckets 	= ["ojo-d2", "ojo-d3", "ojo-d4", "ojo-d5", "ojo-d6", "ojo-d7", "ojo-d8", "ojo-d9", "ojo-d10", "ojo-r01", "ojo-r02", "ojo-r03", "ojo-r04", "ojo-r05", "ojo-r06", "ojo-r07", "ojo-r08", "ojo-r09", "ojo-r10", "ojo-global"]
+imerg_buckets 	= ["ojo-r01", "ojo-r02", "ojo-r03", "ojo-r04", "ojo-r05", "ojo-r06", "ojo-r07", "ojo-r08", "ojo-r09", "ojo-r10"]
 
-dirs2	= ["trmm"]
+dirs2			= ["trmm"]
 
 dirs	= [	"ant_r/d02",
 			"ant_r/d03",
@@ -54,7 +56,7 @@ dirs	= [	"ant_r/d02",
 		]
 
 #
-# Only keep one day of these folders
+# Only keep seven days of these folders
 #
 daily_dirs = [
 	"gpm_30mn",
@@ -62,25 +64,22 @@ daily_dirs = [
 	"gpm_30mn_3hr"
 ]
 
-def manage_buckets(conn, dl):
-	for b in buckets:
-		print "** bucket:", b
-		bucket 		= conn.get_bucket(b)
-		rs 			= bucket.list()
-		keysList 	= []
-
-		for key in rs:
-			dt 		= boto.utils.parse_ts(key.last_modified)
-			msg 	= ""
-			name	= key.name
-			dirname	= os.path.dirname(name)
-			#print dirname, dt.date(), dl
-			if (dt.date() < dl):
-				msg = "** delete **"
-				print b, name, key.size, dt, msg
-				keysList.append(key)
+def names(x):
+	return x.name
 			
-		result = bucket.delete_keys([key.name for key in keysList])
+def manage_bucket(b, product, dl):
+	s3 			= boto3.resource('s3')
+	print "** managing bucket:", b
+	bucket 		= s3.Bucket(b)
+	for obj in bucket.objects.filter(Prefix=product+"/"):
+		dt 		= obj.last_modified
+		name	= obj.key
+		
+		if (dt.date() < dl):
+			msg = "** delete **"
+			print b, name, key.size, dt, msg
+			obj.delete()
+		
 			
 def manage_folder(f, dl):
 	basename = os.path.basename(f)
@@ -133,15 +132,32 @@ if __name__ == '__main__':
 		aws_access_key 			= os.environ.get('AWS_ACCESSKEYID')
 		aws_secret_access_key 	= os.environ.get('AWS_SECRETACCESSKEY')
 	
-		conn 	= S3Connection(aws_access_key, aws_secret_access_key)
+		#conn 	= S3Connection(aws_access_key, aws_secret_access_key)
 	
+		s3 		= boto3.client('s3', 
+				aws_access_key_id		= os.environ.get('AWS_ACCESSKEYID'),
+				aws_secret_access_key 	= os.environ.get('AWS_SECRETACCESSKEY')
+		)
+		
 	today 	= datetime.date.today()
-	delta	= timedelta(days= config.DAYS_KEEP)
-	dl		= today - delta
+	
+	# manage daily products (60 days)
+	manage_local_dirs(today - timedelta(days= config.DAYS_KEEP), config.DATA_DIR )
+	
+	# manage 30mn products (7 days)
+	manage_daily_dirs(today - timedelta(days= 7), config.DATA_DIR )
 	
 	if config.USING_AWS_S3_FOR_STORAGE:
-		manage_buckets(conn, dl)
+		dl = today - timedelta(days= config.DAYS_KEEP)
+		for b in all_buckets:
+			for d in dirs
+				manage_bucket(b, d, dl)
+		
+		# Manage IMERG 30mn product buckets for 7 days
+		dl = today - timedelta(days= 7)
+		for b in imerg_buckets:
+			for d in daily_dirs:
+				manage_bucket(b, d, dl)
 
-	manage_local_dirs(dl, config.DATA_DIR )
-	#manage_daily_dirs(today - timedelta(days= 1), config.DATA_DIR )
+	
 	

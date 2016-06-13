@@ -2,7 +2,7 @@
 #
 # Created on 03/02/2016 Pat Cappelaere - Vightel Corporation
 #
-# Generates 24hr Forecast Landslide Estimate every six hours
+# Generates 24hr Forecast Landslide Estimate every 3hrs
 #
 
 import numpy, sys, os, glob, inspect, urllib, shutil
@@ -28,7 +28,7 @@ verbose 	= 0
 ymd 		= config.ymd
 ftp_site 	= "jsimpson.pps.eosdis.nasa.gov"
 
-early_gis_path 	= "/data/imerg/gis/early"
+early_gis_path 	= "/data/imerg/gis/early/"
 late_gis_path	= "/data/imerg/gis/"
 
 def execute(cmd):
@@ -120,7 +120,7 @@ def CreateLevel(l, geojsonDir, fileName, src_ds, data, attr, _force, _verbose):
 		if not verbose:
 			out = "> /dev/null 2>&1"
 			
-		cmd = str.format("topojson -q 1e6 -s 0.0000001 -o {0} -p {3}={1} -- {3}={2} {4}", fileName+".topojson", l, fileName+".geojson", attr, out ); 
+		cmd = str.format("topojson --no-stitch-poles -q 1e6 -s 0.0000001 -o {0} -p {3}={1} -- {3}={2} {4}", fileName+".topojson", l, fileName+".geojson", attr, out ); 
 		execute(cmd)
 	
 		# convert it back to json
@@ -160,8 +160,59 @@ def save_tif(fname, data, ds, type, ct):
 		dst_ds = None
 	else:
 		pass
+
+def get_early_gpm_files(gis_files, product_name, ymd_org, hour):
+	global force, verbose
+	downloaded_files = []
+		
+	err = 0
+		
+	try:
+		ftp = FTP(ftp_site)
+		ftp.login('pat@cappelaere.com','pat@cappelaere.com')	# user anonymous, passwd anonymous@
 	
-def get_late_gpm_files(gis_files, product_name, ymd_org):
+	except Exception as e:
+		print "FTP login Error", sys.exc_info()[0], e
+		print "Exception", e
+		sys.exit(-1)
+
+	for f in gis_files:
+		# Check the year and month, we may be ahead
+		arr 	= f.split(".")
+		ymdarr	= arr[4].split("-")
+		ymd		= ymdarr[0]
+		month	= ymd[4:6]
+		
+		mydir	= os.path.join(config.data_dir, product_name, ymd_org, hour)
+		if not os.path.exists(mydir):
+		    os.makedirs(mydir)
+			
+		filepath = early_gis_path
+		
+		ftp.cwd(filepath)
+		local_filename = os.path.join(mydir, f)
+		if not os.path.exists(local_filename):
+			file = open(local_filename, 'wb')
+			try:
+				ftp.retrbinary("RETR " + f, file.write)
+				if verbose:
+					print "Downloading...", f, " to ", local_filename
+				file.close()
+				downloaded_files.append(f)
+			except Exception as e:
+				if verbose:
+					print "GPM IMERG FTP Error", filepath, e					
+				os.remove(local_filename)
+				err = 1
+
+	ftp.close()
+	
+	if err:
+		sys.exit(-1)
+		
+	return gis_files
+	
+def get_late_gpm_files(gis_files, product_name, ymd_org, hour):
 	global force, verbose
 	downloaded_files = []
 	
@@ -184,7 +235,7 @@ def get_late_gpm_files(gis_files, product_name, ymd_org):
 		ymd		= ymdarr[0]
 		month	= ymd[4:6]
 		
-		mydir	= os.path.join(config.data_dir, product_name, ymd_org)		
+		mydir	= os.path.join(config.data_dir, product_name, ymd_org, hour)		
 		if not os.path.exists(mydir):
 		    os.makedirs(mydir)
 			
@@ -213,7 +264,7 @@ def get_late_gpm_files(gis_files, product_name, ymd_org):
 		
 	return gis_files
 
-def process(_dir, files, ymd):
+def process(_dir, files, ymd, hour):
 	weights = [ 1.00000000, 0.25000000, 0.11111111, 0.06250000, 0.04000000, 0.02777778, 0.02040816]
 	sum		= 1.511797
 	
@@ -222,7 +273,7 @@ def process(_dir, files, ymd):
 	global total
 	
 	for f in files:
-		if f.find(".1day.tif")>0:
+		if f.find(".1day.tif") > 0:
 			fname	= os.path.join(_dir, f)
 			ds 		= gdal.Open( fname )
 			band	= ds.GetRasterBand(1)
@@ -319,7 +370,7 @@ def process(_dir, files, ymd):
 	# High Hazard
 	data_1[data_2>4]	= 2
 	
-	fname_1km_final 	= os.path.join(_dir, "global_landslide_nowcast_%s.tif"%ymd)
+	fname_1km_final 	= os.path.join(_dir, "global_landslide_nowcast_3hr.%s.%s0000.tif"%(ymd, hour))
 	
 	if force or not os.path.exists(fname_1km_final):
 		save_tif(fname_1km_final, data_1, ds2, gdal.GDT_Byte, 1)
@@ -336,8 +387,8 @@ def process(_dir, files, ymd):
 	if not os.path.exists(levelsDir):            
 		os.makedirs(levelsDir)
 		
-	topojson_filename 	= os.path.join(_dir, "global_landslide_nowcast_%s.topojson" % ymd)
-	merge_filename 		= os.path.join(geojsonDir, "global_landslide_nowcast_%s.geojson" % ymd)
+	topojson_filename 	= os.path.join(_dir, "global_landslide_nowcast_3hr.%s.%s0000.topojson" % (ymd, hour))
+	merge_filename 		= os.path.join(geojsonDir, "global_landslide_nowcast_3hr.%s.%s0000.geojson" % (ymd, hour))
 	attr				= "nowcast"
 	if force or not os.path.exists(topojson_filename+".gz"):
 		for l in levels:
@@ -363,18 +414,18 @@ def process(_dir, files, ymd):
 		    json.dump(jsonDict, outfile)	
 
 		# Convert to topojson
-		cmd 	= "topojson -p -o "+ topojson_filename + " " + merge_filename + " > /dev/null 2>&1"
+		cmd 	= "topojson --no-stitch-poles -p -o "+ topojson_filename + " " + merge_filename + " > /dev/null 2>&1"
 		execute(cmd)
 
 		cmd 	= "gzip -f --keep "+ topojson_filename
 		execute(cmd)
 		
-	osm_bg_image		= os.path.join(_dir, "..", "osm_bg.png")
-	sw_osm_image		= os.path.join(_dir, "global_landslide_nowcast_%s_thn.jpg" % ymd)
+	osm_bg_image		= os.path.join(_dir, "..", "..", "osm_bg.png")
+	sw_osm_image		= os.path.join(_dir, "global_landslide_nowcast_3hr.%s.%s0000_thn.jpg" % (ymd,hour))
 	
-	browse_filename		= os.path.join(geojsonDir, "global_browse_%s.tif" % ymd)
-	subset_filename 	= os.path.join(geojsonDir, "global.%s_small_browse.tif" % (ymd))
-	transparent			= os.path.join(geojsonDir, "global.%s_small_browse_transparent.tif" % (ymd))
+	browse_filename		= os.path.join(geojsonDir, "global_browse.%s.%s0000.tif" % (ymd,hour))
+	subset_filename 	= os.path.join(geojsonDir, "global.%s.%s0000.small_browse.tif" % (ymd,hour))
+	transparent			= os.path.join(geojsonDir, "global.%s.%s0000.small_browse_transparent.tif" % (ymd,hour))
 	
 	if not os.path.exists(osm_bg_image):
 		ullat = 85
@@ -384,7 +435,6 @@ def process(_dir, files, ymd):
 		
 		print "wms", ullat, ullon, lrlat, lrlon
 		wms(ullat, ullon, lrlat, lrlon, osm_bg_image)
-	
 	
 	#if force or not os.path.exists(sw_osm_image):
 	#	MakeBrowseImage(ds1, browse_filename, subset_filename, osm_bg_image, sw_osm_image,levels, hexColors, force, verbose, zoom)
@@ -449,57 +499,97 @@ def cleanup():
 # python landslide_nowcast_global.py --date 2016-02-29 -v
 if __name__ == '__main__':
 	
-	parser 		= argparse.ArgumentParser(description='Generate Forecast Landslide Estimates')
-	apg_input 	= parser.add_argument_group('Input')
+	parser 			= argparse.ArgumentParser(description='Generate Forecast Landslide Estimates')
+	apg_input 		= parser.add_argument_group('Input')
 		
 	apg_input.add_argument("-f", "--force", 	action='store_true', help="Forces new products to be generated")
 	apg_input.add_argument("-v", "--verbose", 	action='store_true', help="Verbose Flag")
 	apg_input.add_argument("-d", "--date", 		help="date: 2014-11-20 or today if not defined")
 	
-	todaystr		= date.today().strftime("%Y-%m-%d")
-	
 	options 		= parser.parse_args()
+	dt				= options.date
 	force			= options.force
 	verbose			= options.verbose
-	dt				= options.date or todaystr
-	
+
+	if not dt:
+		utc			= datetime.datetime.utcnow()	
+		hour		= utc.hour
+		hour		= (hour/3) * 3
+		hour		-= 6
+		today		= datetime.datetime( utc.year, utc.month, utc.day, hour)
+		dt			= today.strftime("%Y-%m-%dT%H:00:00")
+			
+	today			= parse(dt)
 	basedir 		= os.path.dirname(os.path.realpath(sys.argv[0]))
 	
-	today			= parse(dt)
 	year			= today.year
 	month			= today.month
 	day				= today.day
 	ymd				= "%d%02d%02d" % (year, month, day)
 	doy				= today.strftime('%j')
-	product_name	= "global_landslide_nowcast"
+	
+	hour			= today.hour
+	
+	product_name	= "global_landslide_nowcast_3hr"
 	s3_folder		= os.path.join(product_name, str(year), doy)
 	
 	region			= config.regions['global']
 	s3_bucket		= region['bucket']
 
-	_dir	= os.path.join(config.data_dir, product_name, ymd)
+	_dir			= os.path.join(config.data_dir, product_name, ymd, "%02d"%hour)
 	if not os.path.exists(_dir):
 	    os.makedirs(_dir)
 	
 	if verbose:
-		print "generating landslide global nowcast for", today.strftime("%Y-%m-%d")
-		
-	# Get last 7 days
-	files = []
-	for i in range(0,7):
-		dt	 				= today + datetime.timedelta(days= -i-1)
-		year				= dt.year
-		month				= dt.month
-		day					= dt.day
+		print "generating landslide global nowcast for", today.strftime("%Y-%m-%dT%H:00:00")	
+	
+	#
+	# Get Early Data
+	#
+	early_files = []
+	elapsed_minutes	= hour*2*30 + 30
+	for i in range(0,1):
+		today	 			= today + datetime.timedelta(days= -i)
+		tyear				= today.year
+		tmonth				= today.month
+		tday				= today.day
+		thour				= today.hour
 
-		gis_file_day		= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.1day.tif"%(year, month, day)
-		gis_file_day_tfw 	= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S233000-E235959.1410.V03E.1day.tfw"%(year, month, day)
+		gis_file_day		= "3B-HHR-E.MS.MRG.3IMERG.%d%02d%02d-S%02d3000-E%02d5959.%04d.V03E.1day.tif" % (tyear, tmonth, tday, thour, thour, elapsed_minutes)
+		gis_file_day_tfw 	= "3B-HHR-E.MS.MRG.3IMERG.%d%02d%02d-S%02d3000-E%02d5959.%04d.V03E.1day.tfw" % (tyear, tmonth, tday, thour, thour, elapsed_minutes)
 
-		files.append(gis_file_day)
-		files.append(gis_file_day_tfw)
+		early_files.append(gis_file_day)
+		early_files.append(gis_file_day_tfw)
+		#print gis_file_day
+	
+	get_early_gpm_files(early_files, product_name, ymd, "%02d"%hour)
+	
+	#
+	# Get 6 days from Late
+	#
+	late_files = []
+	for i in range(1,7):
+		today	 			= today + datetime.timedelta(days= -1)
+		tyear				= today.year
+		tmonth				= today.month
+		tday				= today.day
+		thour				= today.hour
+
+		gis_file_day		= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S%02d3000-E%02d5959.%04d.V03E.1day.tif" % (tyear, tmonth, tday, thour, thour, elapsed_minutes)
+		gis_file_day_tfw 	= "3B-HHR-L.MS.MRG.3IMERG.%d%02d%02d-S%02d3000-E%02d5959.%04d.V03E.1day.tfw" % (tyear, tmonth, tday, thour, thour, elapsed_minutes)
+
+		#print gis_file_day
+		late_files.append(gis_file_day)
+		late_files.append(gis_file_day_tfw)
 		
-	get_late_gpm_files(files, product_name, ymd)
-	process(_dir, files, ymd)
+	get_late_gpm_files(late_files, product_name, ymd, "%02d"%hour)
+	
+	#
+	# Merge all the files
+	#
+	all_files = early_files + late_files
+	
+	process(_dir, all_files, ymd, "%02d"%(hour))
 	
 	cleanup()
 	

@@ -1,0 +1,770 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.56423,
+                    -1.40997
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "268",
+                "classrooms": "8",
+                "teachers": "8",
+                "id": "0",
+                "name": "Kenya Connect Learning Center"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.5802,
+                    -1.46625
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "268",
+                "classrooms": "8",
+                "teachers": "8",
+                "id": "1",
+                "name": "Itunduni Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.5853,
+                    -1.36189
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "392",
+                "classrooms": "8",
+                "teachers": "9",
+                "id": "2",
+                "name": "Kaitha Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.6873086,
+                    0.090696
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "893",
+                "classrooms": "25",
+                "teachers": "21",
+                "id": "3",
+                "name": "Kambiti Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.60578,
+                    -1.49448
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "514",
+                "classrooms": "15",
+                "teachers": "13",
+                "id": "4",
+                "name": "Kikaso Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.638872,
+                    -1.278552
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "541",
+                "classrooms": "8",
+                "teachers": "2",
+                "id": "5",
+                "name": "Kilaatu Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.56819,
+                    -1.43558
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "168",
+                "classrooms": "8",
+                "teachers": "8",
+                "id": "6",
+                "name": "Kisinzini Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    38.17523,
+                    -2.47137
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "153",
+                "classrooms": "8",
+                "teachers": "7",
+                "id": "7",
+                "name": "Kithiiani Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.58231,
+                    -1.42176
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "164",
+                "classrooms": "8",
+                "teachers": "8",
+                "id": "8",
+                "name": "Kituiu Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.58062,
+                    -1.48116
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "333",
+                "classrooms": "8",
+                "teachers": "8",
+                "id": "9",
+                "name": "Kyamatula Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.63334,
+                    -1.44147
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "219",
+                "classrooms": "8",
+                "teachers": "9",
+                "id": "10",
+                "name": "Kyeengai Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.59634,
+                    -1.4521
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "277",
+                "classrooms": "9",
+                "teachers": "8",
+                "id": "11",
+                "name": "Lema Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.23189,
+                    -1.3727
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "477",
+                "classrooms": "15",
+                "teachers": "13",
+                "id": "12",
+                "name": "Maanzoni Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.56364,
+                    -1.42396
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "300",
+                "classrooms": "8",
+                "teachers": "8",
+                "id": "13",
+                "name": "Makaalu Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.78586,
+                    -1.82706
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "413",
+                "classrooms": "9",
+                "teachers": "12",
+                "id": "14",
+                "name": "Mavindini Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.55064,
+                    -1.39235
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "330",
+                "classrooms": "8",
+                "teachers": "7",
+                "id": "15",
+                "name": "Mbaikini Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.531712,
+                    -1.3635965
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "",
+                "classrooms": "",
+                "teachers": "",
+                "id": "16",
+                "name": "Miini Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.63179,
+                    -1.4128
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "210",
+                "classrooms": "8",
+                "teachers": "9",
+                "id": "17",
+                "name": "Miondoni Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.55242,
+                    -1.34261
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "270",
+                "classrooms": "8",
+                "teachers": "9",
+                "id": "18",
+                "name": "Mutyangoi Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.5293,
+                    -1.37864
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "357",
+                "classrooms": "11",
+                "teachers": "10",
+                "id": "19",
+                "name": "Mwaasua Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.56554,
+                    -1.34743
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "330",
+                "classrooms": "8",
+                "teachers": "9",
+                "id": "20",
+                "name": "Ndeini SA Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.58685,
+                    -1.60242
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "383",
+                "classrooms": "9",
+                "teachers": "10",
+                "id": "21",
+                "name": "Nduluku Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.74862,
+                    -2.10019
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "207",
+                "classrooms": "9",
+                "teachers": "9",
+                "id": "23",
+                "name": "Ngomano Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.56767,
+                    -1.45446
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "402",
+                "classrooms": "8",
+                "teachers": "9",
+                "id": "24",
+                "name": "Ngului Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.52,
+                    -1.41768
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "408",
+                "classrooms": "13",
+                "teachers": "9",
+                "id": "25",
+                "name": "Nunga Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    38.303,
+                    -1.1463
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "322",
+                "classrooms": "8",
+                "teachers": "9",
+                "id": "26",
+                "name": "Nyaani Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.496328,
+                    -1.126596
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "355",
+                "classrooms": "8",
+                "teachers": "10",
+                "id": "27",
+                "name": "Sofia Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.60252,
+                    -1.3838
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "271",
+                "classrooms": "9",
+                "teachers": "10",
+                "id": "28",
+                "name": "Wakaela Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.5588106,
+                    -1.4090383
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "",
+                "classrooms": "",
+                "teachers": "",
+                "id": "29",
+                "name": "Wamunyu Abc Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.5017,
+                    -1.45427
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "194",
+                "classrooms": "8",
+                "teachers": "9",
+                "id": "31",
+                "name": "Kisola Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.50765,
+                    -1.44429
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "316",
+                "classrooms": "14",
+                "teachers": "9",
+                "id": "32",
+                "name": "Kaliambeu Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.98058,
+                    -1.2
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "399",
+                "classrooms": "12",
+                "teachers": "12",
+                "id": "33",
+                "name": "Kyaani Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.556,
+                    -1.47864
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "212",
+                "classrooms": "9",
+                "teachers": "9",
+                "id": "34",
+                "name": "Kyaimu Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.48614,
+                    -1.45483
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "130",
+                "classrooms": "0",
+                "teachers": "9",
+                "id": "35",
+                "name": "Mbaani primary school Mbaani Secondary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.89656,
+                    -1.14818
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "539",
+                "classrooms": "13",
+                "teachers": "14",
+                "id": "36",
+                "name": "Iiani Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.5986,
+                    -1.52443
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "263",
+                "classrooms": "8",
+                "teachers": "8",
+                "id": "37",
+                "name": "Kikulumi Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.581,
+                    -1.681
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "329",
+                "classrooms": "9",
+                "teachers": "11",
+                "id": "38",
+                "name": "Mavitini Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.72968,
+                    -0.84095
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "227",
+                "classrooms": "8",
+                "teachers": "9",
+                "id": "40",
+                "name": "Kithuia Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.65431,
+                    -1.49766
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "182",
+                "classrooms": "8",
+                "teachers": "9",
+                "id": "41",
+                "name": "Kivauni Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.62042,
+                    -1.54231
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "196",
+                "classrooms": "8",
+                "teachers": "8",
+                "id": "42",
+                "name": "Kyalavo Primary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.53368,
+                    -1.43565
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "48",
+                "classrooms": "0",
+                "teachers": "4",
+                "id": "45",
+                "name": "Nyaani Secondary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.009806,
+                    -0.596695277
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "10",
+                "classrooms": "0",
+                "teachers": "3",
+                "id": "46",
+                "name": "Ngamba Secondary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.53763,
+                    -1.34288
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "194",
+                "classrooms": "0",
+                "teachers": "9",
+                "id": "47",
+                "name": "Kilembwa Secondary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.58062,
+                    -1.48116
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "18",
+                "classrooms": "0",
+                "teachers": "1",
+                "id": "52",
+                "name": "Kyamatula Secondary School"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    37.26116,
+                    -1.52017
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "students": "142",
+                "classrooms": "11",
+                "teachers": "24",
+                "id": "54",
+                "name": "Machakos School for the Deaf"
+            }
+        }
+    ]
+}

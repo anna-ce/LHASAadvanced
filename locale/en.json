@@ -268,7 +268,9 @@
         "flood_catalog": "Flood Catalog",
         "frost": "Frost",
         "landslide_catalog": "Landslide Catalog",
-        "global_landslide_nowcast": "Global_Landslide Nowcast",
+        "global_landslide_nowcast": "Global Landslide Nowcast",
+        "global_landslide_nowcast_3hr": "Global Landslide Nowcast 3hr",
+        "global_landslide_nowcast_30mn": "Global Landslide Nowcast 30mn",
         "landslide_nowcast": "Landslide Forecast",
         "landslide_forecast": "Landslide Forecast",
         "landslide_susceptibility": "Landslide Susceptibility",
@@ -654,6 +656,18 @@
         },
         "global_landslide_nowcast": {
             "title": "Global Landslide Nowcast",
+            "credits": "NASA GSFC",
+            "source": {
+                "label": "Source",
+                "source": "NASA GSFC"
+            },
+            "legend": {
+                "level_1": "moderate",
+                "level_2": "high"
+            }
+        },
+        "global_landslide_nowcast_3hr": {
+            "title": "Global Landslide Nowcast 3hr",
             "credits": "NASA GSFC",
             "source": {
                 "label": "Source",

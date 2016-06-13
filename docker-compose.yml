@@ -48,3 +48,8 @@ development:
     - '7465:7465'
     - '7464:7464'
     
+conda:
+  build: .
+  dockerfile: Dockerfile_conda
+
+

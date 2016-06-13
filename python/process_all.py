@@ -197,7 +197,7 @@ if __name__ == '__main__':
 		process_global_script('gfms_vectorizer.py', ydt)
 		
 		process_global_script('landslide_nowcast_global.py', dt)
-		#process_global_script('geos5.py', dt)
+		process_global_script('geos5_daily.py', dt)
 
 		#process_script('viirs_CHLA.py', ydt, regions2)
 		
