@@ -520,8 +520,8 @@ if __name__ == '__main__':
 		minutes		= utc.minute
 		minutes		= (minutes/30) * 30
 		
-		hour		-= 6
-		today		= datetime.datetime( utc.year, utc.month, utc.day, hour, minutes)
+		today		= datetime.datetime( utc.year, utc.month, utc.day, hour, minutes) + datetime.timedelta(hours= -6)
+
 		dt			= today.strftime("%Y-%m-%dT%H:%M:00")
 			
 	today			= parse(dt)

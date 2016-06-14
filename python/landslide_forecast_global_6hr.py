@@ -2,7 +2,7 @@
 #
 # Created on 03/02/2016 Pat Cappelaere - Vightel Corporation
 #
-# Generates 24hr Forecast Landslide Estimate every 3hrs
+# Generates 24hr Forecast Landslide Estimate every 6hrs
 #
 
 import numpy, sys, os, glob, inspect, urllib, shutil
@@ -370,7 +370,7 @@ def process(_dir, files, ymd, hour):
 	# High Hazard
 	data_1[data_2>4]	= 2
 	
-	fname_1km_final 	= os.path.join(_dir, "global_landslide_nowcast_3hr.%s.%s0000.tif"%(ymd, hour))
+	fname_1km_final 	= os.path.join(_dir, "global_landslide_forecast_6hr.%s.%s0000.tif"%(ymd, hour))
 	
 	if force or not os.path.exists(fname_1km_final):
 		save_tif(fname_1km_final, data_1, ds2, gdal.GDT_Byte, 1)
@@ -387,8 +387,8 @@ def process(_dir, files, ymd, hour):
 	if not os.path.exists(levelsDir):            
 		os.makedirs(levelsDir)
 		
-	topojson_filename 	= os.path.join(_dir, "global_landslide_nowcast_3hr.%s.%s0000.topojson" % (ymd, hour))
-	merge_filename 		= os.path.join(geojsonDir, "global_landslide_nowcast_3hr.%s.%s0000.geojson" % (ymd, hour))
+	topojson_filename 	= os.path.join(_dir, "global_landslide_forecast_6hr.%s.%s0000.topojson" % (ymd, hour))
+	merge_filename 		= os.path.join(geojsonDir, "global_landslide_forecast_6hr.%s.%s0000.geojson" % (ymd, hour))
 	attr				= "nowcast"
 	if force or not os.path.exists(topojson_filename+".gz"):
 		for l in levels:
@@ -421,7 +421,7 @@ def process(_dir, files, ymd, hour):
 		execute(cmd)
 		
 	osm_bg_image		= os.path.join(_dir, "..", "..", "osm_bg.png")
-	sw_osm_image		= os.path.join(_dir, "global_landslide_nowcast_3hr.%s.%s0000_thn.jpg" % (ymd,hour))
+	sw_osm_image		= os.path.join(_dir, "global_landslide_forecast_6hr.%s.%s0000_thn.jpg" % (ymd,hour))
 	
 	browse_filename		= os.path.join(geojsonDir, "global_browse.%s.%s0000.tif" % (ymd,hour))
 	subset_filename 	= os.path.join(geojsonDir, "global.%s.%s0000.small_browse.tif" % (ymd,hour))
@@ -512,15 +512,13 @@ if __name__ == '__main__':
 	verbose			= options.verbose
 
 	if not dt:
-		utc			= datetime.datetime.utcnow()
-		print utc
-		
+		utc			= datetime.datetime.utcnow()	
 		hour		= utc.hour
-		hour		= (hour/3) * 3
+		hour		= (hour/6) * 6
 		today		= datetime.datetime( utc.year, utc.month, utc.day, hour) + datetime.timedelta(hours= -6)
 
 		dt			= today.strftime("%Y-%m-%dT%H:00:00")
-	
+			
 	today			= parse(dt)
 	basedir 		= os.path.dirname(os.path.realpath(sys.argv[0]))
 	
@@ -532,7 +530,7 @@ if __name__ == '__main__':
 	
 	hour			= today.hour
 	
-	product_name	= "global_landslide_nowcast_3hr"
+	product_name	= "global_landslide_forecast_6hr"
 	s3_folder		= os.path.join(product_name, str(year), doy)
 	
 	region			= config.regions['global']
@@ -546,25 +544,10 @@ if __name__ == '__main__':
 		print "generating landslide global nowcast for", today.strftime("%Y-%m-%dT%H:00:00")	
 	
 	#
-	# Get Early Data
+	# Get Forecast Data
 	#
-	early_files = []
-	elapsed_minutes	= hour*2*30 + 30
-	for i in range(0,1):
-		today	 			= today + datetime.timedelta(days= -i)
-		tyear				= today.year
-		tmonth				= today.month
-		tday				= today.day
-		thour				= today.hour
-
-		gis_file_day		= "3B-HHR-E.MS.MRG.3IMERG.%d%02d%02d-S%02d3000-E%02d5959.%04d.V03E.1day.tif" % (tyear, tmonth, tday, thour, thour, elapsed_minutes)
-		gis_file_day_tfw 	= "3B-HHR-E.MS.MRG.3IMERG.%d%02d%02d-S%02d3000-E%02d5959.%04d.V03E.1day.tfw" % (tyear, tmonth, tday, thour, thour, elapsed_minutes)
-
-		early_files.append(gis_file_day)
-		early_files.append(gis_file_day_tfw)
-		#print gis_file_day
+	forecast_files = []
 	
-	get_early_gpm_files(early_files, product_name, ymd, "%02d"%hour)
 	
 	#
 	# Get 6 days from Late

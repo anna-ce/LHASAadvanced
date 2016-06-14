@@ -24,6 +24,8 @@ Check PREREQUISITES.md
 ## Local Docker
 Install docker and start VM
 Start Docker VM via Docker Quickstart Terminal
+or might have to do: $ docker-machine start
+
 > docker --version
 Docker version 1.11.0
 
@@ -75,4 +77,9 @@ Push it
 > docker login
 
 > docker push cappelaere/ojo_publisher_base_stack
+
+## Docker Deployment using Convox
+$ convox login console.convox.com
+$ convox apps info
+$ convox deploy
 
