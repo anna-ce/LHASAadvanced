@@ -173,8 +173,13 @@ class GFMS:
 		]
 	
 		if not verbose:		# probably debugging, so do not dispose of artifacts
-			cmd = "rm -f "+ " ".join(delete_files)
-			self.execute(cmd)
+			if config.USING_AWS_S3_FOR_STORAGE:
+				_dir = os.path.join(config.data_dir,"gfms", dx, ymd)
+				cmd = "rm -rf %s " % (_dir)
+				execute(cmd)
+			else:
+				cmd = "rm -f "+ " ".join(delete_files)
+				self.execute(cmd)
 			
 	def process_highres_d02(self, dt):
 		self.process_highres_region("d02", dt)

@@ -34,7 +34,7 @@ RUN conda update --yes conda && conda install pip --yes
 RUN conda install \
   netcdf4 libnetcdf proj4 pyproj geos hdf4 hdf5 h5py lxml gdal libgdal \
   numpy scipy matplotlib ipython pillow
-RUN pip install boto pytrmm python-dateutil
+RUN pip install boto boto3 pytrmm python-dateutil
 
 # Install potrace
 RUN mkdir ${MINICONDA}/potrace && cd ${MINICONDA}/potrace && wget http://potrace.sourceforge.net/download/1.13/potrace-1.13.tar.gz && tar -zxf potrace-1.13.tar.gz

@@ -29,6 +29,9 @@ var util	= require('util'),
 	
 	
 module.exports = {
+	check: function(req, res) {  
+		res.sendStatus(200)
+	},
 	index: function(req, res) {  
 		var region 	= app.config.regions['Global']
 		var user	= req.session.user

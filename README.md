@@ -35,7 +35,7 @@ Docker version 1.11.0
 > docker ps
 
 ### Build locally
-> docker-compose build development
+> docker-compose build development [use docker-compose-dev.yaml]
 > docker images
 
 Start shell in development mode... you can start processing python scripts
@@ -83,3 +83,22 @@ $ convox login console.convox.com
 $ convox apps info
 $ convox deploy
 
+### Deployment Configuration
+#### Note size worker to avoid out of memory (OOM) errors
+$ convox scale worker --memory=2048
+$ convox scale worker --count=2
+$ convox scale web --memory=2048
+$ convox scale web --count=2
+
+$ convox rack scale --type=m3.large --count=4
+######$ convox rack params set Autoscale=Yes
+
+#### Debugging
+$ convox ps
+$ convox exec <ID> bash
+$ convox instances
+	
+#### Task Scheduling (https://convox.com/docs/scheduled-tasks/)
+Add convox.cron commands to docker-compose.yaml
+$ convox run worker <command> --detach
+	

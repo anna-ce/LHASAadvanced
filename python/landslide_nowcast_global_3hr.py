@@ -458,7 +458,10 @@ def process(_dir, files, ymd, hour):
 	file_list = [ sw_osm_image, topojson_filename+".gz", fname_1km_final ]
 	CopyToS3( s3_bucket, s3_folder, file_list, 1, 1 )
 	
-	if not verbose: # Cleanup
+	if config.USING_AWS_S3_FOR_STORAGE:
+		cmd = "rm -rf %s " % (_dir)
+		execute(cmd)
+	else:
 		gpm_files = os.path.join(_dir, "3B-HHR*")
 		cmd = "rm -rf %s %s %s %s %s %s" % (gpm_files, fname_1km, fname, topojson_filename, geojsonDir, levelsDir)
 		execute(cmd)
@@ -499,7 +502,7 @@ def cleanup():
 # python landslide_nowcast_global.py --date 2016-02-29 -v
 if __name__ == '__main__':
 	
-	parser 			= argparse.ArgumentParser(description='Generate Forecast Landslide Estimates')
+	parser 			= argparse.ArgumentParser(description='Generate Landslide Nowcast')
 	apg_input 		= parser.add_argument_group('Input')
 		
 	apg_input.add_argument("-f", "--force", 	action='store_true', help="Forces new products to be generated")

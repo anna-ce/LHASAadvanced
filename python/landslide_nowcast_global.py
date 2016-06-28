@@ -377,10 +377,10 @@ def process(_dir, files, ymd):
 	transparent			= os.path.join(geojsonDir, "global.%s_small_browse_transparent.tif" % (ymd))
 	
 	if not os.path.exists(osm_bg_image):
-		ullat = 85
-		ullon = -180
-		lrlat = -85
-		lrlon = 180
+		ullat 			= 85
+		ullon 			= -180
+		lrlat 			= -85
+		lrlon 			= 180
 		
 		print "wms", ullat, ullon, lrlat, lrlon
 		wms(ullat, ullon, lrlat, lrlon, osm_bg_image)
@@ -409,9 +409,13 @@ def process(_dir, files, ymd):
 	CopyToS3( s3_bucket, s3_folder, file_list, 1, 1 )
 	
 	if not verbose: # Cleanup
-		gpm_files = os.path.join(_dir, "3B-HHR*")
-		cmd = "rm -rf %s %s %s %s %s %s" % (gpm_files, fname_1km, fname, topojson_filename, geojsonDir, levelsDir)
-		execute(cmd)
+		if config.USING_AWS_S3_FOR_STORAGE:
+			cmd = "rm -rf %s " % (_dir)
+			execute(cmd)
+		else:
+			gpm_files = os.path.join(_dir, "3B-HHR*")
+			cmd = "rm -rf %s %s %s %s %s %s" % (gpm_files, fname_1km, fname, topojson_filename, geojsonDir, levelsDir)
+			execute(cmd)
 		
 def get_gpm_files( _dir, files):
 	print files

@@ -13,15 +13,19 @@ web:
     - PYTHONPATH=/app/user/python:$PYTHONPATH
   ports:
     - '80:3000'
-
+  
 worker:
   build: .
   dockerfile: Dockerfile_production
   working_dir: /app/user
   command: . /app/user/envs.docker.sh && node qserver.js
   expose: 
-    - '3001'  
+    - '3001'
   environment:
     - PYTHONPATH=/app/user/python:$PYTHONPATH
     - PORT=3001
-
+  labels:
+    - convox.cron.Every30mnJob=*/30 * * * ? python /app/user/python/queue_process_30mn.py
+    - convox.cron.Every3hrJob=0 */3 * * ? python /app/user/python/queue_process_3hr.py
+    - convox.cron.Every6hrJob=0 */6 * * ? python /app/user/python/queue_process_6hr.py
+    - convox.cron.DailyJob=0 15 * * ? python /app/user/python/queue_process_daily.py

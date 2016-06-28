@@ -1,0 +1,31 @@
+web:
+  build: .
+  dockerfile: Dockerfile_production
+  working_dir: /app/user
+  command: . /app/user/envs.docker.sh && node server.js
+  expose: 
+    - '3000'
+    - '5432'
+    - '6002'
+  environment:
+    - NODE_ENV=production
+    - PORT=3000
+    - PYTHONPATH=/app/user/python:$PYTHONPATH
+  ports:
+    - '80:3000'
+
+worker:
+  build: .
+  dockerfile: Dockerfile_production
+  working_dir: /app/user
+  command: . /app/user/envs.docker.sh && node qserver.js
+  expose: 
+    - '3001'  
+  environment:
+    - PYTHONPATH=/app/user/python:$PYTHONPATH
+    - PORT=3001
+  labels:
+    - convox.cron.Every30mnJob=*/30 * * * ? sh /app/user/python/process_30mn.sh
+    - convox.cron.Every3hrJob=0 */3 * * ? sh /app/user/python/process_3hr.sh
+    - convox.cron.Every6hrJob=0 */6 * * ? sh /app/user/python/process_6hr.sh
+    - convox.cron.DailyJob=0 15 * * ? sh /app/user/python/process_daily.sh

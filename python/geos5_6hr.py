@@ -31,7 +31,7 @@ from level import CreateLevel
 
 verbose 	= 0
 force 		= 0
-processes	= 4 #multiprocessing.cpu_count()
+processes	= multiprocessing.cpu_count()
 
 def execute( cmd ):
 	if verbose:
@@ -405,14 +405,18 @@ if __name__ == '__main__':
 	process_file( mydir, flipped_tif_filename, s3_bucket, s3_folder)
 		
 	if not verbose:
-		cmd = "rm %s" % tif_filename
-		execute(cmd)
-		
-		for f in files:
-			ffilename 		= os.path.join(mydir,f)
-			ftif_filename 	= ffilename + ".tif"
-			cmd = "rm %s %s" %(ffilename, ftif_filename)
+		if config.USING_AWS_S3_FOR_STORAGE:
+			cmd = "rm -rf %s " % (mydir)
 			execute(cmd)
-			cmd = "rm %s %s" %(tif_filename, rgb_tif_filename)
+		else:
+			cmd = "rm %s" % tif_filename
+			execute(cmd)
+		
+			for f in files:
+				ffilename 		= os.path.join(mydir,f)
+				ftif_filename 	= ffilename + ".tif"
+				cmd = "rm %s %s" %(ffilename, ftif_filename)
+				execute(cmd)
+				cmd = "rm %s %s" %(tif_filename, rgb_tif_filename)
 
 	cleanupdir(config.GEOS5_DIR_6hr)

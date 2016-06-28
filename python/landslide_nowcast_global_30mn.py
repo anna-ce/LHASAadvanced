@@ -459,9 +459,14 @@ def process(_dir, files, ymd, hour_min):
 	CopyToS3( s3_bucket, s3_folder, file_list, 1, 1 )
 	
 	if not verbose: # Cleanup
-		gpm_files = os.path.join(_dir, "3B-HHR*")
-		cmd = "rm -rf %s %s %s %s %s %s" % (gpm_files, fname_1km, fname, topojson_filename, geojsonDir, levelsDir)
-		execute(cmd)
+		if config.USING_AWS_S3_FOR_STORAGE:
+			cmd = "rm -rf %s " % (_dir)
+			execute(cmd)
+		
+		else:
+			gpm_files = os.path.join(_dir, "3B-HHR*")
+			cmd = "rm -rf %s %s %s %s %s %s" % (gpm_files, fname_1km, fname, topojson_filename, geojsonDir, levelsDir)
+			execute(cmd)
 		
 def get_gpm_files( _dir, files):
 	print files

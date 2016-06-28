@@ -211,6 +211,8 @@ def process(gpm_dir, name, gis_file, ymd, regionName, s3_bucket, s3_folder, leve
 
 	origFileName 			= os.path.join(gpm_dir,gis_file)
 	
+	print "processing ", regionName, name, gis_file
+	
 	if not os.path.exists(origFileName):
 		print "File does not exist", origFileName
 		return
@@ -227,7 +229,7 @@ def process(gpm_dir, name, gis_file, ymd, regionName, s3_bucket, s3_folder, leve
 	origFileName_tfw		= origFileName.replace(".tif", ".tfw")
 	
 	supersampled_file		= os.path.join(region_dir, "%s.%s_x2.tif" % (name, ymd))
-	merge_filename 			= os.path.join(geojsonDir, "%s.%s.geojson" % (name, ymd))
+	merge_filename 			= os.path.join(geojsonDir, "..", "%s.%s.geojson" % (name, ymd))
 	topojson_filename 		= os.path.join(geojsonDir, "..", "%s.%s.topojson" % (name,ymd))
 	topojson_gz_filename 	= os.path.join(region_dir, "%s.%s.topojson.gz" % (name,ymd))
 	browse_filename 		= os.path.join(geojsonDir, "..", "%s.%s_browse.tif" % (name,ymd))
@@ -239,7 +241,7 @@ def process(gpm_dir, name, gis_file, ymd, regionName, s3_bucket, s3_folder, leve
 	sw_osm_image			= os.path.join(region_dir, "%s.%s_thn.png" % (name, ymd))
 	tif_image				= os.path.join(region_dir, "%s.%s.tif" % (name, ymd))
 	rgb_tif_image			= os.path.join(region_dir, "%s.%s.rgb.tif" % (name, ymd))
-	geojson_filename 		= os.path.join(region_dir, "%s.%s.json" % (name,ymd))
+	#geojson_filename 		= os.path.join(region_dir, "..", "%s.%s.json" % (name,ymd))
 	
 	# subset
 	if force or not os.path.exists(subset_file):
@@ -291,45 +293,59 @@ def process(gpm_dir, name, gis_file, ymd, regionName, s3_bucket, s3_folder, leve
 	data[data>9000]		= 0					# No value
 	sdata 				= data/10			# back to mm
 	
-	if force or not os.path.exists(topojson_filename+".gz"):
-		for idx, l in enumerate(levels):
-			#print "level", idx
-			#if idx < len(levels)-1:
-			fileName 		= os.path.join(levelsDir, ymd+"_level_%d.tif"%l)
-			#CreateLevel(l, levels[idx+1], geojsonDir, fileName, ds, sdata, "precip")
-			CreateLevel(l, geojsonDir, fileName, ds, sdata, "precip", regionName)
-	
-		jsonDict = dict(type='FeatureCollection', features=[])
-	
-		for idx, l in enumerate(levels):
-			fileName 		= os.path.join(geojsonDir, "precip_level_%d.geojson"%l)
-			if os.path.exists(fileName):
-				with open(fileName) as data_file:    
-					jdata = json.load(data_file)
-		
-				if 'features' in jdata:
-					for f in jdata['features']:
-						jsonDict['features'].append(f)
-	
+	if regionName != 'global':
+		# Invoke the node script to subset the global geojson	
+		global_dir			= os.path.join(gpm_dir,"global")
+		global_geojson 		= os.path.join(global_dir, "%s.%s.geojson" % (name,ymd))
 
-		with open(merge_filename, 'w') as outfile:
-		    json.dump(jsonDict, outfile)	
-
-		quiet = " > /dev/null 2>&1"
-		if verbose:
-			quiet = " "
-				
-		# Convert to topojson
-		cmd 	= "topojson --no-stitch-poles --bbox -p precip -o "+ topojson_filename + " " + merge_filename + quiet
-		execute(cmd)
-
-		if verbose:
-			keep = " --keep "
-		else:
-			keep = " "
-
-		cmd 	= "gzip -f "+keep+ topojson_filename
+		if not os.path.exists(global_geojson):
+			print "missing global geojson", global_geojson
+			sys.exit(-1)
+			
+		print "doing regionsl subset...", regionName, global_geojson
+		cmd = "node ../subsetregions.js "+regionName+ " " + global_geojson
 		execute(cmd)	
+		
+	else:		
+		if force or not os.path.exists(topojson_filename+".gz"):
+			for idx, l in enumerate(levels):
+				#print "level", idx
+				#if idx < len(levels)-1:
+				fileName 		= os.path.join(levelsDir, ymd+"_level_%d.tif"%l)
+				#CreateLevel(l, levels[idx+1], geojsonDir, fileName, ds, sdata, "precip")
+				CreateLevel(l, geojsonDir, fileName, ds, sdata, "precip", regionName)
+	
+			jsonDict = dict(type='FeatureCollection', features=[])
+	
+			for idx, l in enumerate(levels):
+				fileName 		= os.path.join(geojsonDir, "precip_level_%d.geojson"%l)
+				if os.path.exists(fileName):
+					with open(fileName) as data_file:    
+						jdata = json.load(data_file)
+		
+					if 'features' in jdata:
+						for f in jdata['features']:
+							jsonDict['features'].append(f)
+	
+
+			with open(merge_filename, 'w') as outfile:
+			    json.dump(jsonDict, outfile)	
+
+			quiet = " > /dev/null 2>&1"
+			if verbose:
+				quiet = " "
+				
+			# Convert to topojson
+			cmd 	= "topojson --no-stitch-poles --bbox -p precip -o "+ topojson_filename + " " + merge_filename + quiet
+			execute(cmd)
+
+			if verbose:
+				keep = " --keep "
+			else:
+				keep = " "
+
+			cmd 	= "gzip -f "+keep+ topojson_filename
+			execute(cmd)	
 	
 	if not os.path.exists(osm_bg_image):
 		#if verbose:
@@ -353,8 +369,13 @@ def process(gpm_dir, name, gis_file, ymd, regionName, s3_bucket, s3_folder, leve
 	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 	
 	if not verbose: # Cleanup
-		cmd = "rm -rf %s %s %s %s %s %s %s %s %s %s %s %s" % (origFileName, origFileName_tfw, supersampled_file, merge_filename, topojson_filename, subset_aux_filename, browse_filename, subset_filename, subset_file, rgb_tif_image, geojsonDir, levelsDir)
-		execute(cmd)
+		if config.USING_AWS_S3_FOR_STORAGE:		# moved to end
+			cmd = "rm -rf %s " % (gpm_dir)
+			#print cmd
+			#execute(cmd)
+		else:
+			cmd = "rm -rf %s %s %s %s %s %s %s %s %s %s %s %s" % (origFileName, origFileName_tfw, supersampled_file, merge_filename, topojson_filename, subset_aux_filename, browse_filename, subset_filename, subset_file, rgb_tif_image, geojsonDir, levelsDir)
+			execute(cmd)
 
 #	
 # ===============================
@@ -376,16 +397,24 @@ if __name__ == '__main__':
 	apg_input.add_argument("-d", "--date", help="--date 2015-03-20 or today if not defined")
 	apg_input.add_argument("-r", "--regions", help="--regions 'global,d02,d03' ")
 	
-	todaystr	=  datetime.datetime.utcnow()
-	
-	options 	= parser.parse_args()
-	
-	dt			= options.date or str(todaystr)
-	force		= options.force
-	verbose		= options.verbose
-	regions		= options.regions.split(',')
-	
+	options 			= parser.parse_args()
+	force				= options.force
+	verbose				= options.verbose
+	regions				= options.regions.split(',')
+
 	ValidateRegions(regions)
+	
+	dt					= options.date 
+	
+	if not dt:
+		utc				= datetime.datetime.utcnow()
+		#print "GPM daily current utc: ", utc
+		hour			= utc.hour
+		
+		today			= datetime.datetime( utc.year, utc.month, utc.day, hour, 0) + datetime.timedelta(days= -1)
+		dt				= today.strftime("%Y-%m-%dT%H:%M:00")
+
+	print "GPM daily for previous day: ", dt
 	
 	basedir 			= os.path.dirname(os.path.realpath(sys.argv[0]))
 	
@@ -410,15 +439,16 @@ if __name__ == '__main__':
 	# 12 colors - do not change for products (only levels may change)
 	#   from low intensity to high intensity Green to Red
 	#
-	hexColors     				= [ "#c0c0c0", "#018414","#018c4e","#02b331","#57d005","#b5e700","#f9f602","#fbc500","#FF9400","#FE0000","#C80000","#8F0000"]	
+	hexColors     		= [ "#c0c0c0", "#018414","#018c4e","#02b331","#57d005","#b5e700","#f9f602","#fbc500","#FF9400","#FE0000","#C80000","#8F0000"]	
+	products 			= ['gpm_1d', 'gpm_3d', 'gpm_7d']
+	levels 				= [ 1,2,3,5,10,20,40,70,120,200,350,600]
 
-	for r in regions:
-		region					= config.regions[r]
-		s3_bucket				= region['bucket']
+	for p in products:
+		for r in regions:
+			region				= config.regions[r]
+			s3_bucket			= region['bucket']
 		
-		if 1:
-			product_name		= 'gpm_1d'
-			levels 				= [ 1,2,3,5,10,20,40,70,120,200,350,600]
+			product_name		= p
 	
 			s3_folder			= os.path.join(product_name, str(year), doy)
 	
@@ -429,35 +459,14 @@ if __name__ == '__main__':
 			get_late_gpm_files([gis_file_day, gis_file_day_tfw], product_name)
 			process(gpm_dir, product_name, gis_file_day, ymd, r, s3_bucket, s3_folder, levels, hexColors)
 
-		#
-		# gpm_3d
-		#
-		if 1:
-			product_name		= 'gpm_3d'
-			levels 				= [ 1,2,3,5,10,20,40,70,120,200,350,600]
-		
-			s3_folder			= os.path.join(product_name, str(year), doy)
-		
-			gpm_dir				= os.path.join(config.data_dir, product_name, ymd)
-			if not os.path.exists(gpm_dir):
-			    os.makedirs(gpm_dir)
-		
-			get_late_gpm_files([gis_file_3day, gis_file_3day_tfw], product_name)
-			process(gpm_dir, product_name, gis_file_3day, ymd, r, s3_bucket, s3_folder, levels, hexColors)
-	
-		#
-		# gpm_7d
-		#
-		if 1:
-			product_name		= 'gpm_7d'
-			levels 				= [ 1,2,3,5,10,20,40,70,120,200,350,600]
-			s3_folder			= os.path.join(product_name, str(year), doy)
-
-			gpm_dir				= os.path.join(config.data_dir, product_name, ymd)
-			if not os.path.exists(gpm_dir):
-			    os.makedirs(gpm_dir)
-
-			get_late_gpm_files([gis_file_7day, gis_file_7day_tfw], product_name)
-			process(gpm_dir, product_name, gis_file_7day, ymd, r, s3_bucket, s3_folder, levels, hexColors)
-		
+	#
+	# Cleanup
+	#
+	if not verbose:
+		for p in products:
+			gpm_dir		= os.path.join(config.data_dir, p, ymd)
+			for r in regions:
+				region_dir = os.path.join(gpm_dir, r)
+				if config.USING_AWS_S3_FOR_STORAGE: # Full Cleanup
+					cmd = "rm -rf %s " % ( region_dir)
 		

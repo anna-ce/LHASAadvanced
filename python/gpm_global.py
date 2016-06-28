@@ -420,8 +420,12 @@ def process(gpm_dir, name, gis_file_day, ymd ):
 	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 	
 	if not verbose: # Cleanup
-		cmd = "rm -rf %s %s %s %s %s %s %s %s %s %s" % (origFileName, origFileName_tfw, supersampled_file, merge_filename, topojson_filename, subset_aux_filename, browse_filename, subset_filename, geojsonDir, levelsDir)
-		execute(cmd)
+		if config.USING_AWS_S3_FOR_STORAGE:
+			cmd = "rm -rf %s " % (gpm_dir)
+			execute(cmd)
+		else:
+			cmd = "rm -rf %s %s %s %s %s %s %s %s %s %s" % (origFileName, origFileName_tfw, supersampled_file, merge_filename, topojson_filename, subset_aux_filename, browse_filename, subset_filename, geojsonDir, levelsDir)
+			execute(cmd)
 
 #
 # Get 30mn files every 30mn

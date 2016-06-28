@@ -31,7 +31,7 @@ from level import CreateLevel
 
 verbose 	= 0
 force 		= 0
-processes	= 4 #multiprocessing.cpu_count()
+processes	= multiprocessing.cpu_count()
 
 def execute( cmd ):
 	if verbose:
@@ -69,9 +69,9 @@ def multiprocessing_download(filepath, local_filename):
 		print "multiprocessing exception:", sys.exc_info()[0], e
 		
 def get_files(year, mydir, files):
-	pool 		= multiprocessing.Pool(processes=processes)
-	mstr		= "%02d" % month
-	dstr		= "%02d" % day
+	pool 			= multiprocessing.Pool(processes=processes)
+	mstr			= "%02d" % month
+	dstr			= "%02d" % day
 
 	ftp_site 		= "ftp.nccs.nasa.gov"
 	filepath 		= "fp/forecast/Y%s/M%s/D%s/H00" % (year, mstr, dstr)		
@@ -219,7 +219,6 @@ def process_file( mydir, filename, s3_bucket, s3_folder):
 		execute(cmd)
 
 		cmd 	= "gzip -f "+ topojson_filename
-			
 		execute(cmd)
 	
 	# Create shapefile gz
@@ -252,8 +251,12 @@ def process_file( mydir, filename, s3_bucket, s3_folder):
 	CopyToS3( s3_bucket, s3_folder, file_list, 1, 1 )
 	
 	if not verbose: # Cleanup
-		cmd = "rm -rf %s %s %s %s %s %s %s %s" % ( merge_filename, browse_filename, topojson_filename, subset_filename, super_subset_file, subset_aux_filename, geojsonDir, levelsDir)
-		execute(cmd)
+		if config.USING_AWS_S3_FOR_STORAGE:
+			cmd = "rm -rf %s " % (mydir)
+			execute(cmd)
+		else:
+			cmd = "rm -rf %s %s %s %s %s %s %s %s" % ( merge_filename, browse_filename, topojson_filename, subset_filename, super_subset_file, subset_aux_filename, geojsonDir, levelsDir)
+			execute(cmd)
 
 def cleanupdir( mydir):
 	print "cleaning up", mydir

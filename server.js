@@ -209,6 +209,7 @@ app.get('/terms',	 							home.terms);
 app.get('/support', 							home.support);
 app.get('/swagger.json', 						home.swagger);
 app.get('/api',			 						home.api);
+app.get('/check',			 					home.check);
 
 // Testing ESRI ARCGIS Compliance
 app.get('/esri/:id',	 						esri.index);

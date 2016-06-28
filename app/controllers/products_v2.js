@@ -1,26 +1,27 @@
-var util	= require('util'),
-	async	= require('async'),
-	eyes	= require('eyes'),
-	moment	= require('moment'),
-	path	= require('path'),
-	mkdirp 	= require('mkdirp'),
-	filesize = require('filesize'),
-	Hawk	= require('hawk'),
-	glob 	= require("glob")
-	debug	= require('debug')('products'),
-	//sys 	= require('sys'),
-	exec 	= require('child_process').exec,
-	mime	= require('mime-types'),
-	osm_geojson	= require("osm-and-geojson/osm_geojson"),
-	tokml		= require('tokml'),
-	turf		= require('turf'),
-	fs			= require('fs'),
-	topojson	= require('topojson'),
-    topotype 	= require("topojson/lib/topojson/type"),
+var util			= require('util'),
+	async			= require('async'),
+	eyes			= require('eyes'),
+	moment			= require('moment'),
+	path			= require('path'),
+	mkdirp 			= require('mkdirp'),
+	filesize 		= require('filesize'),
+	Hawk			= require('hawk'),
+	glob 			= require("glob")
+	debug			= require('debug')('products'),
+	exec 			= require('child_process').exec,
+	mime			= require('mime-types'),
+	osm_geojson		= require("osm-and-geojson/osm_geojson"),
+	tokml			= require('tokml'),
+	turf			= require('turf'),
+	turf_bbox_clip	= require('./lib/turf-bbox-clip');
 
-	zlib 		= require('zlib');
+	fs				= require('fs'),
+	topojson		= require('topojson'),
+    topotype 		= require("topojson/lib/topojson/type"),
+
+	zlib 			= require('zlib');
 	
-	var yaml	= JSON.parse(fs.readFileSync("./config/products.yaml", "utf-8"))
+	var yaml		= JSON.parse(fs.readFileSync("./config/products.yaml", "utf-8"))
 	
 	function makePoly( bbox, options ) {
 		var feature = turf.polygon([[
@@ -112,12 +113,13 @@ var util	= require('util'),
 
 					console.log("intersects...", geojson.features.length)
 					
-					var poly1 = makePoly(region.bbox, null)
+					//var poly1 = makePoly(region.bbox, null)
 					var features = [];
 					for (var f in geojson.features ) {
 						try {
-							var intersection = turf.intersect(poly1, geojson.features[f])
-							if( intersection ) {
+							//var intersection = turf.intersect(poly1, geojson.features[f])
+							var intersection = turf_bbox_clip(geojson.features[f], region.bbox)
+							if( intersection && intersection.geometry.coordinates.length ) {
 								intersection.properties = geojson.features[f].properties
 								features.push(intersection)
 							} else {
