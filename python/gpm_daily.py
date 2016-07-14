@@ -440,7 +440,8 @@ if __name__ == '__main__':
 	#   from low intensity to high intensity Green to Red
 	#
 	hexColors     		= [ "#c0c0c0", "#018414","#018c4e","#02b331","#57d005","#b5e700","#f9f602","#fbc500","#FF9400","#FE0000","#C80000","#8F0000"]	
-	products 			= ['gpm_1d', 'gpm_3d', 'gpm_7d']
+	# products 			= ['gpm_1d', 'gpm_3d', 'gpm_7d']
+	products 			= ['gpm_7d']
 	levels 				= [ 1,2,3,5,10,20,40,70,120,200,350,600]
 
 	for p in products:

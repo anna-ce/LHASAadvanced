@@ -59,7 +59,7 @@ function generate() {
 		fs.writeFileSync(regional_geojson_filename, JSON.stringify(regional_geojson), "utf-8")
 		// console.log("written", regional_geojson_filename)
 
-		var cmd = "topojson -o " + regional_topojson_filename + " -p -- " + regional_geojson_filename 
+		var cmd = "topojson -o " + regional_topojson_filename + " --no-stitch-poles --bbox -p -- " + regional_geojson_filename 
 		cmd += "; gzip "+regional_topojson_filename
 		
 		var child = exec(cmd, function (error, stdout, stderr) {
