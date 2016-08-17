@@ -41,8 +41,8 @@ class GFMS:
 		os.system(cmd)
 		
 	def get_latest_file(self):
-		path 			= "%s/flood/download/%s/%s/Flood_byStor_%s%02d00.bin" % (url, year, ym, ym, day)
-		fname 			= "Flood_byStor_%s%02d00.bin" % (ym, day)
+		path 			= "%s/flood/download/%s/%s/Flood_byStor_%s%02d12.bin" % (url, year, ym, ym, day)
+		fname 			= "Flood_byStor_%s%02d12.bin" % (ym, day)
 		fullname		= os.path.join(self.inpath, "gfms", ymd, fname)
 		
 		if not os.path.exists(fullname):
@@ -240,7 +240,7 @@ class GFMS:
 	def process_lowres(self):
 		name					= "flood_14km"
 		
-		input_fname 			= "Flood_byStor_%s%02d00.bin" % (ym, day)
+		input_fname 			= "Flood_byStor_%s%02d12.bin" % (ym, day)
 		input_fullname			= os.path.join(self.inpath, "gfms", ymd, input_fname)
 		
 		output_fname 			= "%s.%s%02d.tif" % (name, ym, day)
@@ -264,7 +264,7 @@ class GFMS:
 
 		output_rgb_fname		= "%s.%s%02d_rgb.tif" % (name, ym, day)
 		output_rgb_fullname		= os.path.join(self.inpath, "gfms", ymd, output_rgb_fname)
-		color_file 				= os.path.join("cluts", "gfms_colors.txt")
+		color_file 				= os.path.join("cluts", "gfms_colors_2.txt")
 		
 		flood_dir				= os.path.join(self.inpath, "gfms", ymd)
 		geojsonDir	= os.path.join(flood_dir,"geojson")
@@ -351,7 +351,7 @@ class GFMS:
 		#	self.execute(cmd)
 		
 		levels 			= [ 200, 		100, 		50, 		20, 		10, 		1]
-		hexColors 		= [ "#FF0000",  "#FFA500", "#FFD700", 	"#0000FF", "#00BFFF", 	"#00FF00" ]
+		hexColors 		= [ "#FF0000",  "#FFA500", "#FFD700", 	"#0000FF", "#00BFFF", 	"#00FF00",]
 		
 		ds 				= gdal.Open( super_fullname )
 		band			= ds.GetRasterBand(1)
@@ -503,4 +503,4 @@ if __name__ == '__main__':
 	#app.get_latest_highres_file()
 	#app.process_highres()
 	
-	cleanup()
+	#cleanup()

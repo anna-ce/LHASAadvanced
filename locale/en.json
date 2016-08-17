@@ -234,7 +234,7 @@
         "usgs": "USGS",
         "avhrr": "AVHRR",
         "viirs": "VIIRS",
-        "gfms": "NASA TMPA",
+        "gfms": "UMD GFMS",
         "geos5": "GEOS-5 Model",
         "wrf": "WRF Model"
     },
@@ -802,12 +802,12 @@
             "flood_14km": "Flood Nowcast 1/8 deg",
             "legend": {
                 "1mm": "1mm",
-                "5mm": "5mm",
-                "10mm": "10mm",
-                "20mm": "20mm",
-                "50mm": "50mm",
-                "100mm": "100mm",
-                "200mm": "200mm"
+                "10mm": "<10mm",
+                "20mm": "<20mm",
+                "50mm": "<50mm",
+                "100mm": "<100mm",
+                "200mm": "<200mm",
+                "255mm": ">200mm"
             }
         }
     }
