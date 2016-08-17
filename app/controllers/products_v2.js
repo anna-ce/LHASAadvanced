@@ -13,7 +13,7 @@ var util			= require('util'),
 	osm_geojson		= require("osm-and-geojson/osm_geojson"),
 	tokml			= require('tokml'),
 	turf			= require('turf'),
-	turf_bbox_clip	= require('./lib/turf-bbox-clip');
+	turf_bbox_clip	= require('turf-bbox-clip');
 
 	fs				= require('fs'),
 	topojson		= require('topojson'),

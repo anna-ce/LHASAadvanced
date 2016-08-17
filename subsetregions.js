@@ -7,7 +7,7 @@ var fs 							= require('fs');
 var path						= require('path');
 var turf						= require('turf');
 
-var turf_bbox_clip				= require('./lib/turf-bbox-clip');
+var turf_bbox_clip				= require('turf-bbox-clip');
 var exec 						= require('child_process').exec;
 
 var script						= process.argv[1]
