@@ -58,6 +58,7 @@
     "tokml": "0.2.4",
     "topojson": "1.6.26",
     "turf": "^3.0.11",
+    "turf-bbox-clip": "git://github.com/Turfjs/turf-bbox-clip",
     "underscore": "1.5.2",
     "underscore.string": "2.3.3",
     "unirest": "0.3.4",
