@@ -128,29 +128,56 @@ module.exports = {
 	},
 	r07_download: function(req, res) {
 		console.log("download", req.body)
-		var which = req.body['which']
+		var which 	= req.body['which']
+		var format 	= req.body['format']
 
 		//var dt = req.params['date']
 		var dt 				= "2016-05-15"
 		var mday 			= moment(dt)
 		var formattedDate 	= mday.format("YYYYMMDD")
+		var ext				= ".topojson.gz"
+		
+		switch(format) {
+		case 'geojson':
+			ext = ".geojson"
+			break
+		case 'shape':
+			ext = ".shp.zip"
+			break
+		case 'kml':
+			ext = ".kml"
+		}
+		var url;
 		
 		switch (which) {
 			case 'flood':
-				var basename = formattedDate + "_levels.topojson.gz"
-				var url = "/products/s3/r07/gfms/" + mday.format("YYYY")+ "/"+ mday.format("DDDD") + "/" + basename
+				var basename = formattedDate + "_levels"+ext
+				if( ext == 'topojson') {
+					url = "/products/s3/r07/gfms/" + mday.format("YYYY")+ "/"+ mday.format("DDDD") + "/" + basename
+				} else {
+					url = "/products/gfms/export/r07/" + mday.format("YYYY")+ "/"+ mday.format("DDDD") + "/" + basename
+				}
+				
 				console.log(url)
 				res.redirect(url)
 				break
 			case 'landslide':
-				var formattedDate = mday.format("YYYYMMDD")
-				var basename = "global_landslide_nowcast_" + formattedDate + ".topojson.gz"
+				var basename = "global_landslide_nowcast_" + formattedDate + ext
+				if( ext == 'topojson') {
+					url = "/products/s3/r07/global_landslide_nowcast/" + mday.format("YYYY")+ "/"+ mday.format("DDDD") + "/" + basename
+				} else {
+					url = "/products/global_landslide_nowcast/export/r07/" + mday.format("YYYY")+ "/"+ mday.format("DDDD") + "/" + basename
+				}
 				console.log(url)
 				res.redirect(url)
 				break			
 			case 'precipitation':
-				var basename = "gpm_1d." + formattedDate + ".topojson.gz"
-				var url = "/products/s3/r07/gpm_1d/" + mday.format("YYYY")+ "/"+ mday.format("DDDD") + "/" + basename
+				var basename = "gpm_1d." + formattedDate + ext
+				if( ext == 'topojson') {
+					url = "/products/s3/r07/gpm_1d/" + mday.format("YYYY")+ "/"+ mday.format("DDDD") + "/" + basename
+				} else {
+					url = "/products/gpm_1d/export/r07/" + mday.format("YYYY")+ "/"+ mday.format("DDDD") + "/" + basename
+				}	
 				console.log(url)
 				res.redirect(url)
 				break
