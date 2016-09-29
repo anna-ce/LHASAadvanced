@@ -328,6 +328,10 @@ app.get("/test/gpm",								test.gpm);
 app.get("/test/gpm2",								test.gpm2);
 app.get("/test/gpm3",								test.gpm3);
 app.get("/test/gfms",								test.gfms);
+app.get("/test/r07",								test.r07);
+app.get("/test/feed",								test.feed);
+app.get("/test/notifications",						test.notifications);
+app.post("/test/download",							test.r07_download);
 
 app.get("/test/topojson/:id",						test.topojson);
 app.get("/test/precip/:id",							test.precip);

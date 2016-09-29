@@ -22,7 +22,10 @@ var topoBaseName				= baseName.replace('geojson', "topojson")
 var regional_geojson_filename	= path.join(dir, "..", regionName, baseName)
 var regional_topojson_filename	= path.join(dir, "..", regionName, topoBaseName)
 
-// console.log("Subsetting", regionName, geojson_file)
+//var regional_geojson_filename	= path.join(dir,  regionName, baseName)
+//var regional_topojson_filename	= path.join(dir,  regionName, topoBaseName)
+
+console.log("Subsetting", regionName, geojson_file)
 
 var regions			= JSON.parse(fs.readFileSync('../imerg_regions.yaml', 'utf-8'))
 var geojson			= JSON.parse(fs.readFileSync(geojson_file, 'utf-8'))
@@ -34,8 +37,11 @@ function generate() {
 	
 		// Make a polygon
 		var poly1 	= turf.bboxPolygon( bbox )
-	
+		console.log(regionName, JSON.stringify(poly1))
+		
 		var features = [];	
+		console.log("Features:", geojson.features.length)
+		
 		for (var f in geojson.features ) {
 			try {
 				var poly2 = geojson.features[f]
@@ -57,6 +63,7 @@ function generate() {
 		}	
 				
 		fs.writeFileSync(regional_geojson_filename, JSON.stringify(regional_geojson), "utf-8")
+		
 		// console.log("written", regional_geojson_filename)
 
 		var cmd = "topojson -o " + regional_topojson_filename + " --no-stitch-poles --bbox -p -- " + regional_geojson_filename 

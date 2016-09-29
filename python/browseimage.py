@@ -141,6 +141,9 @@ def wms(ullat, ullon, lrlat, lrlon, osm_bg_image):
 		
 	url 	= str.format("http://ows.terrestris.de/osm/service?LAYERS=OSM-WMS&STYLES=&SRS=EPSG:4326&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX={0},{1},{2},{3}&WIDTH={4}&HEIGHT={5}", ullon,lrlat,lrlon,ullat,int(width),int(height))
 	
+	# There is a bug on previous WMS for Central America
+	url		= str.format("http://www2.demis.nl/worldmap/wms.asp?Service=WMS&Version=1.1.0&Request=GetMap&Layers=Countries,Borders,Coastlines&Format=image/png&SRS=EPSG:4326&BBOX={0},{1},{2},{3}&WIDTH={4}&HEIGHT={5}", ullon,lrlat,lrlon,ullat,int(width),int(height))
+	
 	#if verbose:
 	print "wms url:" , url
 	

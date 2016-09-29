@@ -189,6 +189,16 @@
             "ojobot": "http://ojo-bot.herokuapp.com",
             "ojobot-dev": "http://localhost:7465",
             "susmap": "cappelaere.6tl0kfef"
+        },
+        "r07": {
+            "name": "India",
+            "bbox": [60.5, 6.7917, 97.383224, 38.375],
+            "target": [
+                -42,
+                -20.6332733
+            ],
+            "map_id": "cappelaere.map-q4hdwmh3",
+            "bucket": "ojo-r07"
         }
     },
     "admins": [

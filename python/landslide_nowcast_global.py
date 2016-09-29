@@ -36,6 +36,13 @@ def execute(cmd):
 		print cmd
 	os.system(cmd)
 
+def ValidateRegions(regions):
+	for r in regions:
+		if not config.regions[r]:
+			print "Invalid region", r
+			sys.exit(-1)
+
+
 def CreateLevel(l, geojsonDir, fileName, src_ds, data, attr, _force, _verbose):
 	global force, verbose
 	force 				= _force
@@ -214,6 +221,8 @@ def get_late_gpm_files(gis_files, product_name, ymd_org):
 	return gis_files
 
 def process(_dir, files, ymd):
+	global s3_bucket, s3_folder
+	
 	weights = [ 1.00000000, 0.25000000, 0.11111111, 0.06250000, 0.04000000, 0.02777778, 0.02040816]
 	sum		= 1.511797
 	
@@ -406,16 +415,38 @@ def process(_dir, files, ymd):
 	ds2 = None
 	
 	file_list = [ sw_osm_image, topojson_filename+".gz", fname_1km_final ]
-	CopyToS3( s3_bucket, s3_folder, file_list, 1, 1 )
+	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 	
-	if not verbose: # Cleanup
-		if config.USING_AWS_S3_FOR_STORAGE:
-			cmd = "rm -rf %s " % (_dir)
+	for r in regions:
+		region			= config.regions[r]
+		regional_dir 	=  os.path.join(_dir, r)
+		if not os.path.exists(regional_dir):
+			os.makedirs(regional_dir)
+		
+		s3_bucket		= region['bucket']
+		
+		reg_full_geojson = os.path.join(regional_dir, os.path.basename(merge_filename))
+		topojsongz = reg_full_geojson.replace("geojson", "topojson.gz")
+
+		if not os.path.exists(reg_full_geojson):
+			cmd = "cp "+merge_filename+" "+regional_dir
 			execute(cmd)
-		else:
-			gpm_files = os.path.join(_dir, "3B-HHR*")
-			cmd = "rm -rf %s %s %s %s %s %s" % (gpm_files, fname_1km, fname, topojson_filename, geojsonDir, levelsDir)
+		
+		if not os.path.exists(topojsongz):
+			cmd = "node ../subsetregions.js "+r+ " " + merge_filename
 			execute(cmd)
+		
+		file_list = [topojsongz]
+		CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
+		
+	#if not verbose: # Cleanup
+	#	if config.USING_AWS_S3_FOR_STORAGE:
+	#		cmd = "rm -rf %s " % (_dir)
+	#		execute(cmd)
+	#	else:
+	#		gpm_files = os.path.join(_dir, "3B-HHR*")
+	#		cmd = "rm -rf %s %s %s %s %s %s" % (gpm_files, fname_1km, fname, topojson_filename, geojsonDir, levelsDir)
+	#		execute(cmd)
 		
 def get_gpm_files( _dir, files):
 	print files
@@ -445,7 +476,7 @@ def cleanupdir( mydir, product_name):
 				
 def cleanup():
 	_dir			=  os.path.join(config.data_dir, product_name)
-	cleanupdir(_dir, product_name)
+	#cleanupdir(_dir, product_name)
 	
 	
 # =======================================================================
@@ -459,6 +490,7 @@ if __name__ == '__main__':
 	apg_input.add_argument("-f", "--force", 	action='store_true', help="Forces new products to be generated")
 	apg_input.add_argument("-v", "--verbose", 	action='store_true', help="Verbose Flag")
 	apg_input.add_argument("-d", "--date", 		help="date: 2014-11-20 or today if not defined")
+	apg_input.add_argument("-r", "--regions", help="--regions 'global,d02,d03' ")
 	
 	todaystr		= date.today().strftime("%Y-%m-%d")
 	
@@ -467,6 +499,12 @@ if __name__ == '__main__':
 	verbose			= options.verbose
 	dt				= options.date or todaystr
 	
+	if options.regions:
+		regions			= options.regions.split(',')
+		ValidateRegions(regions)
+	else:
+		regions = false
+
 	basedir 		= os.path.dirname(os.path.realpath(sys.argv[0]))
 	
 	today			= parse(dt)
@@ -504,7 +542,7 @@ if __name__ == '__main__':
 		
 	get_late_gpm_files(files, product_name, ymd)
 	process(_dir, files, ymd)
-	
+		
 	cleanup()
 	
 	if verbose:

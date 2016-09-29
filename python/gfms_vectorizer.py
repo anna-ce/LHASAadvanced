@@ -27,7 +27,10 @@ from level import CreateLevel
 # Site configuration
 import config
 
-url		= "http://eagle1.umd.edu"
+url			= "http://eagle1.umd.edu"
+s3_bucket 	= False
+s3_folder	= False
+
 
 class GFMS:
 	def __init__( self, inpath, force, verbose ):
@@ -238,6 +241,8 @@ class GFMS:
 		self.process_highres_d03(dt)
 			
 	def process_lowres(self):
+		global s3_bucket, s3_folder
+		
 		name					= "flood_14km"
 		
 		input_fname 			= "Flood_byStor_%s%02d12.bin" % (ym, day)
@@ -410,8 +415,33 @@ class GFMS:
 			MakeBrowseImage(ds, browse_filename, subset_filename, osm_bg_image, sw_osm_image, levels, hexColors, force, verbose, zoom=2)
 			
 		file_list = [ sw_osm_image, topojson_fullname_gz, output_fullname ]
-		CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
+        
+		if s3_bucket and s3_folder:
+			CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
+		else:
+			for r in regions:				
+				region			= config.regions[r]
+				s3_bucket		= region['bucket']
 
+				regional_dir 	=  os.path.join(flood_dir, r)
+				if not os.path.exists(regional_dir):
+					os.makedirs(regional_dir)
+
+				
+				reg_full_geojson = os.path.join(regional_dir, os.path.basename(merge_filename))
+				topojsongz = reg_full_geojson.replace("geojson", "topojson.gz")
+
+				if not os.path.exists(reg_full_geojson):
+					cmd = "cp "+merge_filename+" "+regional_dir
+					self.execute(cmd)
+				
+				if not os.path.exists(topojsongz):
+					cmd = "node ../subsetregions.js "+r+ " " + reg_full_geojson
+					self.execute(cmd)
+				
+				file_list = [topojsongz]
+				CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
+								
 		if not self.verbose:
 			cmd = "rm -rf %s %s %s %s %s %s %s %s" % ( browse_filename, input_fullname, subset_filename, super_fullname, output_rgb_fullname, browse_aux_filename, levelsDir, geojsonDir )
 			self.execute(cmd)
@@ -452,7 +482,12 @@ def cleanupdir( mydir):
 def cleanup():
 	_dir			=  os.path.join(config.data_dir,"gfms")
 	cleanupdir(_dir)
-	
+
+def ValidateRegions(regions):
+	for r in regions:
+		if not config.regions[r]:
+			print "Invalid region", r
+			sys.exit(-1)	
 #
 # ======================================================================
 #
@@ -468,7 +503,8 @@ if __name__ == '__main__':
 	apg_input.add_argument("-f", "--force", action='store_true', help="forces new product to be generated")
 	apg_input.add_argument("-v", "--verbose", action='store_true', help="Verbose Flag")
 	apg_input.add_argument("-d", "--date", help="Date 2015-03-20 or today if not defined")
-	
+	apg_input.add_argument("-r", "--regions", help="--regions 'global,d02,d03' ")
+
 	options 	= parser.parse_args()
 	basedir 	= os.path.dirname(os.path.realpath(sys.argv[0]))
 	
@@ -477,6 +513,12 @@ if __name__ == '__main__':
 	force		= options.force
 	verbose		= options.verbose
 	dt			= options.date or todaystr
+	
+	if options.regions:
+		regions		= options.regions.split(',')
+		ValidateRegions(regions)
+	else:
+		regions 	= False
 
 	today		= parse(dt)
 	year		= today.year
@@ -486,11 +528,12 @@ if __name__ == '__main__':
 	ym	 		= "%d%02d" % (year, month)
 	ymd 		= "%d%02d%02d" % (year, month, day)
 
-	region		= config.regions['global']	
-	s3_bucket	= region['bucket']
+	if not regions:
+		region		= config.regions['global']	
+		s3_bucket	= region['bucket']
 
 	s3_folder	= os.path.join("gfms", str(year), doy)
-	
+        
 	# Destination Directory
 	dir			= config.data_dir
 	checkdirs();

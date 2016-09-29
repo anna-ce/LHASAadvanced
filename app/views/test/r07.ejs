@@ -1,0 +1,431 @@
+<!doctype html>
+<html>
+<head>
+    <title>Sri Lanka Floods Demo</title>
+    <meta charset="utf-8">
+
+ 	   <link rel="stylesheet" href="/css/font-awesome.min.css" />
+ 	   <link rel="stylesheet" href="/js/Leaflet.TimeDimension/dist/leaflet.timedimension.control.min.css" />
+	   <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css" />
+	   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-rc.2/leaflet.css" />
+	   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.4.2/Control.FullScreen.min.css" />
+	   
+    <style>
+        body {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+			margin-right: 10;
+            background: rgb(14, 21, 30);
+            height: 100%;
+            font-family: Tahoma, Geneva, Verdana, sans-serif;
+            font-size:12px;
+            color:#808080;
+        }
+		
+        h2,a {
+          color: white;
+        }
+        
+        #map {
+            /* position: absolute;
+            height: 60%;
+            width: 100%;
+    		*/
+			width: 100%;
+			height: 900px;
+            background-color: #333;
+        }
+    
+        .black {
+          color: black;
+        }
+		
+	    .flood_nowcast_map-info .legend-scale ul {
+	       margin: 0;
+	       margin-bottom: 5px;
+	       padding: 0;
+	       float: right;
+	       list-style: none;
+	       }
+		.flood_nowcast_map-info .legend-scale ul li {
+		   font-size: 80%;
+		   list-style: none;
+		    margin-left: 0;
+		    line-height: 18px;
+		    margin-bottom: 2px;
+		}
+	    .flood_nowcast_map-info ul.legend-labels li span {
+	      display: block;
+	      float: left;
+	      height: 16px;
+	      width: 30px;
+	      margin-right: 5px;
+	      margin-left: 0;
+	      border: 1px solid #999;
+	    }
+	    .flood_nowcast_map-info .legend-source {
+	       font-size: 70%;
+	       color: #999;
+	       clear: both;
+	    }
+		.flood_nowcast_map-info {
+		    padding: 6px 8px;
+		    font: 14px/16px Arial, Helvetica, sans-serif;
+		    background: white;
+		    background: rgba(255,255,255,0.8);
+		    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+		    border-radius: 5px;
+			position: relative;
+			float: right;
+		    line-height: 18px;
+		    color: #555;
+	
+		}
+		.download {
+		    border-radius: 25px;
+		    border: 2px solid #73AD21;
+		    padding: 20px; 
+			float: right;
+			margin-right: 10;
+		    /*
+			width: 200px;
+		    height: 150px; 
+			*/
+		}
+		</style>
+
+</head>
+</head>
+
+<body>
+  	<h2>&nbsp;SRI LANKA Floods Demo: May 10th - May 26th, 2016</h2>
+	<div class='container'>
+	<b>&nbsp;Today is:</b> May 15th, 2016
+	<span class='pull-right'>
+		<a href="Javascript:ShowDownload();"><b>Download</b> <i class="fa fa-download" aria-hidden="true"></i></a>
+	&nbsp;
+		<a href='/test/notifications'>Feed <i class="fa fa-rss" aria-hidden="true"></i></a>&nbsp;&nbsp;
+	</span>
+	</div>
+	
+		<div id='download' class='download' style="display:none">
+			<form action='/test/download' method='post' class='form-horizontal-right'>
+				<span><b>Download:</b></span><br/><br/>
+				<input type='hidden' name='date' id='date' value='20160515'/>
+				<div class="radio">
+					<label>
+						<input type='radio' name="which" id="precip" value='precipitation' checked>
+						precipitation
+					</label>
+				</div>
+				<div class="radio">
+					<label>
+						<input type='radio' name="which" id="flood" value='flood'>
+						flood
+					</label>
+				</div>
+				<div class="radio">
+					<label>
+						<input type='radio' name="which" id="landslide" value='landslide'>
+						landslide
+					</label>
+				</div>
+				<hr/>
+				<div class="radio">
+					<label>
+						<input type='radio' name="format" id="topojson" value='topojson' checked>
+						topojson
+					</label>
+				</div>
+				<div class="radio">
+					<label>
+						<input type='radio' name="format" id="geoojson" value='geojson' disabled>
+						geoojson
+					</label>
+				</div>
+				<div class="radio">
+					<label>
+						<input type='radio' name="format" id="shape" value='shape' disabled>
+						shape
+					</label>
+				</div>
+				<div class="radio">
+					<label>
+						<input type='radio' name='format' id='kml' value='kml' disabled>
+						kml
+					</label>		
+				</div>
+					<br/>
+				
+				<button type="submit" class="btn btn-primary">Submit</button>	
+			<form>
+		</div>
+	</br>
+	</br/>
+    <div id="map"></div>
+    <br/>
+	<br/>
+	
+	<div id="legends"></div>
+	
+
+	<!-- Leaflet -->
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-rc.3/leaflet.js"></script>
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.4.2/Control.FullScreen.min.js"></script>
+ <script type="text/javascript" src="https://cdn.rawgit.com/nezasa/iso8601-js-period/master/iso8601.min.js"></script>
+ 
+     <script src="/js/Leaflet.TimeDimension/dist/leaflet.timedimension.min.js"></script>
+    
+      
+  
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>	
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+	<script src="/js/moment.js"></script>
+	<script src="http://d3js.org/queue.v1.min.js"></script>
+	<script src="/js/LStyledTopojson.js"></script>
+	<script src="/js/dust-full.js"></script>
+
+    <script>
+	var gfmsLayer, gpmLayer, landslideLayer
+	
+	var show_gfms				= false
+	var show_gpm				= false
+	var show_landslide			= false
+	
+	var gfms_layer_name			= "Floodcast"
+	var gpm_layer_name			= "Precipitation"
+	var landslide_layer_name	= "Landslide"
+	
+	var gfms_style_url 			= "/mapinfo/gfms/style?product=flood_14km"
+	var gpm_style_url 			= "/mapinfo/gpm_1d/style?product=gpm_1d" 
+	var landslide_style_url 	= "/mapinfo/global_landslide_nowcast/style?product=global_landslide_nowcast"
+	
+	var show = '<%= show %>'
+	if( show == gfms_layer_name ) 		show_gfms = true
+	if( show == gpm_layer_name ) 		show_gpm = true
+	if( show == landslide_layer_name ) 	show_landslide = true
+		
+	function ShowDownload() {
+		$('#download').toggle()
+	}
+
+	function getGFMSFileName(mday) {
+		var formattedDate = mday.format("YYYYMMDD")
+		var basename = formattedDate + "_levels.topojson.gz"
+		var url = "/products/s3/r07/gfms/" + mday.format("YYYY")+ "/"+ mday.format("DDDD") + "/" + basename
+		return url
+	}
+	
+	function getGPMFileName(mday){
+		var formattedDate = mday.format("YYYYMMDD")
+		var basename = "gpm_1d." + formattedDate + ".topojson.gz"
+		var url = "/products/s3/r07/gpm_1d/" + mday.format("YYYY")+ "/"+ mday.format("DDDD") + "/" + basename
+		return url
+	}
+	
+	function getLandslideFileName(mday){
+		var formattedDate = mday.format("YYYYMMDD")
+		var basename = "global_landslide_nowcast_" + formattedDate + ".topojson.gz"
+		var url = "/products/s3/r07/global_landslide_nowcast/" + mday.format("YYYY")+ "/"+ mday.format("DDDD") + "/" + basename
+		return url
+	}
+	
+	function getLegend( url ) {
+		$.get(url, function(data) {
+			//console.log("Getting legend", url)
+			$('#legends').append("&nbsp;&nbsp;")
+			$('#legends').append(data)
+		}).fail( function(jqxhr, textStatus, error ) {
+		    var err = textStatus + ", " + error;
+			console.log("error getting legend", err)
+		})
+	}
+	
+	function getStyle( url ) {
+		$.getJSON(url, function(data) {
+			styleId		= hashCode(url)
+			//console.log("Getting style", url, styleId)
+			compileStyle(styleId, data);
+		})
+	}
+	
+	function LoadLayerUrl( url, styleUrl, product_layer, layer_name, show ) {
+		//console.log( "LoadUrlLayer", url)
+		
+		loadDataUrl( url, function(err, data) {
+			styleId		= hashCode(styleUrl)
+			//console.log("loadedData err", err, url, styleId)
+			
+			if( !err) {				
+				function loadGeoJson2( geojson, key_name ) {
+					styleData = styles[styleId]
+					
+					var options = {
+						style: function(feature) {
+						 	return styleFeature( feature, styleId, styleData );
+						},
+						onEachFeature: function(feature, layer) {
+							var html = "<br/><table>"
+							for( var i in feature.properties ) {
+								var prop = feature.properties[i]
+								if( prop && (typeof prop == 'string') && prop.indexOf("http:")>=0) {
+									prop = "<a href='"+prop+"'>link</a>"
+								}
+								html += "<tr><td>"+i+":&nbsp; </td><td>"+ prop +"</td></tr>"
+							}
+							html += "</table"
+							layer.bindPopup( html)
+						}
+					}
+					
+					if( geojson.features ) {
+						if( typeof(product_layer) !== 'undefined' ) {
+							console.log("remove layer", layer_name)
+							map_controls.removeLayer(product_layer)
+							map.removeLayer(product_layer)
+						} 
+						
+						product_layer = L.geoJson(geojson, options)
+						
+						//console.log("Add to map")
+						if( show ) product_layer.addTo(map)		
+						
+						map_controls.addOverlay(product_layer, layer_name)
+						
+						if( layer_name == gfms_layer_name) 			gfmsLayer = product_layer
+						if( layer_name == gpm_layer_name) 			gpmLayer = product_layer
+						if( layer_name == landslide_layer_name) 	landslideLayer = product_layer
+						
+					} else {
+						return 0
+					}
+				}
+				
+				// For Topojson
+				for (var key in data.objects) {
+					var geodata = topojson.feature(data, data.objects[key]);
+					loadGeoJson2(geodata, key)
+					if( geodata.features ) {
+						featureCount = geodata.features.length
+					} 
+				}
+				
+			}
+		});
+	}
+	
+	
+	// Get gfms styledata
+	getStyle( gfms_style_url )
+	getStyle(gpm_style_url)
+	getStyle( landslide_style_url)
+	
+	// Get legends
+	getLegend( "/mapinfo/gfms/legend?product=flood_14km" )
+	getLegend( "/mapinfo/gpm_1d/legend?product=gpm_1d" )
+	getLegend( "/mapinfo/global_landslide_nowcast/legend?product=global_landslide_nowcast" )	
+		
+    var accessToken = '<%=token%>';
+    // var map         = L.map('map', {minZoom:3, maxZoom:12}).setView([<%=latitude%>, <%=longitude%>], 7);
+	var map = L.map('map', {
+	    zoom: 4,
+	    //zoomDelta: 0.5,
+	    //zoomSnap: 0.5,    
+	    fullscreenControl: true,
+	    timeDimension: true,
+	    timeDimensionControl: true,
+		timeDimensionOptions: {
+			timeInterval: "2016-05-10/2016-05-26",
+			period: "P1D",			
+		},
+	    timeDimensionControlOptions: {
+			minSpeed: 0.2,
+			maxSpeed: 1,
+			transitionTime: 1000
+	    },
+	    center: [<%=latitude%>, <%=longitude%>],
+	});                
+    
+    var streets = L.tileLayer('https://{s}.tiles.mapbox.com/v4/cappelaere.map-1d8e1acq/{z}/{x}/{y}.png?access_token=' + accessToken, {
+		attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
+	});
+ 
+    var grayscale = L.tileLayer('https://{s}.tiles.mapbox.com/v4/cappelaere.hg330434/{z}/{x}/{y}.png?access_token=' + accessToken, {
+		attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
+	});
+ 
+    var outdoor = L.tileLayer('https://{s}.tiles.mapbox.com/v4/cappelaere.mdlkf4f8/{z}/{x}/{y}.png?access_token=' + accessToken, {
+		attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
+	});
+
+    var light = L.tileLayer('https://{s}.tiles.mapbox.com/v4/cappelaere.mdlk2ljn/{z}/{x}/{y}.png?access_token=' + accessToken, {
+		attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
+	});
+ 
+    var emerald = L.tileLayer('https://{s}.tiles.mapbox.com/v4/cappelaere.mdpjemkk/{z}/{x}/{y}.png?access_token=' + accessToken, {
+		attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
+	});
+    
+	var map_controls = L.control.layers({
+		"Light": light.addTo(map)
+		,'Emerald': emerald
+		,"Outdoor": outdoor
+		,"Simple": grayscale
+		,"Topo": streets
+	}, {}).addTo(map);
+	
+	map.on("overlayadd", function(data) {
+		if( data.name == gfms_layer_name ) 		show_gfms = true
+		if( data.name == gpm_layer_name ) 		show_gpm = true
+		if( data.name == landslide_layer_name ) show_landslide = true
+	})
+	
+	map.on("overlayremove", function(data) {
+		if( data.name == gfms_layer_name ) 		show_gfms = false
+		if( data.name == gpm_layer_name ) 		show_gpm = false
+		if( data.name == landslide_layer_name ) show_landslide = false
+	})
+	
+	map.timeDimension.on('timeload', function(data) {
+		var date = new Date(map.timeDimension.getCurrentTime());
+		if (data.time == map.timeDimension.getCurrentTime()) {
+			var totalTimes = map.timeDimension.getAvailableTimes().length;
+			var position = map.timeDimension.getAvailableTimes().indexOf(data.time);
+			$(map.getContainer()).find('.animation-progress-bar').width((position*100)/totalTimes + "%");
+			
+			console.log("datetime", date.toISOString())
+			
+			gfms_url = getGFMSFileName(moment.utc(date))
+			LoadLayerUrl( gfms_url, gfms_style_url, gfmsLayer, gfms_layer_name, show_gfms ) 
+			
+			gpm_url 	= getGPMFileName(moment.utc(date))			
+			LoadLayerUrl( gpm_url, gpm_style_url, gpmLayer, gpm_layer_name, show_gpm ) 
+			
+			landslide_url = getLandslideFileName(moment.utc(date))
+			LoadLayerUrl( landslide_url, landslide_style_url, landslideLayer, landslide_layer_name, show_landslide ) 
+		}
+	});
+	
+	var latlon_poly = [ 
+		 L.latLng(0, 60),
+		 L.latLng(40, 60),
+		 L.latLng(40, 100),
+		 L.latLng(0, 100),
+		 L.latLng(0, 60)
+	];
+	var options 	= {color: '#787878 ', weight:2, opacity: 0.8};
+
+	var newqueryLayer 	= L.polyline(latlon_poly, options).addTo(map);
+	map_controls.addOverlay( newqueryLayer, 'Region r07 Area' );
+	
+	var dt = "<%= date %>"
+	
+	console.log("init", dt)
+	initialTime = moment(dt)
+	map.timeDimension.setCurrentTime(initialTime.valueOf())
+		
+    </script>
+</body>
+</html>

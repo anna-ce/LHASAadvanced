@@ -389,8 +389,10 @@ function loadData( topojsonUrl, displayName, mapinfos, value_url, featuresId ) {
 					//console.log("adding legend mapping as", layerName, legendObject.id)
 				}
 				
-				if( geoJsonLayer ) {
-					map_controls.addOverlay(geoJsonLayer, layerName)	
+				if( typeof(map_controls) !== 'undefined' ) {
+					if( geoJsonLayer) {
+						map_controls.addOverlay(geoJsonLayer, layerName)	
+					}
 				}
 			}
 			
