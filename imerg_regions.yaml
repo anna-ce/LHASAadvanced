@@ -30,18 +30,19 @@
           "bbox": [ -30, -60, 50, 40 ],
           "bucket": "ojo-r05"
       },
-      "r07": {
-          "id":   7,
-          "name": "India",
-          "bbox": [ 60.0, 0.0, 100.0, 40.0 ],
-          "bucket": "ojo-r07"
-      }, 
       "r06": {
           "id":   6,
           "name": "Middle East",
           "bbox": [ 20, 10, 90, 60 ],
           "bucket": "ojo-r06"
       },
+      "r07": {
+          "id":   7,
+          "name": "India",
+          "bbox": [ 60.0, 0.0, 100.0, 40.0 ],
+          "bucket": "ojo-r07",
+          "thn_zoom": 5
+      }, 
       "r08": {
           "id":   8,
           "name": "Australia",

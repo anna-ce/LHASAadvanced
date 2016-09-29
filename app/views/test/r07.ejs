@@ -90,7 +90,7 @@
 		    border-radius: 25px;
 		    border: 2px solid #73AD21;
 		    padding: 20px; 
-			top: 80px;
+			top: 120px;
 			left: 800px;
 			float: right;
 			margin-right: 10;
@@ -108,7 +108,9 @@
 <body>
   	<h2>&nbsp;SRI LANKA Floods Demo: May 10th - May 26th, 2016</h2>
 	<div class='container'>
-	<b>&nbsp;Today is:</b> May 15th, 2016
+		<span id='date_label'>
+			<b>&nbsp;Today is:</b> May 15th, 2016
+		</span>
 	<span class='pull-right'>
 		<a href="Javascript:ShowDownload();"><b>Download</b> <i class="fa fa-download" aria-hidden="true"></i></a>
 	&nbsp;
@@ -119,7 +121,7 @@
 		<div id='download' class='download' style="display:none">
 			<form action='/test/download' method='post' class='form-horizontal'>
 				<span><b>Download:</b></span><br/><br/>
-				<input type='hidden' name='date' id='date' value='20160515'/>
+				<input type='hidden' name='date' id='date' value='2016-05-15'/>
 				<div class="radio">
 					<label>
 						<input type='radio' name="which" id="precip" value='precipitation' checked>
@@ -195,25 +197,47 @@
 	<script src="/js/dust-full.js"></script>
 
     <script>
-	var gfmsLayer, gpmLayer, landslideLayer
+	var gfmsLayer, gpmLayer, landslideLayer, popLayer
 	
-	var show_gfms				= false
+	var show_gfms				= true
 	var show_gpm				= false
 	var show_landslide			= false
+	var show_pop				= false
 	
 	var gfms_layer_name			= "Floodcast"
 	var gpm_layer_name			= "Precipitation"
 	var landslide_layer_name	= "Landslide"
+	var pop_layer_name			= "Population"
 	
 	var gfms_style_url 			= "/mapinfo/gfms/style?product=flood_14km"
 	var gpm_style_url 			= "/mapinfo/gpm_1d/style?product=gpm_1d" 
 	var landslide_style_url 	= "/mapinfo/global_landslide_nowcast/style?product=global_landslide_nowcast"
+	var pop_style_url 			= "/mapinfo/ls/style?product=ls"
 	
 	var show = '<%= show %>'
 	if( show == gfms_layer_name ) 		show_gfms = true
 	if( show == gpm_layer_name ) 		show_gpm = true
 	if( show == landslide_layer_name ) 	show_landslide = true
+	if( show == pop_layer_name ) 		show_pop = true
 		
+	function ShowTime(initTime, currentTime) {
+		var html = "<h3>&nbsp;"+currentTime.format("YYYY-MM-DD") 
+		if( initTime == currentTime ) {
+			html += " - Nowcast"
+		}
+		
+		if( currentTime > initTime) {
+			html += " - Forecast"
+		} else if( currentTime == initTime){
+			html += " - Nowcast"
+		} else {
+			html += " - Actuals"			
+		}
+		html += "</h3>"
+		
+		$('#date_label').html(html)
+	}
+	
 	function ShowDownload() {
 		$('#download').toggle()
 	}
@@ -238,6 +262,12 @@
 		var url = "/products/s3/r07/global_landslide_nowcast/" + mday.format("YYYY")+ "/"+ mday.format("DDDD") + "/" + basename
 		return url
 	}
+
+	function getPopFileName(){
+		var basename = "ls.2011.topojson.gz"
+		var url = "/products/s3/r07/ls/2011/-/" + basename
+		return url
+	}
 	
 	function getLegend( url ) {
 		$.get(url, function(data) {
@@ -253,17 +283,17 @@
 	function getStyle( url ) {
 		$.getJSON(url, function(data) {
 			styleId		= hashCode(url)
-			//console.log("Getting style", url, styleId)
+			console.log("Getting style", url, styleId)
 			compileStyle(styleId, data);
 		})
 	}
 	
 	function LoadLayerUrl( url, styleUrl, product_layer, layer_name, show ) {
-		//console.log( "LoadUrlLayer", url)
+		console.log( "LoadUrlLayer", url)
 		
 		loadDataUrl( url, function(err, data) {
 			styleId		= hashCode(styleUrl)
-			//console.log("loadedData err", err, url, styleId)
+			console.log("loadedData err", err, url, styleId)
 			
 			if( !err) {				
 				function loadGeoJson2( geojson, key_name ) {
@@ -296,7 +326,7 @@
 						
 						product_layer = L.geoJson(geojson, options)
 						
-						//console.log("Add to map")
+						console.log("Add to map")
 						if( show ) product_layer.addTo(map)		
 						
 						map_controls.addOverlay(product_layer, layer_name)
@@ -304,6 +334,7 @@
 						if( layer_name == gfms_layer_name) 			gfmsLayer = product_layer
 						if( layer_name == gpm_layer_name) 			gpmLayer = product_layer
 						if( layer_name == landslide_layer_name) 	landslideLayer = product_layer
+						if( layer_name == pop_layer_name) 			popLayer = product_layer
 						
 					} else {
 						return 0
@@ -326,13 +357,15 @@
 	
 	// Get gfms styledata
 	getStyle( gfms_style_url )
-	getStyle(gpm_style_url)
+	getStyle( gpm_style_url)
 	getStyle( landslide_style_url)
+	getStyle( pop_style_url)
 	
 	// Get legends
 	getLegend( "/mapinfo/gfms/legend?product=flood_14km" )
 	getLegend( "/mapinfo/gpm_1d/legend?product=gpm_1d" )
 	getLegend( "/mapinfo/global_landslide_nowcast/legend?product=global_landslide_nowcast" )	
+	getLegend( "/mapinfo/ls/legend?product=ls" )	
 		
     var accessToken = '<%=token%>';
     // var map         = L.map('map', {minZoom:3, maxZoom:12}).setView([<%=latitude%>, <%=longitude%>], 7);
@@ -395,6 +428,9 @@
 		if( data.name == landslide_layer_name ) show_landslide = false
 	})
 	
+	var pop_url = getPopFileName()
+	LoadLayerUrl( pop_url, pop_style_url, popLayer, pop_layer_name, show_pop ) 
+	
 	map.timeDimension.on('timeload', function(data) {
 		var date = new Date(map.timeDimension.getCurrentTime());
 		if (data.time == map.timeDimension.getCurrentTime()) {
@@ -403,15 +439,21 @@
 			$(map.getContainer()).find('.animation-progress-bar').width((position*100)/totalTimes + "%");
 			
 			console.log("datetime", date.toISOString())
+			var utc_date = moment.utc(date)
 			
-			gfms_url = getGFMSFileName(moment.utc(date))
+			var gfms_url = getGFMSFileName(utc_date)
 			LoadLayerUrl( gfms_url, gfms_style_url, gfmsLayer, gfms_layer_name, show_gfms ) 
 			
-			gpm_url 	= getGPMFileName(moment.utc(date))			
+			var gpm_url 	= getGPMFileName(utc_date)			
 			LoadLayerUrl( gpm_url, gpm_style_url, gpmLayer, gpm_layer_name, show_gpm ) 
 			
-			landslide_url = getLandslideFileName(moment.utc(date))
-			LoadLayerUrl( landslide_url, landslide_style_url, landslideLayer, landslide_layer_name, show_landslide ) 
+			var landslide_url = getLandslideFileName(utc_date)
+			LoadLayerUrl( landslide_url, landslide_style_url, landslideLayer, landslide_layer_name, show_landslide )
+			
+			var dt = utc_date.format("YYYYY-MM-DD")
+			$("#date").val(dt)
+			
+			ShowTime(initialTime, utc_date )
 		}
 	});
 	
