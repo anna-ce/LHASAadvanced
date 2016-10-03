@@ -168,8 +168,8 @@ if __name__ == '__main__':
 		
 	print "Processing date:", dt, ydt, ydt2
 		
-	regions 				= ["d02", "d03", "d08", "d09", "d10"]
-	regions2 				= ["d02", "d03", "d08", "d09", "d10"]
+	regions 				= ["global", "d02", "d03", "d08", "d09", "d10"]
+	regions2 				= ["global", "d02", "d03", "d08", "d09", "d10"]
 	
 	if 1:
 		process_script('trmm_process.py', 		ydt, regions2)

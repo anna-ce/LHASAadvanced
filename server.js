@@ -41,7 +41,6 @@ var express 		= require('express'),
 	
 global.app 			= express();
 app.root 			= process.cwd();
-console.log("app root", app.root)
 var mainEnv 		= path.join(app.root, '/config/environment'+'.js');
 var supportEnv 		= path.join(app.root, '/config/environments/' + app.settings.env+'.js');
 
@@ -313,6 +312,10 @@ app.get('/products/:subfolder/subset/:regionKey/:year/:doy/:prefix',			setAuthHe
 app.get('/products/:subfolder/features/:regionKey/:year/:doy/:prefix/query',	function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Features(req, res); })
 app.get('/products/:subfolder/features/:regionKey/:year/:doy/:prefix',			function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].FeatureService(req, res); })
 
+app.get('/products/:subfolder/vt/:regionKey/:year/:doy/:z/:x/:y/:prefix',		function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].VectorTile(req, res); })
+app.get('/products/:subfolder/vt/style',										function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].VTStyle(req, res); })
+app.get('/products/:subfolder/vt/tilejson',										function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Tilejson(req, res); })
+
 app.get('/products/s3/:regionKey/:subfolder/:year/:doy/:id',	function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].S3(req, res); })
 
 app.get('/mapinfo/:subfolder',				function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].MapInfo(req, res); })
@@ -331,6 +334,8 @@ app.get("/test/gfms",								test.gfms);
 app.get("/test/r07",								test.r07);
 app.get("/test/feed",								test.feed);
 app.get("/test/notifications",						test.notifications);
+app.get("/test/mapboxgl",							test.mapboxgl);
+
 app.post("/test/download",							test.r07_download);
 
 app.get("/test/topojson/:id",						test.topojson);

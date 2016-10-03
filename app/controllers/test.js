@@ -126,6 +126,17 @@ module.exports = {
 			layout: false
 		 })			
 	},
+	mapboxgl: function(req, res) {
+		var host = req.protocol + "://" + req.get('host')
+		
+		res.render("test/mapboxgl.ejs", { 
+			token: process.env.MAPBOX_PUBLIC_TOKEN,
+			host: host,
+			latitude: 10,
+			longitude: -80.7,
+			layout: false
+		 })	
+	},
 	r07_download: function(req, res) {
 		console.log("download", req.body)
 		var which 	= req.body['which']

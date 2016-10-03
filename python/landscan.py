@@ -107,9 +107,9 @@ def CreateLevel(l, geojsonDir, fileName, src_ds, data, attr, _force, _verbose):
 		# -B		bottom margin
 
 		if stretch != 1:
-			cmd = str.format("potrace -i -z black -a 3 -t 10 -b geojson -o {0} {1} -x {2} -S {3} -L {4} -B {5} ", fileName+".geojson", fileName+".pgm", xres, stretch, xorg, ymax ); 
+			cmd = str.format("potrace -i -z black -a 3 -t 5 -b geojson -o {0} {1} -x {2} -S {3} -L {4} -B {5} ", fileName+".geojson", fileName+".pgm", xres, stretch, xorg, ymax ); 
 		else:
-			cmd = str.format("potrace -i -z black -a 3 -t 10 -b geojson -o {0} {1} -x {2} -L {3} -B {4} ", fileName+".geojson", fileName+".pgm", xres, xorg, ymax ); 
+			cmd = str.format("potrace -i -z black -a 3 -t 5 -b geojson -o {0} {1} -x {2} -L {3} -B {4} ", fileName+".geojson", fileName+".pgm", xres, xorg, ymax ); 
 			
 		execute(cmd)
 
@@ -141,7 +141,7 @@ def process(mydir, lsFile, regionName, region, s3_bucket, s3_folder):
 		bbox 			= region['bbox']
 		print region['name'], region['bbox']
 		
-		warpOptions 	= "-q -overwrite -co COMPRESS=DEFLATE -r cubic -t_srs EPSG:4326 -te %s %s %s %s " % (bbox[0], bbox[1], bbox[2], bbox[3])
+		warpOptions 	= "-q -overwrite -co COMPRESS=DEFLATE -t_srs EPSG:4326 -te %s %s %s %s " % (bbox[0], bbox[1], bbox[2], bbox[3])
 		#warpOptions		+= " -ts 2400 2400 "	# for India
 		warpCmd 		= 'gdalwarp ' + warpOptions + lsFile + ' ' + subsetFileName
 		execute( warpCmd )
@@ -167,8 +167,7 @@ def process(mydir, lsFile, regionName, region, s3_bucket, s3_folder):
 	osm_bg_image		= os.path.join(geojsonDir, "..", "osm_bg.png")
 	sw_osm_image		= os.path.join(geojsonDir, "..", "ls.2011_thn.jpg" )
 
-	#levels 				= [ 5500, 3400, 2100, 1300, 800, 500, 300, 200, 100 ]
-	levels 				= [ 8900, 5500, 3400, 2100, 1300, 800, 500 ]
+	levels 				= [ 8900, 5500, 3400, 2100, 1300, 800, 500, 300, 200, 100 ]
 	
 	# From http://colorbrewer2.org/	
 	#hexColors 			= [	"#f7f4f9", "#e7e1ef", "#d4b9da", "#c994c7", "#df65b0", "#e7298a", "#ce1256", "#980043", "#67001f"]

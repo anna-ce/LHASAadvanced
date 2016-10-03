@@ -436,8 +436,15 @@ class GFMS:
 					self.execute(cmd)
 				
 				if not os.path.exists(topojsongz):
-					cmd = "node ../subsetregions.js "+r+ " " + reg_full_geojson
-					self.execute(cmd)
+					if r == 'global':
+						regional_topojson_filename = reg_full_geojson.replace("geojson", "topojson")
+						cmd = "topojson -o " + regional_topojson_filename + " --no-stitch-poles --bbox -p -- " + reg_full_geojson 
+						cmd += "; gzip "+regional_topojson_filename
+						
+						self.execute(cmd)					
+					else:
+						cmd = "node ../subsetregions.js "+r+ " " + reg_full_geojson
+						self.execute(cmd)
 				
 				file_list = [topojsongz]
 				CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )

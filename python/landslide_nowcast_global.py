@@ -417,27 +417,28 @@ def process(_dir, files, ymd):
 	file_list = [ sw_osm_image, topojson_filename+".gz", fname_1km_final ]
 	CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 	
-	for r in regions:
-		region			= config.regions[r]
-		regional_dir 	=  os.path.join(_dir, r)
-		if not os.path.exists(regional_dir):
-			os.makedirs(regional_dir)
+	if regions:
+		for r in regions:
+			region			= config.regions[r]
+			regional_dir 	=  os.path.join(_dir, r)
+			if not os.path.exists(regional_dir):
+				os.makedirs(regional_dir)
 		
-		s3_bucket		= region['bucket']
+			s3_bucket		= region['bucket']
 		
-		reg_full_geojson = os.path.join(regional_dir, os.path.basename(merge_filename))
-		topojsongz = reg_full_geojson.replace("geojson", "topojson.gz")
+			reg_full_geojson = os.path.join(regional_dir, os.path.basename(merge_filename))
+			topojsongz = reg_full_geojson.replace("geojson", "topojson.gz")
 
-		if not os.path.exists(reg_full_geojson):
-			cmd = "cp "+merge_filename+" "+regional_dir
-			execute(cmd)
+			if not os.path.exists(reg_full_geojson):
+				cmd = "cp "+merge_filename+" "+regional_dir
+				execute(cmd)
 		
-		if not os.path.exists(topojsongz):
-			cmd = "node ../subsetregions.js "+r+ " " + merge_filename
-			execute(cmd)
+			if not os.path.exists(topojsongz):
+				cmd = "node ../subsetregions.js "+r+ " " + merge_filename
+				execute(cmd)
 		
-		file_list = [topojsongz]
-		CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
+			file_list = [topojsongz]
+			CopyToS3( s3_bucket, s3_folder, file_list, force, verbose )
 		
 	#if not verbose: # Cleanup
 	#	if config.USING_AWS_S3_FOR_STORAGE:
@@ -503,7 +504,7 @@ if __name__ == '__main__':
 		regions			= options.regions.split(',')
 		ValidateRegions(regions)
 	else:
-		regions = false
+		regions = False
 
 	basedir 		= os.path.dirname(os.path.realpath(sys.argv[0]))
 	

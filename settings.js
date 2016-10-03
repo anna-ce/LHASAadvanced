@@ -27,6 +27,7 @@ var express 		= require('express'),
 	methodOverride 	= require('method-override'),
 	multer 			= require('multer'),
 	moment			= require('moment'),
+	MemJS			= require('memjs').Client,
 	shortid			= require('shortid');
 
   	require('winston-papertrail').Papertrail;
@@ -52,7 +53,7 @@ var express 		= require('express'),
 	//
 	function CheckAWS_S3() {
 		if( app.config.using_aws_s3_for_storage) {
-			console.log("using_aws_s3_for_storage...")
+			logger.info("using_aws_s3_for_storage...")
 		
 			// AWS Amazon
 			app.s3_config = {
@@ -131,6 +132,15 @@ var express 		= require('express'),
 	}
 	
 
+	// Create cache
+	app.memjs = MemJS.create(null,{
+		retries: 10
+	});
+	
+	//var key  = "flood_14km.20161002_4_3_8"
+  	//app.memjs.get(key, function(err, val) {
+  	//	console.log("cached", key, err, val.toString())
+  	//})
 	
 	// Pick a secret to secure your session storage
 	app.sessionSecret = process.env.COOKIEHASH || 'OJO-BOT-PGC-2014-04';
