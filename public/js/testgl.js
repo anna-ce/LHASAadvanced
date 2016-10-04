@@ -165,7 +165,7 @@ Play = function() {
 }
 
 $("#slider").on("change", function(){
-	var delta = 1+ maxDays-parseInt(this.value)
+	var delta = 2+ maxDays-parseInt(this.value)
 	dt = moment().subtract('days', delta) 
 	$('#DateLabel').html(dt.format("YYYY-MM-DD"))	
 	console.log("date:", dt.format("YYYY-MM-DD"))
