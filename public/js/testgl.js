@@ -1,4 +1,7 @@
 (function (undefined) {
+
+var play = false
+	
 map.on('load', function () {
 	AddMapLayers()
 });
@@ -140,7 +143,9 @@ function UpdateLayers() {
 	AddMapLayers()
 }
 
-var maxDays = 7
+var maxDays = 7;
+var playTimeout;
+
 AddOne = function() {
 	var delta = parseInt($('#slider').val()) + 1
 	if(delta <= maxDays) {
@@ -160,17 +165,37 @@ SubtractOne = function() {
 	}
 }
 
+function PlayOne() {
+	var delta = parseInt($('#slider').val()) + 1
+	if(delta > maxDays) {		
+		$('#slider').val(0)
+		$('#slider').trigger('change')
+	}
+	AddOne()
+}
+
 Play = function() {
+	console.log("Play", play)
+	if( play == false ) {
+		play = true
+		$('#play').removeClass('fa fa-play').addClass('fa fa-pause')
+		playTimeout = window.setInterval(PlayOne, 2000)
+	} else {
+		play = false
+		$('#play').removeClass('fa fa-pause').addClass('fa fa-play')
+		window.clearTimeout(playTimeout)
+	}
+	
 	AddOne()
 }
 
 $("#slider").on("change", function(){
-	var delta = 2+ maxDays-parseInt(this.value)
-	dt = moment().subtract('days', delta) 
-	$('#DateLabel').html(dt.format("YYYY-MM-DD"))	
-	console.log("date:", dt.format("YYYY-MM-DD"))
+	var delta 	= 2 + maxDays-parseInt(this.value)
+	dt 			= moment().subtract('days', delta) 
+	fdt		 	= dt.format("YYYY-MM-DD")
+	$('#DateLabel').html(fdt)	
+	$('#date').html(fdt)
 	UpdateLayers()
-	
 });
 
 function UpdateButtons() {

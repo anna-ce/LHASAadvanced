@@ -56,7 +56,7 @@
 			.map-overlay {
 			    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
 			    position: absolute;
-			    width: 25%;
+			    width: 20%;
 			    top: 0;
 			    left: 0;
 			    padding: 10px;
@@ -69,6 +69,10 @@
 			    padding: 10px;
 			    margin-bottom: 10px;
 				opacity: 0.5;
+			}
+
+			.map-overlay .map-overlay-inner a {
+				color: #3887be;
 			}
 
 			.map-overlay h2 {
@@ -90,6 +94,34 @@
 			    margin: 0;
 			    cursor: ew-resize;
 			}		
+			
+			#download_button {
+				position: absolute;
+				top: 140;
+				right: 10px;
+				z-index: 2;
+				color: #3887be;
+			}
+			
+			#download_button a {
+				color: #3887be;
+			}
+			
+			.download {
+				position: absolute;
+			    background: white;
+			    background: rgba(255,255,255,0.5);
+			    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+			    border-radius: 25px;
+			    border: 2px solid #73AD21;
+			    padding: 20px; 
+				top: 130px;
+				right: 30px;
+				float: right;
+				margin-right: 10;
+				z-index: 9999;
+			}
+
     </style>
 </head>
 <body>
@@ -97,21 +129,79 @@
 	var AddOne, SubTractOne,Play
 </script>
 <nav id="menu"></nav>
+<div id='download_button'>
+	<a href='Javascript:ShowDownload();'><i class='fa fa-download'></i></a>
+</div>
 <div id='map'></div>
  <div class='map-overlay top'>
      <div class='map-overlay-inner'>
-		 
          <label id='DateLabel'></label>
-		 <table><tr><td>
-		  <a href='Javascript:SubtractOne()'><i class='fa fa-backward'></i></a>
-		  <a href='Javascript:Play()'><i class='fa fa-play'></i></a>
-		  <a href='Javascript:AddOne()'><i class='fa fa-forward'></i></a>
-	  </td><td>
-		 <input id='slider' type='range' min='0' max='7' step='1' value='7' />
-	 </td></tr></table>
+		 <table>
+			 <tr><td>
+				 <a href='Javascript:SubtractOne()'><i class='fa fa-backward'></i></a>
+				 <a href='Javascript:Play()'><i id='play' class='fa fa-play'></i></a>
+				 <a href='Javascript:AddOne()'><i class='fa fa-forward'></i></a>
+			 </td>
+			 <td>
+		 		<input id='slider' type='range' min='0' max='7' step='1' value='7' />
+			</td></tr>
+		</table>
      </div>
  </div>
- 
+
+<div id='download' class='download' style="display:none">
+	<form action='/test/download' method='post' class='form-horizontal'>
+		<span><b>Download:</b></span><br/><br/>
+		<input type='hidden' name='date' id='date' value='2016-05-15'/>
+		<div class="radio">
+			<label>
+				<input type='radio' name="which" id="precip" value='precipitation' checked>
+				precipitation
+			</label>
+		</div>
+		<div class="radio">
+			<label>
+				<input type='radio' name="which" id="flood" value='flood'>
+				flood
+			</label>
+		</div>
+		<div class="radio">
+			<label>
+				<input type='radio' name="which" id="landslide" value='landslide'>
+				landslide
+			</label>
+		</div>
+		<hr/>
+		<div class="radio">
+			<label>
+				<input type='radio' name="format" id="topojson" value='topojson' checked>
+				topojson
+			</label>
+		</div>
+		<div class="radio">
+			<label>
+				<input type='radio' name="format" id="geoojson" value='geojson' >
+				geoojson
+			</label>
+		</div>
+		<div class="radio">
+			<label>
+				<input type='radio' name="format" id="shape" value='shape' >
+				shape
+			</label>
+		</div>
+		<div class="radio">
+			<label>
+				<input type='radio' name='format' id='kml' value='kml' >
+				kml
+			</label>		
+		</div>
+			<br/>
+		
+		<button type="submit" class="btn btn-primary">Submit</button>	
+	<form>
+</div>
+
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.25.0/mapbox-gl.js'></script>
 <script src='/js/moment.js'></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -130,7 +220,9 @@ var startTime 	= moment().subtract('days', 2)
 var dt			= startTime
 $('#DateLabel').html(dt.format("YYYY-MM-DD"))
 
-
+function ShowDownload() {
+	$('#download').toggle()
+}
 
 
 </script>
