@@ -216,7 +216,15 @@ var map = new mapboxgl.Map({
 });
 var host = '<%= host %>'
 
-var startTime 	= moment().subtract('days', 2) 
+var startTime 	= moment().subtract('days', 1)
+
+// Check if we are past 14:00PM
+var hr = startTime.hour()
+if(hr < 14 ) {
+	startTime 	= moment().subtract('days', 2)
+}
+console.log("Hour", hr, "startTime", startTime.format("YYYY-MM-DD"))
+
 var dt			= startTime
 $('#DateLabel').html(dt.format("YYYY-MM-DD"))
 

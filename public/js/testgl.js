@@ -32,7 +32,7 @@ function getLandslideFileName(){
 }
 
 function RemoveMapLayers() {
-	console.log("RemoveMapLayers")
+	//console.log("RemoveMapLayers")
 	for (var i = 0; i < toggleableLayerIds.length; i++) {
 	    var id = toggleableLayerIds[i];
 		map.removeLayer(id)
@@ -41,7 +41,7 @@ function RemoveMapLayers() {
 }
 
 function AddMapLayers() {
-	console.log("AddMapLayers:", dt.format("YYYY-MM-DD"))
+	//console.log("AddMapLayers:", dt.format("YYYY-MM-DD"))
 	
     map.addSource('precipitation', {
         type: 'vector',
@@ -143,14 +143,12 @@ function UpdateLayers() {
 	AddMapLayers()
 }
 
-var maxDays = 7;
+var maxDays = 8;
 var playTimeout;
 
 AddOne = function() {
-	var delta = parseInt($('#slider').val()) + 1
-	if(delta <= maxDays) {
-		console.log("set slider", delta)
-		
+	var delta = parseInt($('#slider').val())+1
+	if(delta <= maxDays) {		
 		$('#slider').val(delta)
 		$('#slider').trigger('change')
 	}
@@ -159,7 +157,6 @@ AddOne = function() {
 SubtractOne = function() {
 	var delta = parseInt($('#slider').val()) - 1
 	if(delta >= 0) {
-		console.log("set slider", delta)
 		$('#slider').val(delta)
 		$('#slider').trigger('change')
 	}
@@ -167,7 +164,7 @@ SubtractOne = function() {
 
 function PlayOne() {
 	var delta = parseInt($('#slider').val()) + 1
-	if(delta > maxDays) {		
+	if(delta >= maxDays) {
 		$('#slider').val(0)
 		$('#slider').trigger('change')
 	}
@@ -175,11 +172,10 @@ function PlayOne() {
 }
 
 Play = function() {
-	console.log("Play", play)
 	if( play == false ) {
 		play = true
 		$('#play').removeClass('fa fa-play').addClass('fa fa-pause')
-		playTimeout = window.setInterval(PlayOne, 2000)
+		playTimeout = window.setInterval(PlayOne, 3000)
 	} else {
 		play = false
 		$('#play').removeClass('fa fa-pause').addClass('fa fa-play')
@@ -190,8 +186,9 @@ Play = function() {
 }
 
 $("#slider").on("change", function(){
-	var delta 	= 2 + maxDays-parseInt(this.value)
-	dt 			= moment().subtract('days', delta) 
+	var delta 	= maxDays -1 - parseInt(this.value)
+	dt			= startTime.clone()
+	dt 			= dt.subtract('days', delta) 
 	fdt		 	= dt.format("YYYY-MM-DD")
 	$('#DateLabel').html(fdt)	
 	$('#date').html(fdt)
@@ -234,7 +231,7 @@ function UpdateButtons() {
 	            map.setLayoutProperty(layerName, 'visibility', 'visible');
 				visibility[id] = 'visible'
 	        }
-			console.log("visibility", layerName, clickedLayer, id, visibility[id])
+			//console.log("visibility", layerName, clickedLayer, id, visibility[id])
 	    };
 
 	    //var layers = document.getElementById('menu');
