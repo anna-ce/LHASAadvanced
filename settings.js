@@ -34,16 +34,19 @@ var express 		= require('express'),
 
 	global.logger = new winston.Logger({
 		transports: [
-			new (winston.transports.Console)(),
+			new (winston.transports.Console)({
+				level: 'info'
+			}),
 
 			new winston.transports.Papertrail({
 				host: 'logs.papertrailapp.com',
 				port: 12836,
-				colorize: true
+				colorize: true,
+				level: 'info'
 			})
 		]
 	});
-
+	
 	// shortid for database key management
 	shortid.seed(20130311);
 	app.shortid = shortid;

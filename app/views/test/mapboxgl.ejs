@@ -6,123 +6,7 @@
     
 	<link rel="stylesheet" href="/css/font-awesome.min.css" />
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.25.0/mapbox-gl.css' rel='stylesheet' />
-    <style>
-        body { margin:0; padding:0; }
-        #map { position:absolute; top:0; bottom:0; width:100%; }
-		
-		    #menu {
-		        background: #fff;
-		        position: absolute;
-		        z-index: 1;
-		        top: 10px;
-		        right: 10px;
-		        border-radius: 10px;
-			    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-		        width: 120px;
-		        border: 1px solid rgba(0,0,0,0.4);
-		        font-family: 'Open Sans', sans-serif;
-				opacity: 0.4;
-		    }
-
-		    #menu a {
-		        font-size: 13px;
-		        color: #404040;
-		        display: block;
-		        margin: 0;
-		        padding: 0;
-		        padding: 10px;
-		        text-decoration: none;
-		        border-bottom: 1px solid rgba(0,0,0,0.25);
-		        text-align: center;
-		    }
-
-		    #menu a:last-child {
-		        border: none;
-		    }
-
-		    #menu a:hover {
-		        background-color: #f8f8f8;
-		        color: #404040;
-		    }
-
-		    #menu a.active {
-		        background-color: #3887be;
-		        color: #ffffff;
-		    }
-
-		    #menu a.active:hover {
-		        background: #3074a4;
-		    }
-			.map-overlay {
-			    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-			    position: absolute;
-			    width: 20%;
-			    top: 0;
-			    left: 0;
-			    padding: 10px;
-			}
-
-			.map-overlay .map-overlay-inner {
-			    background-color: #fff;
-			    box-shadow:0 1px 2px rgba(0, 0, 0, 0.20);
-			    border-radius: 3px;
-			    padding: 10px;
-			    margin-bottom: 10px;
-				opacity: 0.5;
-			}
-
-			.map-overlay .map-overlay-inner a {
-				color: #3887be;
-			}
-
-			.map-overlay h2 {
-			    line-height: 24px;
-			    display: block;
-			    margin: 0 0 10px;
-			}
-
-			.map-overlay .legend .bar {
-			    height: 10px;
-			    display: inline-block;
-			}
-
-			.map-overlay input {
-			    background-color: transparent;
-			    display: inline-block;
-			    width: 100%;
-			    position: relative;
-			    margin: 0;
-			    cursor: ew-resize;
-			}		
-			
-			#download_button {
-				position: absolute;
-				top: 140;
-				right: 10px;
-				z-index: 2;
-				color: #3887be;
-			}
-			
-			#download_button a {
-				color: #3887be;
-			}
-			
-			.download {
-				position: absolute;
-			    background: white;
-			    background: rgba(255,255,255,0.5);
-			    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-			    border-radius: 25px;
-			    border: 2px solid #73AD21;
-			    padding: 20px; 
-				top: 130px;
-				right: 30px;
-				float: right;
-				margin-right: 10;
-				z-index: 9999;
-			}
-
-    </style>
+	<link rel="stylesheet" href="/css/mapboxgl.css" />
 </head>
 <body>
 <script>
@@ -155,20 +39,26 @@
 		<input type='hidden' name='date' id='date' value='2016-05-15'/>
 		<div class="radio">
 			<label>
-				<input type='radio' name="which" id="precip" value='precipitation' checked>
-				precipitation
+				<input type='radio' name="which" id="flood forecast" value='flood_forecast'>
+				flood forecast
 			</label>
 		</div>
 		<div class="radio">
 			<label>
-				<input type='radio' name="which" id="flood" value='flood'>
-				flood
+				<input type='radio' name="which" id="flood maps" value='flood_map'>
+				flood maps
 			</label>
 		</div>
 		<div class="radio">
 			<label>
 				<input type='radio' name="which" id="landslide" value='landslide'>
 				landslide
+			</label>
+		</div>
+		<div class="radio">
+			<label>
+				<input type='radio' name="which" id="precip" value='precipitation' checked>
+				precipitation
 			</label>
 		</div>
 		<hr/>
@@ -181,7 +71,7 @@
 		<div class="radio">
 			<label>
 				<input type='radio' name="format" id="geoojson" value='geojson' >
-				geoojson
+				geojson
 			</label>
 		</div>
 		<div class="radio">
@@ -212,7 +102,7 @@ var map = new mapboxgl.Map({
     container: 'map', // container id
     style: 'mapbox://styles/mapbox/basic-v9', //hosted style id
     center: [<%=longitude%>, <%=latitude%>], // starting position
-    zoom: 4 // starting zoom
+    zoom: <%= zoom %> // starting zoom
 });
 var host = '<%= host %>'
 

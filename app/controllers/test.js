@@ -66,7 +66,7 @@ module.exports = {
 		res.render("test/gfms.ejs", { 
 			layout: false,
 			token: process.env.MAPBOX_PUBLIC_TOKEN,
-			latitude: 30,
+			latitude: 50,
 			longitude: 70
 		 })	
 	},
@@ -132,8 +132,9 @@ module.exports = {
 		res.render("test/mapboxgl.ejs", { 
 			token: process.env.MAPBOX_PUBLIC_TOKEN,
 			host: host,
-			latitude: 10,
+			latitude: 30,
 			longitude: -80.7,
+			zoom: 5,
 			layout: false
 		 })	
 	},
@@ -161,40 +162,49 @@ module.exports = {
 		var url;
 		
 		switch (which) {
-			case 'flood':
+			case 'flood_forecast':
 				var basename = formattedDate + "_levels"+ext
-				if( ext == 'topojson') {
-					url = "/products/s3/r07/gfms/" + mday.format("YYYY")+ "/"+ mday.format("DDDD") + "/" + basename
+				if( ext == '.topojson.gz') {
+					url = "/products/s3/Global/gfms/" + mday.format("YYYY")+ "/"+ mday.format("DDDD") + "/" + basename
 				} else {
-					url = "/products/gfms/export/r07/" + mday.format("YYYY")+ "/"+ mday.format("DDDD") + "/" + basename
+					url = "/products/gfms/export/Global/" + mday.format("YYYY")+ "/"+ mday.format("DDDD") + "/" + basename
 				}
-				
+			
+				console.log(url)
+				res.redirect(url)
+				break
+			case 'flood_map':
+				var basename = formattedDate + "_levels"+ext
+				if( ext == '.topojson.gz') {
+					url = "/products/s3/Global/dfo/2016/288/dfo.20161014.topojson.gz"
+				} else {
+					url = "/products/dfo/export/Global/2016/288/dfo.20161014"
+				}
 				console.log(url)
 				res.redirect(url)
 				break
 			case 'landslide':
 				var basename = "global_landslide_nowcast_" + formattedDate + ext
-				if( ext == 'topojson') {
-					url = "/products/s3/r07/global_landslide_nowcast/" + mday.format("YYYY")+ "/"+ mday.format("DDDD") + "/" + basename
+				if( ext == '.topojson.gz') {
+					url = "/products/s3/Global/global_landslide_nowcast/" + mday.format("YYYY")+ "/"+ mday.format("DDDD") + "/" + basename
 				} else {
-					url = "/products/global_landslide_nowcast/export/r07/" + mday.format("YYYY")+ "/"+ mday.format("DDDD") + "/" + basename
+					url = "/products/global_landslide_nowcast/export/Global/" + mday.format("YYYY")+ "/"+ mday.format("DDDD") + "/" + basename
 				}
 				console.log(url)
 				res.redirect(url)
 				break			
 			case 'precipitation':
 				var basename = "gpm_1d." + formattedDate + ext
-				if( ext == 'topojson') {
-					url = "/products/s3/r07/gpm_1d/" + mday.format("YYYY")+ "/"+ mday.format("DDDD") + "/" + basename
+				if( ext == '.topojson.gz') {
+					url = "/products/s3/Global/gpm_1d/" + mday.format("YYYY")+ "/"+ mday.format("DDDD") + "/" + basename
 				} else {
-					url = "/products/gpm_1d/export/r07/" + mday.format("YYYY")+ "/"+ mday.format("DDDD") + "/" + basename
+					url = "/products/gpm_1d/export/Global/" + mday.format("YYYY")+ "/"+ mday.format("DDDD") + "/" + basename
 				}	
 				console.log(url)
 				res.redirect(url)
 				break
 			default:
-				res.redirect("/test/ro7")
-						
+				res.sendStatus(400, "invalid product:"+which)
 		}
 	},
 	topojson: function(req,res) {

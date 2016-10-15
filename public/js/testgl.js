@@ -6,9 +6,9 @@ map.on('load', function () {
 	AddMapLayers()
 });
 
-var toggleableLayerIds 	= [ 'precipitation', 'flood_nowcast',  'global_landslide_nowcast' ];
-var labels 				= [ 'precipitation', 'flood',  'landslides' ];
-var visibility 			= [ 'none', 'visible',  'none' ];
+var toggleableLayerIds 	= [ 'flood_nowcast', 'flood_map', 'global_landslide_nowcast', 'precipitation' ];
+var labels 				= [ 'flood forecast', 'flood maps', 'landslides', 'precipitation' ];
+var visibility 			= [ 'none', 'visible',  'none', 'none' ];
 
 function get_GPM_url(){
 	var formattedDate 	= dt.format("YYYYMMDD")
@@ -24,6 +24,14 @@ function get_GFMS_url(){
 	return url
 }
 	
+function get_DFO_url(){
+	var formattedDate 	= dt.format("YYYYMMDD")
+	var basename 		= "dfo."+formattedDate + ".mvt"		
+	var url 			= host + "/products/dfo/vt/Global/2016/288/{z}/{x}/{y}/"+ basename
+	console.log(url)
+	return url
+}
+
 function getLandslideFileName(){
 	var formattedDate 	= dt.format("YYYYMMDD")
 	var basename 		= "global_landslide_nowcast_" + formattedDate + ".mvt"		
@@ -54,7 +62,7 @@ function AddMapLayers() {
         "source": "precipitation",
         "source-layer": "precipitation",
 		"layout": {
-			'visibility': visibility[0]
+			'visibility': visibility[3]
 		},
         "paint": {
 			"fill-color": {
@@ -89,7 +97,7 @@ function AddMapLayers() {
         "source": "flood_nowcast",
         "source-layer": "flood_nowcast",
 		"layout": {
-			'visibility': visibility[1]
+			'visibility': visibility[0]
 		},
         "paint": {
 			"fill-color": {
@@ -129,6 +137,32 @@ function AddMapLayers() {
 				"stops": [
 					[1,  "#ffcc00"],
 					[2,  "#ff0000"]
+				]
+			},
+			"fill-opacity": 0.5
+        }
+    });
+	
+    map.addSource('flood_map', {
+        type: 'vector',
+		tiles: [
+			get_DFO_url()
+		]
+    });
+	
+    map.addLayer({
+        "id": "flood_map",
+        "type": "fill",
+        "source": "flood_map",
+        "source-layer": "flood_map",
+		"layout": {
+			'visibility': visibility[1]
+		},
+        "paint": {
+			"fill-color": {
+				"property": "flood",
+				"stops": [
+					[1,  "#ff0000"],
 				]
 			},
 			"fill-opacity": 0.5
