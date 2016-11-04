@@ -314,7 +314,7 @@ app.get('/products/:subfolder/features/:regionKey/:year/:doy/:prefix',			functio
 
 app.get('/products/:subfolder/vt/:regionKey/:year/:doy/:z/:x/:y/:prefix',		function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].VectorTile(req, res); })
 app.get('/products/:subfolder/vt/style',										function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].VTStyle(req, res); })
-app.get('/products/:subfolder/vt/tilejson',										function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Tilejson(req, res); })
+app.get('/products/:subfolder/tilejson/:regionKey/:year/:doy/:prefix',			function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].Tilejson(req, res); })
 
 app.get('/products/s3/:regionKey/:subfolder/:year/:doy/:id',	function(req,res) { var subfolder = req.params.subfolder; s3_products[subfolder].S3(req, res); })
 

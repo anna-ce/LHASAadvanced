@@ -1,114 +1,132 @@
-body { margin:0; padding:0; }
-#map { position:absolute; top:0; bottom:0; width:100%; }
+body {
+	margin: 0;
+	padding: 0;
+}
+#map {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+}
 
-    #menu {
-        background: #fff;
-        position: absolute;
-        z-index: 1;
-        top: 10px;
-        right: 10px;
-        border-radius: 10px;
-	    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-        width: 120px;
-        border: 1px solid rgba(0,0,0,0.4);
-        font-family: 'Open Sans', sans-serif;
-		opacity: 0.4;
-    }
+#menu {
+	background: #fff;
+	position: absolute;
+	z-index: 2;
+	top: 10px;
+	right: 10px;
+	border-radius: 10px;
+	box-shadow: 0 0 15px rgba(0,0,0,0.2);
+	width: 120px;
+	border: 1px solid rgba(0,0,0,0.4);
+	font-family: 'Open Sans', sans-serif;
+	opacity: 0.4;
+}
 
-    #menu a {
-        font-size: 13px;
-        color: #404040;
-        display: block;
-        margin: 0;
-        padding: 0;
-        padding: 10px;
-        text-decoration: none;
-        border-bottom: 1px solid rgba(0,0,0,0.25);
-        text-align: center;
-    }
+#menu a {
+	font-size: 13px;
+	color: #404040;
+	display: block;
+	margin: 0;
+	padding: 0;
+	padding: 10px;
+	text-decoration: none;
+	border-bottom: 1px solid rgba(0,0,0,0.25);
+	text-align: center;
+}
 
-    #menu a:last-child {
-        border: none;
-    }
+#menu a:last-child {
+	border: none;
+}
 
-    #menu a:hover {
-        background-color: #f8f8f8;
-        color: #404040;
-    }
+#menu a:hover {
+	background-color: #f8f8f8;
+	color: #404040;
+}
 
-    #menu a.active {
-        background-color: #3887be;
-        color: #ffffff;
-    }
+#menu a.active {
+	background-color: #3887be;
+	color: #ffffff;
+}
 
-    #menu a.active:hover {
-        background: #3074a4;
-    }
-	.map-overlay {
-	    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-	    position: absolute;
-	    width: 20%;
-	    top: 0;
-	    left: 0;
-	    padding: 10px;
-	}
+#menu a.active:hover {
+	background: #3074a4;
+}
+.map-overlay {
+	font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+	position: absolute;
+	width: 20%;
+	top: 0;
+	left: 0;
+	padding: 10px;
+	z-index: 2;
+}
 
-	.map-overlay .map-overlay-inner {
-	    background-color: #fff;
-	    box-shadow:0 1px 2px rgba(0, 0, 0, 0.20);
-	    border-radius: 3px;
-	    padding: 10px;
-	    margin-bottom: 10px;
-		opacity: 0.5;
-	}
+.map-overlay .map-overlay-inner {
+	background-color: #fff;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.20);
+	border-radius: 3px;
+	padding: 10px;
+	margin-bottom: 10px;
+	opacity: 0.5;
+}
 
-	.map-overlay .map-overlay-inner a {
-		color: #3887be;
-	}
+.map-overlay .map-overlay-inner a {
+	color: #3887be;
+}
 
-	.map-overlay h2 {
-	    line-height: 24px;
-	    display: block;
-	    margin: 0 0 10px;
-	}
+.map-overlay h2 {
+	line-height: 24px;
+	display: block;
+	margin: 0 0 10px;
+}
 
-	.map-overlay .legend .bar {
-	    height: 10px;
-	    display: inline-block;
-	}
+.map-overlay .legend .bar {
+	height: 10px;
+	display: inline-block;
+}
 
-	.map-overlay input {
-	    background-color: transparent;
-	    display: inline-block;
-	    width: 100%;
-	    position: relative;
-	    margin: 0;
-	    cursor: ew-resize;
-	}		
+.map-overlay input {
+	background-color: transparent;
+	display: inline-block;
+	width: 100%;
+	position: relative;
+	margin: 0;
+	cursor: ew-resize;
+}
 	
-	#download_button {
-		position: absolute;
-		top: 160;
-		right: 10px;
-		z-index: 2;
-		color: #3887be;
-	}
+#download_button {
+	position: absolute;
+	top: 200;
+	right: 10px;
+	z-index: 2;
+	color: #3887be;
+}
 	
-	#download_button a {
-		color: #3887be;
-	}
+#download_button a {
+	color: #3887be;
+}
 	
-	.download {
-		position: absolute;
-	    background: white;
-	    background: rgba(255,255,255,0.5);
-	    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-	    border-radius: 25px;
-	    border: 2px solid #73AD21;
-	    padding: 10px; 
-		top: 180px;
-		right: 10px;
-		float: right;
-		margin-right: 10;
-		z-index: 9999;
-	}
+.download {
+	position: absolute;
+	background: white;
+	background: rgba(255,255,255,0.5);
+	box-shadow: 0 0 15px rgba(0,0,0,0.2);
+	border-radius: 25px;
+	border: 2px solid #73AD21;
+	padding: 10px;
+	top: 220px;
+	right: 10px;
+	float: right;
+	margin-right: 10;
+	z-index: 9999;
+}
+div.fill {
+	width: 100%;
+	height: 100%;
+}
+#windyMap {
+	position: absolute;
+	z-index: 1;
+	pointer-events: none;
+}

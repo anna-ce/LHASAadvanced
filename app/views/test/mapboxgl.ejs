@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="/css/font-awesome.min.css" />
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.25.0/mapbox-gl.css' rel='stylesheet' />
 	<link rel="stylesheet" href="/css/mapboxgl.css" />
+    <link rel="stylesheet" href="http://js.arcgis.com/3.8/js/esri/css/esri.css">
 </head>
 <body>
 <script>
@@ -16,7 +17,9 @@
 <div id='download_button'>
 	<a href='Javascript:ShowDownload();'><i class='fa fa-download'></i></a>
 </div>
-<div id='map'></div>
+<div id='map'>
+    <canvas id="windyMap" class="fill"></canvas>
+</div>
  <div class='map-overlay top'>
      <div class='map-overlay-inner'>
          <label id='DateLabel'></label>
@@ -94,6 +97,8 @@
 
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.25.0/mapbox-gl.js'></script>
 <script src='/js/moment.js'></script>
+<script src='/js/d3.js'></script>
+
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
 <script>

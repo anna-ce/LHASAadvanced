@@ -1,6 +1,55 @@
 (function (undefined) {
 
-var play = false
+var play 	= false
+var windy 	= undefined;
+var canvas;
+	
+
+function redraw(){
+	if( !windy ) return;
+	
+	windy.stop();
+
+	var bbox 	= document.body.getBoundingClientRect();
+	var width 	= bbox.width;
+	var height 	= bbox.height
+	
+	canvas.width	= width
+	canvas.height	= height
+		
+	var extent = map.getBounds();
+	var xmin 	= extent.getWest()
+	var xmax	= extent.getEast()
+	var ymin	= extent.getSouth()
+	var ymax	= extent.getNorth() 
+		
+	setTimeout(function(){
+		windy.start(
+			[[0,0],[width, height]],
+			width,
+			height,
+			[[xmin, ymin],[xmax, ymax]]
+		);
+	},100);
+}
+
+map.on('zoomend', function () {
+	console.log("zoomend")
+	redraw()
+})
+
+map.on("viewreset", function() {
+	console.log("viewreset")
+	redraw()
+})
+map.on("dragend", function() {
+	console.log("dragend")
+	redraw()
+})
+map.on("resize", function() {
+	console.log("resize")
+	redraw()
+})  	
 	
 map.on('load', function () {
 	AddMapLayers()
@@ -8,7 +57,7 @@ map.on('load', function () {
 
 var toggleableLayerIds 	= [ 'flood_nowcast', 'flood_map', 'global_landslide_nowcast', 'precipitation' ];
 var labels 				= [ 'flood forecast', 'flood maps', 'landslides', 'precipitation' ];
-var visibility 			= [ 'none', 'visible',  'none', 'none' ];
+var visibility 			= [ 'none', 'none',  'none', 'visible' ];
 
 function get_GPM_url(){
 	var formattedDate 	= dt.format("YYYYMMDD")
@@ -26,9 +75,10 @@ function get_GFMS_url(){
 	
 function get_DFO_url(){
 	var formattedDate 	= dt.format("YYYYMMDD")
-	var basename 		= "dfo."+formattedDate + ".mvt"		
+	//var basename 		= "dfo."+formattedDate + ".mvt"		
+	var basename 		= "dfo.20161014.mvt"		
 	var url 			= host + "/products/dfo/vt/Global/2016/288/{z}/{x}/{y}/"+ basename
-	console.log(url)
+	//console.log(url)
 	return url
 }
 
@@ -40,16 +90,16 @@ function getLandslideFileName(){
 }
 
 function RemoveMapLayers() {
-	//console.log("RemoveMapLayers")
 	for (var i = 0; i < toggleableLayerIds.length; i++) {
 	    var id = toggleableLayerIds[i];
-		map.removeLayer(id)
-		map.removeSource(id)
+		if( id != 'wind') {
+			//map.removeLayer(id)
+			map.removeSource(id)
+		}
 	}
 }
 
 function AddMapLayers() {
-	//console.log("AddMapLayers:", dt.format("YYYY-MM-DD"))
 	
     map.addSource('precipitation', {
         type: 'vector',
@@ -235,15 +285,12 @@ function UpdateButtons() {
 	for (var i = 0; i < toggleableLayerIds.length; i++) {
 	    var id = toggleableLayerIds[i];
 
-	    var link = document.createElement('a');
-	    link.href = '#';
-		link.textContent = labels[i];	//id;
+	    var link 			= document.createElement('a');
+	    link.href 			= '#';
+		link.textContent 	= labels[i];	//id;
 	
 		if( visibility[i] == 'visible') {
 			link.className = 'active';
-			//map.setLayoutProperty(layerName, 'visibility', 'visible');
-		} else {
-	        //map.setLayoutProperty(id, 'visibility', 'none');
 		}
 	
 	    link.onclick = function (e) {
@@ -253,7 +300,7 @@ function UpdateButtons() {
 		
 	        e.preventDefault();
 	        e.stopPropagation();
-
+			
 	        var vis = map.getLayoutProperty(layerName, 'visibility');
 
 	        if (vis === 'visible') {
@@ -265,10 +312,8 @@ function UpdateButtons() {
 	            map.setLayoutProperty(layerName, 'visibility', 'visible');
 				visibility[id] = 'visible'
 	        }
-			//console.log("visibility", layerName, clickedLayer, id, visibility[id])
 	    };
 
-	    //var layers = document.getElementById('menu');
 	    $('#menu').append(link);
 	}
 }
