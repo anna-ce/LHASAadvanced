@@ -289,12 +289,14 @@
         "vhi": "Vegetation Health Index",
         "algal_bloom": "Algal Bloom",
         "burned_areas": "Burned Areas",
+        "precip_3h": "3hr Accumulated Rainfall",
         "precip_1d": "1day Accumulated Rainfall",
         "precip_30mn": "30mn Accumulated Rainfall",
         "precip_30mn_3hr": "3hr Accumulated Rainfall every 30mn",
         "precip_30mn_1d": "1-day Accumulated Rainfall every 30mn",
         "precip_3d": "3day Accumulated Rainfall",
         "precip_7d": "7day Accumulated Rainfall",
+        "precip_3h_forecast": "3hr Accumulated Rainfall Forecast",
         "precip_1d_forecast": "1-d Accumulated Rainfall Forecast",
         "precip_2d_forecast": "2-d Accumulated Rainfall Forecast",
         "precip_3d_forecast": "3-d Accumulated Rainfall Forecast",
@@ -467,25 +469,6 @@
             },
             "legend": "Snow Cover"
         },
-        "snow_water_equivalent": {
-            "title": "Snow Water Equivalent",
-            "credits": "University of Oklahoma",
-            "source": {
-                "label": "Source",
-                "source": "University of Oklahoma EF5 CREST"
-            },
-            "legend": {
-                "10mm": "10mm",
-                "20mm": "20mm",
-                "30mm": "30mm",
-                "50mm": "50mm",
-                "80mm": "80mm",
-                "130mm": "130mm",
-                "210mm": "210mm",
-                "340mm": "340mm",
-                "550mm": "550mm"
-            }
-        },
         "population_count": {
             "title": "Population Count",
             "credits": "Oakridge National Laboratory",
@@ -538,6 +521,7 @@
                 "label": "Source",
                 "source": "NASA GSFC GPM"
             },
+            "gpm_3hr": "3-hr Rainfall Accum. (GPM)",
             "gpm_1d": "1-d Rainfall Accum. (GPM)",
             "gpm_3d": "3-d Rainfall Accum. (GPM)",
             "gpm_7d": "7-d Rainfall Accum. (GPM)",
@@ -549,7 +533,7 @@
                 "1": "1mm",
                 "2": "2mm",
                 "3": "3mm",
-                "5": "5mm",                
+                "5": "5mm",
                 "8": "8mm",
                 "10": "10mm",
                 "13": "13mm",
@@ -582,19 +566,42 @@
             },
             "precip_1d_forecast": "1-d Rainfall Accumulation Forecast",
             "legend": {
-                "1mm": "1mm",
-                "2mm": "2mm",
-                "3mm": "3mm",
-                "5mm": "5mm",
-                "8mm": "8mm",
-                "13mm": "13mm",
-                "21mm": "21mm",
-                "34mm": "34mm",
-                "55mm": "55mm",
-                "89mm": "89mm",
-                "144mm": "144mm",
-                "233mm": "233mm",
-                "377mm": "377mm"
+                "1": "1mm",
+                "2": "2mm",
+                "3": "3mm",
+                "5": "5mm",
+                "8": "8mm",
+                "13": "13mm",
+                "21": "21mm",
+                "34": "34mm",
+                "55": "55mm",
+                "89": "89mm",
+                "144": "144mm",
+                "233": "233mm",
+                "377": "377mm"
+            }
+        },
+        "precipitation_gfs": {
+            "title": "Precipitation Forecast",
+            "credits": "NOAA NCEP Global Forecasting System",
+            "source": {
+                "label": "Source",
+                "source": "NOAA GFS"
+            },
+            "forecast": "Rainfall Accumulation Forecast",
+            "legend": {
+                "1": "1mm",
+                "2": "2mm",
+                "3": "3mm",
+                "5": "5mm",
+                "10": "10mm",
+                "20": "20mm",
+                "40":  "40mm",
+                "70":  "74mm",
+                "120": "120mm",
+                "200":  "200mm",
+                "350": "350mm",
+                "600": "600mm"
             }
         },
         "precipitation_wrf_30km": {
@@ -624,7 +631,7 @@
                 "610": "610mm"
             }
         },
-        "stream_flow": {
+        "maxq": {
             "title": "Stream Flow",
             "credits": "University of Oklahoma",
             "source": {
@@ -641,6 +648,46 @@
                 "210cms": "21cms",
                 "340cms": "340cms",
                 "550cms": "550cms"
+            }
+        },
+        "maxsm": {
+            "title": "Soil Moisture",
+            "credits": "University of Oklahoma",
+            "source": {
+                "label": "Source",
+                "source": "University of Oklahoma EF5 CREST"
+            },
+            "legend": {
+                "1": "1pct",
+                "2": "2pct",
+                "3": "3pct",
+                "5": "5pct",
+                "8": "8pct",
+                "13": "13pct",
+                "21": "21pct",
+                "34": "34pct",
+                "55": "55pct",
+                "89": "89pct",
+                "144": "144pct"
+            }
+        },
+        "maxswe": {
+            "title": "Snow Water Equivalent",
+            "credits": "University of Oklahoma",
+            "source": {
+                "label": "Source",
+                "source": "University of Oklahoma EF5 CREST"
+            },
+            "legend": {
+                "10mm": "10mm",
+                "20mm": "20mm",
+                "30mm": "30mm",
+                "50mm": "50mm",
+                "80mm": "80mm",
+                "130mm": "130mm",
+                "210mm": "210mm",
+                "340mm": "340mm",
+                "550mm": "550mm"
             }
         },
         "landslide_nowcast": {
@@ -688,25 +735,7 @@
             },
             "legend": "Landslide Catalog"
         },
-        "soil_moisture": {
-            "title": "Soil Moisture",
-            "credits": "University of Oklahoma",
-            "source": {
-                "label": "Source",
-                "source": "University of Oklahoma EF5 CREST"
-            },
-            "legend": {
-                "3pct": "3pct",
-                "5pct": "5pct",
-                "8pct": "8pct",
-                "13pct": "13pct",
-                "21pct": "21pct",
-                "34pct": "34pct",
-                "55pct": "55pct",
-                "89pct": "89pct",
-                "144pct": "144pct"
-            }
-        },
+
         "viirs_chla": {
             "title": "VIIRS Chlorophyll-A",
             "credits": "NASA GSFC",
