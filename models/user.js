@@ -45,12 +45,12 @@ module.exports = {
 		})
 	},
 	update: function(json, cb ) {       
-		console.log("Update user ", json)
+		//console.log("Update user ", json)
 		app.client.query("UPDATE users SET (is_admin, is_banned, name, organization, updated_at ) = ($1, $2, $3, $4, $5 ) WHERE id= $6;", 
 				[json.is_admin, json.is_banned, json.name, json.organization, json.updated_at, json.id], function(err, result) {
 					console.log("update_local_record", err)
 					if( !err ) {
-						cb(err, result.rows[0])
+						cb(err, json)
 					} else {
 						cb(err, result)
 					}

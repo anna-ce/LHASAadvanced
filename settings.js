@@ -87,10 +87,56 @@ var express 		= require('express'),
 				var tmp_dir = app.get('tmp_dir')
 				logger.info("tmp_dir:", tmp_dir)
 				logger.info("data_dir:", data_dir)
-				//if( data_dir != tmp_dir) {
-				//	throw "Data Directory is not the same as your tmp_dir... data may not be publishable"
-				//}
 			}
+		}
+	}
+	
+	function Check_Firebase() {
+		assert(process.env.FIREBASE_APIKEY)
+		assert(process.env.FIREBASE_AUTHDOMAIN)
+		assert(process.env.FIREBASE_DATABASURL)
+		assert(process.env.FIREBASE_STORAGEBUCKET)
+		assert(process.env.FIREBASE_MESSAGESENDERID)
+	}
+	
+	function Check_AWS_Cognito() {
+		logger.info("using_aws_cognito for identity...")
+		
+		app.cognito 						= new aws.CognitoIdentity();
+		app.cognitoidentityserviceprovider 	= new aws.CognitoIdentityServiceProvider();
+
+		var PoolRegion	= process.env.AWS_REGION 
+		var UserPoolId	= process.env.AWS_USERPOOLID
+		var ClientId	= process.env.AWS_USERCLIENTID
+		var PoolGUID	= process.env.AWS_USERPOOLGUID
+		
+		var PoolIdp		= "cognito-idp." + PoolRegion +".amazonaws.com/"+ UserPoolId
+				
+		try {
+			if (app.cognito) {
+
+				var params = {
+				  IdentityPoolId: PoolGUID
+				};
+			
+				app.cognito.describeIdentityPool(params, function(err, data) {
+				  if (err) console.log(err, err.stack); // an error occurred
+				  else {
+					  // console.log(data);           // successful response
+
+					  app.cognito.UserPoolId 				= UserPoolId
+					  app.cognito.ClientId 					= ClientId
+					  app.cognito.UserPoolIdp				= PoolIdp
+					  
+					  app.cognito.IdentityPoolId 			= data.IdentityPoolId
+					  app.cognito.IdentityPoolName 			= data.IdentityPoolName
+					  app.cognito.SupportedLoginProviders	= data.SupportedLoginProviders
+					}
+				});
+			}
+		} catch(e) {
+			app.cognito = undefined
+			console.log("Cognito exception", e)
 		}
 	}
 	
@@ -156,6 +202,8 @@ var express 		= require('express'),
 		// load config
 		app.config 			= JSON.parse(fs.readFileSync("./config/config.yaml"));
 		
+		process.env.CONTACT_EMAIL	= app.config.contact_mail
+
 		// overload regions for GPM App
 		//
 		var global_region		= app.config.regions.Global
@@ -211,7 +259,8 @@ var express 		= require('express'),
 		})
 		
 		CheckAWS_S3()
-		Check_AWS_SES
+		Check_AWS_SES()
+		Check_Firebase()
 	}
 	
 // ===============================	

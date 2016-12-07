@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+	
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>	
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>	
+		
+    <script src="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.css" />
+	<script src="https://www.gstatic.com/firebasejs/3.6.3/firebase.js"></script>
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: 			'<%= process.env.FIREBASE_APIKEY %>',
+	    authDomain: 		'<%= process.env.FIREBASE_AUTHDOMAIN %>',
+	    databaseURL: 		'<%= process.env.FIREBASE_DATABASURL %>',
+	    storageBucket: 		'<%= process.env.FIREBASE_STORAGEBUCKET %>',
+	    messagingSenderId: 	'<%= process.env.FIREBASE_MESSAGESENDERID %>'
+	  };
+	  firebase.initializeApp(config);
+	</script>
+	  
+    <script type="text/javascript">
+      // FirebaseUI config.
+	  var uiConfig = {
+		  callbacks: {
+			  signInSuccess: function(currentUser, credential, redirectUrl) {
+				  firebase.auth().onAuthStateChanged(function(user) {
+					  if (user) {
+						  var http 	= new XMLHttpRequest();
+						  var url 	= "/login/verify"
+						  http.open("POST", url);
+						  http.setRequestHeader('Content-Type', 'application/json')
+				
+						  http.onreadystatechange = function() {
+							  if(http.readyState == 4 && http.status == 200) {
+								  window.location.href='/home';
+							  } else {
+								  window.location.href='/home';
+							  }
+						  }
+						  http.send(JSON.stringify(user));
+					  } 
+					  return true;
+				  }, function(error) {
+					  console.log(error);
+					  return false;
+				  });
+			  }
+		  },
+		  signInSuccessUrl: '<%= host %>/signin',
+		  signInOptions: [
+			  // Leave the lines as is for the providers you want to offer your users.
+			  {
+				  provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+				  scopes: [
+					  'https://www.googleapis.com/auth/plus.login'
+				  ]
+			  },			  
+			  {	
+				  provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+				  scopes: [
+					  'public_profile',
+					  'email'
+			     ]
+			  },
+			  {	
+				  provider: firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+				  scopes: [
+					  'public_profile',
+					  'email'
+			     ]
+			  },
+			  firebase.auth.GithubAuthProvider.PROVIDER_ID,
+			  firebase.auth.EmailAuthProvider.PROVIDER_ID
+        ],
+        // Terms of service url.
+        tosUrl: '<your-tos-url>'
+      };
+
+      // Initialize the FirebaseUI Widget using Firebase.
+      var ui = new firebaseui.auth.AuthUI(firebase.auth());
+      // The start method will wait until the DOM is loaded.
+      ui.start('#firebaseui-auth-container', uiConfig);
+    </script>
+	  
+  	<style type="text/css">
+  	    body {
+  	        padding-top: 60px;
+  	        padding-bottom: 40px;
+  			}
+  	    .sidebar-nav {
+  	        padding: 9px 0;
+  	    }
+  	  	.login {
+  	  		float: right;
+  	  		text-align: right;
+  	  	}
+  	    @media (max-width: 980px) {
+  	        /* Enable use of floated navbar text */
+  	        .navbar-text.pull-right {
+  	          float: none;
+  	          padding-left: 5px;
+  	          padding-right: 5px;
+  	        }
+  	    }
+  	</style>
+	
+  </head>
+  <body>
+	<div class="container">
+		<nav class="navbar navbar-default" role='navigation'>
+		    <div class="navbar-header">
+				<a class="navbar-brand" href="/"><img alt='logo'src='/img/logo.png' width='32' /></a>
+			</div>
+		</nav>
+	</div>
+	
+	<div class='container'>
+    <h1>Login</h1>
+    <div id="firebaseui-auth-container"></div>
+	</div>
+  </body>
+</html>

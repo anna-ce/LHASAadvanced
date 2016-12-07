@@ -18,6 +18,12 @@ function new_avatar( str ) {
 
 module.exports = {
 	
+	current: function(req, res) {
+		var user 	= req.session.user 
+		//console.log("current user", user) 
+		res.send(user)
+	},
+	
 	index: function(req, res) {    
 		var user 	= req.session.user   
 		var id 		= req.params['id'];
@@ -36,11 +42,11 @@ module.exports = {
 			is_banned: 		req.body.is_banned,
 			updated_at: 	new Date()
 		}
-		eyes.inspect(json, "update")
+		debug(json, "update")
 		
 		User.update(json, function(err, user){
 			if( !err ) {
-				eyes.inspect(user, "updated user")
+				debug(user, "updated user")
 				if( current_user.id == id ) {
 					current_user.name 			= json.name
 					current_user.organization 	= json.organization
@@ -66,9 +72,9 @@ module.exports = {
 		var id = req.params['id']
 		if( current_user.id != id || !current_user.is_admin ) return res.redirect("/")
 		
-		console.log("show user", id)
+		//console.log("show user", id)
 		User.get_by_id(id, function(err, user){
-			eyes.inspect(user, "user")
+			debug(user, "user")
 			res.render("users/profile.ejs", { 
 				user: current_user,
 				u: user })
@@ -97,7 +103,7 @@ module.exports = {
 	list: function(req, res) {
 		var user = req.session.user
 		User.all( function(err, users) {
-			eyes.inspect(users, "users")
+			//eyes.inspect(users, "users")
 			res.render("users/list.ejs", {list: users, user:user })
 		})
 	}

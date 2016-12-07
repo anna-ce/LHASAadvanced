@@ -19,14 +19,15 @@ var express 		= require('express'),
 	users			= require('./app/controllers/users'),
 	stats			= require('./app/controllers/stats'),
 	opensearch		= require('./app/controllers/opensearch'),
-	persona			= require('./app/controllers/persona'),
 	App				= require('./models/app'),
 	User			= require('./models/user'),
 	apps			= require('./app/controllers/apps'),
 	products		= require('./app/controllers/products'),
-	//products_v2		= require('./app/controllers/products_v2'),
-	mapinfo			= require('./app/controllers/mapinfo');
+	//products_v2	= require('./app/controllers/products_v2'),
+	mapinfo			= require('./app/controllers/mapinfo'),
+	firebase		= require('./app/controllers/firebase');	
 	
+	//cognito			= require('./app/controllers/cognito');
 	//var mapinfo_trmm	= require('./lib/mapinfo_trmm');
 	//var	products_trmm	= require('./lib/products_trmm');
 
@@ -38,7 +39,6 @@ var express 		= require('express'),
 	var s3_products = {}
 	
 
-	
 global.app 			= express();
 app.root 			= process.cwd();
 var mainEnv 		= path.join(app.root, '/config/environment'+'.js');
@@ -213,9 +213,6 @@ app.get('/check',			 					home.check);
 // Testing ESRI ARCGIS Compliance
 app.get('/esri/:id',	 						esri.index);
 
-//app.get('/login', 							login.index);
-//app.get('/logout', 							login.logout);
-
 //app.get('/users', 							users.index);
 app.get('/users/:id',	 						users.show);
 app.post('/users/:id',	 						users.update);
@@ -223,15 +220,12 @@ app.get('/users', 								users.list);
 
 // compatibility for editor
 app.get('/user/:name',	 						users.show_by_name);
+app.get('/currentuser', 						users.current);
 
 app.get('/stats', 								stats.index);
 
 app.get('/s3/sync',								s3.sync);
 app.get('/s3/:bucket/:id',						s3.index);
-
-//app.get('/test/image',							test.image);
-//app.get('/test/:id', 							test.index);
-//app.get('/test',								test.index);
 
 app.options('/opensearch',						function(req, res) { setOptionsHeaders(req, res)})
 
@@ -239,9 +233,6 @@ app.get('/opensearch',							if_authorized, opensearch.index);
 app.get('/opensearch/classic',					if_authorized, opensearch.classic);
 app.get('/opensearch/description',				opensearch.description);
 app.get('/opensearch/:id',						if_authorized, opensearch.index);
-
-app.all('/persona/verify',						persona.verify);
-app.all('/persona/logout',						persona.logout);
 
 //app.get('/social/facebook',					social.facebook);
 //app.get('/social/twitter',					social.twitter);
@@ -270,7 +261,6 @@ app.get('/apps/edit/:id',						hawk_restrict, apps.edit);
 app.get('/apps/delete/:id',						hawk_restrict, apps.delete);
 app.put('/apps/:id',							hawk_restrict, apps.update);
 app.delete('/apps/:id',							hawk_restrict, apps.delete);
-
 
 app.get('/mapinfo/wrf_24',						mapinfo.wrf_24);
 app.get('/mapinfo/wrf_24/style',				mapinfo.wrf_24_style);
@@ -345,6 +335,17 @@ app.get("/test/precip/:id",							test.precip);
 //app.get('/v2/:prod',								products_v2.regions);
 //app.get('/v2/:prod/:span/:reg',					products_v2.whichProduct);
 //app.get('/v2/:prod/:span/:reg/:id.:fmt?',			products_v2.getProduct);
+
+//app.get("/cognito/register",						cognito.register_form)
+//app.get("/cognito/login",							cognito.login_form)
+//app.post("/cognito/register",						cognito.register_user)
+//app.get("/cognito/test",							cognito.test)
+//app.get("/cognito/list",							cognito.list)
+//app.post("/cognito/verify",							cognito.verify)
+
+app.get("/login",									firebase.login_form)
+app.post("/login/verify",							firebase.verify)
+app.get("/logout",									firebase.logout)
 
 //
 // returned to OPTIONS

@@ -21,7 +21,7 @@ var fs 			 				= require('fs'),
 	qt							= require("../../lib/s3queries/query_ba")
 	query_planet_labs			= require("../../lib/query_planet_labs"),
 	query_locationcast			= require("../../lib/query_locationcast");
-	// query_pop					= require("../../lib/query_pop");
+	// query_pop				= require("../../lib/query_pop");
 
 var productQueries = {
 	//	"dfo": 					[query_dfo.QueryDFO],
@@ -179,7 +179,7 @@ module.exports = {
 		var user	= req.session.user
 		
 		res.render( "opensearch/classic", {
-			layout: 		false,
+			//layout: 		false,
 			user: 			user,
 			opensearch_url: host+"/opensearch",
 			region: 		region,
