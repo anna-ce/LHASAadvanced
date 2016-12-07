@@ -1,16 +1,6 @@
 var User 		= require("../../models/user"),
-	firebase 	= require('firebaseui/node_modules/firebase'),
 	debug		= require('debug')('opensearch')
 ;
-
-var config = {
-  apiKey: 				'<%= process.env.FIREBASE_APIKEY %>',
-  authDomain: 			'<%= process.env.FIREBASE_AUTHDOMAIN %>',
-  databaseURL: 			'<%= process.env.FIREBASE_DATABASURL %>',
-  storageBucket: 		'<%= process.env.FIREBASE_STORAGEBUCKET %>',
-  messagingSenderId: 	'<%= process.env.FIREBASE_MESSAGESENDERID %>'
-};
-firebase.initializeApp(config);
 
 module.exports = {
 	
