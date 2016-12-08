@@ -318,6 +318,8 @@ function bootApplication(app) {
 		saveUninitialized: true
 	}))
 
+	pg.defaults.ssl = true;
+
 	app.client = new pg.Client(conString);
 	app.client.connect(function(err) {
 	  if(err) {
