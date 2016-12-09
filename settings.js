@@ -99,46 +99,46 @@ var express 		= require('express'),
 		assert(process.env.FIREBASE_MESSAGESENDERID)
 	}
 	
-	function Check_AWS_Cognito() {
-		logger.info("using_aws_cognito for identity...")
+//	function Check_AWS_Cognito() {
+//		logger.info("using_aws_cognito for identity...")
 		
-		app.cognito 						= new aws.CognitoIdentity();
-		app.cognitoidentityserviceprovider 	= new aws.CognitoIdentityServiceProvider();
+//		app.cognito 						= new aws.CognitoIdentity();
+//		app.cognitoidentityserviceprovider 	= new aws.CognitoIdentityServiceProvider();
 
-		var PoolRegion	= process.env.AWS_REGION 
-		var UserPoolId	= process.env.AWS_USERPOOLID
-		var ClientId	= process.env.AWS_USERCLIENTID
-		var PoolGUID	= process.env.AWS_USERPOOLGUID
+//		var PoolRegion	= process.env.AWS_REGION 
+//		var UserPoolId	= process.env.AWS_USERPOOLID
+//		var ClientId	= process.env.AWS_USERCLIENTID
+//		var PoolGUID	= process.env.AWS_USERPOOLGUID
 		
-		var PoolIdp		= "cognito-idp." + PoolRegion +".amazonaws.com/"+ UserPoolId
+//		var PoolIdp		= "cognito-idp." + PoolRegion +".amazonaws.com/"+ UserPoolId
 				
-		try {
-			if (app.cognito) {
+//		try {
+//			if (app.cognito) {
 
-				var params = {
-				  IdentityPoolId: PoolGUID
-				};
+//				var params = {
+//				  IdentityPoolId: PoolGUID
+//				};
 			
-				app.cognito.describeIdentityPool(params, function(err, data) {
-				  if (err) console.log(err, err.stack); // an error occurred
-				  else {
+//				app.cognito.describeIdentityPool(params, function(err, data) {
+//				  if (err) console.log(err, err.stack); // an error occurred
+//				  else {
 					  // console.log(data);           // successful response
 
-					  app.cognito.UserPoolId 				= UserPoolId
-					  app.cognito.ClientId 					= ClientId
-					  app.cognito.UserPoolIdp				= PoolIdp
+//					  app.cognito.UserPoolId 				= UserPoolId
+//					  app.cognito.ClientId 					= ClientId
+//					  app.cognito.UserPoolIdp				= PoolIdp
 					  
-					  app.cognito.IdentityPoolId 			= data.IdentityPoolId
-					  app.cognito.IdentityPoolName 			= data.IdentityPoolName
-					  app.cognito.SupportedLoginProviders	= data.SupportedLoginProviders
-					}
-				});
-			}
-		} catch(e) {
-			app.cognito = undefined
-			console.log("Cognito exception", e)
-		}
-	}
+//					  app.cognito.IdentityPoolId 			= data.IdentityPoolId
+//					  app.cognito.IdentityPoolName 			= data.IdentityPoolName
+//					  app.cognito.SupportedLoginProviders	= data.SupportedLoginProviders
+//					}
+//				});
+//			}
+//		} catch(e) {
+//			app.cognito = undefined
+//			console.log("Cognito exception", e)
+//		}
+//	}
 	
 	//
 	// Check if we can use AWS SImpel Email Service

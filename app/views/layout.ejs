@@ -14,9 +14,6 @@
 	
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>	
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-	<!-- 
-		<script src="https://login.persona.org/include.js"></script>
-	-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.3.5/bootstrap-select.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.3.5/bootstrap-select.min.js"></script>
 
@@ -158,52 +155,8 @@
 			</div>
 		</div>
 	</div>
-
-<!--
-<script src="/js/cognito/jsbn.js"></script>
-<script src="/js/cognito/jsbn2.js"></script>
-<script src="/js/cognito/sjcl.js"></script>
-<script src="/js/cognito/aws-cognito-sdk.min.js"></script>
-<script src="/js/cognito/amazon-cognito-identity.min.js"></script>
--->
 	
 <script>
-//	var poolData = {
-//		UserPoolId : 	'<%= process.env.AWS_USERPOOLID  %>',
-//		ClientId : 		'<%= process.env.AWS_USERCLIENTID %>'
-//	}
-   
-//	var userPool 	= new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
-//  var cognitoUser = userPool.getCurrentUser();
-	
-//	if (cognitoUser != null) {
-//		cognitoUser.getSession(function(err, sess) {
-//			if (err) {
-//				console.log(err);
-//				return;
-//			}
-//			//console.log('session validity: ' + sess.isValid());
-//			//console.log(JSON.stringify(cognitoUser))
-//			cognitoUser.getUserAttributes(function(err, result) {
-//			        if (err) {
-//			            alert(err);
-//			            return;
-//			        }
-//					user = {}
-//			        for (i = 0; i < result.length; i++) {
-//						var key 	= result[i].getName()
-//						var value	= result[i].getValue()
-//						user[key]	= value
-//					}
-//					$("#signin").hide()
-//					$("#logged_in").show()
-//					$("#user_email").html(user.email)
-//			    });
-//			})
-//	} else {
-//		console.log("Null cognito user", document.cookie)
-//	}
-	
 	function showuser() {
 		console.log("show user", user.email)
 		window.location.href = "/user/"+user.email
@@ -211,8 +164,7 @@
 	
 	function signout() {
 		console.log("sign out user", user.email)
-	    cognitoUser.signOut();
-		window.location.href="/home"
+		window.location.href="/logout"
 	}
 	
 	function getCurrentUser() {

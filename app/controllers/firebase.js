@@ -3,13 +3,6 @@ var User 		= require("../../models/user"),
 ;
 
 module.exports = {
-	
-	register_form: function(req, res) {  
-		res.render ("cognito/register.ejs", {
-			layout:"cognito/cognito_layout.ejs",
-			title: "Register"
-		})
-	},
 
 	login_form: function(req, res) {  
 		var host 		= req.protocol + "://"+ req.get('Host')

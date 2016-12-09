@@ -26,10 +26,11 @@
 	  
 	  firebase.auth().signOut().then(function() {
 	    console.log('Signed Out');
-		window.href.location='/'
+		window.location='/'
 	  }, function(error) {
 	    console.error('Sign Out Error', error);
 	  });
+	</script>
 	  
   	<style type="text/css">
   	    body {
