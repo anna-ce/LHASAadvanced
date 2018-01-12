@@ -400,7 +400,7 @@ def process(_dir, files, ymd):
 
 	# Make a small browse image
 	if force or not os.path.exists(browse_filename):
-		cmd = "gdalwarp -q -te -180 -85 180 85 -tr 0.5 0.5 %s %s" %(fname_1km_final, browse_filename)
+		cmd = "gdalwarp -q -te -180 -85 180 85 -tr 1 1 %s %s" %(fname_1km_final, browse_filename)
 		execute(cmd)
 	
 	if force or not os.path.exists(transparent):
