@@ -41,7 +41,7 @@
     "method-override": "2.3.1",
     "mime-types": "1.0.1",
     "mkdirp": "0.4.0",
-    "moment": "~2.5.1",
+    "moment": "~2.26.0",
     "multer": "0.1.7",
     "ngeohash": "^0.6.0",
     "osm-and-geojson": "0.1.2",
