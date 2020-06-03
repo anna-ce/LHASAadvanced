@@ -34,7 +34,7 @@
     "geopix": "git://github.com/cappelaere/geopix.git",
     "github": "0.1.15",
     "glob": "~3.2.8",
-    "hawk": "2.1.2",
+    "hawk": "7.0.10",
     "lineclip": "^1.1.5",
     "lockfile": "^1.0.1",
     "memjs": "0.10.0",
