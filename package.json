@@ -63,7 +63,7 @@
     "turf": "^3.0.11",
     "turf-bbox-clip": "git://github.com/Turfjs/turf-bbox-clip",
     "underscore": "1.5.2",
-    "underscore.string": "2.3.3",
+    "underscore.string": "3.3.5",
     "unirest": "0.3.4",
     "vt-pbf": "2.1.2",
     "winston": "0.7.2",
