@@ -51,7 +51,7 @@
     "shortid": "2.0.0",
     "sprintf-js": "1.0.2",
     "sqs-consumer": "^3.1.2",
-    "tar": "~0.1.19",
+    "tar": "~6.0.2",
     "terraformer": "^1.0.5",
     "terraformer-arcgis-parser": "^1.0.4",
     "terraformer-geostore": "^1.0.4",
